@@ -3165,14 +3165,6 @@ body:has(#loginScreen.front-home){background:#edf3f8!important}
     const success = await addDistributorCloud(newDistData);
 
     if (success) {
-      const screenshotUploadResult = await uploadScreenshotCloud(email, paymentScreenshot, paymentFile.name);
-      if (!screenshotUploadResult.success) {
-        signUpStatusMsg.innerText = `⚠️ अकाउंट बन गया है, लेकिन भुगतान screenshot upload नहीं हुआ: ${screenshotUploadResult.error || 'Unknown error'}`;
-        signUpStatusMsg.style.color = '#ef4444';
-        signUpStatusMsg.style.display = 'block';
-        return;
-      }
-
       signUpStatusMsg.innerText = '✅ आपका आवेदन सफलतापूर्वक भेज दिया गया है। एडमिन आपके भुगतान screenshot की समीक्षा करेगा और तभी login approved होगा।';
       signUpStatusMsg.style.color = '#34d399';
       signUpStatusMsg.style.display = 'block';
