@@ -2033,7 +2033,7 @@ body:has(#loginScreen.front-home){background:#edf3f8!important}
     if(!response.ok) throw new Error('Server unavailable. Please retry.');
 
     if(!['login','register'].includes(payload.action) && requestToken!==authToken) throw new Error('Account changed. Please retry.');
-    if(!result || result.success!==true) throw new Error(result?.error || 'Server did not confirm the action.');
+    if(!result || result.success!==true) throw new Error([result?.error,result?.debug].filter(Boolean).join(' | ') || 'Server did not confirm the action.');
     return result;
   }
   async function getDistributorsListCloud() {
