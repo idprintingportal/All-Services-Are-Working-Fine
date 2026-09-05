@@ -2155,7 +2155,7 @@ body:has(#loginScreen.front-home){background:#edf3f8!important}
       cell(`${days} Days Left | ${d.status}`);
       const actions=cell('');
       const button=(label,fn)=>{const b=document.createElement('button');b.type='button';b.className='history-msg-btn';b.textContent=label;b.style.margin='3px';b.addEventListener('click',async()=>{b.disabled=true;try{await fn();}catch(error){alert(error.message);}finally{b.disabled=false;}});actions.appendChild(b);};
-      const image=safeImageUrl(renewal?d.renewalScreenshot:d.paymentScreenshot);
+      const image=String(renewal?d.renewalScreenshot:d.paymentScreenshot||'').trim();
       if(image) button('🔗 Open Screenshot',()=>openDistributorScreenshot(image));
       if(d.distributorMessage) {const text=document.createElement('div');text.textContent=d.distributorMessage;actions.appendChild(text);}
       const reply=safeImageUrl(d.distributorReplyImage);
@@ -3158,13 +3158,15 @@ body:has(#loginScreen.front-home){background:#edf3f8!important}
       paymentPlan: selectedPlan.label,
       paymentAmount: selectedPlan.amount,
       paymentTxnId: txnId,
-      paymentScreenshot: paymentScreenshot,
+      paymentScreenshot: '',
       approvalNote: 'Awaiting admin review'
     };
 
     const success = await addDistributorCloud(newDistData);
 
     if (success) {
+      const screenshotUploadResult = await uploadScreenshotCloud(email, paymentScreenshot, paymentFile.name);
+      if (!screenshotUploadResult || !screenshotUploadResult.success) throw new Error(screenshotUploadResult?.error || 'Payment screenshot upload failed.');
       signUpStatusMsg.innerText = '✅ आपका आवेदन सफलतापूर्वक भेज दिया गया है। एडमिन आपके भुगतान screenshot की समीक्षा करेगा और तभी login approved होगा।';
       signUpStatusMsg.style.color = '#34d399';
       signUpStatusMsg.style.display = 'block';
