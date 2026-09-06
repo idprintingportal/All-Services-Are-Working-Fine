@@ -1,0 +1,16 @@
+name = "id-printing-storage-worker"
+main = "worker.js"
+compatibility_date = "2026-09-01"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "id-printing-storage-db"
+database_id = "bd466608-40dd-4aed-96de-efaaee0080b9"
+
+[[r2_buckets]]
+binding = "FILES"
+bucket_name = "id-printing-private-files"
+
+[vars]
+RETENTION_DAYS = "15"
+MAX_DOWNLOADS = "3"
