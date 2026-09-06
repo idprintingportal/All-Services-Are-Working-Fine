@@ -3708,6 +3708,25 @@ body:has(#loginScreen.front-home){background:#edf3f8!important}
     const out=document.createElement('canvas');out.width=canvas.width;out.height=canvas.height;out.getContext('2d').drawImage(img,0,0,out.width,out.height);return out;
   }
 
+  // Conservative clarity pass: improves edge definition without inventing facial details.
+  // The source canvas is never modified; this is applied once per photo before layout.
+  function enhancePassportCanvas(source, amount){
+    const level=Math.max(0,Math.min(40,Number(amount)||0));
+    if(!level)return source;
+    const out=document.createElement('canvas');out.width=source.width;out.height=source.height;
+    const ctx=out.getContext('2d');
+    const edgeAlpha=Math.min(0.16,level/250);
+    ctx.imageSmoothingEnabled=true;
+    ctx.drawImage(source,0,0);
+    // Low-strength directional edge overlay acts as a safe unsharp-mask approximation.
+    ctx.globalAlpha=edgeAlpha;
+    ctx.globalCompositeOperation='screen';
+    ctx.drawImage(source,-1,0);ctx.drawImage(source,1,0);
+    ctx.drawImage(source,0,-1);ctx.drawImage(source,0,1);
+    ctx.globalCompositeOperation='source-over';ctx.globalAlpha=1;
+    return out;
+  }
+
   document.getElementById('generateMultiPassportA4Btn').addEventListener('click', async () => {
     for (let i = 0; i < activePassportCount; i++) {
       if (!multiPassportLoaded[i]) {
@@ -3719,6 +3738,8 @@ body:has(#loginScreen.front-home){background:#edf3f8!important}
     const targetQty = Math.max(1, Math.min(50, parseInt(document.getElementById('passportQtyInput').value) || 30));
     let outputCanvases=multiPassportCanvases;
     if(passportRemoveBg){const button=document.getElementById('generateMultiPassportA4Btn');button.disabled=true;button.textContent='⏳ Removing background…';try{outputCanvases=await Promise.all(multiPassportCanvases.map(aiRemovePassportBackground));}catch(e){alert('Background removal failed. Check internet connection and try again.');return;}finally{button.disabled=false;button.textContent='🖼️ Generate Sheet (Preview)';}}
+    const enhanceValue=Number(document.getElementById('passportEnhanceSlider')?.value||0);
+    outputCanvases=outputCanvases.map(canvas=>enhancePassportCanvas(canvas,enhanceValue));
     const sheetCanvas = document.getElementById('passportSheetCanvas');
     const sheetCtx = sheetCanvas.getContext('2d');
 
@@ -3740,9 +3761,8 @@ body:has(#loginScreen.front-home){background:#edf3f8!important}
         const y = startY + r * (ph + gapY);
 
         const currentCanvas = outputCanvases[photoIndexToPrint % activePassportCount];
-        const enhance=Number(document.getElementById('passportEnhanceSlider')?.value||0);
         sheetCtx.save();
-        sheetCtx.filter=`contrast(${100+enhance}%) brightness(${100+Math.round(enhance/3)}%) saturate(${100+Math.round(enhance/2)}%)`;
+        sheetCtx.filter=`contrast(${100+enhanceValue}%) brightness(${100+Math.round(enhanceValue/3)}%) saturate(${100+Math.round(enhanceValue/2)}%)`;
         if(passportRemoveBg){sheetCtx.fillStyle=document.getElementById('passportBgColor')?.value||'#ffffff';sheetCtx.fillRect(x,y,pw,ph);}
         sheetCtx.drawImage(currentCanvas, x, y, pw, ph);
         sheetCtx.restore();
