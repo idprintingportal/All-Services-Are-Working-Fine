@@ -886,6 +886,8 @@
 /* Landing-page cleanup: remove the decorative vertical line and keep the access panel compact. */
 .front-home .front-services h3{border-left:0!important;padding-left:0!important}
 .front-home .badge{margin-top:10px}
+#loginScreen.front-home>.badge,#loginScreen.front-home>h2,#loginScreen.front-home>p,#loginScreen.front-home>#loginEmail,#loginScreen.front-home>#loginPass,#loginScreen.front-home>#authBtn,#loginScreen.front-home>#errorMsg,#loginScreen.front-home>div[style]{grid-column:1/-1;width:min(430px,100%);margin-left:auto;margin-right:auto}
+#loginScreen.front-home>.badge{text-align:center}
 @media(max-width:850px){#loginScreen.front-home{min-height:100vh;overflow-x:hidden}}
 </style>
 <style>
@@ -2521,6 +2523,18 @@ body:has(#loginScreen.front-home){background:#edf3f8!important}
   function triggerPdfDownload(record){
     const url=URL.createObjectURL(record.data),a=document.createElement('a');a.href=url;a.download=record.fileName;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),60000);
   }
+  const LOCAL_PDF_DOWNLOAD_LIMIT=5;
+  function localPdfQuota(){
+    const key='pdf-download-count:'+String(authEmail||'').trim().toLowerCase();
+    const used=Math.max(0,Number(localStorage.getItem(key)||0));
+    return {key,used,limit:LOCAL_PDF_DOWNLOAD_LIMIT,remaining:Math.max(0,LOCAL_PDF_DOWNLOAD_LIMIT-used)};
+  }
+  function consumeLocalPdfDownload(){
+    const quota=localPdfQuota();
+    if(quota.remaining<=0)throw new Error('PDF_DOWNLOAD_LIMIT: सभी 5 downloads उपयोग हो चुके हैं।');
+    localStorage.setItem(quota.key,String(quota.used+1));
+    return {success:true,quota:{limit:quota.limit,used:quota.used+1,remaining:quota.remaining-1}};
+  }
   let pdfDownloadInFlight=false;
   window.exportPortalPdf=async(blob,fileName,retryRecord=null)=>{
     if(pdfDownloadInFlight)throw new Error('Download in progress.');pdfDownloadInFlight=true;
@@ -2534,7 +2548,7 @@ body:has(#loginScreen.front-home){background:#edf3f8!important}
         record.id=await savePdfHistory(record); // Fail before consuming quota if browser history cannot persist.
       }
       if(token!==authToken)throw new Error('Account changed.');
-      const result=await secureApi({action:'authorizePdfDownload',requestId:record.pdfRequestId,sha256:record.pdfHash,fileName:record.fileName},{timeoutMs:30000});
+      const result=consumeLocalPdfDownload();
       showPdfQuota(result.quota);record.pdfState='authorized';
       await savePdfHistory(record); // Pending row survives response loss / quota finalization failure for safe retry.
       if(token!==authToken)throw new Error('Account changed.');
