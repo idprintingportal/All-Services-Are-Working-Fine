@@ -1386,6 +1386,15 @@ body:has(#loginScreen.front-home){background:#edf3f8!important}
       <div id="passportUploadBlocksContainer" style="display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; margin-bottom: 12px;">
         <!-- Dynamically rendered via JS -->
       </div>
+      <div class="control-panel" style="margin-bottom:12px;text-align:left;">
+        <strong style="color:var(--accent-blue);font-size:13px;">🎨 Photo Background &amp; Enhance</strong>
+        <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:10px;">
+          <button type="button" id="passportRemoveBgBtn" class="action-btn">🪄 Remove Background</button>
+          <label style="font-size:12px;">Background <select id="passportBgColor" class="login-input" style="width:auto;display:inline-block;padding:6px;"><option value="#ffffff">White</option><option value="#dbeafe">Light Blue</option><option value="#2563eb">Blue</option><option value="#dc2626">Red</option><option value="#16a34a">Green</option></select></label>
+          <label style="font-size:12px;">Enhance <input id="passportEnhanceSlider" type="range" min="0" max="40" value="15"><span id="passportEnhanceValue">15</span></label>
+        </div>
+        <small id="passportBgStatus" style="display:block;margin-top:7px;color:var(--text-muted);">Background removal uses the selected photo preview.</small>
+      </div>
 
       <!-- Custom Quantity Control Panel -->
       <div class="control-panel" style="margin-bottom: 15px;">
@@ -2155,7 +2164,7 @@ body:has(#loginScreen.front-home){background:#edf3f8!important}
       cell(`${days} Days Left | ${d.status}`);
       const actions=cell('');
       const button=(label,fn)=>{const b=document.createElement('button');b.type='button';b.className='history-msg-btn';b.textContent=label;b.style.margin='3px';b.addEventListener('click',async()=>{b.disabled=true;try{await fn();}catch(error){alert(error.message);}finally{b.disabled=false;}});actions.appendChild(b);};
-      const image=safeImageUrl(renewal?d.renewalScreenshot:d.paymentScreenshot);
+      const image=String(renewal?d.renewalScreenshot:d.paymentScreenshot||'').trim();
       if(image) button('🔗 Open Screenshot',()=>openDistributorScreenshot(image));
       if(d.distributorMessage) {const text=document.createElement('div');text.textContent=d.distributorMessage;actions.appendChild(text);}
       const reply=safeImageUrl(d.distributorReplyImage);
@@ -3158,7 +3167,7 @@ body:has(#loginScreen.front-home){background:#edf3f8!important}
       paymentPlan: selectedPlan.label,
       paymentAmount: selectedPlan.amount,
       paymentTxnId: txnId,
-      paymentScreenshot: paymentScreenshot,
+      paymentScreenshot: '',
       approvalNote: 'Awaiting admin review'
     };
 
@@ -3166,13 +3175,7 @@ body:has(#loginScreen.front-home){background:#edf3f8!important}
 
     if (success) {
       const screenshotUploadResult = await uploadScreenshotCloud(email, paymentScreenshot, paymentFile.name);
-      if (!screenshotUploadResult.success) {
-        signUpStatusMsg.innerText = `⚠️ अकाउंट बन गया है, लेकिन भुगतान screenshot upload नहीं हुआ: ${screenshotUploadResult.error || 'Unknown error'}`;
-        signUpStatusMsg.style.color = '#ef4444';
-        signUpStatusMsg.style.display = 'block';
-        return;
-      }
-
+      if (!screenshotUploadResult || !screenshotUploadResult.success) throw new Error(screenshotUploadResult?.error || 'Payment screenshot upload failed.');
       signUpStatusMsg.innerText = '✅ आपका आवेदन सफलतापूर्वक भेज दिया गया है। एडमिन आपके भुगतान screenshot की समीक्षा करेगा और तभी login approved होगा।';
       signUpStatusMsg.style.color = '#34d399';
       signUpStatusMsg.style.display = 'block';
@@ -3649,6 +3652,7 @@ body:has(#loginScreen.front-home){background:#edf3f8!important}
   let activePassportCount = 1;
   let multiPassportCanvases = [];
   let multiPassportLoaded = [];
+  let passportRemoveBg = false;
 
   function setPassportCount(count) {
     activePassportCount = count;
@@ -3695,7 +3699,16 @@ body:has(#loginScreen.front-home){background:#edf3f8!important}
     document.getElementById('passportQtyInput').value = qty;
   }
 
-  document.getElementById('generateMultiPassportA4Btn').addEventListener('click', () => {
+  let passportBgRemovalPromise=null;
+  async function aiRemovePassportBackground(canvas){
+    if(!passportBgRemovalPromise)passportBgRemovalPromise=import('https://esm.sh/@imgly/background-removal@1.5.5').then(m=>m.removeBackground||m.default);
+    const blob=await new Promise(resolve=>canvas.toBlob(resolve,'image/png'));
+    const output=await (await passportBgRemovalPromise)(blob,{output:{format:'image/png'}});
+    const img=new Image();img.src=URL.createObjectURL(output);await img.decode();URL.revokeObjectURL(img.src);
+    const out=document.createElement('canvas');out.width=canvas.width;out.height=canvas.height;out.getContext('2d').drawImage(img,0,0,out.width,out.height);return out;
+  }
+
+  document.getElementById('generateMultiPassportA4Btn').addEventListener('click', async () => {
     for (let i = 0; i < activePassportCount; i++) {
       if (!multiPassportLoaded[i]) {
         alert(`⚠️ कृपया Photo #${i + 1} अपलोड और क्रॉप करें!`);
@@ -3704,6 +3717,8 @@ body:has(#loginScreen.front-home){background:#edf3f8!important}
     }
 
     const targetQty = Math.max(1, Math.min(50, parseInt(document.getElementById('passportQtyInput').value) || 30));
+    let outputCanvases=multiPassportCanvases;
+    if(passportRemoveBg){const button=document.getElementById('generateMultiPassportA4Btn');button.disabled=true;button.textContent='⏳ Removing background…';try{outputCanvases=await Promise.all(multiPassportCanvases.map(aiRemovePassportBackground));}catch(e){alert('Background removal failed. Check internet connection and try again.');return;}finally{button.disabled=false;button.textContent='🖼️ Generate Sheet (Preview)';}}
     const sheetCanvas = document.getElementById('passportSheetCanvas');
     const sheetCtx = sheetCanvas.getContext('2d');
 
@@ -3724,8 +3739,13 @@ body:has(#loginScreen.front-home){background:#edf3f8!important}
         const x = startX + c * (pw + gapX);
         const y = startY + r * (ph + gapY);
 
-        const currentCanvas = multiPassportCanvases[photoIndexToPrint % activePassportCount];
+        const currentCanvas = outputCanvases[photoIndexToPrint % activePassportCount];
+        const enhance=Number(document.getElementById('passportEnhanceSlider')?.value||0);
+        sheetCtx.save();
+        sheetCtx.filter=`contrast(${100+enhance}%) brightness(${100+Math.round(enhance/3)}%) saturate(${100+Math.round(enhance/2)}%)`;
+        if(passportRemoveBg){sheetCtx.fillStyle=document.getElementById('passportBgColor')?.value||'#ffffff';sheetCtx.fillRect(x,y,pw,ph);}
         sheetCtx.drawImage(currentCanvas, x, y, pw, ph);
+        sheetCtx.restore();
         
         sheetCtx.strokeStyle = '#000000';
         sheetCtx.lineWidth = 2;
@@ -3739,6 +3759,9 @@ body:has(#loginScreen.front-home){background:#edf3f8!important}
     document.getElementById('passportSheetTitle').innerText = `A4 Passport Sheet Preview (${activePassportCount} Unique Photos, Total Qty: ${targetQty})`;
     document.getElementById('downloadMultiPassportPdfBtn').disabled = false;
   });
+
+  document.getElementById('passportEnhanceSlider')?.addEventListener('input',e=>{document.getElementById('passportEnhanceValue').textContent=e.target.value;});
+  document.getElementById('passportRemoveBgBtn')?.addEventListener('click',()=>{passportRemoveBg=!passportRemoveBg;const b=document.getElementById('passportRemoveBgBtn');b.textContent=passportRemoveBg?'↩️ Keep Original Background':'🪄 Remove Background';document.getElementById('passportBgStatus').textContent=passportRemoveBg?'Selected background color will be used in the generated sheet.':'Original photo background will be retained.';});
 
   document.getElementById('downloadMultiPassportPdfBtn').addEventListener('click', () => {
     const sheetCanvas = document.getElementById('passportSheetCanvas');
