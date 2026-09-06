@@ -883,6 +883,10 @@
 #np-editor #np-inline{background:transparent!important;opacity:1!important;box-shadow:none!important;border:0!important;outline:0!important}
 #np-quota{font-size:12px;color:#475569;white-space:nowrap}
 .tab-btn{min-height:54px!important;padding:14px 20px!important;font-size:15px!important}.tool-active{background:#2563eb!important;color:#fff!important;border-color:#60a5fa!important;box-shadow:0 8px 20px #2563eb66!important}.premium-crop-mode .basic-only{display:none!important}
+/* Landing-page cleanup: remove the decorative vertical line and keep the access panel compact. */
+.front-home .front-services h3{border-left:0!important;padding-left:0!important}
+.front-home .badge{margin-top:10px}
+@media(max-width:850px){#loginScreen.front-home{min-height:100vh;overflow-x:hidden}}
 </style>
 <style>
   .op-footer{margin:28px auto 0;padding:32px 28px 18px;max-width:1320px;border:1px solid #ffffff24;border-radius:24px 24px 0 0;background:linear-gradient(135deg,#0f172eee,#1e1b4bee);color:#cbd5e1;box-shadow:0 -16px 45px #02061744;backdrop-filter:blur(18px)}
@@ -1036,7 +1040,7 @@ body:has(#loginScreen.front-home){background:#edf3f8!important}
     <div class="front-highlight">🖨️ Perfect A4 Alignment</div>
   </section>
   <input class="front-search" id="frontServiceSearch" type="search" placeholder="⌕  Search services, forms, files... (e.g. Aadhaar, PDF)" aria-label="Search services">
-  <section class="front-services"><h3>Essential &amp; Services</h3><div class="service-tile" tabindex="0" onclick="document.getElementById('loginEmail').focus()"><span>📝</span><small>Mock Test</small></div><div class="service-tile" tabindex="0" onclick="document.getElementById('loginEmail').focus()"><span>🪪</span><small>ID Card Print</small></div><div class="service-tile" tabindex="0" onclick="document.getElementById('loginEmail').focus()"><span>✂️</span><small>PVC Auto Crop</small></div><div class="service-tile" tabindex="0" onclick="document.getElementById('loginEmail').focus()"><span>🖨️</span><small>Auto Print</small></div><div class="service-tile" tabindex="0" onclick="document.getElementById('loginEmail').focus()"><span>📷</span><small>Passport Photo</small></div></section>
+  <section class="front-services"><h3>Essential Services</h3><div class="service-tile" tabindex="0" onclick="document.getElementById('loginEmail').focus()"><span>📝</span><small>Mock Test</small></div><div class="service-tile" tabindex="0" onclick="document.getElementById('loginEmail').focus()"><span>🪪</span><small>ID Card Print</small></div><div class="service-tile" tabindex="0" onclick="document.getElementById('loginEmail').focus()"><span>✂️</span><small>PVC Auto Crop</small></div><div class="service-tile" tabindex="0" onclick="document.getElementById('loginEmail').focus()"><span>🖨️</span><small>Auto Print</small></div><div class="service-tile" tabindex="0" onclick="document.getElementById('loginEmail').focus()"><span>📷</span><small>Passport Photo</small></div></section>
   
   <!-- Running Ticker Notification -->
   <div class="ticker-container legacy-front">
