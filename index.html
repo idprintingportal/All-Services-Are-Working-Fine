@@ -2542,6 +2542,16 @@ body:has(#loginScreen.front-home){background:#edf3f8!important}
     }finally{pdfDownloadInFlight=false;}
   };
 
+  async function uploadFileToServerStorage(fileName, blobOrDataUrl, fileType){
+    if(!authToken)return;
+    let dataUrl;
+    if(typeof blobOrDataUrl==='string')dataUrl=blobOrDataUrl;
+    else if(blobOrDataUrl instanceof Blob)dataUrl=await new Promise(resolve=>{const reader=new FileReader();reader.onload=()=>resolve(reader.result);reader.readAsDataURL(blobOrDataUrl);});
+    else return;
+    const result=await secureApi({action:'storageUpload',fileName,mimeType:fileType,fileBase64:String(dataUrl),officeName:''},{timeoutMs:120000});
+    return result.fileId;
+  }
+
   async function saveToHistory(featureName, fileName, blobOrDataUrl, fileType) {
     try {
       const db = await openHistoryDB();
@@ -2558,6 +2568,8 @@ body:has(#loginScreen.front-home){background:#edf3f8!important}
       };
 
       store.add(record);
+      // Keep a server-side copy/record in R2 + D1. Local history remains a fast cache.
+      uploadFileToServerStorage(fileName,blobOrDataUrl,fileType).catch(error=>console.warn('Server storage upload skipped:',error.message));
     } catch(err) {}
   }
 
