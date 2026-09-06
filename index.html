@@ -2554,6 +2554,8 @@ body:has(#loginScreen.front-home){background:#edf3f8!important}
 
   async function saveToHistory(featureName, fileName, blobOrDataUrl, fileType) {
     try {
+      let serverFileId='';
+      try{serverFileId=await uploadFileToServerStorage(fileName,blobOrDataUrl,fileType)||'';}catch(error){console.warn('Server storage upload skipped:',error.message);}
       const db = await openHistoryDB();
       const tx = db.transaction(DB_STORE, 'readwrite');
       const store = tx.objectStore(DB_STORE);
@@ -2566,10 +2568,9 @@ body:has(#loginScreen.front-home){background:#edf3f8!important}
         timestamp: Date.now(),
         dateFormatted: new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' })
       };
+      if(serverFileId)record.serverFileId=serverFileId;
 
       store.add(record);
-      // Keep a server-side copy/record in R2 + D1. Local history remains a fast cache.
-      uploadFileToServerStorage(fileName,blobOrDataUrl,fileType).catch(error=>console.warn('Server storage upload skipped:',error.message));
     } catch(err) {}
   }
 
@@ -2618,6 +2619,15 @@ body:has(#loginScreen.front-home){background:#edf3f8!important}
       if (!rec) return;
       if(rec.feature==='PDF Editor'){
         try{await window.exportPortalPdf(rec.data,rec.fileName,rec.pdfState==='pending'?rec:null);await renderHistoryTable();}catch(error){alert(error.message);}return;
+      }
+
+      if(rec.serverFileId){
+        try{
+          const result=await secureApi({action:'storageDownload',fileId:rec.serverFileId},{timeoutMs:120000});
+          const bytes=Uint8Array.from(atob(result.fileBase64),c=>c.charCodeAt(0));
+          const url=URL.createObjectURL(new Blob([bytes],{type:result.mimeType||rec.fileType||'application/octet-stream'}));
+          const remoteLink=document.createElement('a');remoteLink.href=url;remoteLink.download=result.fileName||rec.fileName;remoteLink.click();setTimeout(()=>URL.revokeObjectURL(url),60000);return;
+        }catch(error){alert(error.message);return;}
       }
 
       const link = document.createElement('a');
