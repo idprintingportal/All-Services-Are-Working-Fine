@@ -16,9 +16,12 @@ API_KEY = os.getenv("ENHANCE_API_KEY", "")
 def _authorized():
     return bool(API_KEY) and request.headers.get("X-Enhance-Key", "") == API_KEY
 
-def _process(raw: bytes, level: int) -> bytes:
-    src = ImageOps.exif_transpose(Image.open(io.BytesIO(raw))).convert("RGB")
-    bgr = cv2.cvtColor(np.asarray(src), cv2.COLOR_RGB2BGR)
+def _process(raw: bytes, level: int) -> tuple[bytes, str]:
+    original = ImageOps.exif_transpose(Image.open(io.BytesIO(raw)))
+    has_alpha = "A" in original.getbands()
+    src = original.convert("RGBA" if has_alpha else "RGB")
+    alpha = np.asarray(src)[:, :, 3] if has_alpha else None
+    bgr = cv2.cvtColor(np.asarray(src), cv2.COLOR_RGBA2BGR if has_alpha else cv2.COLOR_RGB2BGR)
     # Gentle denoise, local contrast and unsharp mask. No facial synthesis.
     strength = max(0.0, min(1.0, level / 100.0))
     if strength:
@@ -32,8 +35,12 @@ def _process(raw: bytes, level: int) -> bytes:
         bgr = cv2.addWeighted(bgr, 1.0 + 0.35 * strength, blur, -0.35 * strength, 0)
     out = cv2.cvtColor(bgr, cv2.COLOR_BGR2RGB)
     buf = io.BytesIO()
-    Image.fromarray(out).save(buf, format="JPEG", quality=96, optimize=True)
-    return buf.getvalue()
+    if has_alpha:
+        rgba = np.dstack((out, alpha))
+        Image.fromarray(rgba, "RGBA").save(buf, format="PNG", optimize=True)
+        return buf.getvalue(), "image/png"
+    Image.fromarray(out, "RGB").save(buf, format="JPEG", quality=96, optimize=True)
+    return buf.getvalue(), "image/jpeg"
 
 @app.get("/health")
 def health():
@@ -57,8 +64,8 @@ def enhance():
         return jsonify(success=False, error="image is too large"), 413
     try:
         level = int((request.form.get("level") if not request.is_json else request.json.get("level", 35)) or 35)
-        result = _process(data, level)
-        return jsonify(success=True, imageBase64=base64.b64encode(result).decode("ascii"), mimeType="image/jpeg")
+        result, mime = _process(data, level)
+        return jsonify(success=True, imageBase64=base64.b64encode(result).decode("ascii"), mimeType=mime)
     except Exception:
         app.logger.exception("enhancement failed")
         return jsonify(success=False, error="Image enhancement failed"), 422
