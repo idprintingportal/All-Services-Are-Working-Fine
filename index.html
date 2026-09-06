@@ -885,7 +885,12 @@
 .tab-btn{min-height:54px!important;padding:14px 20px!important;font-size:15px!important}.tool-active{background:#2563eb!important;color:#fff!important;border-color:#60a5fa!important;box-shadow:0 8px 20px #2563eb66!important}.premium-crop-mode .basic-only{display:none!important}
 /* Landing-page cleanup: remove the decorative vertical line and keep the access panel compact. */
 .front-home .front-services h3{border-left:0!important;padding-left:0!important}
+.universal-export-panel{display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap;margin:14px auto 0;padding:12px;border:1px solid var(--border-color);border-radius:12px;background:rgba(15,23,42,.45)}.universal-export-panel label{font-size:12px;color:var(--text-muted)}.universal-export-size{margin-left:5px;padding:7px;border-radius:7px;background:#172338;color:#fff;border:1px solid #52637f}.universal-export-panel button{padding:8px 11px;border:1px solid #52637f;border-radius:8px;background:#24334b;color:#fff;cursor:pointer;font-size:11px}.universal-export-panel button:disabled{opacity:.45;cursor:not-allowed}.universal-export-panel button:not(:disabled):hover{background:#124951;border-color:#43c4d4}
+.account-field-row{display:flex;align-items:center;gap:8px;margin-top:5px}.account-field-row .login-input{flex:1;margin:0!important}.account-field-row button{padding:8px 10px;border:1px solid #52637f;border-radius:8px;background:#24334b;color:#fff;cursor:pointer;white-space:nowrap}.account-field-row button:hover{background:#124951;border-color:#43c4d4}
 .front-home .badge{margin-top:10px}
+#loginScreen.front-home .front-showcase{grid-column:2;grid-row:2 / span 3;align-self:stretch;min-height:360px;position:relative;overflow:hidden;border-radius:22px;background:#172033;border:1px solid #ffffffaa;box-shadow:0 16px 35px #17203326}
+.front-showcase img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .7s ease}.front-showcase img.active{opacity:1}.front-showcase .showcase-caption{position:absolute;left:16px;right:16px;bottom:14px;padding:10px 12px;border-radius:12px;background:#020617b8;color:#fff;font-size:12px;font-weight:700;backdrop-filter:blur(5px)}
+#loginScreen.front-home>.badge,#loginScreen.front-home>h2,#loginScreen.front-home>p,#loginScreen.front-home>#loginEmail,#loginScreen.front-home>#loginPass,#loginScreen.front-home>#authBtn,#loginScreen.front-home>#errorMsg,#loginScreen.front-home>div[style]{grid-column:2;width:100%;margin-left:0;margin-right:0}
 #loginScreen.front-home>.badge,#loginScreen.front-home>h2,#loginScreen.front-home>p,#loginScreen.front-home>#loginEmail,#loginScreen.front-home>#loginPass,#loginScreen.front-home>#authBtn,#loginScreen.front-home>#errorMsg,#loginScreen.front-home>div[style]{grid-column:2;width:100%;margin-left:0;margin-right:0}
 #loginScreen.front-home>.badge{text-align:left}
 #loginScreen.front-home .front-services h3{border-left:4px solid #10b981!important;padding-left:10px!important}
@@ -1036,6 +1041,13 @@ body:has(#loginScreen.front-home){background:#edf3f8!important}
 <div id="loginScreen" class="auth-box front-home">
   <nav class="front-nav"><strong>OP Printing Hub</strong><div class="front-nav-links" aria-label="Primary navigation"><a href="#loginScreen">Home</a><a href="#pricing">Pricing &amp; Plans</a><a href="#mainApp">All PDF Tools</a><a href="#faq">Help &amp; FAQs</a></div><label class="front-language" style="margin-left:auto;margin-right:58px;font-size:12px;color:#475569;display:flex;align-items:center;gap:6px;">🌐 <select id="frontLanguageSelect" style="border:1px solid #cbd5e1;border-radius:9px;padding:7px;background:#fff;color:#334155;"><option value="en">English</option><option value="hi">हिन्दी</option><option value="mr">मराठी</option></select></label><div class="front-menu-wrap"><button class="front-menu-btn" id="frontMenuBtn" aria-expanded="false" aria-controls="frontMenu">☰</button><div class="front-menu" id="frontMenu"><button type="button" id="frontLoginBtn">🔑 Login</button><button type="button" id="frontJoinBtn">📝 Join / Create Account</button></div></div></nav>
   <section class="front-hero"><h1>Launch Your Digital Operations With<br>Our Print Portal</h1><p>All-in-one platform for seamless online printing and digital services.</p></section>
+  <section class="front-showcase" aria-label="Printing sample slideshow">
+    <img class="active" src="assets/passport.png" alt="Passport photo printing sample">
+    <img src="assets/post-cards.png" alt="Post card printing sample">
+    <img src="assets/pdf-editor.png" alt="PDF editor sample">
+    <img src="assets/frame-samples/sample_01.png" alt="Frame printing sample">
+    <div class="showcase-caption">🖨️ Print samples · Passport · Post cards · PDF Editor</div>
+  </section>
   <div class="front-status-banner" role="status">🟢 All Portal Services Operational · Fast 300 DPI Rendering Active</div>
   <section class="front-highlights" aria-label="Portal highlights">
     <div class="front-highlight">⚡ Fast Processing</div>
@@ -1084,10 +1096,10 @@ body:has(#loginScreen.front-home){background:#edf3f8!important}
   
   <div style="display:flex; justify-content:space-between; align-items:center; gap:8px; flex-wrap:wrap; margin-top:10px;">
     <span id="goToSignUp" hidden aria-hidden="true">Create Account</span>
-    <span id="goToChangePwd" class="auth-link change-password-link">🔑 Change Password</span>
+    <span id="goToChangePwd" hidden aria-hidden="true">Change Password</span>
   </div>
   <div style="display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-top:10px;">
-    <button type="button" id="forgotIdBtn" class="auth-link" style="border:0;background:none;cursor:pointer;">🪪 Forgot ID</button>
+    <button type="button" id="forgotIdBtn" hidden aria-hidden="true">Forgot ID</button>
     <button type="button" id="changePasswordBtn" class="auth-link" style="border:0;background:none;cursor:pointer;">🔑 Change Password</button>
     <button type="button" id="forgotPasswordBtn" class="auth-link" style="border:0;background:none;cursor:pointer;">🔒 Forgot Password</button>
   </div>
@@ -1258,6 +1270,7 @@ body:has(#loginScreen.front-home){background:#edf3f8!important}
     <button class="tab-btn" onclick="switchTab('tab-pdf-to-jpg')">🖼️ PDF to JPG (Manual DPI)</button>
     <button class="tab-btn" onclick="switchTab('tab-pdf-compressor')">🗜️ PDF Compressor</button>
     <button class="tab-btn" onclick="switchTab('tab-history')" style="border-color: rgba(56, 189, 248, 0.5);">📂 History</button>
+    <button id="myAccountTabBtn" class="tab-btn" onclick="switchTab('tab-my-account')" style="border-color: rgba(167, 139, 250, 0.6);">👤 My Account</button>
     <button id="adminTabBtn" class="tab-btn" onclick="switchTab('tab-admin')" style="display:none; border-color: #f59e0b; color:#fbbf24;">⚙️ Admin Panel</button>
   </div>
 
@@ -1432,6 +1445,10 @@ body:has(#loginScreen.front-home){background:#edf3f8!important}
         <div class="btn-group">
           <button id="downloadMultiPassportPdfBtn" class="action-btn btn-download" disabled>📥 Download A4 Sheet PDF</button>
         </div>
+        <div class="universal-export-panel" data-export-canvas="passportSheetCanvas" data-export-name="passport-sheet">
+          <label>Print size <select class="universal-export-size"><option value="4x6">4×6 in</option><option value="8x10">8×10 in</option><option value="10x12">10×12 in</option><option value="12x18">12×18 in</option><option value="16x20">16×20 in</option><option value="20x30">20×30 in</option><option value="24x36">24×36 in</option></select></label>
+          <button type="button" class="universal-print-btn" disabled>🖨️ Direct Print</button><button type="button" class="universal-pdf-btn" disabled>📄 Download PDF</button><button type="button" class="universal-jpg-btn" disabled>🖼️ Download JPG</button>
+        </div>
       </div>
     </div>
 
@@ -1559,6 +1576,10 @@ body:has(#loginScreen.front-home){background:#edf3f8!important}
         </div>
         <div class="btn-group">
           <button id="downloadA4_4x6_PdfBtn" class="action-btn btn-download" disabled>📥 Download A4 4×6 Sheet PDF</button>
+        </div>
+        <div class="universal-export-panel" data-export-canvas="a4_4x6_SheetCanvas" data-export-name="photo-sheet">
+          <label>Print size <select class="universal-export-size"><option value="4x6">4×6 in</option><option value="8x10">8×10 in</option><option value="10x12">10×12 in</option><option value="12x18">12×18 in</option><option value="16x20">16×20 in</option><option value="20x30">20×30 in</option><option value="24x36">24×36 in</option></select></label>
+          <button type="button" class="universal-print-btn" disabled>🖨️ Direct Print</button><button type="button" class="universal-pdf-btn" disabled>📄 Download PDF</button><button type="button" class="universal-jpg-btn" disabled>🖼️ Download JPG</button>
         </div>
       </div>
     </div>
@@ -1855,6 +1876,21 @@ body:has(#loginScreen.front-home){background:#edf3f8!important}
             </tr>
           </tbody>
         </table>
+      </div>
+    </div>
+
+    <div id="tab-my-account" class="tab-content">
+      <div class="badge">Account Settings</div>
+      <h1>My Account</h1>
+      <p style="font-size:12px;color:var(--text-muted);margin-bottom:14px;">अपनी profile details बदलने के लिए field के सामने Edit दबाएँ। Save के बाद नया email इस्तेमाल करने पर दोबारा login करना होगा।</p>
+      <div style="max-width:620px;margin:auto;display:grid;gap:10px;">
+        <label>Full name <span class="account-field-row"><input id="accountName" class="login-input" disabled><button type="button" data-account-edit="accountName">✏️ Edit</button></span></label>
+        <label>Company / office name <span class="account-field-row"><input id="accountOffice" class="login-input" disabled><button type="button" data-account-edit="accountOffice">✏️ Edit</button></span></label>
+        <label>Mobile number <span class="account-field-row"><input id="accountMobile" class="login-input" disabled><button type="button" data-account-edit="accountMobile">✏️ Edit</button></span></label>
+        <label>Email address <span class="account-field-row"><input id="accountEmail" type="email" class="login-input" disabled><button type="button" data-account-edit="accountEmail">✏️ Edit</button></span></label>
+        <button id="accountSaveBtn" class="action-btn btn-download" type="button" disabled>💾 Save account changes</button>
+        <button id="accountPasswordBtn" class="action-btn" type="button">🔑 Change password</button>
+        <div id="accountStatus" style="font-size:12px;color:var(--accent-blue);" role="status"></div>
       </div>
     </div>
 
@@ -2286,6 +2322,7 @@ body:has(#loginScreen.front-home){background:#edf3f8!important}
     if(adminPanelUntil || adminUnlockPending) lockAdminPanel();
     showPortalTab(tabId);
     if(tabId==='tab-history') renderHistoryTable();
+    if(tabId==='tab-my-account') renderAccountFields();
     if(tabId==='tab-pdf-editor') await refreshPdfPremium();
   }
   function switchTabDirect(tabId) {
@@ -2294,6 +2331,10 @@ body:has(#loginScreen.front-home){background:#edf3f8!important}
     if(tabId!=='tab-admin' && adminPanelUntil) lockAdminPanel();
     showPortalTab(tabId);
   }
+  function renderAccountFields(){const r=activeDistributorSession||{};const map={accountName:r.name||'',accountOffice:r.officeName||'',accountMobile:r.mobile||'',accountEmail:r.email||authEmail||''};Object.keys(map).forEach(id=>{const el=document.getElementById(id);if(el){el.value=map[id];el.disabled=true;}});const save=document.getElementById('accountSaveBtn');if(save)save.disabled=true;}
+  document.querySelectorAll('[data-account-edit]').forEach(btn=>btn.addEventListener('click',()=>{const el=document.getElementById(btn.dataset.accountEdit);if(!el)return;el.disabled=false;el.focus();const save=document.getElementById('accountSaveBtn');if(save)save.disabled=false;}));
+  document.getElementById('accountSaveBtn')?.addEventListener('click',async()=>{const status=document.getElementById('accountStatus'),save=document.getElementById('accountSaveBtn');try{save.disabled=true;status.textContent='Saving…';const result=await secureApi({action:'updateOwnProfile',email:document.getElementById('accountEmail').value,name:document.getElementById('accountName').value,officeName:document.getElementById('accountOffice').value,mobile:document.getElementById('accountMobile').value},{timeoutMs:30000});activeDistributorSession=result.profile;status.textContent=result.emailChanged?'Saved. New email के साथ दोबारा login करें।':'Profile saved successfully.';renderAccountFields();}catch(error){status.textContent=error.message||'Profile update failed.';save.disabled=false;}});
+  document.getElementById('accountPasswordBtn')?.addEventListener('click',()=>document.getElementById('changePasswordBtn')?.click());
   async function enhanceCanvasViaServer(canvas, level=35){
     if(!canvas||!canvas.width||!canvas.height)throw new Error('Photo is not ready.');
     // PNG is required here so a removed background remains transparent.
@@ -2352,6 +2393,7 @@ body:has(#loginScreen.front-home){background:#edf3f8!important}
       loginScreen.style.display='none';changePwdScreen.style.display='none';renewalScreen.style.display='none';mainApp.style.display='block';
       document.getElementById('topNavRegistrationBox').style.display='none';
       adminTabBtn.style.display=result.role==='admin'?'inline-block':'none';
+      document.getElementById('myAccountTabBtn').style.display=result.role==='distributor'?'inline-block':'none';
       if(result.role==='admin') {updateValidityDisplay();switchTabDirect('tab-cards');}
       else {
         currentLoggedDistributorEmail=email;renderDistributorNotice(result.record);switchTabDirect('tab-cards');
@@ -3520,6 +3562,19 @@ body:has(#loginScreen.front-home){background:#edf3f8!important}
   const a4Ctx = a4Canvas.getContext('2d');
 
   const addCardBtn = document.getElementById('addCardBtn');
+  const universalPrintSizes={
+    '4x6':[4,6],'8x10':[8,10],'10x12':[10,12],'12x18':[12,18],
+    '16x20':[16,20],'20x30':[20,30],'24x36':[24,36]
+  };
+  function universalExport(canvas,sizeKey,name,type){
+    const size=universalPrintSizes[sizeKey]||universalPrintSizes['4x6'];
+    if(!canvas||canvas.width<2||canvas.height<2)throw new Error('पहले preview generate करें।');
+    const [w,h]=size,ratio=Math.min(w/canvas.width,h/canvas.height),dw=canvas.width*ratio,dh=canvas.height*ratio;
+    if(type==='jpg'){const a=document.createElement('a');a.href=canvas.toDataURL('image/jpeg',.95);a.download=`${name}-${sizeKey}.jpg`;a.click();return;}
+    if(type==='print'){const win=window.open('','_blank','noopener,noreferrer');if(!win)throw new Error('Print window blocked.');const src=canvas.toDataURL('image/png');win.document.write(`<html><head><title>${name}</title><style>@page{size:${w}in ${h}in;margin:0}html,body{margin:0;width:${w}in;height:${h}in}img{width:${dw}in;height:${dh}in;object-fit:contain;display:block;margin:auto}</style></head><body><img src="${src}" onload="window.print()"></body></html>`);win.document.close();return;}
+    const {jsPDF}=window.jspdf||{};if(!jsPDF)throw new Error('PDF library अभी load नहीं हुई।');const pdf=new jsPDF({orientation:w>=h?'landscape':'portrait',unit:'in',format:[w,h]});pdf.addImage(canvas.toDataURL('image/jpeg',.95),'JPEG',(w-dw)/2,(h-dh)/2,dw,dh);pdf.save(`${name}-${sizeKey}.pdf`);
+  }
+  document.querySelectorAll('.universal-export-panel').forEach(panel=>{const canvas=document.getElementById(panel.dataset.exportCanvas),size=panel.querySelector('.universal-export-size'),buttons=panel.querySelectorAll('button');const enable=()=>buttons.forEach(b=>b.disabled=!(canvas&&canvas.width>2&&canvas.height>2));enable();setInterval(enable,700);panel.addEventListener('click',e=>{const btn=e.target.closest('button');if(!btn)return;try{const type=btn.classList.contains('universal-print-btn')?'print':btn.classList.contains('universal-jpg-btn')?'jpg':'pdf';universalExport(canvas,size.value,panel.dataset.exportName,type);}catch(err){alert(err.message);}});panel._enable=enable;});
   const downloadPdfBtn = document.getElementById('downloadPdfBtn');
   const downloadJpgBtn = document.getElementById('downloadJpgBtn');
   const resetPageBtn = document.getElementById('resetPageBtn');
@@ -6281,6 +6336,8 @@ try {
 </footer>
 <script>
 (() => {
+  const slides=[...document.querySelectorAll('.front-showcase img')];
+  if(slides.length>1){let index=0;setInterval(()=>{slides[index].classList.remove('active');index=(index+1)%slides.length;slides[index].classList.add('active');},3500);}
   const phrases=['Automate your printing workflow','Crop ID cards with confidence','Create clean A4-ready documents'];
   const hero=document.querySelector('#loginScreen .front-hero h1');
   if(hero){let i=0;setInterval(()=>{i=(i+1)%phrases.length;hero.classList.add('op-type-fade');setTimeout(()=>{hero.innerHTML=phrases[i]+'<br>with OP Printing Hub';hero.classList.remove('op-type-fade')},220)},4200);}
