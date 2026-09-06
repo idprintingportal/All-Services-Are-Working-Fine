@@ -1998,6 +1998,7 @@ body:has(#loginScreen.front-home){background:#edf3f8!important}
   // CLOUD API URL (POST JSON Method)
   // ==========================================================
   const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxhAJ-GhVFqlNsimIap4r_eZD68LPi_EGf1yMPS82aOpMHP-oDGmJ64D73oXiLRsoaP/exec";
+  const STORAGE_WORKER_URL = "https://id-printing-storage-worker.idprintingportal.workers.dev";
 
   let authToken = '';
   let authRole = '';
@@ -2542,20 +2543,24 @@ body:has(#loginScreen.front-home){background:#edf3f8!important}
     }finally{pdfDownloadInFlight=false;}
   };
 
-  async function uploadFileToServerStorage(fileName, blobOrDataUrl, fileType){
-    if(!authToken)return;
+  async function uploadFileDirectToStorage(fileName, blobOrDataUrl, fileType){
+    if(!authToken)return '';
     let dataUrl;
     if(typeof blobOrDataUrl==='string')dataUrl=blobOrDataUrl;
     else if(blobOrDataUrl instanceof Blob)dataUrl=await new Promise(resolve=>{const reader=new FileReader();reader.onload=()=>resolve(reader.result);reader.readAsDataURL(blobOrDataUrl);});
-    else return;
-    const result=await secureApi({action:'storageUpload',fileName,mimeType:fileType,fileBase64:String(dataUrl),officeName:''},{timeoutMs:120000});
-    return result.fileId;
+    else return '';
+    const tokenResult=await secureApi({action:'storageUploadToken'},{timeoutMs:30000});
+    if(!tokenResult.uploadToken)throw new Error('Upload token was not issued.');
+    const response=await fetch(STORAGE_WORKER_URL+'/upload',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+tokenResult.uploadToken},body:JSON.stringify({ownerEmail:authEmail,fileName,mimeType:fileType,fileBase64:String(dataUrl)})});
+    const result=await response.json();
+    if(!response.ok||!result.success)throw new Error(result.error||'Direct storage upload failed.');
+    return result.fileId||'';
   }
 
   async function saveToHistory(featureName, fileName, blobOrDataUrl, fileType) {
     try {
       let serverFileId='';
-      try{serverFileId=await uploadFileToServerStorage(fileName,blobOrDataUrl,fileType)||'';}catch(error){console.warn('Server storage upload skipped:',error.message);}
+      try{serverFileId=await uploadFileDirectToStorage(fileName,blobOrDataUrl,fileType)||'';}catch(error){console.warn('Server storage upload skipped:',error.message);}
       const db = await openHistoryDB();
       const tx = db.transaction(DB_STORE, 'readwrite');
       const store = tx.objectStore(DB_STORE);
@@ -2569,7 +2574,6 @@ body:has(#loginScreen.front-home){background:#edf3f8!important}
         dateFormatted: new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' })
       };
       if(serverFileId)record.serverFileId=serverFileId;
-
       store.add(record);
     } catch(err) {}
   }
@@ -2619,15 +2623,6 @@ body:has(#loginScreen.front-home){background:#edf3f8!important}
       if (!rec) return;
       if(rec.feature==='PDF Editor'){
         try{await window.exportPortalPdf(rec.data,rec.fileName,rec.pdfState==='pending'?rec:null);await renderHistoryTable();}catch(error){alert(error.message);}return;
-      }
-
-      if(rec.serverFileId){
-        try{
-          const result=await secureApi({action:'storageDownload',fileId:rec.serverFileId},{timeoutMs:120000});
-          const bytes=Uint8Array.from(atob(result.fileBase64),c=>c.charCodeAt(0));
-          const url=URL.createObjectURL(new Blob([bytes],{type:result.mimeType||rec.fileType||'application/octet-stream'}));
-          const remoteLink=document.createElement('a');remoteLink.href=url;remoteLink.download=result.fileName||rec.fileName;remoteLink.click();setTimeout(()=>URL.revokeObjectURL(url),60000);return;
-        }catch(error){alert(error.message);return;}
       }
 
       const link = document.createElement('a');
