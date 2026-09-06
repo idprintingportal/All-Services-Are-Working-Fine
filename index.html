@@ -2544,16 +2544,54 @@ body:has(#loginScreen.front-home){background:#edf3f8!important}
   };
 
   async function uploadFileDirectToStorage(fileName, blobOrDataUrl, fileType){
-    if(!authToken)return '';
-    let dataUrl;
-    if(typeof blobOrDataUrl==='string')dataUrl=blobOrDataUrl;
-    else if(blobOrDataUrl instanceof Blob)dataUrl=await new Promise(resolve=>{const reader=new FileReader();reader.onload=()=>resolve(reader.result);reader.readAsDataURL(blobOrDataUrl);});
-    else return '';
-    const tokenResult=await secureApi({action:'storageUploadToken'},{timeoutMs:30000});
-    if(!tokenResult.uploadToken)throw new Error('Upload token was not issued.');
-    const response=await fetch(STORAGE_WORKER_URL+'/upload',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+tokenResult.uploadToken},body:JSON.stringify({ownerEmail:authEmail,fileName,mimeType:fileType,fileBase64:String(dataUrl)})});
-    const result=await response.json();
-    if(!response.ok||!result.success)throw new Error(result.error||'Direct storage upload failed.');
+    if(!authToken) return '';
+
+    let dataUrl='';
+    if(typeof blobOrDataUrl==='string'){
+      dataUrl=blobOrDataUrl;
+    }else if(blobOrDataUrl instanceof Blob){
+      dataUrl=await new Promise((resolve,reject)=>{
+        const reader=new FileReader();
+        reader.onload=()=>resolve(String(reader.result||''));
+        reader.onerror=()=>reject(new Error('File could not be read.'));
+        reader.readAsDataURL(blobOrDataUrl);
+      });
+    }else{
+      return '';
+    }
+
+    const tokenResult=await secureApi(
+      {action:'storageUploadToken'},
+      {timeoutMs:30000}
+    );
+    const uploadToken=String(tokenResult?.uploadToken||'').trim();
+    if(!uploadToken||!uploadToken.includes('.')){
+      throw new Error('Upload token missing or malformed.');
+    }
+
+    const response=await fetch(`${STORAGE_WORKER_URL}/upload`,{
+      method:'POST',
+      headers:{
+        'Content-Type':'application/json',
+        'Authorization':`Bearer ${uploadToken}`
+      },
+      body:JSON.stringify({
+        ownerEmail:authEmail,
+        fileName,
+        mimeType:fileType,
+        fileBase64:dataUrl
+      })
+    });
+
+    let result;
+    try{
+      result=await response.json();
+    }catch(e){
+      throw new Error(`Storage worker returned HTTP ${response.status}.`);
+    }
+    if(!response.ok||!result.success){
+      throw new Error(result.error||'Direct storage upload failed.');
+    }
     return result.fileId||'';
   }
 
