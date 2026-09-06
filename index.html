@@ -2288,7 +2288,8 @@ body:has(#loginScreen.front-home){background:#edf3f8!important}
   }
   async function enhanceCanvasViaServer(canvas, level=35){
     if(!canvas||!canvas.width||!canvas.height)throw new Error('Photo is not ready.');
-    const result=await secureApi({action:'enhanceImage',imageBase64:canvas.toDataURL('image/jpeg',0.96),level},{timeoutMs:120000});
+    // PNG is required here so a removed background remains transparent.
+    const result=await secureApi({action:'enhanceImage',imageBase64:canvas.toDataURL('image/png'),level},{timeoutMs:120000});
     if(!result.imageBase64)throw new Error('Enhancement returned no image.');
     const img=new Image();img.src='data:'+String(result.mimeType||'image/jpeg')+';base64,'+result.imageBase64;await img.decode();
     const out=document.createElement('canvas');out.width=canvas.width;out.height=canvas.height;out.getContext('2d').drawImage(img,0,0,out.width,out.height);return out;
