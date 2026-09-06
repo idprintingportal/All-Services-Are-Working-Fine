@@ -12,12 +12,12 @@ function cleanName(name){return String(name||'file.bin').replace(/[^A-Za-z0-9._ 
 function email(value){return String(value||'').trim().toLowerCase();}
 async function upload(request,env){
   const d=await request.json(); const owner=email(d.ownerEmail); const raw=String(d.fileBase64||'').replace(/^data:[^;]+;base64,/i,'');
-  if(!owner||!raw)return json({success:false,error:'ownerEmail and fileBase64 are required'},400);
-  const bin=Uint8Array.from(atob(raw),c=>c.charCodeAt(0)); if(bin.byteLength>52428800)return json({success:false,error:'File is too large'},413);
+  if(!owner||!raw)return json({success:false,error:'ownerEmail and fileBase64 are required'},400,request);
+  const bin=Uint8Array.from(atob(raw),c=>c.charCodeAt(0)); if(bin.byteLength>52428800)return json({success:false,error:'File is too large'},413,request);
   const id=crypto.randomUUID(),name=cleanName(d.fileName),key=`users/${btoa(owner).replace(/[^A-Za-z0-9]/g,'').slice(0,40)}/${id}-${name}`,created=now(),expires=new Date(Date.now()+Number(env.RETENTION_DAYS||15)*86400000).toISOString();
   await env.FILES.put(key,bin,{httpMetadata:{contentType:String(d.mimeType||'application/octet-stream').slice(0,120)}});
   await env.DB.prepare('INSERT INTO files(id,owner_email,office_name,original_name,storage_key,mime_type,size_bytes,created_at,expires_at) VALUES(?,?,?,?,?,?,?,?,?)').bind(id,owner,String(d.officeName||'').slice(0,200),name,key,String(d.mimeType||'application/octet-stream').slice(0,120),bin.byteLength,created,expires).run();
-  return json({success:true,fileId:id,expiresAt:expires});
+  return json({success:true,fileId:id,expiresAt:expires},200,request);
 }
 async function download(request,env){
   const d=await request.json(),owner=email(d.ownerEmail),row=await env.DB.prepare('SELECT * FROM files WHERE id=? AND owner_email=? AND deleted_at IS NULL AND expires_at>?').bind(String(d.fileId),owner,now()).first();
