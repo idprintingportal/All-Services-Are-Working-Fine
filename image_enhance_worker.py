@@ -44,13 +44,19 @@ def enhance():
     if not _authorized():
         return jsonify(success=False, error="Unauthorized"), 401
     raw = request.files.get("image")
-    if not raw or not raw.filename:
+    if raw and raw.filename:
+        data = raw.read(MAX_BYTES + 1)
+    elif request.is_json and request.json.get("imageBase64"):
+        try:
+            data = base64.b64decode(request.json["imageBase64"], validate=True)
+        except Exception:
+            return jsonify(success=False, error="invalid imageBase64"), 400
+    else:
         return jsonify(success=False, error="image file is required"), 400
-    data = raw.read(MAX_BYTES + 1)
     if len(data) > MAX_BYTES:
         return jsonify(success=False, error="image is too large"), 413
     try:
-        level = int(request.form.get("level", "35"))
+        level = int((request.form.get("level") if not request.is_json else request.json.get("level", 35)) or 35)
         result = _process(data, level)
         return jsonify(success=True, imageBase64=base64.b64encode(result).decode("ascii"), mimeType="image/jpeg")
     except Exception:
