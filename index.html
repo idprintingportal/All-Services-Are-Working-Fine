@@ -2617,70 +2617,31 @@ body:has(#loginScreen.front-home){background:#edf3f8!important}
   }
 
   async function renderHistoryTable() {
-    try {
-      const db = await openHistoryDB();
-      const tx = db.transaction(DB_STORE, 'readonly');
-      const store = tx.objectStore(DB_STORE);
-      const request = store.getAll();
-
-      request.onsuccess = function() {
-        const records = request.result || [];
-        const tbody = document.getElementById('historyTableBody');
-        tbody.innerHTML = '';
-
-        if (!records.length) {
-          tbody.innerHTML = `<tr><td colspan="4" style="text-align:center; color:var(--text-muted); padding:20px;">कोई प्रिंट रिकॉर्ड नहीं मिला।</td></tr>`;
-          return;
-        }
-
-        records.reverse().forEach(rec => {
-          const tr = document.createElement('tr');
-          tr.innerHTML = `
-            <td><strong style="color:var(--accent-blue);">${escapeHtml(rec.feature)}</strong>${rec.pdfState==='pending'?' · Pending / Retry':rec.pdfState==='limit-reached'?' · Limit reached':''}</td>
-            <td>${escapeHtml(rec.fileName)}</td>
-            <td style="color:#94a3b8; font-size:11px;">${escapeHtml(rec.dateFormatted)}</td>
-            <td>
-              <button class="history-download-btn" onclick="reDownloadHistoryFile(${Number(rec.id)})">📥 Download</button>
-              <button class="history-delete-btn" onclick="deleteHistoryRecord(${Number(rec.id)})" style="margin-left: 5px;">🗑️ Delete</button>
-            </td>
-          `;
-          tbody.appendChild(tr);
-        });
-      };
-    } catch(err) {}
+    const tbody=document.getElementById('historyTableBody');
+    try{
+      const result=await secureApi({action:'storageHistory'},{timeoutMs:30000});
+      const records=result.files||[];
+      tbody.innerHTML='';
+      if(!records.length){tbody.innerHTML='<tr><td colspan="4" style="text-align:center;color:var(--text-muted);padding:20px;">कोई प्रिंट रिकॉर्ड नहीं मिला।</td></tr>';return;}
+      records.forEach(rec=>{
+        const tr=document.createElement('tr');
+        const date=rec.created_at?new Date(rec.created_at).toLocaleString('en-IN',{timeZone:'Asia/Kolkata'}):'';
+        const remaining=Math.max(0,3-Number(rec.download_count||0));
+        tr.innerHTML=`<td><strong style="color:var(--accent-blue);">Server file</strong></td><td>${escapeHtml(rec.original_name||'file')}</td><td style="color:#94a3b8;font-size:11px;">${escapeHtml(date)} · ${remaining} downloads left</td><td><button class="history-download-btn" onclick="reDownloadHistoryFile('${String(rec.id).replace(/'/g,"\\'")}')">📥 Download</button><button class="history-delete-btn" onclick="deleteHistoryRecord('${String(rec.id).replace(/'/g,"\\'")}')" style="margin-left:5px;">🗑️ Delete</button></td>`;
+        tbody.appendChild(tr);
+      });
+    }catch(err){
+      tbody.innerHTML='<tr><td colspan="4" style="text-align:center;color:#fca5a5;padding:20px;">Server history नहीं मिली: '+escapeHtml(err.message||'Error')+'</td></tr>';
+    }
   }
 
   async function reDownloadHistoryFile(recordId) {
-    const db = await openHistoryDB();
-    const tx = db.transaction(DB_STORE, 'readonly');
-    const store = tx.objectStore(DB_STORE);
-    const request = store.get(recordId);
-
-    request.onsuccess = async function() {
-      const rec = request.result;
-      if (!rec) return;
-      if(rec.feature==='PDF Editor'){
-        try{await window.exportPortalPdf(rec.data,rec.fileName,rec.pdfState==='pending'?rec:null);await renderHistoryTable();}catch(error){alert(error.message);}return;
-      }
-
-      const link = document.createElement('a');
-      if (typeof rec.data === 'string') {
-        link.href = rec.data;
-      } else {
-        link.href = URL.createObjectURL(rec.data);
-      }
-      link.download = rec.fileName;
-      link.click();
-    };
+    try{const result=await secureApi({action:'storageDownload',fileId:String(recordId)},{timeoutMs:30000});const link=document.createElement('a');link.href=`data:${result.mimeType||'application/octet-stream'};base64,${result.fileBase64}`;link.download=result.fileName||'download.bin';document.body.appendChild(link);link.click();link.remove();await renderHistoryTable();}catch(error){alert(error.message||'Download failed.');}
   }
 
   async function deleteHistoryRecord(recordId) {
     if (!confirm('क्या आप इस रिकॉर्ड को हटाना चाहते हैं?')) return;
-    const db = await openHistoryDB();
-    const tx = db.transaction(DB_STORE, 'readwrite');
-    const store = tx.objectStore(DB_STORE);
-    store.delete(recordId);
-    tx.oncomplete = () => renderHistoryTable();
+    try{await secureApi({action:'storageDelete',fileId:String(recordId)},{timeoutMs:30000});await renderHistoryTable();}catch(error){alert(error.message||'Delete failed.');}
   }
 
   async function clearAllHistoryDB() {
