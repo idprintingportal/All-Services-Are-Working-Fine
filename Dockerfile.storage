@@ -1,0 +1,7 @@
+FROM python:3.12-slim
+WORKDIR /app
+COPY requirements-storage.txt ./
+RUN pip install --no-cache-dir -r requirements-storage.txt
+COPY storage_api.py cleanup_expired.py ./
+ENV PYTHONUNBUFFERED=1
+CMD ["sh","-c","gunicorn -w 1 -b 0.0.0.0:${PORT:-10000} storage_api:app"]
