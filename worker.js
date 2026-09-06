@@ -1,6 +1,12 @@
 const json=(data,status=200)=>new Response(JSON.stringify(data),{status,headers:{'content-type':'application/json','cache-control':'no-store'}});
 const now=()=>new Date().toISOString();
 function auth(request,env){return env.STORAGE_API_KEY&&request.headers.get('X-Storage-Key')===env.STORAGE_API_KEY;}
+function b64urlBytes(value){const s=value.replace(/-/g,'+').replace(/_/g,'/');const pad='='.repeat((4-s.length%4)%4);return Uint8Array.from(atob(s+pad),c=>c.charCodeAt(0));}
+async function uploadAuth(request,env){
+  if(auth(request,env))return true;
+  const token=(request.headers.get('Authorization')||'').replace(/^Bearer\s+/i,'');const parts=token.split('.');if(parts.length!==2||!env.UPLOAD_SIGNING_SECRET)return false;
+  try{const key=await crypto.subtle.importKey('raw',new TextEncoder().encode(env.UPLOAD_SIGNING_SECRET),{name:'HMAC',hash:'SHA-256'},false,['verify']);const valid=await crypto.subtle.verify('HMAC',key, b64urlBytes(parts[1]),new TextEncoder().encode(parts[0]));if(!valid)return false;const p=JSON.parse(new TextDecoder().decode(b64urlBytes(parts[0])));return p.exp>Date.now();}catch(e){return false;}
+}
 function cleanName(name){return String(name||'file.bin').replace(/[^A-Za-z0-9._ -]/g,'_').slice(0,160)||'file.bin';}
 function email(value){return String(value||'').trim().toLowerCase();}
 async function upload(request,env){
@@ -21,4 +27,4 @@ async function download(request,env){
 }
 async function history(request,env){const d=await request.json(),owner=email(d.ownerEmail); const {results}=await env.DB.prepare('SELECT id,original_name,mime_type,size_bytes,created_at,expires_at,download_count FROM files WHERE owner_email=? AND deleted_at IS NULL ORDER BY created_at DESC').bind(owner).all(); return json({success:true,files:results});}
 async function cleanup(env){const {results}=await env.DB.prepare('SELECT id,storage_key FROM files WHERE expires_at<=? AND deleted_at IS NULL').bind(now()).all(); for(const row of results){await env.FILES.delete(row.storage_key);await env.DB.prepare('UPDATE files SET deleted_at=? WHERE id=?').bind(now(),row.id).run();} return results.length;}
-export default {async fetch(request,env){try{const url=new URL(request.url);if(request.method==='GET'&&url.pathname==='/health')return json({success:true,service:'d1-storage-worker'});if(!auth(request,env))return json({success:false,error:'Unauthorized'},401);if(request.method==='POST'&&url.pathname==='/upload')return upload(request,env);if(request.method==='POST'&&url.pathname==='/download')return download(request,env);if(request.method==='POST'&&url.pathname==='/history')return history(request,env);return json({success:false,error:'Not found'},404);}catch(e){console.error(e);return json({success:false,error:'Storage operation failed'},500);}},async scheduled(event,env,ctx){ctx.waitUntil(cleanup(env));}};
+export default {async fetch(request,env){try{const url=new URL(request.url);if(request.method==='GET'&&url.pathname==='/health')return json({success:true,service:'d1-storage-worker'});if(request.method==='POST'&&url.pathname==='/upload'){if(!await uploadAuth(request,env))return json({success:false,error:'Unauthorized'},401);return upload(request,env);}if(!auth(request,env))return json({success:false,error:'Unauthorized'},401);if(request.method==='POST'&&url.pathname==='/download')return download(request,env);if(request.method==='POST'&&url.pathname==='/history')return history(request,env);return json({success:false,error:'Not found'},404);}catch(e){console.error(e);return json({success:false,error:'Storage operation failed'},500);}},async scheduled(event,env,ctx){ctx.waitUntil(cleanup(env));}};
