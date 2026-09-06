@@ -2286,6 +2286,13 @@ body:has(#loginScreen.front-home){background:#edf3f8!important}
     if(tabId!=='tab-admin' && adminPanelUntil) lockAdminPanel();
     showPortalTab(tabId);
   }
+  async function enhanceCanvasViaServer(canvas, level=35){
+    if(!canvas||!canvas.width||!canvas.height)throw new Error('Photo is not ready.');
+    const result=await secureApi({action:'enhanceImage',imageBase64:canvas.toDataURL('image/jpeg',0.96),level},{timeoutMs:120000});
+    if(!result.imageBase64)throw new Error('Enhancement returned no image.');
+    const img=new Image();img.src='data:'+String(result.mimeType||'image/jpeg')+';base64,'+result.imageBase64;await img.decode();
+    const out=document.createElement('canvas');out.width=canvas.width;out.height=canvas.height;out.getContext('2d').drawImage(img,0,0,out.width,out.height);return out;
+  }
   function focusTool(kind){
     document.body.classList.toggle('premium-crop-mode',kind==='premium');
     document.querySelectorAll('#basicIdCropperBtn,#premiumAutoCropperBtn,#premiumPdfEditorBtn').forEach(b=>b.classList.remove('tool-active'));
@@ -3739,7 +3746,8 @@ body:has(#loginScreen.front-home){background:#edf3f8!important}
     let outputCanvases=multiPassportCanvases;
     if(passportRemoveBg){const button=document.getElementById('generateMultiPassportA4Btn');button.disabled=true;button.textContent='⏳ Removing background…';try{outputCanvases=await Promise.all(multiPassportCanvases.map(aiRemovePassportBackground));}catch(e){alert('Background removal failed. Check internet connection and try again.');return;}finally{button.disabled=false;button.textContent='🖼️ Generate Sheet (Preview)';}}
     const enhanceValue=Number(document.getElementById('passportEnhanceSlider')?.value||0);
-    outputCanvases=outputCanvases.map(canvas=>enhancePassportCanvas(canvas,enhanceValue));
+    const aiButton=document.getElementById('generateMultiPassportA4Btn');
+    if(enhanceValue>0){aiButton.disabled=true;aiButton.textContent='⏳ AI enhancement…';try{outputCanvases=await Promise.all(outputCanvases.map(canvas=>enhanceCanvasViaServer(canvas,enhanceValue)));}catch(e){alert('AI enhancement failed: '+e.message);return;}finally{aiButton.disabled=false;aiButton.textContent='🖼️ Generate Sheet (Preview)';}}
     const sheetCanvas = document.getElementById('passportSheetCanvas');
     const sheetCtx = sheetCanvas.getContext('2d');
 
