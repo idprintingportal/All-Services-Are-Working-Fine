@@ -1056,6 +1056,16 @@ body.op-light #mainApp .container,body.op-light #mainApp .tab-content>div{backgr
 .op-celebration{position:fixed;inset:0;z-index:9999;pointer-events:none;overflow:hidden}
 .op-celebration i{position:absolute;left:50%;top:62%;width:7px;height:16px;border-radius:3px;background:var(--c);animation:opBlast 900ms ease-out forwards;transform:rotate(var(--r))}
 @keyframes opBlast{0%{opacity:1;transform:translate(-50%,-50%) scale(.5) rotate(0)}100%{opacity:0;transform:translate(calc(-50% + var(--x)),calc(-50% + var(--y))) scale(1) rotate(540deg)}}
+/* Versatile in-app workspace: clear cards, grouped tools and responsive controls. */
+#mainApp .container{max-width:1320px;margin:0 auto;padding:18px 20px;background:rgba(15,23,42,.28);border:1px solid #ffffff14;border-radius:22px}
+#mainApp .tab-content{animation:opPanelIn .28s ease both}
+#mainApp .tab-content>div,#mainApp .control-panel,#mainApp .upload-box{border-radius:18px!important;box-shadow:0 12px 28px #0206172b}
+#mainApp .tab-content h1,#mainApp .tab-content h2,#mainApp .tab-content h3{letter-spacing:.1px}
+#mainApp .action-btn{border-radius:12px!important;box-shadow:0 6px 16px #02061733}
+#mainApp .action-btn:disabled{filter:saturate(.35);box-shadow:none}
+#mainApp input[type=text],#mainApp input[type=email],#mainApp input[type=number],#mainApp input[type=file],#mainApp select,#mainApp textarea{border-radius:11px!important}
+@keyframes opPanelIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+@media(max-width:720px){#mainApp .container{padding:12px 10px;border-radius:16px}#mainApp .tab-nav{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}#mainApp .tab-btn{min-height:48px!important;padding:10px 8px!important;font-size:12px!important}#mainApp .theme-toggle{order:3}#mainApp .container>div:first-child{align-items:stretch!important}}
 </style>
 </head>
 <body>
@@ -6412,6 +6422,8 @@ try {
   themeBtn?.addEventListener('click',()=>applyTheme(!document.body.classList.contains('op-light')));
   window.opCelebrate=()=>{const box=document.createElement('div');box.className='op-celebration';const colors=['#38bdf8','#10b981','#fbbf24','#f472b6','#a78bfa'];for(let i=0;i<42;i++){const bit=document.createElement('i');bit.style.setProperty('--c',colors[i%colors.length]);bit.style.setProperty('--x',`${Math.round((Math.random()-.5)*620)}px`);bit.style.setProperty('--y',`${Math.round(-120-Math.random()*420)}px`);bit.style.setProperty('--r',`${Math.round(Math.random()*360)}deg`);box.appendChild(bit);}document.body.appendChild(box);setTimeout(()=>box.remove(),1100);};
   document.addEventListener('click',e=>{if(e.target?.closest('a[download]'))window.opCelebrate();});
+  const nativeAnchorClick=HTMLAnchorElement.prototype.click;
+  HTMLAnchorElement.prototype.click=function(){if(this.hasAttribute('download'))window.opCelebrate();return nativeAnchorClick.call(this);};
 })();
 </script>
 </body>
