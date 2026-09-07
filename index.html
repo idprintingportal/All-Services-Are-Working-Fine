@@ -1039,6 +1039,24 @@ body:has(#loginScreen.front-home){background:#edf3f8!important}
 @keyframes frontTickerFade{0%,100%{opacity:.55;transform:translateX(8px)}50%{opacity:1;transform:translateX(0)}}
 @media(max-width:850px){.front-auth-panel{display:block;margin:18px 0;padding:24px 18px}.front-home .front-showcase{min-height:260px;margin:18px 0}}
 </style>
+<style>
+/* Original OP Printing Hub visual system: calm ink, sky and mint surfaces. */
+:root{--op-ink:#172033;--op-sky:#2563eb;--op-mint:#10b981;--op-surface:#f8fafc}
+#mainApp{color:var(--op-surface)}
+#mainApp .tab-nav{padding:10px;border:1px solid #ffffff22;border-radius:18px;background:#111c31aa;box-shadow:0 10px 30px #02061733}
+#mainApp .tab-btn{border-radius:12px!important;background:#1d2b46;color:#dbeafe;border:1px solid #ffffff1f!important}
+#mainApp .tab-btn.active,#mainApp .tab-btn:hover{background:linear-gradient(135deg,#2563eb,#0ea5e9)!important;color:#fff;border-color:#7dd3fc!important}
+.theme-toggle{padding:8px 12px;border:1px solid #7dd3fc66;border-radius:10px;background:#1d2b46;color:#e0f2fe;cursor:pointer;font-weight:700;font-size:12px}
+.theme-toggle:hover{background:#2563eb;transform:translateY(-1px)}
+body.op-light{background:linear-gradient(135deg,#eef6ff,#f8fafc 50%,#ecfdf5)!important}
+body.op-light #mainApp{background:rgba(255,255,255,.82);color:#172033;border-color:#cbd5e1}
+body.op-light #mainApp .tab-nav{background:#ffffffcc;border-color:#cbd5e1}
+body.op-light #mainApp .tab-btn{background:#fff;color:#243b69;border-color:#cbd5e1!important}
+body.op-light #mainApp .container,body.op-light #mainApp .tab-content>div{background:#fff;color:#172033;border-color:#dbe3f0}
+.op-celebration{position:fixed;inset:0;z-index:9999;pointer-events:none;overflow:hidden}
+.op-celebration i{position:absolute;left:50%;top:62%;width:7px;height:16px;border-radius:3px;background:var(--c);animation:opBlast 900ms ease-out forwards;transform:rotate(var(--r))}
+@keyframes opBlast{0%{opacity:1;transform:translate(-50%,-50%) scale(.5) rotate(0)}100%{opacity:0;transform:translate(calc(-50% + var(--x)),calc(-50% + var(--y))) scale(1) rotate(540deg)}}
+</style>
 </head>
 <body>
 
@@ -1300,6 +1318,7 @@ body:has(#loginScreen.front-home){background:#edf3f8!important}
       <div id="validityCounterBadge" style="background: rgba(16, 185, 129, 0.15); border: 1px solid #10b981; color: #34d399; padding: 6px 14px; border-radius: 20px; font-size: 12px; font-weight: 600;">
         ⏳ Validity: Initializing...
       </div>
+      <button id="themeToggleBtn" class="theme-toggle" type="button" aria-label="Toggle dark mode">🌙 Dark mode</button>
       <button id="logoutBtn" class="logout-btn">🔒 Logout</button>
     </div>
 
@@ -6383,6 +6402,16 @@ try {
   const modal=document.getElementById('infoModal'),title=document.getElementById('infoModalTitle'),body=document.getElementById('infoModalBody');
   function close(){modal.hidden=true} document.getElementById('infoModalClose').onclick=close;modal.onclick=e=>{if(e.target===modal)close()};document.addEventListener('keydown',e=>{if(e.key==='Escape')close()});
   document.addEventListener('click',e=>{const a=e.target.closest('a[href^="#"]');if(!a)return;const key=a.getAttribute('href').slice(1);if(!data[key])return;e.preventDefault();title.textContent=data[key].title;body.innerHTML=data[key].body;modal.hidden=false;document.getElementById('infoModalClose').focus();});
+})();
+</script>
+<script>
+(() => {
+  const themeBtn=document.getElementById('themeToggleBtn');
+  const applyTheme=light=>{document.body.classList.toggle('op-light',light);if(themeBtn)themeBtn.textContent=light?'☀️ Light mode':'🌙 Dark mode';localStorage.setItem('op-theme',light?'light':'dark');};
+  applyTheme(localStorage.getItem('op-theme')==='light');
+  themeBtn?.addEventListener('click',()=>applyTheme(!document.body.classList.contains('op-light')));
+  window.opCelebrate=()=>{const box=document.createElement('div');box.className='op-celebration';const colors=['#38bdf8','#10b981','#fbbf24','#f472b6','#a78bfa'];for(let i=0;i<42;i++){const bit=document.createElement('i');bit.style.setProperty('--c',colors[i%colors.length]);bit.style.setProperty('--x',`${Math.round((Math.random()-.5)*620)}px`);bit.style.setProperty('--y',`${Math.round(-120-Math.random()*420)}px`);bit.style.setProperty('--r',`${Math.round(Math.random()*360)}deg`);box.appendChild(bit);}document.body.appendChild(box);setTimeout(()=>box.remove(),1100);};
+  document.addEventListener('click',e=>{if(e.target?.closest('a[download]'))window.opCelebrate();});
 })();
 </script>
 </body>
