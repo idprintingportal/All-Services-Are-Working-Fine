@@ -1063,6 +1063,7 @@ body.op-light #mainApp .container,body.op-light #mainApp .tab-content>div{backgr
 #mainApp .tab-nav .tab-btn{width:100%;min-width:0;white-space:normal;line-height:1.25}
 .my-account-corner{background:linear-gradient(135deg,#6d4bd6,#8b5cf6)!important;color:#fff!important;border-color:#c4b5fd!important;box-shadow:0 7px 18px #8b5cf644}
 .my-account-corner:hover{background:linear-gradient(135deg,#7c3aed,#a78bfa)!important}
+.added-cards-list{display:grid;gap:7px;max-width:520px;margin:12px auto 0;text-align:left}.added-card-row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:8px 10px;border:1px solid #52637f;border-radius:10px;background:#172338;color:#dbeafe;font-size:12px}.added-card-row button{padding:6px 10px;border:1px solid #fb7185;border-radius:8px;background:#7f1d1d;color:#fff;cursor:pointer;font-weight:700}.added-card-row button:hover{background:#dc2626}
 #mainApp .tab-content>div,#mainApp .control-panel,#mainApp .upload-box{border-radius:18px!important;box-shadow:0 12px 28px #0206172b}
 #mainApp .tab-content h1,#mainApp .tab-content h2,#mainApp .tab-content h3{letter-spacing:.1px}
 #mainApp .action-btn{border-radius:12px!important;box-shadow:0 6px 16px #02061733}
@@ -1442,7 +1443,9 @@ body:not(.op-light) .front-tool-catalog{background:linear-gradient(135deg,#16243
         <div class="btn-group">
           <button id="downloadPdfBtn" class="action-btn btn-download" disabled>📥 Direct A4 PDF Download</button>
           <button id="downloadJpgBtn" class="action-btn btn-download" disabled>🖼️ Download A4 JPG</button>
+          <button id="deleteLastCardBtn" class="action-btn" type="button" disabled>🗑️ Delete Last Card</button>
         </div>
+        <div id="addedCardsList" class="added-cards-list" aria-live="polite"></div>
       </div>
     </div>
 
@@ -2120,6 +2123,7 @@ body:not(.op-light) .front-tool-catalog{background:linear-gradient(135deg,#16243
   function mergeDistributorCache(list) { saveDistributorCache(list); return distributorMemoryCache; }
   function acceptSession(result, email) {
     authToken=result.token; authRole=result.role; authEmail=email; authExpires=result.expires;
+    try{localStorage.setItem('op-auth-session',JSON.stringify({token:authToken,role:authRole,email:authEmail,expires:authExpires}));}catch(_){}
     const welcome=document.getElementById('officeWelcome');
     if(welcome){welcome.replaceChildren();const office=String(result.record?.officeName||'').trim();welcome.append(document.createTextNode(office?`Welcome · ${office}`:'Welcome to OP Printing Hub'));const note=document.createElement('small');note.textContent='Happy Business! आपका काम सफल और आसान रहे।';welcome.append(note);welcome.hidden=false;}
     distributorMemoryCache=[];
@@ -2131,7 +2135,7 @@ body:not(.op-light) .front-tool-catalog{background:linear-gradient(135deg,#16243
     authToken=''; authRole=''; authEmail=''; authExpires=0; distributorMemoryCache=[];
     const welcome=document.getElementById('officeWelcome');if(welcome)welcome.hidden=true;
     activeDistributorSession=null; currentRenewalDistributor=null; currentLoggedDistributorEmail='';
-    sessionStorage.removeItem('isLoggedIn');
+    sessionStorage.removeItem('isLoggedIn');try{localStorage.removeItem('op-auth-session');}catch(_){}
     document.getElementById('distributorTableBody').replaceChildren();
     document.getElementById('historyTableBody').replaceChildren();
   }
@@ -3074,7 +3078,7 @@ body:not(.op-light) .front-tool-catalog{background:linear-gradient(135deg,#16243
   const saveNewPwdBtn = document.getElementById('saveNewPwdBtn');
   const pwdStatusMsg = document.getElementById('pwdStatusMsg');
 
-  sessionStorage.removeItem('isLoggedIn');
+  try{const saved=JSON.parse(localStorage.getItem('op-auth-session')||'null');if(saved?.token&&saved.expires>Date.now()){authToken=saved.token;authRole=saved.role||'';authEmail=saved.email||'';authExpires=Number(saved.expires);checkServerSession().then(()=>{if(authToken){loginScreen.style.display='none';mainApp.style.display='block';document.getElementById('myAccountTabBtn').style.display=authRole==='distributor'?'inline-block':'none';document.getElementById('adminTabBtn').style.display=authRole==='admin'?'inline-block':'none';switchTabDirect('tab-cards');}});}}catch(_){try{localStorage.removeItem('op-auth-session');}catch(__){}}
 
   const today = new Date();
   const curDay = String(today.getDate()).padStart(2, '0');
@@ -3614,7 +3618,7 @@ body:not(.op-light) .front-tool-catalog{background:linear-gradient(135deg,#16243
   // TAB 1: 5 CARDS SYSTEM LOGIC
   // ==========================================
   const CARD_W = 1013, CARD_H = 638, A4_W = 2480, A4_H = 3508, GAP_2_5MM_PX = 30, MAX_CARDS = 5;
-  let addedCardsCount = 0, img1Loaded = false, img2Loaded = false;
+  let addedCardsCount = 0, img1Loaded = false, img2Loaded = false, a4History = [], addedCardRecords = [];
 
   const canvas1 = document.getElementById('canvas1');
   const ctx1 = canvas1.getContext('2d');
@@ -3639,6 +3643,19 @@ body:not(.op-light) .front-tool-catalog{background:linear-gradient(135deg,#16243
   document.querySelectorAll('.universal-export-panel').forEach(panel=>{const canvas=document.getElementById(panel.dataset.exportCanvas),size=panel.querySelector('.universal-export-size'),buttons=panel.querySelectorAll('button');const enable=()=>buttons.forEach(b=>b.disabled=!(canvas&&canvas.width>2&&canvas.height>2));enable();setInterval(enable,700);panel.addEventListener('click',e=>{const btn=e.target.closest('button');if(!btn)return;try{const type=btn.classList.contains('universal-print-btn')?'print':btn.classList.contains('universal-jpg-btn')?'jpg':'pdf';universalExport(canvas,size.value,panel.dataset.exportName,type);}catch(err){alert(err.message);}});panel._enable=enable;});
   const downloadPdfBtn = document.getElementById('downloadPdfBtn');
   const downloadJpgBtn = document.getElementById('downloadJpgBtn');
+  const deleteLastCardBtn = document.getElementById('deleteLastCardBtn');
+  const addedCardsList = document.getElementById('addedCardsList');
+  function renderAddedCards(){
+    addedCardsList.replaceChildren();
+    addedCardRecords.forEach((card,index)=>{const row=document.createElement('div');row.className='added-card-row';const label=document.createElement('span');label.textContent=`Card ${index+1} · ${card.mode||'Front / Back'}`;const del=document.createElement('button');del.type='button';del.textContent='🗑️ Delete';del.onclick=()=>{addedCardRecords.splice(index,1);addedCardsCount=addedCardRecords.length;rerenderA4Cards();};row.append(label,del);addedCardsList.appendChild(row);});
+    deleteLastCardBtn.disabled=!addedCardRecords.length;
+  }
+  function rerenderA4Cards(){
+    a4Ctx.fillStyle='#ffffff';a4Ctx.fillRect(0,0,A4_W,A4_H);
+    const totalPairWidth=(CARD_W*2)+GAP_2_5MM_PX,startX=(A4_W-totalPairWidth)/2,startY=45;
+    addedCardRecords.forEach((card,index)=>{const currentY=startY+(index*(CARD_H+45));a4Ctx.putImageData(card.front,startX,currentY);a4Ctx.putImageData(card.back,startX+CARD_W+GAP_2_5MM_PX,currentY);if(card.border){a4Ctx.strokeStyle='#000';a4Ctx.lineWidth=card.border;a4Ctx.strokeRect(startX,currentY,CARD_W,CARD_H);a4Ctx.strokeRect(startX+CARD_W+GAP_2_5MM_PX,currentY,CARD_W,CARD_H);}});
+    slotCounter.innerText=addedCardsCount?`Cards on Page: ${addedCardsCount} / ${MAX_CARDS}`:'No cards added yet.';downloadPdfBtn.disabled=!addedCardsCount;downloadJpgBtn.disabled=!addedCardsCount;renderAddedCards();
+  }
   const resetPageBtn = document.getElementById('resetPageBtn');
   const slotCounter = document.getElementById('slotCounter');
   const cardPrintMode = document.getElementById('cardPrintMode');
@@ -3720,6 +3737,7 @@ body:not(.op-light) .front-tool-catalog{background:linear-gradient(135deg,#16243
   addCardBtn.addEventListener('click', () => {
     const copies=Math.max(1,Math.min(MAX_CARDS-addedCardsCount,Number(cardCopies.value)||1));
     if (addedCardsCount >= MAX_CARDS || !copies) return;
+    a4History.push({imageData:a4Ctx.getImageData(0, 0, A4_W, A4_H),count:copies});
     for(let copy=0;copy<copies;copy++){
     const totalPairWidth = (CARD_W * 2) + GAP_2_5MM_PX;
     const startX = (A4_W - totalPairWidth) / 2;
@@ -3737,6 +3755,8 @@ body:not(.op-light) .front-tool-catalog{background:linear-gradient(135deg,#16243
       a4Ctx.strokeRect(backCardX, currentY, CARD_W, CARD_H);
     }
 
+    addedCardRecords.push({front:a4Ctx.getImageData(startX,currentY,CARD_W,CARD_H),back:a4Ctx.getImageData(backCardX,currentY,CARD_W,CARD_H),border:pvcBorderEnabled.checked?(Number(pvcBorderSize.value)||6):0,mode:cardPrintMode.value});
+
     addedCardsCount++;
     }
     if (addedCardsCount < MAX_CARDS) {
@@ -3747,7 +3767,13 @@ body:not(.op-light) .front-tool-catalog{background:linear-gradient(135deg,#16243
 
     downloadPdfBtn.disabled = false;
     downloadJpgBtn.disabled = false;
+    renderAddedCards();
     clearCurrentCardInputs();
+  });
+
+  deleteLastCardBtn.addEventListener('click',()=>{
+    if(!a4History.length||!addedCardsCount)return;
+    addedCardRecords.splice(-1,1);addedCardsCount=addedCardRecords.length;rerenderA4Cards();
   });
 
   function clearCurrentCardInputs() {
@@ -3771,6 +3797,10 @@ body:not(.op-light) .front-tool-catalog{background:linear-gradient(135deg,#16243
 
   function resetCardA4Sheet() {
     addedCardsCount = 0;
+    a4History = [];
+    addedCardRecords = [];
+    deleteLastCardBtn.disabled = true;
+    addedCardsList.replaceChildren();
     a4Ctx.fillStyle = '#ffffff';
     a4Ctx.fillRect(0, 0, A4_W, A4_H);
     // Keep the A4 preview clean after reset. Empty slot guide rectangles are
