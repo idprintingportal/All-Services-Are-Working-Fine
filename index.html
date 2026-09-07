@@ -1023,6 +1023,18 @@ body:has(#loginScreen.front-home){background:#edf3f8!important}
 @media(max-width:720px){#tab-pdf-editor .pe-heading{padding:16px;align-items:flex-start;flex-direction:column}#tab-pdf-editor .pe-workspace{grid-template-columns:minmax(0,1fr)}#tab-pdf-editor .pe-sidebar{border-right:0;border-bottom:1px solid #34435c}#tab-pdf-editor .pe-sidebar p,#tab-pdf-editor .pe-sidebar hr,#tab-pdf-editor .pe-sidebar h3{display:none}#tab-pdf-editor #pe-scroll{height:520px;padding:12px}#tab-pdf-editor .pe-toolbar{gap:5px}#tab-pdf-editor .pe-toolbar button{padding:8px;font-size:11px}}
 
 </style>
+<style>
+/* Sign-in panel occupies the former slideshow position; samples remain visible beside it. */
+.front-auth-panel{grid-column:2;grid-row:2 / span 3;align-self:start;padding:30px 26px 24px;border-radius:22px;background:rgba(255,255,255,.92);border:1px solid #dbe3f0;box-shadow:0 16px 35px #17203322;text-align:center}
+.front-auth-panel h2{font-size:28px!important;margin-bottom:0!important;color:#172033}
+.front-auth-panel>p{font-size:11px;color:#64748b!important;margin:0 0 15px!important}
+.front-auth-panel>.badge{margin-top:0;text-align:center}
+.front-auth-panel>.login-input,.front-auth-panel>#authBtn{display:block;width:100%;margin-left:0;margin-right:0}
+.front-auth-panel>#authBtn{margin-top:2px}
+.front-auth-panel>#errorMsg{border:1px solid #fb7185;border-radius:12px;padding:10px;background:#fff1f2;color:#be123c}
+#loginScreen.front-home .front-showcase{grid-column:1;grid-row:3 / span 3;min-height:310px}
+@media(max-width:850px){.front-auth-panel{display:block;margin:18px 0;padding:24px 18px}.front-home .front-showcase{min-height:260px;margin:18px 0}}
+</style>
 </head>
 <body>
 
@@ -1085,6 +1097,7 @@ body:has(#loginScreen.front-home){background:#edf3f8!important}
     </ul>
   </div>
 
+  <div class="front-auth-panel">
   <div class="badge">Protected Access</div>
   <h2 style="font-size: 20px; margin-bottom: 6px;">Sign In</h2>
   <p style="font-size: 11px; color: var(--text-muted); margin-bottom: 15px;">Card & Photo Generator Portal</p>
@@ -1102,6 +1115,7 @@ body:has(#loginScreen.front-home){background:#edf3f8!important}
     <button type="button" id="forgotIdBtn" hidden aria-hidden="true">Forgot ID</button>
     <button type="button" id="changePasswordBtn" class="auth-link" style="border:0;background:none;cursor:pointer;">🔑 Change Password</button>
     <button type="button" id="forgotPasswordBtn" class="auth-link" style="border:0;background:none;cursor:pointer;">🔒 Forgot Password</button>
+  </div>
   </div>
 </div>
 
