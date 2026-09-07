@@ -2349,6 +2349,7 @@ body:not(.op-light) .front-tool-catalog{background:linear-gradient(135deg,#16243
     document.querySelectorAll('.tab-content').forEach(content=>content.classList.remove('active'));
     document.getElementById(tabId).classList.add('active');
     document.querySelectorAll('.tab-btn').forEach(btn=>{if((btn.getAttribute('onclick')||'').includes("'"+tabId+"'"))btn.classList.add('active');});
+    try{localStorage.setItem('op-last-tab',tabId);}catch(_){ }
   }
   document.getElementById('portalServiceSearch').addEventListener('input',event=>{
     const q=event.target.value.trim().toLocaleLowerCase();
@@ -3078,7 +3079,7 @@ body:not(.op-light) .front-tool-catalog{background:linear-gradient(135deg,#16243
   const saveNewPwdBtn = document.getElementById('saveNewPwdBtn');
   const pwdStatusMsg = document.getElementById('pwdStatusMsg');
 
-  try{const saved=JSON.parse(localStorage.getItem('op-auth-session')||'null');if(saved?.token&&saved.expires>Date.now()){authToken=saved.token;authRole=saved.role||'';authEmail=saved.email||'';authExpires=Number(saved.expires);checkServerSession().then(()=>{if(authToken){loginScreen.style.display='none';mainApp.style.display='block';document.getElementById('myAccountTabBtn').style.display=authRole==='distributor'?'inline-block':'none';document.getElementById('adminTabBtn').style.display=authRole==='admin'?'inline-block':'none';switchTabDirect('tab-cards');}});}}catch(_){try{localStorage.removeItem('op-auth-session');}catch(__){}}
+  try{const saved=JSON.parse(localStorage.getItem('op-auth-session')||'null');if(saved?.token&&saved.expires>Date.now()){authToken=saved.token;authRole=saved.role||'';authEmail=saved.email||'';authExpires=Number(saved.expires);checkServerSession().then(()=>{if(authToken){loginScreen.style.display='none';mainApp.style.display='block';document.getElementById('myAccountTabBtn').style.display=authRole==='distributor'?'inline-block':'none';document.getElementById('adminTabBtn').style.display=authRole==='admin'?'inline-block':'none';const lastTab=localStorage.getItem('op-last-tab')||'tab-cards';const allowed=['tab-cards','tab-pdf-editor','tab-history','tab-my-account'];switchTabDirect(allowed.includes(lastTab)?lastTab:'tab-cards');}});}}catch(_){try{localStorage.removeItem('op-auth-session');}catch(__){}}
 
   const today = new Date();
   const curDay = String(today.getDate()).padStart(2, '0');
