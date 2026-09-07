@@ -6350,6 +6350,9 @@ try {
 </footer>
 <script>
 (() => {
+  const showcase=document.querySelector('.front-showcase');
+  const samplePaths=Array.from({length:25},(_,i)=>`assets/frame-samples/sample_${String(i+1).padStart(2,'0')}.png`);
+  if(showcase){samplePaths.forEach((src,i)=>{if(!showcase.querySelector(`img[src="${src}"]`)){const img=document.createElement('img');img.src=src;img.alt=`Printing sample ${i+1}`;showcase.insertBefore(img,showcase.querySelector('.showcase-caption'));}});}
   const slides=[...document.querySelectorAll('.front-showcase img')];
   if(slides.length>1){let index=0;setInterval(()=>{slides[index].classList.remove('active');index=(index+1)%slides.length;slides[index].classList.add('active');},3500);}
   const phrases=['Automate your printing workflow','Crop ID cards with confidence','Create clean A4-ready documents'];
