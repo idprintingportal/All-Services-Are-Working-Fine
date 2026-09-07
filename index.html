@@ -1059,6 +1059,10 @@ body.op-light #mainApp .container,body.op-light #mainApp .tab-content>div{backgr
 /* Versatile in-app workspace: clear cards, grouped tools and responsive controls. */
 #mainApp .container{max-width:1320px;margin:0 auto;padding:18px 20px;background:rgba(15,23,42,.28);border:1px solid #ffffff14;border-radius:22px}
 #mainApp .tab-content{animation:opPanelIn .28s ease both}
+#mainApp .tab-nav{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;align-items:stretch}
+#mainApp .tab-nav .tab-btn{width:100%;min-width:0;white-space:normal;line-height:1.25}
+.my-account-corner{background:linear-gradient(135deg,#6d4bd6,#8b5cf6)!important;color:#fff!important;border-color:#c4b5fd!important;box-shadow:0 7px 18px #8b5cf644}
+.my-account-corner:hover{background:linear-gradient(135deg,#7c3aed,#a78bfa)!important}
 #mainApp .tab-content>div,#mainApp .control-panel,#mainApp .upload-box{border-radius:18px!important;box-shadow:0 12px 28px #0206172b}
 #mainApp .tab-content h1,#mainApp .tab-content h2,#mainApp .tab-content h3{letter-spacing:.1px}
 #mainApp .action-btn{border-radius:12px!important;box-shadow:0 6px 16px #02061733}
@@ -1068,7 +1072,7 @@ body.op-light #mainApp .container,body.op-light #mainApp .tab-content>div{backgr
 .front-tool-catalog{grid-column:1/-1;margin:22px 0 0;padding:22px;border:1px solid #cbd5e1;border-radius:22px;background:linear-gradient(135deg,#ffffffd9,#eff6ffcc);box-shadow:0 14px 32px #17203318;text-align:left}
 .catalog-heading span{font-size:10px;letter-spacing:2px;color:#2563eb;font-weight:800}.catalog-heading h3{margin:4px 0;color:#172033;font-size:24px}.catalog-heading p{color:#64748b;font-size:13px;margin-bottom:16px}.catalog-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}.catalog-tool{display:flex;align-items:center;gap:9px;min-height:52px;padding:10px 12px;border:1px solid #dbeafe;border-radius:14px;background:#fff;color:#243b69;font-weight:700;font-size:12px;text-align:left;cursor:pointer;transition:.2s}.catalog-tool span{font-size:21px}.catalog-tool:hover{transform:translateY(-3px);border-color:#60a5fa;box-shadow:0 8px 18px #2563eb24}.catalog-footer-links{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}.catalog-footer-links button{border:0;background:transparent;color:#2563eb;font-size:12px;font-weight:700;cursor:pointer}.catalog-footer-links button:hover{text-decoration:underline}
 body:not(.op-light) .front-tool-catalog{background:linear-gradient(135deg,#16243bdd,#172554dd);border-color:#ffffff24}.front-home .catalog-heading h3{color:#172033}.front-home .catalog-tool{background:#fff}
-@media(max-width:720px){#mainApp .container{padding:12px 10px;border-radius:16px}#mainApp .tab-nav{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}#mainApp .tab-btn{min-height:48px!important;padding:10px 8px!important;font-size:12px!important}#mainApp .theme-toggle{order:3}#mainApp .container>div:first-child{align-items:stretch!important}}
+@media(max-width:720px){#mainApp .container{padding:12px 10px;border-radius:16px}#mainApp .tab-nav{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}#mainApp .tab-btn{min-height:48px!important;padding:10px 8px!important;font-size:12px!important}#mainApp .theme-toggle{order:3}#mainApp .container>div:first-child{align-items:stretch!important}}
 @media(max-width:850px){.front-tool-catalog{margin-top:16px;padding:16px}.catalog-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 </style>
 </head>
@@ -1327,7 +1331,6 @@ body:not(.op-light) .front-tool-catalog{background:linear-gradient(135deg,#16243
     <button class="tab-btn" onclick="switchTab('tab-pdf-to-jpg')">🖼️ PDF to JPG (Manual DPI)</button>
     <button class="tab-btn" onclick="switchTab('tab-pdf-compressor')">🗜️ PDF Compressor</button>
     <button class="tab-btn" onclick="switchTab('tab-history')" style="border-color: rgba(56, 189, 248, 0.5);">📂 History</button>
-    <button id="myAccountTabBtn" class="tab-btn" onclick="switchTab('tab-my-account')" style="border-color: rgba(167, 139, 250, 0.6);">👤 My Account</button>
     <button id="adminTabBtn" class="tab-btn" onclick="switchTab('tab-admin')" style="display:none; border-color: #f59e0b; color:#fbbf24;">⚙️ Admin Panel</button>
   </div>
 
@@ -1340,6 +1343,7 @@ body:not(.op-light) .front-tool-catalog{background:linear-gradient(135deg,#16243
         ⏳ Validity: Initializing...
       </div>
       <button id="themeToggleBtn" class="theme-toggle" type="button" aria-label="Toggle dark mode">🌙 Dark mode</button>
+      <button id="myAccountTabBtn" class="theme-toggle my-account-corner" type="button" onclick="switchTab('tab-my-account')" style="border-color: #a78bfa99;">👤 My Account</button>
       <button id="logoutBtn" class="logout-btn">🔒 Logout</button>
     </div>
 
@@ -6436,7 +6440,7 @@ try {
   const nativeAnchorClick=HTMLAnchorElement.prototype.click;
   HTMLAnchorElement.prototype.click=function(){if(this.hasAttribute('download'))window.opCelebrate();return nativeAnchorClick.call(this);};
   const toolTabs={passport:'tab-passport',resize:'tab-resizer',id:'tab-cards',jpgpdf:'tab-jpg-to-pdf',pngpdf:'tab-jpg-to-pdf',merge:'tab-arranger',delete:'tab-arranger',pdfjpg:'tab-pdf-to-jpg',jpgpng:'tab-resizer',pngjpg:'tab-resizer',compress:'tab-pdf-compressor',editor:'tab-pdf-editor',arranger:'tab-arranger',batch:'tab-jpg-to-pdf'};
-  document.querySelectorAll('.catalog-tool').forEach(btn=>btn.addEventListener('click',()=>{if(!window.authToken){document.getElementById('loginEmail')?.focus();return;}const tab=toolTabs[btn.dataset.tool];if(tab&&typeof window.switchTab==='function')window.switchTab(tab);else alert(btn.textContent.trim()+' को portal में sign in के बाद configure किया जाएगा।');}));
+  document.querySelectorAll('.catalog-tool').forEach(btn=>btn.addEventListener('click',()=>{if(!authToken){document.getElementById('loginEmail')?.focus();return;}const tab=toolTabs[btn.dataset.tool];if(tab) switchTab(tab);else alert(btn.textContent.trim()+' को portal में sign in के बाद configure किया जाएगा।');}));
   document.querySelectorAll('[data-info-link]').forEach(btn=>btn.addEventListener('click',()=>{const copy={payment:['Payment QR','Payment QR केवल admin-configured plan और verified payment proof के लिए उपयोग करें।'],support:['Help & Support','Support के लिए registered email, समस्या का समय और screenshot भेजें। Password या OTP कभी साझा न करें।'],privacy:['Privacy Policy','Uploaded files, account data और payment proof केवल requested processing, access control और support के लिए उपयोग होंगे। Retention rules के अनुसार files हटेंगी।'],terms:['Terms & Conditions','Portal का उपयोग lawful printing/document work के लिए करें। Unauthorized access, abuse, spam और security bypass निषिद्ध हैं।'],refund:['Refund Policy','Refund requests को registered account और transaction reference के साथ admin review के लिए भेजें। Approval plan और payment verification पर निर्भर है।']}[btn.dataset.infoLink];const modal=document.getElementById('infoModal');if(copy&&modal){document.getElementById('infoModalTitle').textContent=copy[0];document.getElementById('infoModalBody').innerHTML='<p>'+copy[1]+'</p>';modal.hidden=false;}}));
 })();
 </script>
