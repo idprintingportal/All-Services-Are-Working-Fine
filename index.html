@@ -3693,7 +3693,8 @@ body:not(.op-light) .front-tool-catalog{background:linear-gradient(135deg,#16243
     if(t==='aadhaar')return pvcSplitPair(pvcCropBox(c,0,.52,1,.48),false);
     if(t==='pan')return pvcSplitPair(pvcCropBox(c,0,.76,1,.20),false);
     if(['eshram','abha','maandhan','mahasarathi'].includes(t))return pvcSplitPair(c,true);
-    if(t==='voter')return [pvcTrimPrintableArea(c),null];
+    // e-EPIC PDFs contain the printable front/back cards near the top; the lower half is verification text.
+    if(t==='voter')return pvcSplitPair(pvcCropBox(c,.04,.16,.92,.20),false);
     return null;
   }
   function pvcShowPair(pair,label){const front=pair[0],back=pair[1]||document.createElement('canvas');if(!back.width){back.width=front.width;back.height=front.height;back.getContext('2d').fillStyle='#fff';back.getContext('2d').fillRect(0,0,back.width,back.height);}autoFitCardToCanvas(front.toDataURL('image/jpeg',.95),canvas1,ctx1,true);autoFitCardToCanvas(back.toDataURL('image/jpeg',.95),canvas2,ctx2,false);pvcPdfStatus.textContent=`✅ ${label} का Front/Back preview तैयार है। जरूरत हो तो Manual Crop दबाएँ।`;document.getElementById('pvcPasswordBox').hidden=true;addCardBtn.disabled=false;}
