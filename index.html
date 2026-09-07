@@ -1032,7 +1032,11 @@ body:has(#loginScreen.front-home){background:#edf3f8!important}
 .front-auth-panel>.login-input,.front-auth-panel>#authBtn{display:block;width:100%;margin-left:0;margin-right:0}
 .front-auth-panel>#authBtn{margin-top:2px}
 .front-auth-panel>#errorMsg{border:1px solid #fb7185;border-radius:12px;padding:10px;background:#fff1f2;color:#be123c}
-#loginScreen.front-home .front-showcase{grid-column:1;grid-row:3 / span 3;min-height:310px}
+#loginScreen.front-home .front-showcase{grid-column:1;grid-row:2;min-height:360px;background:#172033}
+.front-showcase img{object-fit:contain!important;background:#172033}
+#loginScreen.front-home .front-hero{grid-column:1;grid-row:3;margin:0;min-height:150px;padding:28px 30px;text-align:center}
+#loginScreen.front-home .front-hero p{margin:18px auto 0!important;padding:8px 18px;border-top:1px solid #5b78e8;border-bottom:1px solid #5b78e8;background:transparent;color:#334155!important;animation:frontTickerFade 4.2s ease-in-out infinite}
+@keyframes frontTickerFade{0%,100%{opacity:.55;transform:translateX(8px)}50%{opacity:1;transform:translateX(0)}}
 @media(max-width:850px){.front-auth-panel{display:block;margin:18px 0;padding:24px 18px}.front-home .front-showcase{min-height:260px;margin:18px 0}}
 </style>
 </head>
@@ -6356,8 +6360,10 @@ try {
   const slides=[...document.querySelectorAll('.front-showcase img')];
   if(slides.length>1){let index=0;setInterval(()=>{slides[index].classList.remove('active');index=(index+1)%slides.length;slides[index].classList.add('active');},3500);}
   const phrases=['Automate your printing workflow','Crop ID cards with confidence','Create clean A4-ready documents'];
+  const subPhrases=['All-in-one platform for seamless online printing and digital services.','Fast, secure and print-ready tools for everyday work.','Create, edit and download your documents with ease.'];
   const hero=document.querySelector('#loginScreen .front-hero h1');
-  if(hero){let i=0;setInterval(()=>{i=(i+1)%phrases.length;hero.classList.add('op-type-fade');setTimeout(()=>{hero.innerHTML=phrases[i]+'<br>with OP Printing Hub';hero.classList.remove('op-type-fade')},220)},4200);}
+  const sub=document.querySelector('#loginScreen .front-hero p');
+  if(hero){let i=0;setInterval(()=>{i=(i+1)%phrases.length;hero.classList.add('op-type-fade');if(sub)sub.style.opacity='0';setTimeout(()=>{hero.innerHTML=phrases[i]+'<br>with OP Printing Hub';if(sub){sub.textContent=subPhrases[i];sub.style.opacity='1';}hero.classList.remove('op-type-fade')},220)},4200);}
 })();
 </script>
 <script>
