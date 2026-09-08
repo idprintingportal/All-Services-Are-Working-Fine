@@ -1994,15 +1994,23 @@ body:not(.op-light) .front-tool-catalog{background:linear-gradient(135deg,#16243
             <input type="email" id="newDistEmail" class="text-field-input" style="max-width:100%;" placeholder="user@gmail.com">
           </div>
           <div>
+            <label style="font-size: 11px; color: var(--text-muted); display:block; margin-bottom:4px;">Mobile Number:</label>
+            <input type="tel" id="newDistMobile" class="text-field-input" style="max-width:100%;" placeholder="10-digit mobile number" inputmode="tel">
+          </div>
+          <div>
             <label style="font-size: 11px; color: var(--text-muted); display:block; margin-bottom:4px;">Assign Password:</label>
             <input type="text" id="newDistPass" class="text-field-input" style="max-width:100%;" placeholder="SecurePass123">
+          </div>
+          <div>
+            <label style="font-size: 11px; color: var(--text-muted); display:block; margin-bottom:4px;">Validity Plan:</label>
+            <select id="newDistPlan" class="text-field-input" style="max-width:100%;"><option value="1month">30 Days</option><option value="1year">1 Year</option></select>
           </div>
           <button onclick="addNewDistributor()" class="action-btn btn-add" style="margin-top: 5px;">🚀 Assign ID & Password</button>
           <div id="distMsg" style="font-size: 12px; font-weight: 500; display:none; margin-top:5px;"></div>
         </div>
       </div>
 
-      <h3 style="font-size: 14px; color: var(--accent-blue); margin-bottom: 10px; text-align: left; max-width: 850px; margin-left: auto; margin-right: auto;">Connected Distributors List (30 Days Validity)</h3>
+      <h3 style="font-size: 14px; color: var(--accent-blue); margin-bottom: 10px; text-align: left; max-width: 850px; margin-left: auto; margin-right: auto;">Connected Distributors List</h3>
       <div class="history-table-container" style="max-width: 850px; margin-left: auto; margin-right: auto;">
         <table class="history-table">
           <thead>
@@ -2816,10 +2824,12 @@ body:not(.op-light) .front-tool-catalog{background:linear-gradient(135deg,#16243
   async function addNewDistributor() {
     const name = document.getElementById('newDistName').value.trim();
     const email = document.getElementById('newDistEmail').value.trim().toLowerCase();
+    const mobile = document.getElementById('newDistMobile').value.trim();
     const pass = document.getElementById('newDistPass').value;
+    const paymentPlan = document.getElementById('newDistPlan').value;
     const msg = document.getElementById('distMsg');
 
-    if (!name || !email || !pass) {
+    if (!name || !email || !mobile || !pass || !['1month','1year'].includes(paymentPlan)) {
       msg.innerText = "⚠️ कृपया सभी फ़ील्ड भरें!";
       msg.style.color = "#ef4444";
       msg.style.display = "block";
@@ -2834,24 +2844,14 @@ body:not(.op-light) .front-tool-catalog{background:linear-gradient(135deg,#16243
       return;
     }
 
-    const assignedTimestamp = Date.now();
-    const distExpiryTime = assignedTimestamp + THIRTY_MS;
-
     const newDistData = {
-      id: Date.now(),
-      officeName: officeName,
+      officeName: name,
       name: name,
       email: email,
       mobile: mobile,
-      registrationToken: registrationToken,
       pass: pass,
-      assignedTimestamp: assignedTimestamp,
-      expiryTime: distExpiryTime,
-      adminMessage: "",
-      status: "Active",
-      paymentStatus: "Approved",
-      paymentTxnId: "Admin Assignment",
-      approvalNote: "Admin created account manually"
+      paymentPlan,
+      paymentTxnId: 'Admin Assignment'
     };
 
     let success = await addDistributorCloud(newDistData);
@@ -2862,6 +2862,7 @@ body:not(.op-light) .front-tool-catalog{background:linear-gradient(135deg,#16243
 
       document.getElementById('newDistName').value = '';
       document.getElementById('newDistEmail').value = '';
+      document.getElementById('newDistMobile').value = '';
       document.getElementById('newDistPass').value = '';
 
       setTimeout(() => renderDistributorsTable(), 1500);
@@ -3641,13 +3642,16 @@ body:not(.op-light) .front-tool-catalog{background:linear-gradient(135deg,#16243
     '4x6':[4,6],'8x10':[8,10],'10x12':[10,12],'12x18':[12,18],
     '16x20':[16,20],'20x30':[20,30],'24x36':[24,36]
   };
+  function whiteJpegDataUrl(source,quality=.95){if(!source||!source.width||!source.height)throw new Error('Image preview is empty.');const out=document.createElement('canvas');out.width=source.width;out.height=source.height;const c=out.getContext('2d');c.save();c.fillStyle='#fff';c.fillRect(0,0,out.width,out.height);c.drawImage(source,0,0);c.restore();return out.toDataURL('image/jpeg',quality);}
+  function whiteJpegBlob(source,quality=.95){return new Promise((resolve,reject)=>{try{whiteJpegCanvas(source).toBlob(resolve,'image/jpeg',quality);}catch(error){reject(error);}});}
+  function whiteJpegCanvas(source){if(!source||!source.width||!source.height)throw new Error('Image preview is empty.');const out=document.createElement('canvas');out.width=source.width;out.height=source.height;const c=out.getContext('2d');c.fillStyle='#fff';c.fillRect(0,0,out.width,out.height);c.drawImage(source,0,0);return out;}
   function universalExport(canvas,sizeKey,name,type){
     const size=universalPrintSizes[sizeKey]||universalPrintSizes['4x6'];
     if(!canvas||canvas.width<2||canvas.height<2)throw new Error('पहले preview generate करें।');
     const [w,h]=size,ratio=Math.min(w/canvas.width,h/canvas.height),dw=canvas.width*ratio,dh=canvas.height*ratio;
-    if(type==='jpg'){const a=document.createElement('a');a.href=canvas.toDataURL('image/jpeg',.95);a.download=`${name}-${sizeKey}.jpg`;a.click();return;}
+    if(type==='jpg'){const a=document.createElement('a');a.href=whiteJpegDataUrl(canvas,.95);a.download=`${name}-${sizeKey}.jpg`;a.click();return;}
     if(type==='print'){const win=window.open('','_blank','noopener,noreferrer');if(!win)throw new Error('Print window blocked.');const src=canvas.toDataURL('image/png');win.document.write(`<html><head><title>${name}</title><style>@page{size:${w}in ${h}in;margin:0}html,body{margin:0;width:${w}in;height:${h}in}img{width:${dw}in;height:${dh}in;object-fit:contain;display:block;margin:auto}</style></head><body><img src="${src}" onload="window.print()"></body></html>`);win.document.close();return;}
-    const {jsPDF}=window.jspdf||{};if(!jsPDF)throw new Error('PDF library अभी load नहीं हुई।');const pdf=new jsPDF({orientation:w>=h?'landscape':'portrait',unit:'in',format:[w,h]});pdf.addImage(canvas.toDataURL('image/jpeg',.95),'JPEG',(w-dw)/2,(h-dh)/2,dw,dh);pdf.save(`${name}-${sizeKey}.pdf`);
+    const {jsPDF}=window.jspdf||{};if(!jsPDF)throw new Error('PDF library अभी load नहीं हुई।');const pdf=new jsPDF({orientation:w>=h?'landscape':'portrait',unit:'in',format:[w,h]});pdf.addImage(whiteJpegDataUrl(canvas,.95),'JPEG',(w-dw)/2,(h-dh)/2,dw,dh);pdf.save(`${name}-${sizeKey}.pdf`);
   }
   document.querySelectorAll('.universal-export-panel').forEach(panel=>{const canvas=document.getElementById(panel.dataset.exportCanvas),size=panel.querySelector('.universal-export-size'),buttons=panel.querySelectorAll('button');const enable=()=>buttons.forEach(b=>b.disabled=!(canvas&&canvas.width>2&&canvas.height>2));enable();setInterval(enable,700);panel.addEventListener('click',e=>{const btn=e.target.closest('button');if(!btn)return;try{const type=btn.classList.contains('universal-print-btn')?'print':btn.classList.contains('universal-jpg-btn')?'jpg':'pdf';universalExport(canvas,size.value,panel.dataset.exportName,type);}catch(err){alert(err.message);}});panel._enable=enable;});
   const downloadPdfBtn = document.getElementById('downloadPdfBtn');
@@ -3847,7 +3851,7 @@ body:not(.op-light) .front-tool-catalog{background:linear-gradient(135deg,#16243
   downloadPdfBtn.addEventListener('click', () => {
     const { jsPDF } = window.jspdf;
     const pdf = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
-    pdf.addImage(a4Canvas.toDataURL('image/jpeg', 1.0), 'JPEG', 0, 0, 210, 297);
+    pdf.addImage(whiteJpegDataUrl(a4Canvas,1.0), 'JPEG', 0, 0, 210, 297);
     
     const fileName = `A4_Cards_Sheet_${addedCardsCount}_Cards.pdf`;
     const blob = pdf.output('blob');
@@ -3859,7 +3863,7 @@ body:not(.op-light) .front-tool-catalog{background:linear-gradient(135deg,#16243
     if (!addedCardsCount) return;
     const link = document.createElement('a');
     link.download = `A4_Cards_Sheet_${addedCardsCount}_Cards.jpg`;
-    link.href = a4Canvas.toDataURL('image/jpeg', 0.98);
+    link.href = whiteJpegDataUrl(a4Canvas,0.98);
     link.click();
   });
 
@@ -4007,7 +4011,7 @@ body:not(.op-light) .front-tool-catalog{background:linear-gradient(135deg,#16243
     
     const { jsPDF } = window.jspdf;
     const pdf = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
-    pdf.addImage(sheetCanvas.toDataURL('image/jpeg', 1.0), 'JPEG', 0, 0, 210, 297);
+    pdf.addImage(whiteJpegDataUrl(sheetCanvas,1.0), 'JPEG', 0, 0, 210, 297);
     
     const fileName = `Multi_Unique_Passport_${activePassportCount}_Photos_${targetQty}_Qty_A4.pdf`;
     const blob = pdf.output('blob');
@@ -4225,11 +4229,11 @@ body:not(.op-light) .front-tool-catalog{background:linear-gradient(135deg,#16243
     let pdf;
     if (namePassportSheetFormat === '4x6') {
       pdf = new jsPDF({ orientation: 'landscape', unit: 'in', format: [4, 6] });
-      pdf.addImage(namePassportSheetCanvas.toDataURL('image/jpeg', 1.0), 'JPEG', 0, 0, 6, 4);
+      pdf.addImage(whiteJpegDataUrl(namePassportSheetCanvas,1.0), 'JPEG', 0, 0, 6, 4);
       fileName = `Name_Date_Passport_4x6_${namePassportQtyInput.value}_Qty.pdf`;
     } else {
       pdf = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
-      pdf.addImage(namePassportSheetCanvas.toDataURL('image/jpeg', 1.0), 'JPEG', 0, 0, 210, 297);
+      pdf.addImage(whiteJpegDataUrl(namePassportSheetCanvas,1.0), 'JPEG', 0, 0, 210, 297);
       fileName = `Name_Date_Passport_A4_${namePassportQtyInput.value}_Qty.pdf`;
     }
     const blob = pdf.output('blob');
@@ -4262,7 +4266,7 @@ body:not(.op-light) .front-tool-catalog{background:linear-gradient(135deg,#16243
     if (!photo4x6Loaded) return;
     const { jsPDF } = window.jspdf;
     const pdf = new jsPDF({ orientation: 'portrait', unit: 'in', format: [4, 6] });
-    pdf.addImage(canvas4x6.toDataURL('image/jpeg', 1.0), 'JPEG', 0, 0, 4, 6);
+    pdf.addImage(whiteJpegDataUrl(canvas4x6,1.0), 'JPEG', 0, 0, 4, 6);
     const fileName = 'Photo_4x6_Print.pdf';
     const blob = pdf.output('blob');
     pdf.save(fileName);
@@ -4305,7 +4309,7 @@ body:not(.op-light) .front-tool-catalog{background:linear-gradient(135deg,#16243
   document.getElementById('downloadA4_4x6_PdfBtn').addEventListener('click', () => {
     const { jsPDF } = window.jspdf;
     const pdf = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
-    pdf.addImage(a4_4x6_SheetCanvas.toDataURL('image/jpeg', 1.0), 'JPEG', 0, 0, 210, 297);
+    pdf.addImage(whiteJpegDataUrl(a4_4x6_SheetCanvas,1.0), 'JPEG', 0, 0, 210, 297);
     const fileName = `4x6_Photos_A4_Sheet_${photo4x6QtyInput.value}_Qty.pdf`;
     const blob = pdf.output('blob');
     pdf.save(fileName);
@@ -4760,7 +4764,7 @@ body:not(.op-light) .front-tool-catalog{background:linear-gradient(135deg,#16243
   }
 
   document.getElementById('resizerKbSlider').addEventListener('input',e=>document.getElementById('resizerKbValue').textContent=e.target.value+' KB');
-  async function resizedJpegForTarget(targetKB){let q=.95,blob=await new Promise(r=>resizerCanvas.toBlob(r,'image/jpeg',q));while(blob&&blob.size/1024>targetKB&&q>.35){q=Math.max(.35,q-.05);blob=await new Promise(r=>resizerCanvas.toBlob(r,'image/jpeg',q));}return blob;}
+  async function resizedJpegForTarget(targetKB){let q=.95,blob=await whiteJpegBlob(resizerCanvas,q);while(blob&&blob.size/1024>targetKB&&q>.35){q=Math.max(.35,q-.05);blob=await whiteJpegBlob(resizerCanvas,q);}return blob;}
   document.getElementById('downloadResizedJpgBtn').addEventListener('click', async () => {
     if (!originalResizerImg) return;
     const dims = getPixelDimensions();
@@ -4839,7 +4843,7 @@ body:not(.op-light) .front-tool-catalog{background:linear-gradient(135deg,#16243
 
       await page.render({ canvasContext: ctx, viewport: viewport }).promise;
 
-      canvas.toBlob((blob) => {
+      whiteJpegBlob(canvas,.95).then((blob) => {
         const fileName = `Page_1_${activeDpiValue}DPI.jpg`;
         const link = document.createElement('a');
         link.href = URL.createObjectURL(blob);
@@ -4847,7 +4851,7 @@ body:not(.op-light) .front-tool-catalog{background:linear-gradient(135deg,#16243
         link.click();
         progress.innerText = `✅ Download Complete (1 Page @ ${activeDpiValue} DPI)`;
         saveToHistory('PDF to JPG (Single)', fileName, blob, 'image/jpeg');
-      }, 'image/jpeg', 0.95);
+      });
 
     } else {
       const zip = new JSZip();
@@ -4862,7 +4866,7 @@ body:not(.op-light) .front-tool-catalog{background:linear-gradient(135deg,#16243
         canvas.height = viewport.height;
 
         await page.render({ canvasContext: ctx, viewport: viewport }).promise;
-        const imgData = canvas.toDataURL('image/jpeg', 0.95).split(',')[1];
+        const imgData = whiteJpegDataUrl(canvas,0.95).split(',')[1];
         zip.file(`Page_${i}_${activeDpiValue}DPI.jpg`, imgData, { base64: true });
       }
 
@@ -4947,7 +4951,7 @@ body:not(.op-light) .front-tool-catalog{background:linear-gradient(135deg,#16243
       canvas.height = viewport.height;
 
       await page.render({ canvasContext: ctx, viewport: viewport }).promise;
-      const imgData = canvas.toDataURL('image/jpeg', jpegQuality);
+      const imgData = whiteJpegDataUrl(canvas,jpegQuality);
 
       const orientation = viewport.width > viewport.height ? 'landscape' : 'portrait';
       if (i === 1) {
