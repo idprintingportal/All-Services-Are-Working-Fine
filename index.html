@@ -1105,6 +1105,8 @@ body:before{content:'';position:fixed;inset:-20%;z-index:-1;background:radial-gr
 body.op-light{background:linear-gradient(135deg,#dbeafe,#f5d0fe,#ccfbf1)!important;color:#172033}.op-light #loginScreen.front-home,.op-light #mainApp{color:#172033}.op-light #mainApp .dashboard-status,.op-light #mainApp .pdf-tools-bar,.op-light #mainApp .tab-nav,.op-light #mainApp .container,.op-light #mainApp .tab-content>div,.op-light #mainApp .control-panel,.op-light #mainApp .upload-box{background:#ffffff80!important;color:#172033}
 @media(max-width:850px){#loginScreen.front-home{display:block;padding:12px 16px 28px}#loginScreen.front-home .front-nav{margin:-12px -16px 0;padding:0 16px}.front-home .front-hero{margin:16px 0!important;padding:30px 24px!important}.front-home .front-showcase{margin:16px 0!important;min-height:260px}.front-home .front-auth-panel{margin:16px 0!important}.front-home .front-services{margin:18px 0!important}.front-home .front-tool-catalog{margin-top:18px!important}#mainApp .tab-nav{grid-template-columns:repeat(2,minmax(0,1fr))}}
 </style>
+<style>html.session-bootstrap #loginScreen{display:none!important}html.session-bootstrap #mainApp{display:block!important}</style>
+<script>(function(){try{const s=JSON.parse(localStorage.getItem('op-auth-session')||'null');if(s&&s.token&&Number(s.expires)>Date.now())document.documentElement.classList.add('session-bootstrap');}catch(_){}})();</script>
 </head>
 <body>
 
@@ -2163,15 +2165,15 @@ body.op-light{background:linear-gradient(135deg,#dbeafe,#f5d0fe,#ccfbf1)!importa
   function acceptSession(result, email) {
     authToken=result.token; authRole=result.role; authEmail=email; authExpires=result.expires;
     try{localStorage.setItem('op-auth-session',JSON.stringify({token:authToken,role:authRole,email:authEmail,expires:authExpires}));}catch(_){}
-    const welcome=document.getElementById('officeWelcome');
-    if(welcome){welcome.replaceChildren();const office=String(result.record?.officeName||'').trim();welcome.append(document.createTextNode(office?`Welcome · ${office}`:'Welcome to OP Printing Hub'));const note=document.createElement('small');note.textContent='Happy Business! आपका काम सफल और आसान रहे।';welcome.append(note);welcome.hidden=false;}
+    renderOfficeWelcome(result.record);
     distributorMemoryCache=[];
   }
+  function renderOfficeWelcome(record){const welcome=document.getElementById('officeWelcome');if(!welcome)return;welcome.replaceChildren();const office=String(record?.officeName||'').trim();welcome.append(document.createTextNode(office?`Welcome · ${office}`:'Welcome to OP Printing Hub'));const note=document.createElement('small');note.textContent='Happy Business! आपका काम सफल और आसान रहे।';welcome.append(note);welcome.hidden=false;}
   function clearAuth() {
     window.dispatchEvent(new Event('portal-auth-cleared'));
     adminPanelUntil=0;
     if(adminUnlockPending) finishAdminUnlock(false);
-    authToken=''; authRole=''; authEmail=''; authExpires=0; distributorMemoryCache=[];
+    authToken=''; authRole=''; authEmail=''; authExpires=0; distributorMemoryCache=[];document.documentElement.classList.remove('session-bootstrap');
     const welcome=document.getElementById('officeWelcome');if(welcome)welcome.hidden=true;
     activeDistributorSession=null; currentRenewalDistributor=null; currentLoggedDistributorEmail='';
     sessionStorage.removeItem('isLoggedIn');try{localStorage.removeItem('op-auth-session');}catch(_){}
@@ -2552,7 +2554,7 @@ body.op-light{background:linear-gradient(135deg,#dbeafe,#f5d0fe,#ccfbf1)!importa
           if(mainApp.style.display!=='none') showRenewalScreen(result.record);
         } else if(result.state==='pending'||result.state==='rejected') showPendingScreen(result.record,result.state);
         else if(result.state!=='active') throw new Error('Account stopped. Contact admin.');
-        else {activeDistributorSession=result.record;renderDistributorNotice(result.record);}
+        else {activeDistributorSession=result.record;renderOfficeWelcome(result.record);renderDistributorNotice(result.record);}
       }
     } catch(error) {
       clearAuth();mainApp.style.display='none';renewalScreen.style.display='none';document.getElementById('pendingScreen').style.display='none';document.getElementById('pendingUploadScreen').style.display='none';loginScreen.style.display='block';
@@ -3113,7 +3115,7 @@ body.op-light{background:linear-gradient(135deg,#dbeafe,#f5d0fe,#ccfbf1)!importa
   const saveNewPwdBtn = document.getElementById('saveNewPwdBtn');
   const pwdStatusMsg = document.getElementById('pwdStatusMsg');
 
-  try{const saved=JSON.parse(localStorage.getItem('op-auth-session')||'null');if(saved?.token&&saved.expires>Date.now()){authToken=saved.token;authRole=saved.role||'';authEmail=saved.email||'';authExpires=Number(saved.expires);checkServerSession().then(()=>{if(authToken){loginScreen.style.display='none';mainApp.style.display='block';document.getElementById('myAccountTabBtn').style.display=authRole==='distributor'?'inline-block':'none';document.getElementById('adminTabBtn').style.display=authRole==='admin'?'inline-block':'none';const lastTab=localStorage.getItem('op-last-tab')||'tab-cards';const allowed=['tab-cards','tab-pdf-editor','tab-history','tab-my-account'];switchTabDirect(allowed.includes(lastTab)?lastTab:'tab-cards');}});}}catch(_){try{localStorage.removeItem('op-auth-session');}catch(__){}}
+  try{const saved=JSON.parse(localStorage.getItem('op-auth-session')||'null');if(saved?.token&&saved.expires>Date.now()){authToken=saved.token;authRole=saved.role||'';authEmail=saved.email||'';authExpires=Number(saved.expires);checkServerSession().then(()=>{if(authToken){loginScreen.style.display='none';mainApp.style.display='block';document.getElementById('myAccountTabBtn').style.display=authRole==='distributor'?'inline-block':'none';document.getElementById('adminTabBtn').style.display=authRole==='admin'?'inline-block':'none';const lastTab=localStorage.getItem('op-last-tab')||'tab-cards';const allowed=['tab-cards','tab-pdf-editor','tab-history','tab-my-account'];const restoredTab=allowed.includes(lastTab)?lastTab:'tab-cards';switchTabDirect(restoredTab);if(restoredTab==='tab-my-account')renderAccountFields();}});}}catch(_){try{localStorage.removeItem('op-auth-session');}catch(__){}}
 
   const today = new Date();
   const curDay = String(today.getDate()).padStart(2, '0');
