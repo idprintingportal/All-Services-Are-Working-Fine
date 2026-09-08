@@ -2500,12 +2500,17 @@ body.op-light #mainApp .dashboard-card:after{color:#52637f}
   document.getElementById('pdfToolsBtn').addEventListener('click',()=>document.getElementById('pdfToolsMenu').classList.toggle('open'));
   document.querySelectorAll('[data-pdf-tab]').forEach(btn=>btn.addEventListener('click',()=>{document.getElementById('pdfToolsMenu').classList.remove('open');switchTab(btn.dataset.pdfTab);}));
   document.querySelectorAll('[data-pdf-info]').forEach(btn=>btn.addEventListener('click',()=>{document.getElementById('pdfToolsMenu').classList.remove('open');alert(btn.dataset.pdfInfo+' को जोड़ने के लिए dedicated processing engine/OCR की आवश्यकता है।');}));
+  function scrollToOperationPage(tabId){
+    const target=document.getElementById(tabId);
+    if(!target)return;
+    requestAnimationFrame(()=>target.scrollIntoView({behavior:'smooth',block:'start'}));
+  }
   async function switchTab(tabId) {
     if(!authToken || (tabId==='tab-admin' && authRole!=='admin')) return;
     if(tabId==='tab-admin') {
       if(Date.now()>=adminPanelUntil && !(await requestAdminUnlock())) return;
       if(authRole!=='admin' || Date.now()>=adminPanelUntil) return;
-      showPortalTab(tabId);await renderDistributorsTable();return;
+      showPortalTab(tabId);scrollToOperationPage(tabId);await renderDistributorsTable();return;
     }
     if(adminPanelUntil || adminUnlockPending) lockAdminPanel();
     showPortalTab(tabId);
@@ -2517,7 +2522,7 @@ body.op-light #mainApp .dashboard-card:after{color:#52637f}
     if (!authToken || (tabId === 'tab-admin' && authRole !== 'admin')) return;
     if(!authToken || (tabId==='tab-admin' && (authRole!=='admin'||Date.now()>=adminPanelUntil))) return;
     if(tabId!=='tab-admin' && adminPanelUntil) lockAdminPanel();
-    showPortalTab(tabId);
+    showPortalTab(tabId);scrollToOperationPage(tabId);
   }
   function renderAccountFields(){const r=activeDistributorSession||{};const map={accountName:r.name||'',accountOffice:r.officeName||'',accountMobile:r.mobile||'',accountEmail:r.email||authEmail||''};Object.keys(map).forEach(id=>{const el=document.getElementById(id);if(el){el.value=map[id];el.disabled=true;}});const save=document.getElementById('accountSaveBtn');if(save)save.disabled=true;}
   document.querySelectorAll('[data-account-edit]').forEach(btn=>btn.addEventListener('click',()=>{const el=document.getElementById(btn.dataset.accountEdit);if(!el)return;el.disabled=false;el.focus();const save=document.getElementById('accountSaveBtn');if(save)save.disabled=false;}));
@@ -2539,12 +2544,14 @@ body.op-light #mainApp .dashboard-card:after{color:#52637f}
   }
   function openPremiumAutoCropper(){
     switchTabDirect('tab-cards');
+    scrollToOperationPage('tab-cards');
     focusTool('premium');
     const input=document.getElementById('pvcPdfInput');
     if(input){input.closest('.upload-section')?.scrollIntoView({behavior:'smooth',block:'center'});input.focus({preventScroll:true});}
   }
   function openPremiumPdfEditor(){
     switchTabDirect('tab-pdf-editor');
+    scrollToOperationPage('tab-pdf-editor');
     focusTool('pdf');
     document.getElementById('np-editor')?.scrollIntoView({behavior:'smooth',block:'start'});
   }
