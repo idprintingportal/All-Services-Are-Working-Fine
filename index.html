@@ -4,7 +4,7 @@
 <meta name="referrer" content="no-referrer">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>OP Printing Hub</title>
+  <title>Skillo ID Print Solutions</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <!-- Warm up the Apps Script connection so login starts with less network setup time. -->
@@ -1180,12 +1180,98 @@ body.op-light #mainApp .dashboard-card:after{color:#52637f}
 @media(max-width:1050px){#mainApp .dashboard-tool-launcher{grid-template-columns:repeat(3,minmax(0,1fr))!important}}
 @media(max-width:720px){#mainApp .dashboard-tool-launcher{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:9px!important;padding:14px!important}#mainApp .dashboard-nav-title,#mainApp .dashboard-group-title{grid-column:1/-1}#mainApp .dashboard-nav-title strong{font-size:25px}#mainApp .dashboard-card{min-height:78px!important;padding:13px 36px 13px 12px!important;font-size:12px!important}#mainApp .dashboard-card:after{right:9px;bottom:8px;font-size:9px}}
 @media(max-width:430px){#mainApp .dashboard-tool-launcher{grid-template-columns:1fr!important}#mainApp .dashboard-card{min-height:68px!important}}
+﻿</style>
+<style id="skillo-machinery-theme">
+/* Skillo machinery console theme: reference-inspired metal panels, cyan circuit
+   accents and a compact login console. Existing tool procedures are untouched. */
+body:has(#loginScreen.front-home){background:#07111b!important;color:#e8f7ff!important;padding:16px!important;overflow-x:hidden}
+.portal-main-heading{display:none!important}
+#loginScreen.front-home{position:relative;isolation:isolate;max-width:1480px!important;display:grid!important;grid-template-columns:minmax(0,1.28fr) minmax(340px,.72fr)!important;grid-template-rows:auto auto auto auto auto auto auto auto!important;gap:14px!important;padding:16px 20px 28px!important;border:2px solid #486273!important;border-radius:26px!important;background:linear-gradient(145deg,#172936 0%,#0b1723 52%,#102634 100%)!important;box-shadow:0 24px 80px #000b,0 0 0 5px #07111b, inset 0 1px #a5e6ff33!important;overflow:hidden}
+#loginScreen.front-home:before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;opacity:.28;background:linear-gradient(90deg,transparent 49.7%,#25d9ff33 50%,transparent 50.3%),linear-gradient(0deg,transparent 49.7%,#25d9ff22 50%,transparent 50.3%),radial-gradient(circle at 15% 15%,#08d9ff26 0 2px,transparent 3px),radial-gradient(circle at 80% 70%,#00a8ff22 0 2px,transparent 3px);background-size:160px 160px,160px 160px,120px 120px,180px 180px}
+#loginScreen.front-home .front-nav{grid-column:1/-1;grid-row:1;margin:-16px -20px 0!important;padding:10px 18px!important;min-height:68px;border-bottom:2px solid #567888!important;border-radius:24px 24px 0 0;background:linear-gradient(180deg,#718593,#2a3d4a 45%,#111e29)!important;box-shadow:inset 0 1px #e6fbff88,0 6px 22px #0009!important;display:flex;align-items:center;gap:20px}
+#loginScreen.front-home .front-nav:after{content:"⚙  ◉  ▣";margin-left:auto;color:#9defff;font-size:23px;letter-spacing:7px;text-shadow:0 0 12px #00d9ff}
+#loginScreen.front-home .front-nav .skillo-brand{display:flex;align-items:center;gap:9px;color:#eefaff!important;font-size:17px;font-weight:900;line-height:1.02;letter-spacing:.4px;text-transform:uppercase;white-space:nowrap;text-shadow:0 2px 2px #000b}
+#loginScreen.front-home .skillo-brand img{width:45px;height:45px;object-fit:cover;object-position:center;border:2px solid #c2e8f3;border-radius:12px;background:#dfe9ed;box-shadow:0 0 0 3px #203440,0 0 16px #38dfff99}
+#loginScreen.front-home .skillo-brand small{font-size:10px;letter-spacing:1.5px;color:#8cecff}
+#loginScreen.front-home .front-nav-links{display:flex;align-items:center;gap:14px}
+#loginScreen.front-home .front-nav-links a{color:#d9f8ff!important;font-size:11px;font-weight:800;text-decoration:none;text-transform:uppercase;letter-spacing:.7px}
+#loginScreen.front-home .front-nav-links a:hover{color:#6dffff!important;text-shadow:0 0 10px #00eaff}
+#loginScreen.front-home .front-language{margin-left:auto!important;margin-right:0!important;color:#d9f8ff!important}
+#loginScreen.front-home .front-language select{background:#162b38!important;color:#e8fbff!important;border:1px solid #71d6e9!important;border-radius:8px!important}
+#loginScreen.front-home .front-menu-btn{background:linear-gradient(#3c6475,#172a36)!important;border:1px solid #8deaff!important;color:#fff!important;border-radius:10px!important;box-shadow:0 0 12px #00cfff55}
+#loginScreen.front-home .front-hero{grid-column:1;grid-row:3;min-height:122px!important;margin:0!important;padding:26px 30px!important;text-align:left!important;border:2px solid #75919d!important;border-radius:18px!important;background:linear-gradient(145deg,#53636d,#c5d0d2 48%,#667984)!important;box-shadow:inset 0 1px #fff9, inset 0 -10px 20px #15232c66,0 12px 25px #0008!important}
+#loginScreen.front-home .front-hero h1{margin:0!important;color:#0b1620!important;font-size:clamp(24px,3vw,44px)!important;line-height:1.04!important;letter-spacing:-.6px!important;text-shadow:0 1px #fff9!important}
+#loginScreen.front-home .front-hero p{display:inline-block;margin:13px 0 0!important;padding:6px 12px!important;border:1px solid #1c3c4a!important;border-radius:4px!important;background:#cfe1e2aa!important;color:#132532!important;font-weight:800!important;font-size:12px!important;box-shadow:inset 0 1px #fff9}
+#loginScreen.front-home .front-showcase{grid-column:1;grid-row:2;position:relative!important;height:clamp(330px,36vw,520px)!important;min-height:330px!important;margin:0!important;padding:20px!important;border:3px solid #697f8b!important;border-radius:20px!important;background:linear-gradient(145deg,#a8b7bc,#283c48 12%,#0a1721 50%,#768b93)!important;box-shadow:inset 0 0 0 4px #12222c,inset 0 0 0 7px #9eb0b466,0 16px 35px #000b!important;overflow:hidden!important}
+#loginScreen.front-home .front-showcase:before{content:"";position:absolute;inset:14px;z-index:0;pointer-events:none;border:2px solid #3ceaffaa;border-radius:12px;box-shadow:0 0 0 4px #0d2632,0 0 25px #00d9ff55,inset 0 0 22px #00d9ff33;background:repeating-linear-gradient(90deg,transparent 0 38px,#32dfff18 39px 40px),repeating-linear-gradient(0deg,transparent 0 38px,#32dfff12 39px 40px)}
+#loginScreen.front-home .front-showcase img{z-index:1!important;inset:30px!important;width:calc(100% - 60px)!important;height:calc(100% - 60px)!important;object-fit:contain!important;object-position:center!important;background:#eef8f9!important;border:2px solid #71dceb!important;border-radius:8px!important;box-shadow:0 0 0 4px #112733,0 0 24px #00d9ff44!important}
+#loginScreen.front-home .front-showcase .showcase-caption{z-index:5;left:50%!important;right:auto!important;bottom:22px!important;transform:translateX(-50%)!important;padding:7px 15px!important;border:1px solid #75edff!important;border-radius:5px!important;background:#071b29e8!important;color:#e2fbff!important;font-size:11px!important;font-weight:800!important;white-space:nowrap!important;box-shadow:0 0 14px #00d9ff55}
+#loginScreen.front-home .front-auth-panel{grid-column:2;grid-row:2 / span 2;align-self:stretch!important;margin:0!important;padding:28px 24px!important;border:2px solid #6d8b96!important;border-radius:18px!important;background:linear-gradient(145deg,#304753,#0d1c28 55%,#1e3441)!important;box-shadow:inset 0 1px #d6fbff55,inset 0 -18px 30px #0005,0 15px 32px #0009!important;color:#effcff!important}
+#loginScreen.front-home .front-auth-panel:before{content:"LOGIN / ACCOUNT";display:block;margin:-6px 0 18px;padding-bottom:9px;border-bottom:1px solid #5ceaff99;color:#e9fcff;font-size:22px;font-weight:900;letter-spacing:.6px;text-shadow:0 0 12px #00cfff}
+#loginScreen.front-home .front-auth-panel .badge{display:none!important}
+#loginScreen.front-home .front-auth-panel h2{display:none!important}
+#loginScreen.front-home .front-auth-panel>p{color:#9cefff!important;font-size:12px!important;text-transform:uppercase;letter-spacing:1px}
+#loginScreen.front-home .front-auth-panel .login-input{height:50px!important;margin:9px 0!important;background:#091923dd!important;border:2px solid #39d8f2!important;border-radius:8px!important;color:#f1fdff!important;box-shadow:inset 0 2px 8px #0009,0 0 10px #00b9dd22!important}
+#loginScreen.front-home .front-auth-panel .login-input::placeholder{color:#b6d6de!important}
+#loginScreen.front-home .front-auth-panel .login-btn{height:52px!important;margin-top:10px!important;border:2px solid #94fff1!important;border-radius:14px!important;background:linear-gradient(135deg,#21e5d2 0%,#0ebad6 38%,#a345ed 100%)!important;color:#071827!important;font-size:18px!important;font-weight:950!important;box-shadow:0 0 0 4px #112733,0 0 22px #12e5dc99!important;text-transform:none!important}
+#loginScreen.front-home .front-auth-panel .login-btn:hover{transform:translateY(-2px) scale(1.01)!important;filter:brightness(1.08)}
+#loginScreen.front-home .front-auth-panel .landing-auth-links{display:none!important}
+#loginScreen.front-home .front-auth-panel #errorMsg{margin-top:12px!important;color:#ffd6d6!important;background:#6e203b99!important;border:1px solid #ff7194!important}
+#loginScreen.front-home .front-status-banner,#loginScreen.front-home .front-highlights,#loginScreen.front-home .front-search,#loginScreen.front-home .front-services,#loginScreen.front-home .front-tool-catalog{grid-column:1/-1!important}
+#loginScreen.front-home .front-status-banner{grid-row:4;padding:7px 12px!important;border:1px solid #43e7f1!important;border-radius:5px!important;background:#0d3541cc!important;color:#aafcff!important;box-shadow:0 0 14px #00d9ff33!important}
+#loginScreen.front-home .front-highlights{grid-row:5;display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+#loginScreen.front-home .front-highlight{padding:10px!important;border:1px solid #4adbea!important;border-radius:7px!important;background:#112b37cc!important;color:#c8f8ff!important;font-size:11px!important;font-weight:800!important;text-align:center}
+#loginScreen.front-home .front-search{grid-row:6!important;background:#091923!important;border:1px solid #3ccfe2!important;color:#e8fbff!important;border-radius:7px!important}
+#loginScreen.front-home .front-search::placeholder{color:#8ebcc7!important}
+#loginScreen.front-home .front-services{grid-row:7!important;gap:10px!important}
+#loginScreen.front-home .front-services h3{grid-column:1/-1!important;margin:0!important;padding:8px 14px!important;border:2px solid #6f8991!important;border-radius:9px!important;background:linear-gradient(#c8d2d2,#627780)!important;color:#13222d!important;text-align:center!important;letter-spacing:1px!important;text-transform:uppercase;box-shadow:inset 0 1px #fff}
+#loginScreen.front-home .front-services .service-tile{min-height:74px!important;border:2px solid #51ddeb!important;border-radius:10px!important;background:linear-gradient(145deg,#405661,#102532)!important;color:#d8fbff!important;box-shadow:inset 0 1px #ffffff33,0 8px 16px #0007!important}
+#loginScreen.front-home .front-services .service-tile:hover{transform:translateY(-3px)!important;box-shadow:0 0 18px #00dcff88!important}
+#loginScreen.front-home .front-tool-catalog{grid-row:8!important;margin-top:0!important;border-color:#4bdced!important;background:#09202dcc!important}
+#loginScreen.front-home .front-tool-catalog .catalog-heading span{color:#6ceeff!important}
+#loginScreen.front-home .front-tool-catalog .catalog-heading h3{color:#ecfdff!important}
+#loginScreen.front-home .front-tool-catalog .catalog-heading p{color:#a9d2dc!important}
+#loginScreen.front-home .front-tool-catalog .catalog-tool{border-color:#3fd9ed!important;background:#102936!important;color:#dcfbff!important;border-radius:8px!important;box-shadow:inset 0 1px #ffffff22,0 6px 14px #0007!important}
+#loginScreen.front-home .front-tool-catalog .catalog-tool:hover{border-color:#b6ffff!important;box-shadow:0 0 15px #00dcff77!important}
+.showcase-door-ring{position:absolute;z-index:4;inset:17% 25%;pointer-events:none;border:4px solid #82f7ff;border-radius:50%;opacity:.62;transform:scale(1);box-shadow:0 0 0 8px #0a2230aa,0 0 22px #00eaff,inset 0 0 18px #00dfff;background:#07233122}
+.showcase-door-ring:before,.showcase-door-ring:after{content:"";position:absolute;top:8%;bottom:8%;width:48%;border:3px solid #cffeff;border-radius:50%;background:linear-gradient(90deg,#38e8ff18,#ffffff08);box-shadow:0 0 12px #00eaff66}
+.showcase-door-ring:before{left:-3%;border-right-color:transparent;transform-origin:100% 50%}
+.showcase-door-ring:after{right:-3%;border-left-color:transparent;transform-origin:0 50%}
+.showcase-door-ring span{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);padding:5px 9px;border:1px solid #a8ffff;border-radius:4px;background:#071d2bd9;color:#d9ffff;font-size:10px;font-weight:900;letter-spacing:1px;white-space:nowrap}
+.front-showcase.is-switching .showcase-door-ring{animation:skilloDoorCycle 1.05s cubic-bezier(.65,0,.35,1)}
+.front-showcase.is-switching .showcase-door-ring:before{animation:skilloDoorLeft 1.05s cubic-bezier(.65,0,.35,1)}
+.front-showcase.is-switching .showcase-door-ring:after{animation:skilloDoorRight 1.05s cubic-bezier(.65,0,.35,1)}
+@keyframes skilloDoorCycle{0%,100%{opacity:.55;transform:scale(1) rotate(0)}45%{opacity:1;transform:scaleX(.22) rotate(180deg)}58%{opacity:1;transform:scaleX(.22) rotate(180deg)}80%{opacity:.7;transform:scale(1.04) rotate(360deg)}}
+@keyframes skilloDoorLeft{0%,100%{transform:rotateY(0)}48%,60%{transform:rotateY(78deg)}}
+@keyframes skilloDoorRight{0%,100%{transform:rotateY(0)}48%,60%{transform:rotateY(-78deg)}}
+#mainApp{max-width:1480px!important;margin:0 auto!important;padding:16px 20px 30px!important;background:linear-gradient(145deg,#0a1823,#142a35 48%,#07131e)!important;border:2px solid #466875!important;border-radius:26px!important;box-shadow:0 24px 70px #000b,inset 0 1px #c9f8ff33!important}
+#mainApp .dashboard-status{border:1px solid #4ce6ee!important;border-radius:5px!important;background:#0c3542!important;color:#b9fcff!important;box-shadow:0 0 16px #00d9ff33!important}
+#mainApp .pdf-tools-bar{border:1px solid #5bdbea!important;border-radius:10px!important;background:linear-gradient(180deg,#506b76,#172b37)!important;box-shadow:inset 0 1px #fff5,0 8px 20px #0008!important}
+#mainApp .dashboard-tool-launcher{border:2px solid #62828e!important;border-radius:18px!important;background:linear-gradient(145deg,#53666d,#172d39 14%,#0a1b27 80%,#59727c)!important;box-shadow:inset 0 1px #ffffff66,inset 0 -12px 22px #0005,0 14px 30px #0009!important}
+#mainApp .dashboard-nav-title{padding:6px 4px 12px!important;border-bottom:1px solid #64eaf4!important}
+#mainApp .dashboard-nav-title span{color:#79f3ff!important;text-shadow:0 0 10px #00dbff}
+#mainApp .dashboard-nav-title strong{color:#f0fdff!important;text-shadow:0 2px 2px #000}
+#mainApp .dashboard-nav-title small{color:#b9d9df!important}
+#mainApp .dashboard-group-title{padding:9px 4px 6px!important;border-bottom:1px solid #60e5ef88!important;color:#e7fcff!important;text-transform:uppercase;letter-spacing:1px!important}
+#mainApp .dashboard-card{min-height:86px!important;border-radius:10px!important;background:linear-gradient(145deg,#304c58,#0e202c 62%,#172f3b)!important;color:#e9fdff!important;box-shadow:inset 0 1px #ffffff30,inset 0 -8px 12px #0004,0 8px 16px #0008!important}
+#mainApp .dashboard-card:after{color:#8cefff!important;text-shadow:0 0 8px #00dfff}
+#mainApp .dashboard-card:hover,#mainApp .dashboard-card:focus-visible{background:linear-gradient(145deg,#3d6471,#103345 62%,#1e4350)!important;box-shadow:0 0 20px #00dcff66,inset 0 1px #ffffff55!important}
+#mainApp .id-tool-card{border:2px solid #39d9ee!important}.id-tool-card:hover{border-color:#b5fbff!important}
+#mainApp .pdf-tool-card{border:2px solid #5fe3bb!important}.pdf-tool-card:hover{border-color:#c3ffe9!important}
+#mainApp .image-tool-card{border:2px solid #be8cff!important}.image-tool-card:hover{border-color:#ead7ff!important}
+#mainApp .utility-tool-card{border:2px solid #39d9ee!important}
+#mainApp .container{border:1px solid #50727f!important;border-radius:16px!important;background:#0a1722b8!important;box-shadow:inset 0 1px #ffffff18!important}
+#mainApp .container>div:first-child strong{color:#e8fcff!important;text-shadow:0 0 10px #00d9ff66}
+#mainApp .tab-content>div,#mainApp .control-panel,#mainApp .upload-box{border-color:#4f7480!important;background:#112633!important}
+#mainApp input,#mainApp select,#mainApp textarea{background:#081923!important;color:#e9fdff!important;border-color:#438d9d!important}
+#mainApp button{border-radius:9px!important}
+@media(max-width:850px){body:has(#loginScreen.front-home){padding:8px!important}#loginScreen.front-home{display:grid!important;grid-template-columns:1fr!important;gap:11px!important;padding:10px 12px 22px!important}.front-nav{grid-column:1!important;grid-row:1!important;margin:-10px -12px 0!important;padding:8px 12px!important}.front-nav-links{display:none!important}.front-nav:after{font-size:17px!important}.front-language{display:none!important}.front-hero{grid-column:1!important;grid-row:3!important;padding:20px!important;min-height:100px!important}.front-showcase{grid-column:1!important;grid-row:2!important;height:clamp(250px,72vw,390px)!important;min-height:250px!important}.front-auth-panel{grid-column:1!important;grid-row:4!important}.front-status-banner{grid-row:5!important}.front-highlights{grid-row:6!important;grid-template-columns:1fr!important}.front-search{grid-row:7!important}.front-services{grid-row:8!important}.front-tool-catalog{grid-row:9!important}.showcase-door-ring{inset:18% 24%}.skillo-brand img{width:38px!important;height:38px!important}.skillo-brand{font-size:13px!important}}
 </style>
 </head>
 <body>
 
 <div class="portal-main-heading">
-  OP PRINTING HUB
+  SKILLO ID PRINT SOLUTIONS
 </div>
 
 <!-- Contact for Registration Button -->
@@ -1197,9 +1283,10 @@ body.op-light #mainApp .dashboard-card:after{color:#52637f}
 
 <!-- 1. Login Screen with Running Ticker, Ad Images & Services Info -->
 <div id="loginScreen" class="auth-box front-home">
-  <nav class="front-nav"><strong>OP Printing Hub</strong><div class="front-nav-links" aria-label="Primary navigation"><a href="#loginScreen">Home</a><a href="#pricing">Pricing &amp; Plans</a><a href="#mainApp">All PDF Tools</a><a href="#faq">Help &amp; FAQs</a></div><label class="front-language" style="margin-left:auto;margin-right:58px;font-size:12px;color:#475569;display:flex;align-items:center;gap:6px;">🌐 <select id="frontLanguageSelect" style="border:1px solid #cbd5e1;border-radius:9px;padding:7px;background:#fff;color:#334155;"><option value="en">English</option><option value="hi">हिन्दी</option><option value="mr">मराठी</option></select></label><div class="front-menu-wrap"><button class="front-menu-btn" id="frontMenuBtn" aria-expanded="false" aria-controls="frontMenu">☰</button><div class="front-menu" id="frontMenu"><button type="button" id="frontLoginBtn">🔑 Login</button><button type="button" id="frontJoinBtn">📝 Join / Create Account</button></div></div></nav>
-  <section class="front-hero"><h1>Launch Your Digital Operations With<br>Our Print Portal</h1><p>All-in-one platform for seamless online printing and digital services.</p></section>
+  <nav class="front-nav"><strong class="skillo-brand"><img src="assets/skillo-brand-mark.png" alt="Skillo ID Print Solutions logo"> <span>Skillo ID<br><small>Print Solutions</small></span></strong><div class="front-nav-links" aria-label="Primary navigation"><a href="#loginScreen">Home</a><a href="#pricing">Pricing &amp; Plans</a><a href="#mainApp">All PDF Tools</a><a href="#faq">Help &amp; FAQs</a></div><label class="front-language" style="margin-left:auto;margin-right:58px;font-size:12px;color:#475569;display:flex;align-items:center;gap:6px;">🌐 <select id="frontLanguageSelect" style="border:1px solid #cbd5e1;border-radius:9px;padding:7px;background:#fff;color:#334155;"><option value="en">English</option><option value="hi">हिन्दी</option><option value="mr">मराठी</option></select></label><div class="front-menu-wrap"><button class="front-menu-btn" id="frontMenuBtn" aria-expanded="false" aria-controls="frontMenu">☰</button><div class="front-menu" id="frontMenu"><button type="button" id="frontLoginBtn">🔑 Login</button><button type="button" id="frontJoinBtn">📝 Join / Create Account</button></div></div></nav>
+  <section class="front-hero"><h1>Power Your Digital Printing<br>With Skillo ID Solutions</h1><p>Fast, precise and secure tools for ID cards, photos and PDF workflows.</p></section>
   <section class="front-showcase" aria-label="Printing sample slideshow">
+    <div class="showcase-door-ring" aria-hidden="true"><span>NEXT SAMPLE</span></div>
     <img class="active" src="assets/passport-hq.png" alt="Passport photo printing sample">
     <img src="assets/post-cards-hq.png" alt="Post card printing sample">
     <img src="assets/pdf-editor-hq.png" alt="PDF editor sample">
@@ -1215,7 +1302,7 @@ body.op-light #mainApp .dashboard-card:after{color:#52637f}
   <input class="front-search" id="frontServiceSearch" type="search" placeholder="⌕  Search services, forms, files... (e.g. Aadhaar, PDF)" aria-label="Search services">
   <section class="front-services"><h3>Essential Services</h3><div class="service-tile" tabindex="0" onclick="document.getElementById('loginEmail').focus()"><span>📝</span><small>Mock Test</small></div><div class="service-tile" tabindex="0" onclick="document.getElementById('loginEmail').focus()"><span>🪪</span><small>ID Card Print</small></div><div class="service-tile" tabindex="0" onclick="document.getElementById('loginEmail').focus()"><span>✂️</span><small>PVC Auto Crop</small></div><div class="service-tile" tabindex="0" onclick="document.getElementById('loginEmail').focus()"><span>🖨️</span><small>PDF Editor</small></div><div class="service-tile" tabindex="0" onclick="document.getElementById('loginEmail').focus()"><span>📷</span><small>Passport Photo</small></div></section>
   <section class="front-tool-catalog" aria-label="All portal tools">
-    <div class="catalog-heading"><span>OP PRINTING HUB</span><h3>All tools in one workspace</h3><p>Sign in once and use your everyday printing, PDF and image tools.</p></div>
+    <div class="catalog-heading"><span>SKILLO ID PRINT SOLUTIONS</span><h3>All tools in one workspace</h3><p>Sign in once and run your everyday ID, photo and PDF workflows.</p></div>
     <div class="catalog-grid">
       <button class="catalog-tool" data-tool="passport"><span>📷</span>Passport Photo Maker</button><button class="catalog-tool" data-tool="resume"><span>📄</span>Resume Maker / CV Builder</button><button class="catalog-tool" data-tool="resize"><span>📐</span>Photo Resize</button><button class="catalog-tool" data-tool="id"><span>🪪</span>ID Card Print</button><button class="catalog-tool" data-tool="aadhaar"><span>🧾</span>Aadhaar Card Print</button><button class="catalog-tool" data-tool="ayushman"><span>🏥</span>Ayushman Bharat Card</button><button class="catalog-tool" data-tool="pan"><span>💳</span>PAN Card Printing</button><button class="catalog-tool" data-tool="smart"><span>✨</span>Smart ID Card Printing</button><button class="catalog-tool" data-tool="jpgpdf"><span>🖼️</span>JPG to PDF</button><button class="catalog-tool" data-tool="pngpdf"><span>🌈</span>PNG to PDF</button><button class="catalog-tool" data-tool="merge"><span>📚</span>Merge PDF</button><button class="catalog-tool" data-tool="delete"><span>✂️</span>Delete PDF Pages</button><button class="catalog-tool" data-tool="pdfjpg"><span>🔁</span>PDF to JPG</button><button class="catalog-tool" data-tool="jpgpng"><span>🖼️</span>JPG to PNG</button><button class="catalog-tool" data-tool="pngjpg"><span>🗜️</span>PNG to JPG</button><button class="catalog-tool" data-tool="compress"><span>⚡</span>PDF Compressor</button><button class="catalog-tool" data-tool="editor"><span>✏️</span>PDF Editor</button><button class="catalog-tool" data-tool="arranger"><span>↔️</span>PDF Arranger / Reorder</button><button class="catalog-tool" data-tool="batch"><span>📦</span>Batch Image to PDF</button>
     </div>
@@ -1264,7 +1351,7 @@ body.op-light #mainApp .dashboard-card:after{color:#52637f}
     <span id="goToSignUp" hidden aria-hidden="true">Create Account</span>
     <span id="goToChangePwd" hidden aria-hidden="true">Change Password</span>
   </div>
-  <div style="display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-top:10px;">
+  <div class="landing-auth-links" style="display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-top:10px;">
     <button type="button" id="forgotIdBtn" hidden aria-hidden="true">Forgot ID</button>
     <button type="button" id="changePasswordBtn" class="auth-link" style="border:0;background:none;cursor:pointer;">🔑 Change Password</button>
     <button type="button" id="forgotPasswordBtn" class="auth-link" style="border:0;background:none;cursor:pointer;">🔒 Forgot Password</button>
@@ -1446,7 +1533,7 @@ body.op-light #mainApp .dashboard-card:after{color:#52637f}
   <div class="container">
     <!-- Top Header Bar with Live Validity Counter & Logout -->
   <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; flex-wrap: wrap; gap: 10px;">
-      <strong style="font-size:20px;color:#7dd3fc;letter-spacing:.3px;">OP Printing Hub</strong>
+      <strong style="font-size:20px;color:#7dd3fc;letter-spacing:.3px;">Skillo ID Print Solutions</strong>
       <label style="margin-left:auto;color:#cbd5e1;font-size:12px;">🌐 <select id="portalLanguageSelect" style="padding:7px 10px;border-radius:9px;border:1px solid #38bdf8;background:#0f172a;color:#fff;"><option value="en">English</option><option value="hi">हिन्दी</option><option value="mr">मराठी</option></select></label>
       <div id="validityCounterBadge" style="background: rgba(16, 185, 129, 0.15); border: 1px solid #10b981; color: #34d399; padding: 6px 14px; border-radius: 20px; font-size: 12px; font-weight: 600;">
         ⏳ Validity: Initializing...
@@ -2138,7 +2225,7 @@ body.op-light #mainApp .dashboard-card:after{color:#52637f}
     </div>
 
     <footer style="margin-top: 25px; font-size: 12px; color: var(--text-muted);">
-      Designed &amp; Developed by <strong>OP PRINTING HUB @ 2026 ALL RIGHTS RESERVED</strong>
+      Designed &amp; Developed by <strong>SKILLO ID PRINT SOLUTIONS @ 2026 ALL RIGHTS RESERVED</strong>
     </footer>
   </div>
 </div>
@@ -2246,7 +2333,7 @@ body.op-light #mainApp .dashboard-card:after{color:#52637f}
     renderOfficeWelcome(result.record);
     distributorMemoryCache=[];
   }
-  function renderOfficeWelcome(record){const welcome=document.getElementById('officeWelcome');if(!welcome)return;welcome.replaceChildren();const office=String(record?.officeName||'').trim();welcome.append(document.createTextNode(office?`Welcome · ${office}`:'Welcome to OP Printing Hub'));const note=document.createElement('small');note.textContent='Happy Business! आपका काम सफल और आसान रहे।';welcome.append(note);welcome.hidden=false;}
+  function renderOfficeWelcome(record){const welcome=document.getElementById('officeWelcome');if(!welcome)return;welcome.replaceChildren();const office=String(record?.officeName||'').trim();welcome.append(document.createTextNode(office?`Welcome · ${office}`:'Welcome to Skillo ID Print Solutions'));const note=document.createElement('small');note.textContent='Happy Business! आपका काम सफल और आसान रहे।';welcome.append(note);welcome.hidden=false;}
   function clearAuth() {
     window.dispatchEvent(new Event('portal-auth-cleared'));
     adminPanelUntil=0;
@@ -2483,7 +2570,7 @@ body.op-light #mainApp .dashboard-card:after{color:#52637f}
   const helpNav=document.getElementById('topNavRegistrationBox'),changePwd=document.getElementById('goToChangePwd');if(helpNav&&changePwd)changePwd.parentElement.appendChild(helpNav);
   document.getElementById('frontLoginBtn').addEventListener('click',()=>{document.getElementById('frontMenu').classList.remove('open');document.getElementById('loginEmail').focus();});
   document.getElementById('frontJoinBtn').addEventListener('click',()=>{document.getElementById('frontMenu').classList.remove('open');document.getElementById('goToSignUp').click();});
-  document.getElementById('frontLanguageSelect').addEventListener('change',event=>{const lang=event.target.value;const copy={en:{hero:'Launch Your Digital Operations With',sub:'All-in-one platform for seamless online printing and digital services.',services:'Essential Services'},hi:{hero:'अपना डिजिटल काम आसानी से करें',sub:'ऑनलाइन प्रिंटिंग और डिजिटल सेवाओं का एक आसान प्लेटफॉर्म।',services:'जरूरी सेवाएँ'},mr:{hero:'तुमचे डिजिटल काम सहज करा',sub:'ऑनलाइन प्रिंटिंग आणि डिजिटल सेवांसाठी एक सोपे प्लॅटफॉर्म.',services:'महत्त्वाच्या सेवा'}}[lang];const hero=document.querySelector('.front-hero h1'),sub=document.querySelector('.front-hero p'),heading=document.querySelector('.front-services h3');if(hero)hero.innerHTML=copy.hero+'<br>OP Printing Hub';if(sub)sub.textContent=copy.sub;if(heading)heading.textContent=copy.services;});
+  document.getElementById('frontLanguageSelect').addEventListener('change',event=>{const lang=event.target.value;const copy={en:{hero:'Power Your Digital Printing',sub:'Fast, precise and secure tools for ID cards, photos and PDF workflows.',services:'Essential Services'},hi:{hero:'अपना डिजिटल प्रिंटिंग काम आसान करें',sub:'आईडी कार्ड, फोटो और PDF के लिए तेज, सटीक और सुरक्षित टूल्स।',services:'जरूरी सेवाएँ'},mr:{hero:'तुमचे डिजिटल प्रिंटिंग काम सोपे करा',sub:'आयडी कार्ड, फोटो आणि PDF साठी जलद, अचूक आणि सुरक्षित टूल्स.',services:'महत्त्वाच्या सेवा'}}[lang];const hero=document.querySelector('.front-hero h1'),sub=document.querySelector('.front-hero p'),heading=document.querySelector('.front-services h3');if(hero)hero.innerHTML=copy.hero+'<br>with Skillo ID Solutions';if(sub)sub.textContent=copy.sub;if(heading)heading.textContent=copy.services;});
   document.getElementById('frontLanguageSelect').addEventListener('change',e=>{document.getElementById('portalLanguageSelect').value=e.target.value;applyPortalLanguage(e.target.value);});
   document.getElementById('portalLanguageSelect').addEventListener('change',event=>{const lang=event.target.value;document.documentElement.lang=lang==='hi'?'hi':lang==='mr'?'mr':'en';document.querySelectorAll('#portalLanguageSelect,#frontLanguageSelect').forEach(select=>select.value=lang);});
   const opTranslations={hi:{'ID Card (5 Slots)':'आईडी कार्ड (5 स्लॉट)','Passport Photos':'पासपोर्ट फोटो','Name & Date Passport':'नाम और तारीख पासपोर्ट','4×6 Photo Print':'4×6 फोटो प्रिंट','PDF Editor':'पीडीएफ एडिटर','PDF Arranger':'पीडीएफ अरेंजर','Image Resizer':'इमेज रिसाइजर','PDF Compressor':'पीडीएफ कंप्रेसर','History':'इतिहास','PDF Tools':'पीडीएफ टूल्स','Download JPG Image':'JPG डाउनलोड करें','Download PNG Image':'PNG डाउनलोड करें'},mr:{'ID Card (5 Slots)':'आयडी कार्ड (5 स्लॉट)','Passport Photos':'पासपोर्ट फोटो','Name & Date Passport':'नाव आणि तारीख पासपोर्ट','4×6 Photo Print':'4×6 फोटो प्रिंट','PDF Editor':'पीडीएफ एडिटर','PDF Arranger':'पीडीएफ अरेंजर','Image Resizer':'इमेज रिसायझर','PDF Compressor':'पीडीएफ कंप्रेसर','History':'इतिहास','PDF Tools':'पीडीएफ टूल्स','Download JPG Image':'JPG डाउनलोड करा','Download PNG Image':'PNG डाउनलोड करा'}};
@@ -2612,7 +2699,7 @@ body.op-light #mainApp .dashboard-card:after{color:#52637f}
   function openRecovery(kind){
     const title=document.getElementById('accountRecoveryTitle'),msg=document.getElementById('accountRecoveryText'),go=document.getElementById('accountRecoveryContinue'),fields=document.getElementById('recoveryFields');
     fields.hidden=kind==='id';
-    if(kind==='id'){title.textContent='🪪 Forgot ID';msg.textContent='अपनी registered ID जानने के लिए admin से संपर्क करें। सुरक्षा कारणों से account details खुले में नहीं दिखाई जातीं।';go.textContent='Contact Admin';go.onclick=()=>alert('कृपया OP Printing Hub admin को अपना नाम और registered mobile/payment reference भेजें।');}
+    if(kind==='id'){title.textContent='🪪 Forgot ID';msg.textContent='अपनी registered ID जानने के लिए admin से संपर्क करें। सुरक्षा कारणों से account details खुले में नहीं दिखाई जातीं।';go.textContent='Contact Admin';go.onclick=()=>alert('कृपया Skillo ID Print Solutions admin को अपना नाम और registered mobile/payment reference भेजें।');}
     else {title.textContent='🔒 Forgot Password';msg.textContent='Registered email पर OTP भेजें। यही dialog खुला रहेगा और अगले step में OTP field आएगी.';go.textContent='Send OTP';const email=document.getElementById('recoveryEmail'),otp=document.getElementById('recoveryOtp'),np=document.getElementById('recoveryNewPassword'),cp=document.getElementById('recoveryConfirmPassword'),status=document.getElementById('recoveryStatus');[email,otp,np,cp].forEach(x=>{x.hidden=x!==email;x.value='';});status.textContent='';go.onclick=async()=>{let cooldown=false;try{go.disabled=true;go.textContent='⏳ Sending…';if(otp.hidden){await secureApi({action:'requestPasswordReset',email:email.value.trim().toLowerCase()});otp.hidden=false;go.textContent='Verify OTP';status.textContent='✅ OTP sent. Email से OTP डालें.';otp.focus();return;}if(np.hidden){const verified=await secureApi({action:'verifyPasswordOtp',email:email.value.trim().toLowerCase(),otp:otp.value.trim()});go.dataset.resetToken=verified.resetToken;np.hidden=false;cp.hidden=false;go.textContent='Reset Password';status.textContent='✅ OTP verified.';np.focus();return;}if(np.value!==cp.value)throw new Error('Passwords do not match.');await secureApi({action:'resetPassword',email:email.value.trim().toLowerCase(),resetToken:go.dataset.resetToken,newPass:np.value});status.textContent='✅ Password changed. अब नए password से login करें.';go.hidden=true;}catch(e){if(/Too many attempts/i.test(e.message)){cooldown=true;let left=120;clearInterval(recoveryCooldownTimer);const tick=()=>{status.textContent='⏳ Retry OTP in '+left+' seconds';go.textContent='Wait '+left+'s';if(left<=0){clearInterval(recoveryCooldownTimer);go.disabled=false;go.textContent='Send OTP';}left--;};tick();recoveryCooldownTimer=setInterval(tick,1000);}else status.textContent=otp.hidden?'❌ OTP sending failed. Please try again.':'❌ OTP verification failed. Please try again.';}finally{if(!cooldown){go.disabled=false;if(!go.hidden&&go.textContent.includes('Sending'))go.textContent='Send OTP';}}};}
     recoveryDialog.showModal();
   }
@@ -6590,12 +6677,12 @@ try {
 <div id="infoModal" class="info-modal" hidden role="dialog" aria-modal="true" aria-labelledby="infoModalTitle"><div class="info-modal-card"><button id="infoModalClose" class="info-modal-close" type="button" aria-label="Close">×</button><h2 id="infoModalTitle"></h2><div id="infoModalBody"></div></div></div>
 <footer class="op-footer" aria-label="Website footer">
   <div class="op-footer-grid">
-    <div><h3>OP Printing Hub</h3><p>Digital printing and document tools for everyday work.</p><span class="made-india">Made in India 🇮🇳</span></div>
+    <div><h3>Skillo ID Print Solutions</h3><p>Digital printing and document tools for everyday work.</p><span class="made-india">Made in India 🇮🇳</span></div>
     <div><h4>About &amp; Support</h4><a href="#about">About Us</a><a href="#contact">Contact Us</a><a href="#faq">Help &amp; FAQs</a></div>
     <div><h4>Legal</h4><a href="#privacy">Privacy Policy</a><a href="#terms">Terms &amp; Conditions</a><a href="#disclaimer">Disclaimer</a><a href="#cookies">Cookie Policy</a></div>
     <div><h4>Resources</h4><a href="#pricing">Pricing &amp; Plans</a><a href="#mainApp">All PDF Tools</a><a href="#sitemap">Sitemap</a><a href="#contact">✉️ Support Email</a><a href="#social">🔗 Social Media</a></div>
   </div>
-  <div class="op-footer-bottom">© 2026 OP Printing Hub · Secure portal access</div>
+  <div class="op-footer-bottom">© 2026 Skillo ID Print Solutions · Secure portal access</div>
 </footer>
 <script>
 (() => {
@@ -6603,12 +6690,22 @@ try {
   const samplePaths=Array.from({length:25},(_,i)=>`assets/frame-samples/sample_${String(i+1).padStart(2,'0')}.png`);
   if(showcase){samplePaths.forEach((src,i)=>{if(!showcase.querySelector(`img[src="${src}"]`)){const img=document.createElement('img');img.src=src;img.alt=`Printing sample ${i+1}`;showcase.insertBefore(img,showcase.querySelector('.showcase-caption'));}});}
   const slides=[...document.querySelectorAll('.front-showcase img')];
-  if(slides.length>1){let index=0;setInterval(()=>{slides[index].classList.remove('active');index=(index+1)%slides.length;slides[index].classList.add('active');},3500);}
+  if(slides.length>1){
+    let index=0,switching=false;
+    const advanceSlide=()=>{
+      if(switching)return;
+      switching=true;
+      showcase.classList.add('is-switching');
+      window.setTimeout(()=>{slides[index].classList.remove('active');index=(index+1)%slides.length;slides[index].classList.add('active');},520);
+      window.setTimeout(()=>{showcase.classList.remove('is-switching');switching=false;},1100);
+    };
+    setInterval(advanceSlide,3500);
+  }
   const phrases=['Automate your printing workflow','Crop ID cards with confidence','Create clean A4-ready documents'];
   const subPhrases=['All-in-one platform for seamless online printing and digital services.','Fast, secure and print-ready tools for everyday work.','Create, edit and download your documents with ease.'];
   const hero=document.querySelector('#loginScreen .front-hero h1');
   const sub=document.querySelector('#loginScreen .front-hero p');
-  if(hero){let i=0;setInterval(()=>{i=(i+1)%phrases.length;hero.classList.add('op-type-fade');if(sub)sub.style.opacity='0';setTimeout(()=>{hero.innerHTML=phrases[i]+'<br>with OP Printing Hub';if(sub){sub.textContent=subPhrases[i];sub.style.opacity='1';}hero.classList.remove('op-type-fade')},220)},4200);}
+  if(hero){let i=0;setInterval(()=>{i=(i+1)%phrases.length;hero.classList.add('op-type-fade');if(sub)sub.style.opacity='0';setTimeout(()=>{hero.innerHTML=phrases[i]+'<br>with Skillo ID Solutions';if(sub){sub.textContent=subPhrases[i];sub.style.opacity='1';}hero.classList.remove('op-type-fade')},220)},4200);}
 })();
 </script>
 <script>
@@ -6616,7 +6713,7 @@ try {
   const data={
     pricing:{title:'Pricing & Plans',body:'<p>Portal access and premium features are managed according to the plans shown inside your account.</p><ul><li>Basic ID Cropper: Front/Back image upload and manual adjustment.</li><li>Premium Auto ID Cropper: PDF upload, automatic layout detection and manual fallback.</li><li>PDF Editor Premium: advanced PDF editing after approval.</li><li>Other tools: passport sheets, 4×6 photo print, PDF conversion, arranger, resizer and compressor.</li></ul><p>Final price, validity and approval status are always shown in the portal before submission.</p>'},
     faq:{title:'Help & FAQs',body:'<ul><li><b>Login नहीं हो रहा?</b> Email/password जाँचें और जरूरत हो तो Forgot Password से OTP लें.</li><li><b>OTP नहीं आया?</b> Spam folder देखें और 120-second cooldown पूरा होने दें.</li><li><b>Auto crop गलत है?</b> साफ, सीधी और high-resolution PDF/image लगाएँ; manual crop fallback इस्तेमाल करें.</li><li><b>PDF premium कैसे मिलेगा?</b> Portal में payment proof submit करें और admin approval की प्रतीक्षा करें.</li><li><b>फाइल सुरक्षित है?</b> केवल आवश्यक processing के लिए भेजी जाती है; sensitive files का backup अपने पास रखें.</li></ul>'},
-    about:{title:'About OP Printing Hub',body:'<p>OP Printing Hub एक practical digital printing portal है, जो ID cards, passport photos, PDF processing और A4 print workflows को एक जगह सरल बनाने के लिए बनाया गया है.</p><p>हमारा लक्ष्य छोटे printing operators और distributors को तेज, साफ और आसान tools देना है.</p>'},
+    about:{title:'About Skillo ID Print Solutions',body:'<p>Skillo ID Print Solutions एक practical digital printing portal है, जो ID cards, passport photos, PDF processing और A4 print workflows को एक जगह सरल बनाने के लिए बनाया गया है.</p><p>हमारा लक्ष्य छोटे printing operators और distributors को तेज, साफ और आसान tools देना है.</p>'},
     contact:{title:'Contact Us',body:'<p>Support के लिए अपने portal administrator से संपर्क करें।</p><p><b>Support email:</b> अपना verified support email यहाँ configure करें।</p><p>कृपया message में registered email, समस्या का screenshot और समय शामिल करें। अपना password या OTP कभी साझा न करें.</p>'},
     privacy:{title:'Privacy Policy',body:'<p>Portal account, payment proof और uploaded documents को केवल requested service, access control और support के लिए process किया जाता है. Password और OTP किसी के साथ साझा न करें.</p>'},
     terms:{title:'Terms & Conditions',body:'<ul><li>Portal का उपयोग केवल lawful printing और document work के लिए करें.</li><li>अपलोड की गई files और दिए गए details की जिम्मेदारी user की है.</li><li>Premium features approval और validity rules के अधीन हैं.</li><li>Security bypass, abuse, spam या unauthorized access निषिद्ध है.</li><li>Service availability network और third-party providers पर निर्भर हो सकती है.</li></ul>'},
