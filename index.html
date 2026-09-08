@@ -3816,19 +3816,29 @@ body.op-light #mainApp .dashboard-card:after{color:#52637f}
     return best>c.width*.006;
   }
   function pvcCropBox(c,x,y,w,h){const out=document.createElement('canvas');out.width=Math.max(1,Math.round(c.width*w));out.height=Math.max(1,Math.round(c.height*h));out.getContext('2d').drawImage(c,Math.round(c.width*x),Math.round(c.height*y),out.width,out.height,0,0,out.width,out.height);return pvcTrimPrintableArea(out);}
+  function pvcCropRawBox(c,x,y,w,h){const out=document.createElement('canvas');out.width=Math.max(1,Math.round(c.width*w));out.height=Math.max(1,Math.round(c.height*h));out.getContext('2d').drawImage(c,Math.round(c.width*x),Math.round(c.height*y),out.width,out.height,0,0,out.width,out.height);return out;}
   function pvcSplitPair(c,vertical){
     if(vertical){const cut=Math.floor(c.height/2),a=pvcCropBox(c,0,0,1,cut/c.height),b=pvcCropBox(c,0,cut/c.height,1,1-cut/c.height);return [a,b];}
     const cut=Math.floor(c.width/2),a=pvcCropBox(c,0,0,cut/c.width,1),b=pvcCropBox(c,cut/c.width,0,1-cut/c.width,1);return [a,b];
   }
   function pvcInset(c,pct=.018){const x=Math.round(c.width*pct),y=Math.round(c.height*pct),out=document.createElement('canvas');out.width=Math.max(1,c.width-2*x);out.height=Math.max(1,c.height-2*y);out.getContext('2d').drawImage(c,x,y,out.width,out.height,0,0,out.width,out.height);return out;}
   function pvcInsetPair(pair,pct){return pair.map(c=>c?pvcInset(c,pct):c);}
+  function pvcVoterPair(c){
+    // e-EPIC layout: the printable front/back cards are side-by-side in the
+    // upper band; the heading and verification text below must not be included.
+    // Keep the full card band, trim to its rectangle, then inset to hide the
+    // original black border while preserving the card content and QR code.
+    const upperBand=pvcCropRawBox(c,.035,.09,.93,.23);
+    const pair=pvcSplitPair(upperBand,false);
+    return pvcInsetPair(pair.map(card=>pvcTrimPrintableArea(card)),.028);
+  }
   function pvcDocumentProfile(file,type,c){
     const n=(file.name||'').toLowerCase(),t=type==='auto'?(n.includes('pan')?'pan':n.includes('aadhaar')||n.includes('eaadhaar')?'aadhaar':n.includes('maha')?'mahasarathi':n.includes('eshram')?'eshram':n.includes('abha')?'abha':n.includes('maandhan')?'maandhan':n.includes('epic')||n.includes('voter')?'voter':'auto'):type;
     if(t==='aadhaar')return pvcInsetPair(pvcSplitPair(pvcCropBox(c,0,.52,1,.48),false),.022);
     if(t==='pan')return pvcInsetPair(pvcSplitPair(pvcCropBox(c,0,.76,1,.20),false),.035);
     if(['eshram','abha','maandhan','mahasarathi'].includes(t))return pvcSplitPair(c,true);
     // e-EPIC PDFs contain the printable front/back cards near the top; the lower half is verification text.
-    if(t==='voter')return pvcInsetPair(pvcSplitPair(pvcCropBox(c,.04,.16,.92,.20),false),.025);
+    if(t==='voter')return pvcVoterPair(c);
     return null;
   }
   function pvcShowPair(pair,label){const front=pair[0],back=pair[1]||document.createElement('canvas');if(!back.width){back.width=front.width;back.height=front.height;back.getContext('2d').fillStyle='#fff';back.getContext('2d').fillRect(0,0,back.width,back.height);}autoFitCardToCanvas(front.toDataURL('image/jpeg',.95),canvas1,ctx1,true);autoFitCardToCanvas(back.toDataURL('image/jpeg',.95),canvas2,ctx2,false);pvcPdfStatus.textContent=`✅ ${label} का Front/Back preview तैयार है। जरूरत हो तो Manual Crop दबाएँ।`;document.getElementById('pvcPasswordBox').hidden=true;addCardBtn.disabled=false;}
