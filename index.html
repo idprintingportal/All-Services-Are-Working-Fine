@@ -1123,6 +1123,64 @@ body.op-light #mainApp .tab-btn{background:#eef4ff!important;color:#243b69!impor
 body.op-light #mainApp .universal-export-panel,body.op-light #mainApp .added-card-row{background:#eef4ff!important;color:#12203a!important;border-color:#9fb2cc!important}
 body.op-light #loginScreen.front-home .front-auth-panel{background:rgba(255,255,255,.78)!important;border-color:#b8c7dc!important;color:#12203a!important}.op-light .front-auth-panel h2,.op-light .front-auth-panel>p{color:#12203a!important}.op-light .front-auth-panel .login-input{background:#fff!important;color:#12203a!important;border-color:#91a4bf!important}.op-light .front-auth-panel .login-input::placeholder{color:#64748b!important}.op-light .front-home .front-highlight,.op-light .front-home .service-tile{color:#12203a!important;background:#ffffff70!important;border-color:#b8c7dc!important}.op-light .front-home .front-search{background:#fff!important;color:#12203a!important;border-color:#91a4bf!important}.op-light .front-home .front-search::placeholder{color:#64748b!important}
 </style>
+<style>
+/* Slideshow-first landing layout: preserve the complete sample image and move the
+   animated information into a compact, flat strip below it. */
+#loginScreen.front-home .front-showcase{grid-column:1!important;grid-row:2!important;height:clamp(320px,35vw,500px)!important;min-height:320px!important;margin:0!important;padding:12px!important;background:rgba(248,250,252,.96)!important;border:1px solid #dbeafe!important;border-radius:20px!important;box-shadow:0 14px 34px #02061733!important}
+#loginScreen.front-home .front-showcase img{inset:12px!important;width:calc(100% - 24px)!important;height:calc(100% - 24px)!important;object-fit:contain!important;object-position:center!important;background:#fff!important;border-radius:10px!important}
+#loginScreen.front-home .front-showcase .showcase-caption{left:50%!important;right:auto!important;bottom:18px!important;transform:translateX(-50%)!important;padding:5px 10px!important;border-radius:7px!important;font-size:10px!important;white-space:nowrap!important;background:#07152fcc!important}
+#loginScreen.front-home .front-hero{grid-column:1!important;grid-row:3!important;min-height:0!important;margin:0!important;padding:12px 16px 8px!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;text-align:center!important}
+#loginScreen.front-home .front-hero h1{font-size:clamp(19px,2.4vw,32px)!important;line-height:1.15!important;margin:0!important;text-shadow:none!important}
+#loginScreen.front-home .front-hero p{margin:8px auto 0!important;padding:6px 12px!important;border-top:1px solid #7dd3fc88!important;border-bottom:1px solid #7dd3fc88!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;font-size:11px!important;line-height:1.35!important}
+#loginScreen.front-home .front-status-banner{grid-column:1/-1!important;grid-row:4!important;min-height:0!important;margin:0!important;padding:6px 10px!important;border:0!important;border-top:1px solid #5eead466!important;border-bottom:1px solid #5eead466!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;backdrop-filter:none!important;font-size:11px!important}
+#loginScreen.front-home .front-highlights{grid-column:1/-1!important;grid-row:5!important}
+#loginScreen.front-home .front-search{grid-column:1/-1!important;grid-row:6!important}
+#loginScreen.front-home .front-services{grid-column:1/-1!important;grid-row:7!important}
+#loginScreen.front-home .front-tool-catalog{grid-column:1/-1!important;grid-row:8!important}
+@media(max-width:850px){
+  #loginScreen.front-home{display:grid!important;grid-template-columns:minmax(0,1fr)!important;gap:12px!important;padding:12px 16px 28px!important}
+  #loginScreen.front-home .front-nav{grid-column:1!important;grid-row:1!important;margin:-12px -16px 0!important;padding:0 16px!important}
+  #loginScreen.front-home .front-showcase{grid-column:1!important;grid-row:2!important;height:clamp(240px,64vw,370px)!important;min-height:240px!important}
+  #loginScreen.front-home .front-hero{grid-column:1!important;grid-row:3!important}
+  #loginScreen.front-home .front-auth-panel{grid-column:1!important;grid-row:4!important;margin:0!important;min-width:0!important}
+  #loginScreen.front-home .front-status-banner{grid-row:5!important}
+  #loginScreen.front-home .front-highlights{grid-row:6!important}
+  #loginScreen.front-home .front-search{grid-row:7!important}
+  #loginScreen.front-home .front-services{grid-row:8!important}
+  #loginScreen.front-home .front-tool-catalog{grid-row:9!important}
+  #loginScreen.front-home .front-showcase .showcase-caption{max-width:calc(100% - 28px);overflow:hidden;text-overflow:ellipsis}
+}
+</style>
+<style>
+/* Logged-in workspace launcher: large category cards with the existing working
+   onclick procedures preserved on every button. */
+#mainApp .dashboard-tool-launcher{display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:12px!important;align-items:stretch!important;padding:20px!important;border:1px solid #ffffff2d!important;border-radius:22px!important;background:linear-gradient(145deg,#07152fcc,#172554cc)!important;box-shadow:0 18px 42px #02061755!important}
+#mainApp .dashboard-nav-title{grid-column:1/-1;display:flex;flex-direction:column;gap:5px;padding:2px 2px 8px;color:#f8fbff}
+#mainApp .dashboard-nav-title span{font-size:10px;letter-spacing:2px;color:#67e8f9;font-weight:800}
+#mainApp .dashboard-nav-title strong{font-size:clamp(24px,2.8vw,38px);line-height:1.1;color:#fff}
+#mainApp .dashboard-nav-title small{font-size:12px;color:#cbd5e1}
+#mainApp .dashboard-group-title{grid-column:1/-1;margin-top:6px;padding:7px 2px 3px;border-bottom:1px solid #ffffff30;color:#fff;font-size:13px;font-weight:800;letter-spacing:.2px}
+#mainApp .dashboard-group-title:before{content:'•';display:inline-block;margin-right:7px;color:#67e8f9;font-size:18px;line-height:0;vertical-align:-1px}
+#mainApp .pdf-group-title:before{color:#6ee7b7}#mainApp .image-group-title:before{color:#c4b5fd}
+#mainApp .dashboard-card{position:relative;display:flex!important;align-items:center!important;justify-content:flex-start!important;gap:10px!important;width:100%!important;min-height:82px!important;padding:16px 46px 16px 16px!important;border-radius:14px!important;background:#0f1b31e8!important;color:#f8fbff!important;text-align:left!important;font-size:14px!important;font-weight:800!important;line-height:1.25!important;white-space:normal!important;transition:transform .2s ease,box-shadow .2s ease,background .2s ease!important}
+#mainApp .dashboard-card:after{content:'Open →';position:absolute;right:13px;bottom:11px;font-size:10px;font-weight:700;letter-spacing:.2px;color:#cbd5e1;opacity:.9}
+#mainApp .dashboard-card:hover,#mainApp .dashboard-card:focus-visible{transform:translateY(-3px)!important;background:#17243def!important;outline:none!important}
+#mainApp .dashboard-card.active{transform:none!important}
+#mainApp .id-tool-card{border:1px solid #22d3eeaa!important;box-shadow:0 0 0 1px #0e749044 inset,0 8px 20px #0891b233!important}
+#mainApp .id-tool-card:hover,#mainApp .id-tool-card:focus-visible,#mainApp .id-tool-card.active{border-color:#67e8f9!important;box-shadow:0 0 0 1px #22d3ee inset,0 12px 26px #0891b255!important}
+#mainApp .pdf-tool-card{border:1px solid #6ee7b7aa!important;box-shadow:0 0 0 1px #04785744 inset,0 8px 20px #0596692e!important}
+#mainApp .pdf-tool-card:hover,#mainApp .pdf-tool-card:focus-visible{border-color:#86efac!important;box-shadow:0 0 0 1px #34d399 inset,0 12px 26px #05966955!important}
+#mainApp .image-tool-card{border:1px solid #c4b5fdaa!important;box-shadow:0 0 0 1px #6d28d944 inset,0 8px 20px #7c3aed2e!important}
+#mainApp .image-tool-card:hover,#mainApp .image-tool-card:focus-visible{border-color:#ddd6fe!important;box-shadow:0 0 0 1px #a78bfa inset,0 12px 26px #7c3aed55!important}
+#mainApp .utility-tool-card{border:1px solid #67e8f9aa!important;box-shadow:0 0 0 1px #0e749044 inset,0 8px 20px #0891b233!important}
+body.op-light #mainApp .dashboard-tool-launcher{background:linear-gradient(145deg,#f8fbff,#eaf2ff)!important;border-color:#9fb2cc!important}
+body.op-light #mainApp .dashboard-nav-title strong{color:#12203a!important}body.op-light #mainApp .dashboard-nav-title small{color:#42526a!important}body.op-light #mainApp .dashboard-group-title{color:#12203a;border-color:#b8c7dc}
+body.op-light #mainApp .dashboard-card{background:#fff!important;color:#243b69!important}
+body.op-light #mainApp .dashboard-card:after{color:#52637f}
+@media(max-width:1050px){#mainApp .dashboard-tool-launcher{grid-template-columns:repeat(3,minmax(0,1fr))!important}}
+@media(max-width:720px){#mainApp .dashboard-tool-launcher{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:9px!important;padding:14px!important}#mainApp .dashboard-nav-title,#mainApp .dashboard-group-title{grid-column:1/-1}#mainApp .dashboard-nav-title strong{font-size:25px}#mainApp .dashboard-card{min-height:78px!important;padding:13px 36px 13px 12px!important;font-size:12px!important}#mainApp .dashboard-card:after{right:9px;bottom:8px;font-size:9px}}
+@media(max-width:430px){#mainApp .dashboard-tool-launcher{grid-template-columns:1fr!important}#mainApp .dashboard-card{min-height:68px!important}}
+</style>
 </head>
 <body>
 
@@ -1365,20 +1423,24 @@ body.op-light #loginScreen.front-home .front-auth-panel{background:rgba(255,255,
   <div style="max-width:720px;margin:0 auto 14px;padding:0 4px;">
     <input id="portalServiceSearch" type="search" placeholder="🔎 Search tools: ID card, PVC, passport, PDF, JPG…" aria-label="Search portal tools" style="width:100%;padding:12px 15px;border-radius:12px;border:1px solid rgba(56,189,248,.35);background:rgba(15,23,42,.85);color:#fff;font-size:13px;">
   </div>
-  <div class="tab-nav" aria-label="Main tools">
-    <button class="tab-btn active" id="basicIdCropperBtn" onclick="switchTab('tab-cards');focusTool('basic')">✂️ Basic ID Cropper</button>
-    <button class="tab-btn" id="premiumAutoCropperBtn" onclick="openPremiumAutoCropper()">✨ Premium Auto ID Cropper</button>
-    <button class="tab-btn" id="premiumPdfEditorBtn" onclick="openPremiumPdfEditor()">📄 Premium PDF Editor</button>
-    <button class="tab-btn" onclick="switchTab('tab-passport')">👤 Passport Photos</button>
-    <button class="tab-btn" onclick="switchTab('tab-name-passport')">📝 Name & Date Passport</button>
-    <button class="tab-btn" onclick="switchTab('tab-4x6')">🖼️ 4×6 Photo Print</button>
-    <button class="tab-btn" onclick="openPremiumPdfEditor()">✏️ PDF Editor</button>
-    <button class="tab-btn" onclick="switchTab('tab-arranger')">📑 PDF Arranger</button>
-    <button class="tab-btn" onclick="switchTab('tab-jpg-to-pdf')">📄 PDF, JPG, PNG to PDF</button>
-    <button class="tab-btn" onclick="switchTab('tab-resizer')">📐 Image Resizer</button>
-    <button class="tab-btn" onclick="switchTab('tab-pdf-to-jpg')">🖼️ PDF to JPG (Manual DPI)</button>
-    <button class="tab-btn" onclick="switchTab('tab-pdf-compressor')">🗜️ PDF Compressor</button>
-    <button class="tab-btn" onclick="switchTab('tab-history')" style="border-color: rgba(56, 189, 248, 0.5);">📂 History</button>
+  <div class="tab-nav dashboard-tool-launcher" aria-label="Main tools">
+    <div class="dashboard-nav-title"><span>OPH PRINTING HUB</span><strong>All tools in one workspace</strong><small>Choose a tool to open its working procedure.</small></div>
+    <div class="dashboard-group-title id-group-title">ID &amp; Smart Cards</div>
+    <button class="tab-btn dashboard-card id-tool-card active" id="basicIdCropperBtn" onclick="switchTab('tab-cards');focusTool('basic')">✂️ Basic ID Cropper</button>
+    <button class="tab-btn dashboard-card id-tool-card" id="premiumAutoCropperBtn" onclick="openPremiumAutoCropper()">✨ Premium Auto ID Cropper</button>
+    <button class="tab-btn dashboard-card id-tool-card" onclick="switchTab('tab-passport')">👤 Passport Photos</button>
+    <button class="tab-btn dashboard-card id-tool-card" onclick="switchTab('tab-name-passport')">📝 Name &amp; Date Passport</button>
+    <button class="tab-btn dashboard-card id-tool-card" onclick="switchTab('tab-4x6')">🖼️ 4×6 Photo Print</button>
+    <div class="dashboard-group-title pdf-group-title">PDF Tools</div>
+    <button class="tab-btn dashboard-card pdf-tool-card" id="premiumPdfEditorBtn" onclick="openPremiumPdfEditor()">📄 Premium PDF Editor</button>
+    <button class="tab-btn dashboard-card pdf-tool-card" onclick="openPremiumPdfEditor()">✏️ PDF Editor</button>
+    <button class="tab-btn dashboard-card pdf-tool-card" onclick="switchTab('tab-arranger')">📑 PDF Arranger</button>
+    <button class="tab-btn dashboard-card pdf-tool-card" onclick="switchTab('tab-jpg-to-pdf')">📄 PDF, JPG, PNG to PDF</button>
+    <button class="tab-btn dashboard-card pdf-tool-card" onclick="switchTab('tab-pdf-to-jpg')">🖼️ PDF to JPG (Manual DPI)</button>
+    <button class="tab-btn dashboard-card pdf-tool-card" onclick="switchTab('tab-pdf-compressor')">🗜️ PDF Compressor</button>
+    <div class="dashboard-group-title image-group-title">Convert &amp; Image</div>
+    <button class="tab-btn dashboard-card image-tool-card" onclick="switchTab('tab-resizer')">📐 Image Resizer</button>
+    <button class="tab-btn dashboard-card utility-tool-card" onclick="switchTab('tab-history')" style="border-color: rgba(56, 189, 248, 0.5);">📂 History</button>
   </div>
 
   <div class="container">
