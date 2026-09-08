@@ -3823,18 +3823,29 @@ body.op-light #mainApp .dashboard-card:after{color:#52637f}
   }
   function pvcInset(c,pct=.018){const x=Math.round(c.width*pct),y=Math.round(c.height*pct),out=document.createElement('canvas');out.width=Math.max(1,c.width-2*x);out.height=Math.max(1,c.height-2*y);out.getContext('2d').drawImage(c,x,y,out.width,out.height,0,0,out.width,out.height);return out;}
   function pvcInsetPair(pair,pct){return pair.map(c=>c?pvcInset(c,pct):c);}
+  function pvcAadhaarPair(c){
+    // e-Aadhaar sample layout: the printable front/back cards are the bottom
+    // row, immediately below the scissors/dotted cutting line. Crop that row
+    // directly so the large upper information page is never part of preview.
+    // The two cards have a narrow centre separator, so keep separate boxes
+    // instead of splitting the whole page at its mathematical midpoint.
+    const front=pvcCropRawBox(c,.078,.718,.416,.222);
+    const back=pvcCropRawBox(c,.508,.718,.416,.222);
+    return [front,back].map(card=>pvcInset(pvcTrimPrintableArea(card),.022));
+  }
   function pvcVoterPair(c){
     // e-EPIC layout: the printable front/back cards are side-by-side in the
-    // upper band; the heading and verification text below must not be included.
-    // Keep the full card band, trim to its rectangle, then inset to hide the
-    // original black border while preserving the card content and QR code.
-    const upperBand=pvcCropRawBox(c,.035,.09,.93,.23);
-    const pair=pvcSplitPair(upperBand,false);
-    return pvcInsetPair(pair.map(card=>pvcTrimPrintableArea(card)),.028);
+    // upper band. Use separate rectangles because the centre separator is not
+    // the page midpoint; this prevents the right card from being shifted or
+    // clipped. The trim + inset hides the source card border while preserving
+    // the complete card content and QR code.
+    const front=pvcCropRawBox(c,.045,.105,.43,.20);
+    const back=pvcCropRawBox(c,.54,.105,.43,.20);
+    return [front,back].map(card=>pvcInset(pvcTrimPrintableArea(card),.028));
   }
   function pvcDocumentProfile(file,type,c){
     const n=(file.name||'').toLowerCase(),t=type==='auto'?(n.includes('pan')?'pan':n.includes('aadhaar')||n.includes('eaadhaar')?'aadhaar':n.includes('maha')?'mahasarathi':n.includes('eshram')?'eshram':n.includes('abha')?'abha':n.includes('maandhan')?'maandhan':n.includes('epic')||n.includes('voter')?'voter':'auto'):type;
-    if(t==='aadhaar')return pvcInsetPair(pvcSplitPair(pvcCropBox(c,0,.52,1,.48),false),.022);
+    if(t==='aadhaar')return pvcAadhaarPair(c);
     if(t==='pan')return pvcInsetPair(pvcSplitPair(pvcCropBox(c,0,.76,1,.20),false),.035);
     if(['eshram','abha','maandhan','mahasarathi'].includes(t))return pvcSplitPair(c,true);
     // e-EPIC PDFs contain the printable front/back cards near the top; the lower half is verification text.
