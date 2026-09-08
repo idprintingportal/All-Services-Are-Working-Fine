@@ -1107,6 +1107,19 @@ body.op-light{background:linear-gradient(135deg,#dbeafe,#f5d0fe,#ccfbf1)!importa
 </style>
 <style>html.session-bootstrap #loginScreen{display:none!important}html.session-bootstrap #mainApp{display:block!important}</style>
 <script>(function(){try{const s=JSON.parse(localStorage.getItem('op-auth-session')||'null');if(s&&s.token&&Number(s.expires)>Date.now())document.documentElement.classList.add('session-bootstrap');}catch(_){}})();</script>
+<style>
+/* Light mode contrast: dark ink on light glass, readable controls and statuses. */
+body.op-light{--text-main:#12203a;--text-muted:#42526a;--accent-blue:#075985;--accent-purple:#5b21b6;--border-color:#b8c7dc;--card-bg:rgba(255,255,255,.86)}
+body.op-light #mainApp{color:#12203a!important;background:rgba(248,250,252,.9)!important}
+body.op-light #mainApp .container,body.op-light #mainApp .tab-content>div,body.op-light #mainApp .control-panel,body.op-light #mainApp .upload-box,body.op-light #mainApp .pdf-tools-bar,body.op-light #mainApp .dashboard-status{color:#12203a!important;background:rgba(255,255,255,.92)!important;border-color:#b8c7dc!important}
+body.op-light #mainApp .tab-content h1,body.op-light #mainApp .tab-content h2,body.op-light #mainApp .tab-content h3,body.op-light #mainApp .tab-content h4,body.op-light #mainApp .tab-content p,body.op-light #mainApp .tab-content label,body.op-light #mainApp .tab-content small,body.op-light #mainApp .tab-content td,body.op-light #mainApp .tab-content th,body.op-light #mainApp .tab-content output{color:#12203a!important}
+body.op-light #mainApp .tab-content p,body.op-light #mainApp .tab-content small,body.op-light #mainApp .tab-content label{color:#42526a!important}
+body.op-light #mainApp input,body.op-light #mainApp select,body.op-light #mainApp textarea{background:#fff!important;color:#12203a!important;border-color:#91a4bf!important}
+body.op-light #mainApp input::placeholder,body.op-light #mainApp textarea::placeholder{color:#64748b!important}
+body.op-light #mainApp .tab-btn{background:#eef4ff!important;color:#243b69!important;border-color:#9fb2cc!important}.op-light #mainApp .tab-btn.active,.op-light #mainApp .tab-btn:hover{color:#fff!important}.op-light #mainApp .admin-corner-btn{color:#fff!important}
+body.op-light #mainApp .universal-export-panel,body.op-light #mainApp .added-card-row{background:#eef4ff!important;color:#12203a!important;border-color:#9fb2cc!important}
+body.op-light #loginScreen.front-home .front-auth-panel{background:rgba(255,255,255,.78)!important;border-color:#b8c7dc!important;color:#12203a!important}.op-light .front-auth-panel h2,.op-light .front-auth-panel>p{color:#12203a!important}.op-light .front-auth-panel .login-input{background:#fff!important;color:#12203a!important;border-color:#91a4bf!important}.op-light .front-auth-panel .login-input::placeholder{color:#64748b!important}.op-light .front-home .front-highlight,.op-light .front-home .service-tile{color:#12203a!important;background:#ffffff70!important;border-color:#b8c7dc!important}.op-light .front-home .front-search{background:#fff!important;color:#12203a!important;border-color:#91a4bf!important}.op-light .front-home .front-search::placeholder{color:#64748b!important}
+</style>
 </head>
 <body>
 
