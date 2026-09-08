@@ -1043,7 +1043,7 @@ body:has(#loginScreen.front-home){background:#edf3f8!important}
 @media(max-width:850px){.front-auth-panel{display:block;margin:18px 0;padding:24px 18px}.front-home .front-showcase{min-height:260px;margin:18px 0}}
 </style>
 <style>
-/* Original OP Printing Hub visual system: calm ink, sky and mint surfaces. */
+/* Base visual system retained for compatibility; Skillo theme overrides it below. */
 :root{--op-ink:#172033;--op-sky:#2563eb;--op-mint:#10b981;--op-surface:#f8fafc}
 #mainApp{color:var(--op-surface)}
 #mainApp .admin-corner-btn{background:linear-gradient(135deg,#f59e0b,#dc2626)!important;color:#fff!important;border:2px solid #fde68a!important;box-shadow:0 8px 24px #dc262666!important;font-weight:800!important}
@@ -1191,7 +1191,11 @@ body:has(#loginScreen.front-home){background:#07111b!important;color:#e8f7ff!imp
 #loginScreen.front-home .front-nav{grid-column:1/-1;grid-row:1;margin:-16px -20px 0!important;padding:10px 18px!important;min-height:68px;border-bottom:2px solid #567888!important;border-radius:24px 24px 0 0;background:linear-gradient(180deg,#718593,#2a3d4a 45%,#111e29)!important;box-shadow:inset 0 1px #e6fbff88,0 6px 22px #0009!important;display:flex;align-items:center;gap:20px}
 #loginScreen.front-home .front-nav:after{content:"⚙  ◉  ▣";margin-left:auto;color:#9defff;font-size:23px;letter-spacing:7px;text-shadow:0 0 12px #00d9ff}
 #loginScreen.front-home .front-nav .skillo-brand{display:flex;align-items:center;gap:9px;color:#eefaff!important;font-size:17px;font-weight:900;line-height:1.02;letter-spacing:.4px;text-transform:uppercase;white-space:nowrap;text-shadow:0 2px 2px #000b}
-#loginScreen.front-home .skillo-brand img{width:45px;height:45px;object-fit:cover;object-position:center;border:2px solid #c2e8f3;border-radius:12px;background:#dfe9ed;box-shadow:0 0 0 3px #203440,0 0 16px #38dfff99}
+#loginScreen.front-home .skillo-logo-box{position:relative;display:grid;place-items:center;flex:0 0 45px;width:45px;height:45px;border:2px solid #c2e8f3;border-radius:12px;background:radial-gradient(circle at 35% 30%,#effcff,#83aab6 48%,#203440 100%);box-shadow:0 0 0 3px #203440,0 0 16px #38dfff99;overflow:hidden}
+#loginScreen.front-home .skillo-logo-box:before{content:"⚙";position:absolute;color:#0d2a39;font-size:30px;opacity:.35;line-height:1}
+#loginScreen.front-home .skillo-logo-box img{position:relative;z-index:1;width:100%;height:100%;object-fit:cover;object-position:center;border:0;border-radius:10px;background:#dfe9ed;box-shadow:none}
+#loginScreen.front-home .skillo-logo-fallback{position:relative;z-index:2;color:#06202e;font-size:15px;font-weight:950;letter-spacing:-1px}
+#loginScreen.front-home .skillo-brand>img{width:45px;height:45px;object-fit:cover;object-position:center;border:2px solid #c2e8f3;border-radius:12px;background:#dfe9ed;box-shadow:0 0 0 3px #203440,0 0 16px #38dfff99}
 #loginScreen.front-home .skillo-brand small{font-size:10px;letter-spacing:1.5px;color:#8cecff}
 #loginScreen.front-home .front-nav-links{display:flex;align-items:center;gap:14px}
 #loginScreen.front-home .front-nav-links a{color:#d9f8ff!important;font-size:11px;font-weight:800;text-decoration:none;text-transform:uppercase;letter-spacing:.7px}
@@ -1265,7 +1269,7 @@ body:has(#loginScreen.front-home){background:#07111b!important;color:#e8f7ff!imp
 #mainApp .tab-content>div,#mainApp .control-panel,#mainApp .upload-box{border-color:#4f7480!important;background:#112633!important}
 #mainApp input,#mainApp select,#mainApp textarea{background:#081923!important;color:#e9fdff!important;border-color:#438d9d!important}
 #mainApp button{border-radius:9px!important}
-@media(max-width:850px){body:has(#loginScreen.front-home){padding:8px!important}#loginScreen.front-home{display:grid!important;grid-template-columns:1fr!important;gap:11px!important;padding:10px 12px 22px!important}.front-nav{grid-column:1!important;grid-row:1!important;margin:-10px -12px 0!important;padding:8px 12px!important}.front-nav-links{display:none!important}.front-nav:after{font-size:17px!important}.front-language{display:none!important}.front-hero{grid-column:1!important;grid-row:3!important;padding:20px!important;min-height:100px!important}.front-showcase{grid-column:1!important;grid-row:2!important;height:clamp(250px,72vw,390px)!important;min-height:250px!important}.front-auth-panel{grid-column:1!important;grid-row:4!important}.front-status-banner{grid-row:5!important}.front-highlights{grid-row:6!important;grid-template-columns:1fr!important}.front-search{grid-row:7!important}.front-services{grid-row:8!important}.front-tool-catalog{grid-row:9!important}.showcase-door-ring{inset:18% 24%}.skillo-brand img{width:38px!important;height:38px!important}.skillo-brand{font-size:13px!important}}
+@media(max-width:850px){body:has(#loginScreen.front-home){padding:8px!important}#loginScreen.front-home{display:grid!important;grid-template-columns:1fr!important;gap:11px!important;padding:10px 12px 22px!important}.front-nav{grid-column:1!important;grid-row:1!important;margin:-10px -12px 0!important;padding:8px 12px!important}.front-nav-links{display:none!important}.front-nav:after{font-size:17px!important}.front-language{display:none!important}.front-hero{grid-column:1!important;grid-row:3!important;padding:20px!important;min-height:100px!important}.front-showcase{grid-column:1!important;grid-row:2!important;height:clamp(250px,72vw,390px)!important;min-height:250px!important}.front-auth-panel{grid-column:1!important;grid-row:4!important}.front-status-banner{grid-row:5!important}.front-highlights{grid-row:6!important;grid-template-columns:1fr!important}.front-search{grid-row:7!important}.front-services{grid-row:8!important}.front-tool-catalog{grid-row:9!important}.showcase-door-ring{inset:18% 24%}.skillo-logo-box{flex-basis:38px!important;width:38px!important;height:38px!important}.skillo-brand{font-size:13px!important}}
 </style>
 </head>
 <body>
@@ -1283,7 +1287,7 @@ body:has(#loginScreen.front-home){background:#07111b!important;color:#e8f7ff!imp
 
 <!-- 1. Login Screen with Running Ticker, Ad Images & Services Info -->
 <div id="loginScreen" class="auth-box front-home">
-  <nav class="front-nav"><strong class="skillo-brand"><img src="assets/skillo-brand-mark.png" alt="Skillo ID Print Solutions logo"> <span>Skillo ID<br><small>Print Solutions</small></span></strong><div class="front-nav-links" aria-label="Primary navigation"><a href="#loginScreen">Home</a><a href="#pricing">Pricing &amp; Plans</a><a href="#mainApp">All PDF Tools</a><a href="#faq">Help &amp; FAQs</a></div><label class="front-language" style="margin-left:auto;margin-right:58px;font-size:12px;color:#475569;display:flex;align-items:center;gap:6px;">🌐 <select id="frontLanguageSelect" style="border:1px solid #cbd5e1;border-radius:9px;padding:7px;background:#fff;color:#334155;"><option value="en">English</option><option value="hi">हिन्दी</option><option value="mr">मराठी</option></select></label><div class="front-menu-wrap"><button class="front-menu-btn" id="frontMenuBtn" aria-expanded="false" aria-controls="frontMenu">☰</button><div class="front-menu" id="frontMenu"><button type="button" id="frontLoginBtn">🔑 Login</button><button type="button" id="frontJoinBtn">📝 Join / Create Account</button></div></div></nav>
+  <nav class="front-nav"><strong class="skillo-brand"><span class="skillo-logo-box"><img src="assets/skillo-brand-mark.png" alt="Skillo ID Print Solutions logo" onerror="this.hidden=true;this.nextElementSibling.hidden=false"><span class="skillo-logo-fallback" hidden>SI</span></span> <span>Skillo ID<br><small>Print Solutions</small></span></strong><div class="front-nav-links" aria-label="Primary navigation"><a href="#loginScreen">Home</a><a href="#pricing">Pricing &amp; Plans</a><a href="#mainApp">All PDF Tools</a><a href="#faq">Help &amp; FAQs</a></div><label class="front-language" style="margin-left:auto;margin-right:58px;font-size:12px;color:#475569;display:flex;align-items:center;gap:6px;">🌐 <select id="frontLanguageSelect" style="border:1px solid #cbd5e1;border-radius:9px;padding:7px;background:#fff;color:#334155;"><option value="en">English</option><option value="hi">हिन्दी</option><option value="mr">मराठी</option></select></label><div class="front-menu-wrap"><button class="front-menu-btn" id="frontMenuBtn" aria-expanded="false" aria-controls="frontMenu">☰</button><div class="front-menu" id="frontMenu"><button type="button" id="frontLoginBtn">🔑 Login</button><button type="button" id="frontJoinBtn">📝 Join / Create Account</button></div></div></nav>
   <section class="front-hero"><h1>Power Your Digital Printing<br>With Skillo ID Solutions</h1><p>Fast, precise and secure tools for ID cards, photos and PDF workflows.</p></section>
   <section class="front-showcase" aria-label="Printing sample slideshow">
     <div class="showcase-door-ring" aria-hidden="true"><span>NEXT SAMPLE</span></div>
@@ -3910,6 +3914,14 @@ body:has(#loginScreen.front-home){background:#07111b!important;color:#e8f7ff!imp
   }
   function pvcInset(c,pct=.018){const x=Math.round(c.width*pct),y=Math.round(c.height*pct),out=document.createElement('canvas');out.width=Math.max(1,c.width-2*x);out.height=Math.max(1,c.height-2*y);out.getContext('2d').drawImage(c,x,y,out.width,out.height,0,0,out.width,out.height);return out;}
   function pvcInsetPair(pair,pct){return pair.map(c=>c?pvcInset(c,pct):c);}
+  function pvcStackedPair(c,frontY,frontH,backY,backH,inset=.022){
+    // MahaSarathi and Maandhan PDFs place one complete card above the other.
+    // Crop each band independently, trim to its visible outer border, then
+    // inset slightly so the source border/fade is not printed in the preview.
+    const front=pvcCropRawBox(c,0,frontY,1,frontH);
+    const back=pvcCropRawBox(c,0,backY,1,backH);
+    return [front,back].map(card=>pvcInset(pvcTrimPrintableArea(card),inset));
+  }
   function pvcAadhaarPair(c){
     // e-Aadhaar sample layout: the printable front/back cards are the bottom
     // row, immediately below the scissors/dotted cutting line. Crop that row
@@ -3934,7 +3946,9 @@ body:has(#loginScreen.front-home){background:#07111b!important;color:#e8f7ff!imp
     const n=(file.name||'').toLowerCase(),t=type==='auto'?(n.includes('pan')?'pan':n.includes('aadhaar')||n.includes('eaadhaar')?'aadhaar':n.includes('maha')?'mahasarathi':n.includes('eshram')?'eshram':n.includes('abha')?'abha':n.includes('maandhan')?'maandhan':n.includes('epic')||n.includes('voter')?'voter':'auto'):type;
     if(t==='aadhaar')return pvcAadhaarPair(c);
     if(t==='pan')return pvcInsetPair(pvcSplitPair(pvcCropBox(c,0,.76,1,.20),false),.035);
-    if(['eshram','abha','maandhan','mahasarathi'].includes(t))return pvcSplitPair(c,true);
+    if(t==='mahasarathi')return pvcStackedPair(c,.01,.27,.29,.28,.022);
+    if(t==='maandhan')return pvcStackedPair(c,.00,.27,.275,.275,.022);
+    if(['eshram','abha'].includes(t))return pvcSplitPair(c,true);
     // e-EPIC PDFs contain the printable front/back cards near the top; the lower half is verification text.
     if(t==='voter')return pvcVoterPair(c);
     return null;
