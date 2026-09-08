@@ -7,6 +7,9 @@
   <title>OP Printing Hub</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <!-- Warm up the Apps Script connection so login starts with less network setup time. -->
+  <link rel="preconnect" href="https://script.google.com">
+  <link rel="preconnect" href="https://script.googleusercontent.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
   
   <!-- PDF.js Standalone -->
@@ -2495,12 +2498,17 @@ body.op-light #loginScreen.front-home .front-auth-panel{background:rgba(255,255,
     document.getElementById('pendingUploadScreen').style.display='none';document.getElementById('pendingScreen').style.display='block';
     document.getElementById('pendingStatus').textContent=state==='rejected'?'Payment rejected. Contact admin or upload corrected proof.':'Your application is awaiting admin approval.';
   }
+  let loginInFlight=false;
   async function handleLogin() {
+    if(loginInFlight) return;
     const email=loginEmail.value.trim().toLowerCase(), password=loginPass.value;
-    authBtn.disabled=true;const loginLabel=authBtn.textContent;authBtn.textContent='⏳ Loading…';
+    if(!email||!password){errorMsg.textContent='⚠️ ईमेल आईडी और पासवर्ड दर्ज करें।';errorMsg.style.display='block';return;}
+    loginInFlight=true;
+    authBtn.disabled=true;const loginLabel=authBtn.textContent;authBtn.textContent='⏳ लॉगिन हो रहा है…';
+    errorMsg.style.display='none';
     try {
-      const previousToken=authToken;
-      if(previousToken) { try {await secureApi({action:'logout'});} catch(_) {} }
+      // A new login does not need a blocking logout request. The old server session
+      // expires normally, while this browser immediately replaces its local session.
       clearAuth();
       const result=await secureApi({action:'login',email,password});
       acceptSession(result,email);
@@ -2523,11 +2531,13 @@ body.op-light #loginScreen.front-home .front-auth-panel{background:rgba(255,255,
         const days=Math.max(0,Math.ceil((Number(result.record.expiryTime)-Date.now())/86400000));
         document.getElementById('validityCounterBadge').textContent=`👤 ${result.record.name} | Validity: ${days} Days Left`;
       }
-      initAllCanvases();
+      // Let the authenticated dashboard paint first; canvas placeholders are cheap
+      // and can be initialized on the next frame without delaying login completion.
+      requestAnimationFrame(()=>{try{initAllCanvases();}catch(_){}});
     } catch(error) {
       clearAuth();mainApp.style.display='none';loginScreen.style.display='block';
       errorMsg.textContent=error.message;errorMsg.style.display='block';if(/maintenance|चल रहा है/i.test(error.message))alert('🛠️ '+error.message);
-    } finally {authBtn.disabled=false;authBtn.textContent=loginLabel;}
+    } finally {loginInFlight=false;authBtn.disabled=false;authBtn.textContent=loginLabel;}
   }
   const recoveryDialog=document.getElementById('accountRecoveryDialog');
   function openRecovery(kind){
