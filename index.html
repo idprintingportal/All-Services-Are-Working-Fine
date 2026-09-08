@@ -1004,7 +1004,7 @@ body:has(#loginScreen.front-home){background:radial-gradient(circle at 10% 10%,#
 .dashboard-status{padding:10px 15px;margin:0 auto 15px;border:1px solid #34d39966;border-radius:14px;background:linear-gradient(90deg,#064e3b88,#0f766e55);color:#a7f3d0;text-align:center;font-weight:700;letter-spacing:.1px;box-shadow:0 8px 22px #10b98122}
 .welcome-office{padding:16px 20px;margin:0 auto 18px;border:1px solid #60a5fa88;border-radius:16px;background:linear-gradient(110deg,#1d4ed855,#7c3aed44);color:#f8fafc;text-align:center;font-size:clamp(18px,2.4vw,28px);font-weight:800;letter-spacing:.2px;box-shadow:0 10px 28px #2563eb33}.welcome-office small{display:block;margin-top:5px;color:#bfdbfe;font-size:13px;font-weight:600}
   .premium-only{display:none!important}.premium-crop-mode .premium-only{display:block!important}
-  .premium-preview{display:none}.premium-crop-mode .premium-preview{display:flex!important;gap:16px;justify-content:center;flex-wrap:wrap}
+  .premium-preview{display:none}.premium-crop-mode .premium-preview{display:flex!important;gap:16px;justify-content:center;flex-wrap:wrap}.basic-preview{display:flex!important;gap:16px;justify-content:center;flex-wrap:wrap}
   .premium-only .upload-box{margin-left:auto;margin-right:auto;text-align:center}
   /* Landing information footer must never appear inside the logged-in portal. */
   #mainApp:not([style*="display: none"]) ~ .op-footer{display:none!important}
@@ -1043,6 +1043,10 @@ body:has(#loginScreen.front-home){background:#edf3f8!important}
 /* Original OP Printing Hub visual system: calm ink, sky and mint surfaces. */
 :root{--op-ink:#172033;--op-sky:#2563eb;--op-mint:#10b981;--op-surface:#f8fafc}
 #mainApp{color:var(--op-surface)}
+#mainApp .admin-corner-btn{background:linear-gradient(135deg,#f59e0b,#dc2626)!important;color:#fff!important;border:2px solid #fde68a!important;box-shadow:0 8px 24px #dc262666!important;font-weight:800!important}
+#mainApp .new-distributor-alert{display:none;margin:0 auto 14px;max-width:1180px;padding:11px 16px;border:1px solid #fbbf24;border-radius:12px;background:linear-gradient(90deg,#451a03,#78350f,#451a03);color:#fef3c7;font-weight:800;text-align:center;overflow:hidden}
+#mainApp .new-distributor-alert span{display:inline-block;animation:opNoticeSlide 14s linear infinite;white-space:nowrap}
+@keyframes opNoticeSlide{from{transform:translateX(100%)}to{transform:translateX(-100%)}}
 #mainApp .tab-nav{padding:10px;border:1px solid #ffffff22;border-radius:18px;background:#111c31aa;box-shadow:0 10px 30px #02061733}
 #mainApp .tab-btn{border-radius:12px!important;background:#1d2b46;color:#dbeafe;border:1px solid #ffffff1f!important}
 #mainApp .tab-btn.active,#mainApp .tab-btn:hover{background:linear-gradient(135deg,#2563eb,#0ea5e9)!important;color:#fff;border-color:#7dd3fc!important}
@@ -1095,9 +1099,9 @@ body:not(.op-light) .front-tool-catalog{background:linear-gradient(135deg,#16243
   <nav class="front-nav"><strong>OP Printing Hub</strong><div class="front-nav-links" aria-label="Primary navigation"><a href="#loginScreen">Home</a><a href="#pricing">Pricing &amp; Plans</a><a href="#mainApp">All PDF Tools</a><a href="#faq">Help &amp; FAQs</a></div><label class="front-language" style="margin-left:auto;margin-right:58px;font-size:12px;color:#475569;display:flex;align-items:center;gap:6px;">🌐 <select id="frontLanguageSelect" style="border:1px solid #cbd5e1;border-radius:9px;padding:7px;background:#fff;color:#334155;"><option value="en">English</option><option value="hi">हिन्दी</option><option value="mr">मराठी</option></select></label><div class="front-menu-wrap"><button class="front-menu-btn" id="frontMenuBtn" aria-expanded="false" aria-controls="frontMenu">☰</button><div class="front-menu" id="frontMenu"><button type="button" id="frontLoginBtn">🔑 Login</button><button type="button" id="frontJoinBtn">📝 Join / Create Account</button></div></div></nav>
   <section class="front-hero"><h1>Launch Your Digital Operations With<br>Our Print Portal</h1><p>All-in-one platform for seamless online printing and digital services.</p></section>
   <section class="front-showcase" aria-label="Printing sample slideshow">
-    <img class="active" src="assets/passport.png" alt="Passport photo printing sample">
-    <img src="assets/post-cards.png" alt="Post card printing sample">
-    <img src="assets/pdf-editor.png" alt="PDF editor sample">
+    <img class="active" src="assets/passport-hq.png" alt="Passport photo printing sample">
+    <img src="assets/post-cards-hq.png" alt="Post card printing sample">
+    <img src="assets/pdf-editor-hq.png" alt="PDF editor sample">
     <img src="assets/frame-samples/sample_01.png" alt="Frame printing sample">
     <div class="showcase-caption">🖨️ Print samples · Passport · Post cards · PDF Editor</div>
   </section>
@@ -1332,12 +1336,11 @@ body:not(.op-light) .front-tool-catalog{background:linear-gradient(135deg,#16243
     <button class="tab-btn" onclick="switchTab('tab-pdf-to-jpg')">🖼️ PDF to JPG (Manual DPI)</button>
     <button class="tab-btn" onclick="switchTab('tab-pdf-compressor')">🗜️ PDF Compressor</button>
     <button class="tab-btn" onclick="switchTab('tab-history')" style="border-color: rgba(56, 189, 248, 0.5);">📂 History</button>
-    <button id="adminTabBtn" class="tab-btn" onclick="switchTab('tab-admin')" style="display:none; border-color: #f59e0b; color:#fbbf24;">⚙️ Admin Panel</button>
   </div>
 
   <div class="container">
     <!-- Top Header Bar with Live Validity Counter & Logout -->
-    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; flex-wrap: wrap; gap: 10px;">
+  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; flex-wrap: wrap; gap: 10px;">
       <strong style="font-size:20px;color:#7dd3fc;letter-spacing:.3px;">OP Printing Hub</strong>
       <label style="margin-left:auto;color:#cbd5e1;font-size:12px;">🌐 <select id="portalLanguageSelect" style="padding:7px 10px;border-radius:9px;border:1px solid #38bdf8;background:#0f172a;color:#fff;"><option value="en">English</option><option value="hi">हिन्दी</option><option value="mr">मराठी</option></select></label>
       <div id="validityCounterBadge" style="background: rgba(16, 185, 129, 0.15); border: 1px solid #10b981; color: #34d399; padding: 6px 14px; border-radius: 20px; font-size: 12px; font-weight: 600;">
@@ -1345,8 +1348,10 @@ body:not(.op-light) .front-tool-catalog{background:linear-gradient(135deg,#16243
       </div>
       <button id="themeToggleBtn" class="theme-toggle" type="button" aria-label="Toggle dark mode">🌙 Dark mode</button>
       <button id="myAccountTabBtn" class="theme-toggle my-account-corner" type="button" onclick="switchTab('tab-my-account')" style="border-color: #a78bfa99;">👤 My Account</button>
+      <button id="adminTabBtn" class="theme-toggle admin-corner-btn" onclick="switchTab('tab-admin')" style="display:none;">⚙️ Admin Panel</button>
       <button id="logoutBtn" class="logout-btn">🔒 Logout</button>
     </div>
+    <div id="newDistributorAlert" class="new-distributor-alert" role="status" aria-live="polite"><span id="newDistributorAlertText"></span></div>
 
     <!-- Distributor Notification Banner with QR/Image & Reply Payment Screenshot Option -->
     <div id="distributorNoticeBanner" style="display:none; background: rgba(245, 158, 11, 0.2); border: 1px solid #fbbf24; color: #fef08a; padding: 14px 18px; border-radius: 12px; margin-bottom: 15px; font-size: 13px; text-align: left;">
@@ -1417,7 +1422,7 @@ body:not(.op-light) .front-tool-catalog{background:linear-gradient(135deg,#16243
         <input type="file" id="card2Input" accept="image/*">
       </div>
 
-      <div class="preview-container premium-preview">
+      <div class="preview-container premium-preview basic-preview" id="basicCardPreview">
         <div class="preview-box">
           <h4>Front Card Preview</h4>
           <canvas id="canvas1" width="1013" height="638" style="width: 180px;"></canvas>
@@ -1431,6 +1436,7 @@ body:not(.op-light) .front-tool-catalog{background:linear-gradient(135deg,#16243
       </div>
 
       <div class="btn-group">
+        <button id="basicPreviewBtn" class="action-btn" type="button">👁️ Preview Cards</button>
         <button id="addCardBtn" class="action-btn btn-add" disabled>➕ Add This Card to A4 Sheet</button>
         <button id="resetPageBtn" class="action-btn btn-reset">🔄 Clear A4 Page</button>
       </div>
@@ -2262,6 +2268,8 @@ body:not(.op-light) .front-tool-catalog{background:linear-gradient(135deg,#16243
     try { records=await getDistributorsListCloud(); }
     catch(error) { tbody.textContent=error.message; return; }
     if(authRole!=='admin' || Date.now()>=adminPanelUntil) {tbody.replaceChildren();return;}
+    const alertBox=document.getElementById('newDistributorAlert'),alertText=document.getElementById('newDistributorAlertText'),latest=records.slice().sort((a,b)=>Number(b.assignedTimestamp||b.createdAt||0)-Number(a.assignedTimestamp||a.createdAt||0))[0];
+    if(latest&&alertBox&&alertText){alertText.textContent=`🆕 New distributor joined: ${latest.name||latest.email} · ${latest.officeName||'New account'} · ${new Date(Number(latest.assignedTimestamp||latest.createdAt||Date.now())).toLocaleString()}`;alertBox.style.display='block';}
     tbody.replaceChildren();
     for(const d of records) {
       const tr=document.createElement('tr');
@@ -3727,6 +3735,7 @@ body:not(.op-light) .front-tool-catalog{background:linear-gradient(135deg,#16243
   document.getElementById('pvcUnlockBtn').addEventListener('click',()=>{const f=pvcPdfInput.files[0];if(f)pvcRenderPdf(f,document.getElementById('pvcPdfPassword').value).catch(e=>{pvcPdfStatus.textContent='❌ '+e.message;});});
   pvcSideMode.addEventListener('change',()=>{const f=pvcPdfInput.files[0];if(f)pvcRenderPdf(f).catch(e=>{pvcPdfStatus.textContent='❌ '+e.message;});});
   cardPrintMode.addEventListener('change',()=>{slotCounter.dataset.mode=cardPrintMode.value;addCardBtn.textContent=cardPrintMode.value==='pvc'?'➕ Add PVC Card to A4':cardPrintMode.value==='auto'?'➕ Auto-Place on A4':'➕ Add This Card to A4 Sheet';});
+  document.getElementById('basicPreviewBtn')?.addEventListener('click',()=>{document.getElementById('basicCardPreview')?.scrollIntoView({behavior:'smooth',block:'center'});document.getElementById('pvcPdfStatus').textContent=(img1Loaded||img2Loaded)?'👁️ Front/Back preview ऊपर दिख रहा है। Manual Crop के लिए संबंधित button दबाएँ।':'पहले Front और Back image चुनें।';});
 
   document.getElementById('card1Input').addEventListener('change', (e) => {
     const file = e.target.files[0];
