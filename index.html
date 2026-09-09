@@ -1434,6 +1434,7 @@ body:has(#loginScreen.front-home){background:#07111b!important;color:#e8f7ff!imp
   <button id="signUpBtn" class="login-btn" style="background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);">✅ Create Account</button>
   </div>
   <div id="signUpStatusMsg" style="font-size:13px; margin-top:12px; display:none; font-weight:500;"></div>
+  <a id="whatsappChannelBtn" href="https://whatsapp.com/channel/0029Vb8pVZ99cDDacDq9X642" target="_blank" rel="noopener noreferrer" hidden class="login-btn" style="display:block; text-decoration:none; text-align:center; margin-top:10px; background:linear-gradient(135deg,#25d366 0%,#128c7e 100%);">📢 Follow our WhatsApp Channel</a>
 
   <div>
     <span id="backToLoginFromSignUp" class="auth-link">⬅️ Already have account? Login</span>
@@ -3562,6 +3563,7 @@ body:has(#loginScreen.front-home){background:#07111b!important;color:#e8f7ff!imp
       signUpStatusMsg.innerText = '✅ आपका आवेदन सफलतापूर्वक भेज दिया गया है। एडमिन आपके भुगतान screenshot की समीक्षा करेगा और तभी login approved होगा।';
       signUpStatusMsg.style.color = '#34d399';
       signUpStatusMsg.style.display = 'block';
+      document.getElementById('whatsappChannelBtn').hidden = false;
 
       setTimeout(() => {
         signUpScreen.style.display = 'none';
@@ -3576,7 +3578,8 @@ body:has(#loginScreen.front-home){background:#07111b!important;color:#e8f7ff!imp
         signUpPaymentScreenshot.value = '';
         document.querySelector('input[name="planType"][value="1month"]').checked = true;
         signUpStatusMsg.style.display = 'none';
-      }, 2200);
+        document.getElementById('whatsappChannelBtn').hidden = true;
+      }, 7000);
     } else {
       signUpStatusMsg.innerText = '⚠️ अकाउंट बनाने में समस्या हुई, कृपया फिर से प्रयास करें!';
       signUpStatusMsg.style.color = '#ef4444';
