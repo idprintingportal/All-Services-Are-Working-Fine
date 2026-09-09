@@ -4166,12 +4166,26 @@ body:has(#loginScreen.front-home){background:#07111b!important;color:#e8f7ff!imp
   });
 
   downloadPdfBtn.addEventListener('click', () => {
+    if (!addedCardsCount) return;
     const { jsPDF } = window.jspdf;
-    const pdf = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
-    pdf.addImage(whitePngDataUrl(a4Canvas), 'PNG', 0, 0, 210, 297);
-    
+    // Keep the 2480×3508 A4 render for print clarity, but embed it as a
+    // high-quality JPEG in a compressed PDF instead of a huge raw PNG stream.
+    // This keeps Premium Auto ID exports practical for upload/download while
+    // preserving small text, seals and QR codes.
+    const buildPdf = quality => {
+      const pdf = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4', compress: true });
+      const image = whiteJpegDataUrl(a4Canvas, quality);
+      pdf.addImage(image, 'JPEG', 0, 0, 210, 297, undefined, 'MEDIUM');
+      return pdf;
+    };
+    let quality = .90;
+    let pdf = buildPdf(quality);
+    let blob = pdf.output('blob');
+    // A 6 MB ceiling avoids the old 30+ MB PNG export. Lower quality only if
+    // an unusually detailed sheet still exceeds the practical upload size.
+    if (blob.size > 6 * 1024 * 1024) { quality = .84; pdf = buildPdf(quality); blob = pdf.output('blob'); }
+    if (blob.size > 6 * 1024 * 1024) { quality = .78; pdf = buildPdf(quality); blob = pdf.output('blob'); }
     const fileName = `A4_Cards_Sheet_${addedCardsCount}_Cards.pdf`;
-    const blob = pdf.output('blob');
     pdf.save(fileName);
     saveToHistory('ID Card Print (5-Slots)', fileName, blob, 'application/pdf');
   });
