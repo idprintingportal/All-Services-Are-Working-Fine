@@ -3962,25 +3962,43 @@ body:has(#loginScreen.front-home){background:#07111b!important;color:#e8f7ff!imp
     const back=pvcCropRawBox(c,0,backY,1,backH);
     return [front,back].map(card=>pvcInset(pvcTrimPrintableArea(card),inset));
   }
+  function pvcAadhaarBox(c,x,y,w,h){
+    const region=pvcCropRawBox(c,x,y,w,h),bounds=pvcAadhaarBounds(region);
+    if(!bounds||bounds.w<region.width*.55||bounds.h<region.height*.18)return null;
+    return {x:(x*c.width+bounds.x)/c.width,y:(y*c.height+bounds.y)/c.height,w:bounds.w/c.width,h:bounds.h/c.height};
+  }
+  function pvcAadhaarPairScore(front,back){
+    if(!front||!back)return null;
+    const frontRatio=front.w/front.h,backRatio=back.w/back.h;
+    if(frontRatio<1.25||frontRatio>2.05||backRatio<1.25||backRatio>2.05)return null;
+    if(front.h<.12||back.h<.12)return null;
+    return Math.abs(frontRatio-1.585)*2+Math.abs(backRatio-1.585)*2+Math.abs(front.y-back.y)*2+Math.abs(front.h-back.h)*2-Math.min(front.h,back.h)*.25;
+  }
+  function pvcDetectAadhaarLayout(c){
+    // Standard e-Aadhaar exports have the printable Front on the left and
+    // Back on the right. Some exports put that pair below an information page;
+    // others contain only the two cards. Test both layouts from their borders.
+    const gap=.012,leftX=0,rightX=.5+gap,halfW=.5-gap*1.5;
+    const fullFront=pvcAadhaarBox(c,leftX,0,halfW,1),fullBack=pvcAadhaarBox(c,rightX,0,halfW,1),fullScore=pvcAadhaarPairScore(fullFront,fullBack);
+    if(fullScore!==null&&fullFront.h>.30&&fullBack.h>.30)return {front:fullFront,back:fullBack};
+    let best=null;
+    [.32,.38,.44,.50,.54,.58,.62,.66].forEach(startY=>{
+      const regionH=Math.min(.62,Math.max(.18,.98-startY));
+      const front=pvcAadhaarBox(c,leftX,startY,halfW,regionH),back=pvcAadhaarBox(c,rightX,startY,halfW,regionH),score=pvcAadhaarPairScore(front,back);
+      if(score===null||!front||!back||front.y<.32||back.y<.32)return;
+      if(!best||score<best.score)best={front,back,score};
+    });
+    return best?{front:best.front,back:best.back}:null;
+  }
+  function pvcAadhaarSafeCrop(c,box){
+    const front=pvcCropRawBox(c,Math.max(0,box.x-.008),Math.max(0,box.y-.014),Math.min(1-box.x+.008,box.w+.016),Math.min(1-box.y+.014,box.h+.024));
+    return pvcInset(front,.004);
+  }
   function pvcAadhaarPair(c){
-    // e-Aadhaar pages commonly contain a large information panel above the
-    // printable row. Find the lower card row from its own visible ink bounds
-    // instead of assuming the same y-coordinate for every PDF export.
-    const profile=PREMIUM_AUTOPRINT_CROP_LOCK.aadhaar;
-    const halfGap=.012, leftX=0, rightX=.5+halfGap, halfW=.5-halfGap*1.5, lowerY=.52, lowerH=.45;
-    const findLowerCard=(x)=>{
-      const region=pvcCropRawBox(c,x,lowerY,halfW,lowerH),bounds=pvcAadhaarBounds(region);
-      if(!bounds||bounds.w<region.width*.55||bounds.h<region.height*.22)return null;
-      return {x:(x*c.width+bounds.x)/c.width,y:(lowerY*c.height+bounds.y)/c.height,w:bounds.w/c.width,h:bounds.h/c.height};
-    };
-    const lowerFront=findLowerCard(leftX),lowerBack=findLowerCard(rightX);
-    if(lowerFront&&lowerBack){
-      const front=pvcCropRawBox(c,Math.max(0,lowerFront.x-.008),Math.max(0,lowerFront.y-.014),Math.min(1,lowerFront.w+.016),Math.min(1,lowerFront.h+.024));
-      const back=pvcCropRawBox(c,Math.max(0,lowerBack.x-.008),Math.max(0,lowerBack.y-.014),Math.min(1,lowerBack.w+.016),Math.min(1,lowerBack.h+.024));
-      return [front,back].map(card=>pvcInset(card,.004));
-    }
-    // Locked legacy fallback for the known A4 two-card export. Keep a little
-    // extra source area around the top so the seals are never pre-clipped.
+    const profile=PREMIUM_AUTOPRINT_CROP_LOCK.aadhaar,layout=pvcDetectAadhaarLayout(c);
+    if(layout)return [pvcAadhaarSafeCrop(c,layout.front),pvcAadhaarSafeCrop(c,layout.back)];
+    // Locked legacy fallback for the known A4 two-card export. Keep extra
+    // source area around the top so the seals are never pre-clipped.
     const front=pvcCropRawBox(c,profile.front[0],Math.max(0,profile.front[1]-.020),profile.front[2],Math.min(1-profile.front[1]+.020,profile.front[3]+.030));
     const back=pvcCropRawBox(c,profile.back[0],Math.max(0,profile.back[1]-.020),profile.back[2],Math.min(1-profile.back[1]+.020,profile.back[3]+.030));
     return [front,back].map(card=>pvcInset(card,.004));
@@ -3997,7 +4015,11 @@ body:has(#loginScreen.front-home){background:#07111b!important;color:#e8f7ff!imp
     return [front,back].map(card=>pvcInset(pvcTrimPrintableArea(card),profile.inset));
   }
   function pvcDocumentProfile(file,type,c){
-    const n=(file.name||'').toLowerCase(),t=type==='auto'?(n.includes('pan')?'pan':n.includes('aadhaar')||n.includes('eaadhaar')?'aadhaar':n.includes('maha')?'mahasarathi':n.includes('eshram')?'eshram':n.includes('abha')?'abha':n.includes('maandhan')?'maandhan':n.includes('epic')||n.includes('voter')?'voter':'auto'):type;
+    const n=(file.name||'').toLowerCase();let t=type==='auto'?(n.includes('pan')?'pan':n.includes('aadhaar')||n.includes('eaadhaar')?'aadhaar':n.includes('maha')?'mahasarathi':n.includes('eshram')?'eshram':n.includes('abha')?'abha':n.includes('maandhan')?'maandhan':n.includes('epic')||n.includes('voter')?'voter':'auto'):type;
+    // Auto Detect must also recognize generically named Aadhaar PDFs; file
+    // names are unreliable after downloads/renames, but the two-card layout
+    // and border geometry are stable.
+    if(type==='auto'&&t==='auto'&&pvcDetectAadhaarLayout(c))t='aadhaar';
     if(t==='aadhaar')return pvcAadhaarPair(c);
     if(t==='pan')return pvcInsetPair(pvcSplitPair(pvcCropBox(c,0,.76,1,.20),false),.035);
     if(t==='mahasarathi'){const p=PREMIUM_AUTOPRINT_CROP_LOCK.mahasarathi;return pvcStackedPair(c,p.front[1],p.front[3],p.back[1],p.back[3],p.inset);}
