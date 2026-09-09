@@ -3920,6 +3920,12 @@ body:has(#loginScreen.front-home){background:#07111b!important;color:#e8f7ff!imp
     for(let y=0;y<h;y+=3)for(let x=0;x<w;x+=3){const i=(y*w+x)*4,r=p[i],g=p[i+1],b=p[i+2],a=p[i+3];if(a>20&&(Math.max(r,g,b)<248||Math.min(r,g,b)<235)){minX=Math.min(minX,x);minY=Math.min(minY,y);maxX=Math.max(maxX,x);maxY=Math.max(maxY,y);}}
     return maxX<0?null:{x:minX,y:minY,w:maxX-minX+1,h:maxY-minY+1};
   }
+  function pvcAadhaarBounds(c){
+    // Ignore yellow markup/highlighter when a sample is used as the source.
+    const ctx=c.getContext('2d'),w=c.width,h=c.height,p=ctx.getImageData(0,0,w,h).data;let minX=w,minY=h,maxX=-1,maxY=-1;
+    for(let y=0;y<h;y+=3)for(let x=0;x<w;x+=3){const i=(y*w+x)*4,r=p[i],g=p[i+1],b=p[i+2],a=p[i+3],highlight=r>205&&g>185&&b<150;if(a>20&&!highlight&&(Math.max(r,g,b)<248||Math.min(r,g,b)<235)){minX=Math.min(minX,x);minY=Math.min(minY,y);maxX=Math.max(maxX,x);maxY=Math.max(maxY,y);}}
+    return maxX<0?null:{x:minX,y:minY,w:maxX-minX+1,h:maxY-minY+1};
+  }
   function pvcHasCenterGap(c,b){
     if(!b||b.w<c.width*.45)return false;const ctx=c.getContext('2d'),p=ctx.getImageData(0,0,c.width,c.height).data,start=Math.max(1,Math.floor(c.width*.38)),end=Math.min(c.width-2,Math.floor(c.width*.62));let best=0,run=0;
     for(let x=start;x<end;x+=2){let ink=0;for(let y=b.y;y<b.y+b.h;y+=6){const i=(y*c.width+x)*4,r=p[i],g=p[i+1],bl=p[i+2];if(Math.max(r,g,bl)<248||Math.min(r,g,bl)<235)ink++;}if(ink<=Math.max(1,Math.floor(b.h/120))){run+=2;best=Math.max(best,run);}else run=0;}
@@ -3963,21 +3969,21 @@ body:has(#loginScreen.front-home){background:#07111b!important;color:#e8f7ff!imp
     const profile=PREMIUM_AUTOPRINT_CROP_LOCK.aadhaar;
     const halfGap=.012, leftX=0, rightX=.5+halfGap, halfW=.5-halfGap*1.5, lowerY=.52, lowerH=.45;
     const findLowerCard=(x)=>{
-      const region=pvcCropRawBox(c,x,lowerY,halfW,lowerH),bounds=pvcContentBounds(region);
+      const region=pvcCropRawBox(c,x,lowerY,halfW,lowerH),bounds=pvcAadhaarBounds(region);
       if(!bounds||bounds.w<region.width*.55||bounds.h<region.height*.22)return null;
       return {x:(x*c.width+bounds.x)/c.width,y:(lowerY*c.height+bounds.y)/c.height,w:bounds.w/c.width,h:bounds.h/c.height};
     };
     const lowerFront=findLowerCard(leftX),lowerBack=findLowerCard(rightX);
     if(lowerFront&&lowerBack){
-      const front=pvcCropRawBox(c,Math.max(0,lowerFront.x-.006),Math.max(0,lowerFront.y-.006),Math.min(1,lowerFront.w+.012),Math.min(1,lowerFront.h+.012));
-      const back=pvcCropRawBox(c,Math.max(0,lowerBack.x-.006),Math.max(0,lowerBack.y-.006),Math.min(1,lowerBack.w+.012),Math.min(1,lowerBack.h+.012));
-      return [front,back].map(card=>pvcInset(card,.008));
+      const front=pvcCropRawBox(c,Math.max(0,lowerFront.x-.008),Math.max(0,lowerFront.y-.014),Math.min(1,lowerFront.w+.016),Math.min(1,lowerFront.h+.024));
+      const back=pvcCropRawBox(c,Math.max(0,lowerBack.x-.008),Math.max(0,lowerBack.y-.014),Math.min(1,lowerBack.w+.016),Math.min(1,lowerBack.h+.024));
+      return [front,back].map(card=>pvcInset(card,.004));
     }
     // Locked legacy fallback for the known A4 two-card export. Keep a little
     // extra source area around the top so the seals are never pre-clipped.
-    const front=pvcCropRawBox(c,profile.front[0],Math.max(0,profile.front[1]-.012),profile.front[2],Math.min(1-profile.front[1]+.012,profile.front[3]+.024));
-    const back=pvcCropRawBox(c,profile.back[0],Math.max(0,profile.back[1]-.012),profile.back[2],Math.min(1-profile.back[1]+.012,profile.back[3]+.024));
-    return [front,back].map(card=>pvcInset(card,.008));
+    const front=pvcCropRawBox(c,profile.front[0],Math.max(0,profile.front[1]-.020),profile.front[2],Math.min(1-profile.front[1]+.020,profile.front[3]+.030));
+    const back=pvcCropRawBox(c,profile.back[0],Math.max(0,profile.back[1]-.020),profile.back[2],Math.min(1-profile.back[1]+.020,profile.back[3]+.030));
+    return [front,back].map(card=>pvcInset(card,.004));
   }
   function pvcVoterPair(c){
     // e-EPIC layout: the printable front/back cards are side-by-side in the
