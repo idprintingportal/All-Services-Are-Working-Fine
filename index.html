@@ -2220,6 +2220,7 @@ body:has(#loginScreen.front-home){background:#07111b!important;color:#e8f7ff!imp
             <tr>
               <th>Business / Name</th>
               <th>Login Email</th>
+              <th>Mobile Number</th>
               <th>Account Security</th>
               <th>Payment / Screenshot Link</th>
               <th>Validity / Timeline</th>
@@ -2228,7 +2229,7 @@ body:has(#loginScreen.front-home){background:#07111b!important;color:#e8f7ff!imp
           </thead>
           <tbody id="distributorTableBody">
             <tr>
-              <td colspan="6" style="text-align:center; color:var(--text-muted); padding:15px;">डेटा लोड हो रहा है...</td>
+              <td colspan="7" style="text-align:center; color:var(--text-muted); padding:15px;">डेटा लोड हो रहा है...</td>
             </tr>
           </tbody>
         </table>
@@ -2480,12 +2481,12 @@ body:has(#loginScreen.front-home){background:#07111b!important;color:#e8f7ff!imp
     catch(error) { tbody.textContent=error.message; return; }
     if(authRole!=='admin' || Date.now()>=adminPanelUntil) {tbody.replaceChildren();return;}
     const alertBox=document.getElementById('newDistributorAlert'),alertText=document.getElementById('newDistributorAlertText'),latest=records.slice().sort((a,b)=>Number(b.assignedTimestamp||b.createdAt||0)-Number(a.assignedTimestamp||a.createdAt||0))[0];
-    if(latest&&alertBox&&alertText){alertText.textContent=`🆕 New distributor joined: ${latest.name||latest.email} · ${latest.officeName||'New account'} · ${new Date(Number(latest.assignedTimestamp||latest.createdAt||Date.now())).toLocaleString()}`;alertBox.style.display='block';}
+    if(latest&&alertBox&&alertText){alertText.textContent=`🆕 New distributor joined: ${latest.name||latest.email} · ${latest.officeName||'New account'} · 📱 ${latest.mobile||'Mobile not available'} · ${new Date(Number(latest.assignedTimestamp||latest.createdAt||Date.now())).toLocaleString()}`;alertBox.style.display='block';}
     tbody.replaceChildren();
     for(const d of records) {
       const tr=document.createElement('tr');
       const cell=text=>{const td=document.createElement('td');td.textContent=String(text ?? '');tr.appendChild(td);return td;};
-      cell(d.name);cell(d.email);cell('Password protected');
+      cell(d.name);cell(d.email);cell(d.mobile||'—');cell('Password protected');
       const renewal=String(d.renewalRequested).toLowerCase()==='true';
       const payment=cell(`${d.paymentStatus || ''}\n${renewal?'🔄 Renewal Request\n':''}${renewal?d.renewalPlan:d.paymentPlan} | ${renewal?d.renewalAmount:d.paymentAmount}\nTxn: ${renewal?d.renewalTxnId:d.paymentTxnId}`);
       payment.style.whiteSpace='pre-line';
