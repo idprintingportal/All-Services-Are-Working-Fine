@@ -3721,7 +3721,7 @@ body:has(#loginScreen.front-home){background:#07111b!important;color:#e8f7ff!imp
     }
   }
 
-  function autoFitCardToCanvas(dataUrl, targetCanvas, ctx, isFront) {
+  function autoFitCardToCanvas(dataUrl, targetCanvas, ctx, isFront, preserveFull=false) {
     const img = new Image();
     img.onload = function() {
       ctx.clearRect(0, 0, CARD_W, CARD_H);
@@ -3735,21 +3735,29 @@ body:has(#loginScreen.front-home){background:#07111b!important;color:#e8f7ff!imp
       sourceCanvas.getContext('2d').drawImage(img, 0, 0);
       const croppedSource = (typeof pvcTrimPrintableArea === 'function') ? pvcTrimPrintableArea(sourceCanvas) : sourceCanvas;
 
-      const srcRatio = croppedSource.width / croppedSource.height;
-      const targetRatio = CARD_W / CARD_H;
-      let sX = 0, sY = 0, sW = croppedSource.width, sH = croppedSource.height;
-
-      if (srcRatio > targetRatio) {
-        sW = croppedSource.height * targetRatio;
-        sX = (croppedSource.width - sW) / 2;
-      } else {
-        sH = croppedSource.width / targetRatio;
-        sY = (croppedSource.height - sH) / 2;
-      }
-
       ctx.imageSmoothingEnabled = true;
       ctx.imageSmoothingQuality = 'high';
-      ctx.drawImage(croppedSource, sX, sY, sW, sH, 0, 0, CARD_W, CARD_H);
+      if (preserveFull) {
+        // Aadhaar artwork keeps important seals/logos close to the top edge.
+        // Contain the complete detected card instead of center-cropping it.
+        ctx.fillStyle = '#fff';
+        ctx.fillRect(0, 0, CARD_W, CARD_H);
+        const fit = Math.min(CARD_W / croppedSource.width, CARD_H / croppedSource.height);
+        const dw = croppedSource.width * fit, dh = croppedSource.height * fit;
+        ctx.drawImage(croppedSource, 0, 0, croppedSource.width, croppedSource.height, (CARD_W - dw) / 2, (CARD_H - dh) / 2, dw, dh);
+      } else {
+        const srcRatio = croppedSource.width / croppedSource.height;
+        const targetRatio = CARD_W / CARD_H;
+        let sX = 0, sY = 0, sW = croppedSource.width, sH = croppedSource.height;
+        if (srcRatio > targetRatio) {
+          sW = croppedSource.height * targetRatio;
+          sX = (croppedSource.width - sW) / 2;
+        } else {
+          sH = croppedSource.width / targetRatio;
+          sY = (croppedSource.height - sH) / 2;
+        }
+        ctx.drawImage(croppedSource, sX, sY, sW, sH, 0, 0, CARD_W, CARD_H);
+      }
 
       if (isFront) {
         img1Loaded = true;
@@ -3949,15 +3957,27 @@ body:has(#loginScreen.front-home){background:#07111b!important;color:#e8f7ff!imp
     return [front,back].map(card=>pvcInset(pvcTrimPrintableArea(card),inset));
   }
   function pvcAadhaarPair(c){
-    // e-Aadhaar sample layout: the printable front/back cards are the bottom
-    // row, immediately below the scissors/dotted cutting line. Crop that row
-    // directly so the large upper information page is never part of preview.
-    // The two cards have a narrow centre separator, so keep separate boxes
-    // instead of splitting the whole page at its mathematical midpoint.
+    // e-Aadhaar pages commonly contain a large information panel above the
+    // printable row. Find the lower card row from its own visible ink bounds
+    // instead of assuming the same y-coordinate for every PDF export.
     const profile=PREMIUM_AUTOPRINT_CROP_LOCK.aadhaar;
-    const front=pvcCropRawBox(c,...profile.front);
-    const back=pvcCropRawBox(c,...profile.back);
-    return [front,back].map(card=>pvcInset(pvcTrimPrintableArea(card),profile.inset));
+    const halfGap=.012, leftX=0, rightX=.5+halfGap, halfW=.5-halfGap*1.5, lowerY=.52, lowerH=.45;
+    const findLowerCard=(x)=>{
+      const region=pvcCropRawBox(c,x,lowerY,halfW,lowerH),bounds=pvcContentBounds(region);
+      if(!bounds||bounds.w<region.width*.55||bounds.h<region.height*.22)return null;
+      return {x:(x*c.width+bounds.x)/c.width,y:(lowerY*c.height+bounds.y)/c.height,w:bounds.w/c.width,h:bounds.h/c.height};
+    };
+    const lowerFront=findLowerCard(leftX),lowerBack=findLowerCard(rightX);
+    if(lowerFront&&lowerBack){
+      const front=pvcCropRawBox(c,Math.max(0,lowerFront.x-.006),Math.max(0,lowerFront.y-.006),Math.min(1,lowerFront.w+.012),Math.min(1,lowerFront.h+.012));
+      const back=pvcCropRawBox(c,Math.max(0,lowerBack.x-.006),Math.max(0,lowerBack.y-.006),Math.min(1,lowerBack.w+.012),Math.min(1,lowerBack.h+.012));
+      return [front,back].map(card=>pvcInset(card,.008));
+    }
+    // Locked legacy fallback for the known A4 two-card export. Keep a little
+    // extra source area around the top so the seals are never pre-clipped.
+    const front=pvcCropRawBox(c,profile.front[0],Math.max(0,profile.front[1]-.012),profile.front[2],Math.min(1-profile.front[1]+.012,profile.front[3]+.024));
+    const back=pvcCropRawBox(c,profile.back[0],Math.max(0,profile.back[1]-.012),profile.back[2],Math.min(1-profile.back[1]+.012,profile.back[3]+.024));
+    return [front,back].map(card=>pvcInset(card,.008));
   }
   function pvcVoterPair(c){
     // e-EPIC layout: the printable front/back cards are side-by-side in the
@@ -3981,7 +4001,7 @@ body:has(#loginScreen.front-home){background:#07111b!important;color:#e8f7ff!imp
     if(t==='voter')return pvcVoterPair(c);
     return null;
   }
-  function pvcShowPair(pair,label){const front=pair[0],back=pair[1]||document.createElement('canvas');if(!back.width){back.width=front.width;back.height=front.height;back.getContext('2d').fillStyle='#fff';back.getContext('2d').fillRect(0,0,back.width,back.height);}autoFitCardToCanvas(front.toDataURL('image/png'),canvas1,ctx1,true);autoFitCardToCanvas(back.toDataURL('image/png'),canvas2,ctx2,false);pvcPdfStatus.textContent=`✅ ${label} का Front/Back preview तैयार है। जरूरत हो तो Manual Crop दबाएँ।`;document.getElementById('pvcPasswordBox').hidden=true;addCardBtn.disabled=false;}
+  function pvcShowPair(pair,label,preserveFull=false){const front=pair[0],back=pair[1]||document.createElement('canvas');if(!back.width){back.width=front.width;back.height=front.height;back.getContext('2d').fillStyle='#fff';back.getContext('2d').fillRect(0,0,back.width,back.height);}autoFitCardToCanvas(front.toDataURL('image/png'),canvas1,ctx1,true,preserveFull);autoFitCardToCanvas(back.toDataURL('image/png'),canvas2,ctx2,false,preserveFull);pvcPdfStatus.textContent=`✅ ${label} का Front/Back preview तैयार है। जरूरत हो तो Manual Crop दबाएँ।`;document.getElementById('pvcPasswordBox').hidden=true;addCardBtn.disabled=false;}
   async function pvcRenderPdf(file,password=''){
     pvcPdfStatus.textContent='⏳ Loading…';
     try{await window.requirePdfPremium();}catch(err){pvcPdfStatus.textContent=err.message||'PVC Auto Crop के लिए Premium access आवश्यक है।';return;}
@@ -4001,7 +4021,7 @@ body:has(#loginScreen.front-home){background:#07111b!important;color:#e8f7ff!imp
     const data=await file.arrayBuffer();let doc;
     try{doc=await pdfjsLib.getDocument({data,password}).promise;}catch(e){if(/password/i.test(e.name||'')||/password/i.test(e.message||'')){document.getElementById('pvcPasswordBox').hidden=false;pvcPdfStatus.textContent='Password डालकर Unlock दबाएँ।';return;}throw e;}
     if(doc.numPages<1)throw new Error('PDF में page नहीं मिला।');const page=await doc.getPage(1),vp=page.getViewport({scale:4}),src=document.createElement('canvas');src.width=vp.width;src.height=vp.height;const renderContext=src.getContext('2d');renderContext.imageSmoothingEnabled=true;renderContext.imageSmoothingQuality='high';await page.render({canvasContext:renderContext,viewport:vp}).promise;
-    const requestedType=pvcCardType.value,profile=pvcDocumentProfile(file,requestedType,src);if(profile){pvcShowPair(profile,requestedType==='auto'?'Document':requestedType);return;}const bounds=pvcContentBounds(src),forcedSide=pvcSideMode.value,vertical=forcedSide!=='single'&&Boolean(bounds&&bounds.h/bounds.w>1.12),horizontal=!vertical&&forcedSide==='double'||(!vertical&&forcedSide!=='single'&&Boolean(bounds&&((bounds.w/bounds.h>2.2)||pvcHasCenterGap(src,bounds))));let front,back;if(vertical){const cut=Math.floor(src.height/2),top=document.createElement('canvas'),bottom=document.createElement('canvas');top.width=bottom.width=src.width;top.height=bottom.height=cut;top.getContext('2d').drawImage(src,0,0,src.width,cut,0,0,src.width,cut);bottom.getContext('2d').drawImage(src,0,cut,src.width,src.height-cut,0,0,src.width,src.height-cut);front=pvcTrimPrintableArea(top);back=pvcTrimPrintableArea(bottom);}else if(horizontal){const cut=Math.floor(src.width/2),left=document.createElement('canvas'),right=document.createElement('canvas');left.width=right.width=cut;left.height=right.height=src.height;left.getContext('2d').drawImage(src,0,0,cut,src.height,0,0,cut,src.height);right.getContext('2d').drawImage(src,cut,0,src.width-cut,src.height,0,0,src.width-cut,src.height);front=pvcTrimPrintableArea(left);back=pvcTrimPrintableArea(right);}else{front=pvcTrimPrintableArea(src);back=document.createElement('canvas');back.width=front.width;back.height=front.height;back.getContext('2d').fillStyle='#fff';back.getContext('2d').fillRect(0,0,back.width,back.height);}
+    const requestedType=pvcCardType.value,profile=pvcDocumentProfile(file,requestedType,src);if(profile){pvcShowPair(profile,requestedType==='auto'?'Document':requestedType,requestedType==='aadhaar'||/aadhaar|eaadhaar/i.test(file.name||''));return;}const bounds=pvcContentBounds(src),forcedSide=pvcSideMode.value,vertical=forcedSide!=='single'&&Boolean(bounds&&bounds.h/bounds.w>1.12),horizontal=!vertical&&forcedSide==='double'||(!vertical&&forcedSide!=='single'&&Boolean(bounds&&((bounds.w/bounds.h>2.2)||pvcHasCenterGap(src,bounds))));let front,back;if(vertical){const cut=Math.floor(src.height/2),top=document.createElement('canvas'),bottom=document.createElement('canvas');top.width=bottom.width=src.width;top.height=bottom.height=cut;top.getContext('2d').drawImage(src,0,0,src.width,cut,0,0,src.width,cut);bottom.getContext('2d').drawImage(src,0,cut,src.width,src.height-cut,0,0,src.width,src.height-cut);front=pvcTrimPrintableArea(top);back=pvcTrimPrintableArea(bottom);}else if(horizontal){const cut=Math.floor(src.width/2),left=document.createElement('canvas'),right=document.createElement('canvas');left.width=right.width=cut;left.height=right.height=src.height;left.getContext('2d').drawImage(src,0,0,cut,src.height,0,0,cut,src.height);right.getContext('2d').drawImage(src,cut,0,src.width-cut,src.height,0,0,src.width-cut,src.height);front=pvcTrimPrintableArea(left);back=pvcTrimPrintableArea(right);}else{front=pvcTrimPrintableArea(src);back=document.createElement('canvas');back.width=front.width;back.height=front.height;back.getContext('2d').fillStyle='#fff';back.getContext('2d').fillRect(0,0,back.width,back.height);}
     autoFitCardToCanvas(front.toDataURL('image/png'),canvas1,ctx1,true);autoFitCardToCanvas(back.toDataURL('image/png'),canvas2,ctx2,false);pvcPdfStatus.textContent=`✅ ${requestedType==='auto'?'Auto':requestedType} · ${horizontal?'Front/Back':'Single'} printable area crop होकर PVC template में तैयार है।`;document.getElementById('pvcPasswordBox').hidden=true;addCardBtn.disabled=false;
   }
   pvcPdfInput.addEventListener('change',()=>{const f=pvcPdfInput.files[0];if(!f)return;pvcPdfName.textContent='✅ '+f.name;document.getElementById('pvcPasswordBox').hidden=true;pvcRenderPdf(f).catch(e=>{pvcPdfStatus.textContent='PDF खोलने के लिए password आवश्यक है।';document.getElementById('pvcPasswordBox').hidden=false;});});
