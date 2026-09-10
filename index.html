@@ -4576,14 +4576,20 @@ body:has(#loginScreen.front-home){background:#07111b!important;color:#e8f7ff!imp
     const targetQty = Math.max(1, Math.min(30, parseInt(namePassportQtyInput.value) || 1));
     const A4_W_300 = 2480;
     const A4_H_300 = 3508;
-    const PHOTO_W_300 = 1200; // 4 inches at 300 DPI
-    const PHOTO_H_300 = 1800; // 6 inches at 300 DPI
-    const gap = A4_W_300 - (PHOTO_W_300 * 2);
-    const xPositions = [gap / 2, gap / 2 + PHOTO_W_300];
-    const y = (A4_H_300 - PHOTO_H_300) / 2;
+    // Four 4×6-ratio frames arranged at the four corners of one A4 page.
+    // Four exact 4×6-inch prints cannot physically fit on A4, so the
+    // 2:3 ratio is preserved while the frames are scaled to fit safely.
+    const PHOTO_W_300 = 1080;
+    const PHOTO_H_300 = 1620;
+    const framePositions = [
+      {x: 80, y: 50},
+      {x: 1320, y: 50},
+      {x: 80, y: 1838},
+      {x: 1320, y: 1838}
+    ];
 
     namePassportSheetPages = [];
-    for (let start = 0; start < targetQty; start += 2) {
+    for (let start = 0; start < targetQty; start += 4) {
       const page = document.createElement('canvas');
       page.width = A4_W_300;
       page.height = A4_H_300;
@@ -4591,8 +4597,9 @@ body:has(#loginScreen.front-home){background:#07111b!important;color:#e8f7ff!imp
       pageCtx.fillStyle = '#ffffff';
       pageCtx.fillRect(0, 0, A4_W_300, A4_H_300);
 
-      for (let slot = 0; slot < 2 && start + slot < targetQty; slot++) {
-        pageCtx.drawImage(namePassportCanvas, xPositions[slot], y, PHOTO_W_300, PHOTO_H_300);
+      for (let slot = 0; slot < 4 && start + slot < targetQty; slot++) {
+        const position = framePositions[slot];
+        pageCtx.drawImage(namePassportCanvas, position.x, position.y, PHOTO_W_300, PHOTO_H_300);
       }
       namePassportSheetPages.push(page);
     }
@@ -4603,7 +4610,7 @@ body:has(#loginScreen.front-home){background:#07111b!important;color:#e8f7ff!imp
     namePassportSheetCtx.clearRect(0, 0, A4_W_300, A4_H_300);
     namePassportSheetCtx.drawImage(namePassportSheetPages[0], 0, 0);
     document.getElementById('namePassportSheetTitle').innerText =
-      `Name & Date 4×6 Photos on A4 (${targetQty} Photos • ${namePassportSheetPages.length} Page${namePassportSheetPages.length === 1 ? '' : 's'})`;
+      `Name & Date 4×6 Frames — 4 Photos on A4 (${targetQty} Photos • ${namePassportSheetPages.length} Page${namePassportSheetPages.length === 1 ? '' : 's'})`;
     document.getElementById('downloadNamePassportPdfBtn').disabled = false;
   });
 
@@ -4614,7 +4621,7 @@ body:has(#loginScreen.front-home){background:#07111b!important;color:#e8f7ff!imp
       fileName = `Name_Date_Passport_4x6_${namePassportQtyInput.value}_Qty.pdf`;
       result=buildOptimizedCanvasPdf(namePassportSheetCanvas,{orientation:'landscape',unit:'in',format:[4,6],w:6,h:4,fileName});
     } else if (namePassportSheetFormat === 'a4-4x6') {
-      fileName = `Name_Date_Passport_4x6_on_A4_${namePassportQtyInput.value}_Qty.pdf`;
+      fileName = `Name_Date_Passport_4x6_4_Corners_A4_${namePassportQtyInput.value}_Qty.pdf`;
       const {jsPDF}=window.jspdf||{};
       if (!jsPDF || !namePassportSheetPages.length) throw new Error('पहले 4×6 photos on A4 generate करें।');
       const makePdf = (quality) => {
