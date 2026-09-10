@@ -1794,7 +1794,7 @@ body:has(#loginScreen.front-home){background:#07111b!important;color:#e8f7ff!imp
       <div class="btn-group">
         <button id="make4x6NamePassportBtn" class="action-btn btn-add" disabled>🖼️ Generate 4×6 Sheet</button>
         <button id="makeA4NamePassportBtn" class="action-btn btn-add" disabled>📄 Generate A4 Sheet</button>
-        <button id="makeA4NamePassport4x6Btn" class="action-btn btn-add" disabled>🧾 Generate selected quantity on A4 sheet</button>
+         <button id="makeA4NamePassport4x6Btn" class="action-btn btn-add" disabled>🧾 Generate selected quantity 4×6 on A4 sheet</button>
       </div>
 
       <div style="margin-top: 20px; border-top: 1px solid var(--border-color); padding-top: 15px;">
@@ -4371,7 +4371,10 @@ body:has(#loginScreen.front-home){background:#07111b!important;color:#e8f7ff!imp
   const namePassportSheetCtx = namePassportSheetCanvas.getContext('2d');
   const namePassportQtyInput = document.getElementById('namePassportQtyInput');
   let namePassportLoaded = false;
-  let namePassportSheetFormat = '4x6';
+   let namePassportSheetFormat = '4x6';
+   // The dedicated 4×6-on-A4 mode keeps each print at the real 4×6-inch
+   // size (300 DPI = 1200×1800 px) and creates more A4 pages when needed.
+   let namePassportSheetPages = [];
 
   let currentNameFontSize = 24;
   let currentDobFontSize = 20;
@@ -4501,6 +4504,7 @@ body:has(#loginScreen.front-home){background:#07111b!important;color:#e8f7ff!imp
   document.getElementById('make4x6NamePassportBtn').addEventListener('click', () => {
     if (!namePassportLoaded) return;
     namePassportSheetFormat = '4x6';
+    namePassportSheetPages = [];
     const targetQty = Math.max(1, Math.min(8, parseInt(namePassportQtyInput.value) || 8));
 
     namePassportSheetCanvas.width = 1800;
@@ -4534,6 +4538,7 @@ body:has(#loginScreen.front-home){background:#07111b!important;color:#e8f7ff!imp
   document.getElementById('makeA4NamePassportBtn').addEventListener('click', () => {
     if (!namePassportLoaded) return;
     namePassportSheetFormat = 'a4';
+    namePassportSheetPages = [];
     const targetQty = Math.max(1, Math.min(30, parseInt(namePassportQtyInput.value) || 30));
 
     namePassportSheetCanvas.width = 2480;
@@ -4565,7 +4570,41 @@ body:has(#loginScreen.front-home){background:#07111b!important;color:#e8f7ff!imp
   });
 
   document.getElementById('makeA4NamePassport4x6Btn').addEventListener('click', () => {
-    document.getElementById('makeA4NamePassportBtn').click();
+    if (!namePassportLoaded) return;
+
+    namePassportSheetFormat = 'a4-4x6';
+    const targetQty = Math.max(1, Math.min(30, parseInt(namePassportQtyInput.value) || 1));
+    const A4_W_300 = 2480;
+    const A4_H_300 = 3508;
+    const PHOTO_W_300 = 1200; // 4 inches at 300 DPI
+    const PHOTO_H_300 = 1800; // 6 inches at 300 DPI
+    const gap = A4_W_300 - (PHOTO_W_300 * 2);
+    const xPositions = [gap / 2, gap / 2 + PHOTO_W_300];
+    const y = (A4_H_300 - PHOTO_H_300) / 2;
+
+    namePassportSheetPages = [];
+    for (let start = 0; start < targetQty; start += 2) {
+      const page = document.createElement('canvas');
+      page.width = A4_W_300;
+      page.height = A4_H_300;
+      const pageCtx = page.getContext('2d');
+      pageCtx.fillStyle = '#ffffff';
+      pageCtx.fillRect(0, 0, A4_W_300, A4_H_300);
+
+      for (let slot = 0; slot < 2 && start + slot < targetQty; slot++) {
+        pageCtx.drawImage(namePassportCanvas, xPositions[slot], y, PHOTO_W_300, PHOTO_H_300);
+      }
+      namePassportSheetPages.push(page);
+    }
+
+    // Show the first generated A4 page in the existing preview area.
+    namePassportSheetCanvas.width = A4_W_300;
+    namePassportSheetCanvas.height = A4_H_300;
+    namePassportSheetCtx.clearRect(0, 0, A4_W_300, A4_H_300);
+    namePassportSheetCtx.drawImage(namePassportSheetPages[0], 0, 0);
+    document.getElementById('namePassportSheetTitle').innerText =
+      `Name & Date 4×6 Photos on A4 (${targetQty} Photos • ${namePassportSheetPages.length} Page${namePassportSheetPages.length === 1 ? '' : 's'})`;
+    document.getElementById('downloadNamePassportPdfBtn').disabled = false;
   });
 
   document.getElementById('downloadNamePassportPdfBtn').addEventListener('click', () => {
@@ -4574,6 +4613,29 @@ body:has(#loginScreen.front-home){background:#07111b!important;color:#e8f7ff!imp
     if (namePassportSheetFormat === '4x6') {
       fileName = `Name_Date_Passport_4x6_${namePassportQtyInput.value}_Qty.pdf`;
       result=buildOptimizedCanvasPdf(namePassportSheetCanvas,{orientation:'landscape',unit:'in',format:[4,6],w:6,h:4,fileName});
+    } else if (namePassportSheetFormat === 'a4-4x6') {
+      fileName = `Name_Date_Passport_4x6_on_A4_${namePassportQtyInput.value}_Qty.pdf`;
+      const {jsPDF}=window.jspdf||{};
+      if (!jsPDF || !namePassportSheetPages.length) throw new Error('पहले 4×6 photos on A4 generate करें।');
+      const makePdf = (quality) => {
+        const pdf = new jsPDF({orientation:'portrait', unit:'mm', format:'a4', compress:true});
+        namePassportSheetPages.forEach((page, index) => {
+          if (index) pdf.addPage('a4', 'portrait');
+          pdf.addImage(whiteJpegDataUrl(page, quality), 'JPEG', 0, 0, 210, 297, undefined, 'MEDIUM');
+        });
+        return pdf;
+      };
+      let quality = .92;
+      let pdf = makePdf(quality);
+      let blob = pdf.output('blob');
+      [.86, .80, .74].some(nextQuality => {
+        if (blob.size <= 7 * 1024 * 1024) return true;
+        quality = nextQuality;
+        pdf = makePdf(quality);
+        blob = pdf.output('blob');
+        return false;
+      });
+      result = {pdf, blob, quality, fileName};
     } else {
       fileName = `Name_Date_Passport_A4_${namePassportQtyInput.value}_Qty.pdf`;
       result=buildOptimizedCanvasPdf(namePassportSheetCanvas,{fileName});
