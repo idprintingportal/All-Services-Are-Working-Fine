@@ -849,7 +849,7 @@
 #np-editor .np-toolbar{display:flex;gap:6px;flex-wrap:wrap;padding:12px;background:#fff;border-bottom:1px solid #d6dfe9}#np-editor [aria-pressed=true]{background:#d9f0f1;border-color:#087e8b;color:#065b65}
 #np-editor .np-body{display:grid;grid-template-columns:235px minmax(0,1fr)}#np-editor .np-panel{padding:17px;display:flex;flex-direction:column;gap:10px;border-right:1px solid #d6dfe9;background:#fff}#np-editor label{display:block;font-size:12px;color:#35475d}#np-editor input,#np-editor select,#np-editor textarea{background:#fff;color:#172a41;border:1px solid #bdcada;border-radius:5px;padding:8px;max-width:100%}#np-editor textarea{width:100%;resize:vertical;line-height:1.7;font-family:Arial,'Noto Sans Devanagari',sans-serif}#np-editor .np-fields{display:flex;gap:12px}#np-size{width:75px}#np-color{width:47px;height:34px}#np-editor hr{border:0;border-top:1px solid #d6dfe9}#np-editor .np-help{font-size:11px}#np-selection{font-size:11px!important}#np-results{display:flex;flex-direction:column;gap:5px;max-height:180px;overflow:auto}#np-results button{text-align:left;white-space:normal;overflow-wrap:anywhere;font-weight:400}
 #np-editor .np-pages{display:flex;align-items:center;justify-content:center;gap:12px;padding:8px;background:#e9eef5;font-size:12px}#np-scroll{height:690px;overflow:auto;padding:24px;background:#dfe6ef;position:relative}#np-empty{text-align:center;padding:110px 10px}#np-empty>div{font-size:55px;color:#7894a9}#np-empty h3{font-size:20px;color:#203c51;margin:10px}#np-wrap{position:relative;margin:0 auto;box-shadow:0 5px 24px #132d4426}
-#np-editor #np-canvas,#np-editor #np-gesture{display:block!important;max-width:none!important;max-height:none!important;width:100%!important;height:100%!important;border:0!important;border-radius:0!important;margin:0!important;box-shadow:none!important}#np-canvas{background:white!important}#np-gesture{position:absolute;inset:0;background:transparent!important;touch-action:none;pointer-events:none}#np-hits{position:absolute;inset:0;pointer-events:none}#np-editor #np-hits button{position:absolute;background:#0396cc0a;border:1px dashed #168abb;padding:0;min-width:5px;min-height:7px;border-radius:0;pointer-events:auto}#np-editor #np-hits button:hover,#np-editor #np-hits button.chosen{background:#0ea5e933;border:2px solid #087e8b}#np-status{padding:12px 20px;background:#f8fafc;border-top:1px solid #cbd5e1;font-size:12px;color:#135a69;overflow-wrap:anywhere}
+#np-editor #np-canvas,#np-editor #np-gesture{display:block!important;max-width:none!important;max-height:none!important;width:100%!important;height:100%!important;border:0!important;border-radius:0!important;margin:0!important;box-shadow:none!important}#np-canvas{background:white!important}#np-gesture{position:absolute;inset:0;background:transparent!important;touch-action:none;pointer-events:none}#np-hits{position:absolute;inset:0;pointer-events:none}#np-editor #np-hits button{position:absolute;background:#0396cc0a;border:1px dashed #168abb;padding:0;min-width:5px;min-height:7px;border-radius:0;pointer-events:auto}#np-editor #np-hits button:hover,#np-editor #np-hits button.chosen{background:#0ea5e933;border:2px solid #087e8b}#np-editor #np-hits button.np-placed-hit{z-index:3;background:#f59e0b0a;border:1px solid transparent}#np-editor #np-hits button.np-placed-hit.chosen{background:#f59e0b22;border:2px solid #f59e0b}#np-editor .np-resize-handle{position:absolute;right:-6px;bottom:-6px;width:12px;height:12px;border:2px solid #fff;border-radius:50%;background:#f59e0b;cursor:nwse-resize;box-sizing:border-box}#np-status{padding:12px 20px;background:#f8fafc;border-top:1px solid #cbd5e1;font-size:12px;color:#135a69;overflow-wrap:anywhere}
 #np-password-dialog{margin:auto;max-width:420px;width:90%;padding:24px;border:1px solid #087e8b;border-radius:12px;background:#fff;color:#1e293b}#np-password-dialog::backdrop{background:#020617b0}#np-password-form{display:flex;flex-direction:column;gap:15px}#np-password-form>div{display:flex;gap:12px}
 @media(max-width:740px){#np-editor .np-body{grid-template-columns:1fr}#np-editor .np-head{padding:16px;align-items:flex-start;flex-direction:column}#np-editor .np-panel{border-right:0;border-bottom:1px solid #cbd5e1}#np-editor .np-help{display:none}#np-scroll{height:500px;padding:12px}#np-editor .np-filebar{flex-wrap:wrap}#np-editor .np-toolbar button{font-size:11px;padding:8px}#np-editor h2{font-size:22px}}
 
@@ -1691,6 +1691,22 @@ body:has(#loginScreen.front-home){background:#07111b!important;color:#e8f7ff!imp
         <small id="passportBgStatus" style="display:block;margin-top:7px;color:var(--text-muted);">Background removal uses the selected photo preview.</small>
       </div>
 
+      <div class="control-panel" style="margin-bottom:12px;text-align:left;border:1px solid rgba(56,189,248,.35);">
+        <strong style="color:var(--accent-blue);font-size:13px;">✨ Clean &amp; Clear Passport Photo</strong>
+        <p style="font-size:12px;color:var(--text-muted);margin:6px 0 10px;">3.5×4.5 cm portrait profile: centered framing, natural likeness, even lighting and a clean studio background.</p>
+        <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
+          <button type="button" id="cleanPassportBtn" class="action-btn btn-add">✨ Clean &amp; Clear Passport Photo</button>
+          <input type="file" id="cleanPassportInput" accept="image/*" hidden>
+          <label style="font-size:12px;">Studio background <select id="cleanPassportBgColor" class="login-input" style="width:auto;display:inline-block;padding:6px;"><option value="#dbeafe">Light Blue</option><option value="#ffffff">Off-White</option></select></label>
+        </div>
+        <small id="cleanPassportStatus" style="display:block;margin-top:7px;color:var(--text-muted);">Photo upload करने के बाद पहले crop box में पूरा चेहरा और shoulders रखें।</small>
+        <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-top:10px;">
+          <canvas id="cleanPassportCanvas" width="413" height="531" hidden style="width:124px;height:159px;background:#dbeafe;border-radius:6px;border:1px solid var(--border-color);"></canvas>
+          <button type="button" id="useCleanPassportBtn" class="action-btn" hidden>Use in Passport Photo #1</button>
+          <button type="button" id="downloadCleanPassportBtn" class="action-btn btn-download" hidden>📥 Download Clean Photo JPG</button>
+        </div>
+      </div>
+
       <!-- Custom Quantity Control Panel -->
       <div class="control-panel" style="margin-bottom: 15px;">
         <span style="font-size: 13px; font-weight:600; color: var(--accent-blue);">🔢 A4 शीट पर कुल फ़ोटो की संख्या (Quantity) चुनें या टाइप करें:</span>
@@ -1703,12 +1719,18 @@ body:has(#loginScreen.front-home){background:#07111b!important;color:#e8f7ff!imp
           <button class="quick-qty-btn" onclick="setPassportQty(12)">12</button>
           <button class="quick-qty-btn" onclick="setPassportQty(16)">16</button>
           <button class="quick-qty-btn" onclick="setPassportQty(30)">30</button>
-        </div>
+       </div>
+      </div>
+      <div class="control-panel" style="margin-bottom:12px;text-align:left;">
+        <strong style="color:var(--accent-blue);font-size:13px;">▣ Photo Border</strong>
+        <label style="display:inline-flex;align-items:center;gap:7px;margin:9px 12px 0 0;font-size:12px;"><input type="checkbox" id="passportBorderEnabled" checked> Border दिखाएँ</label>
+        <label style="font-size:12px;">Width <input type="number" id="passportBorderWidth" value="3" min="1" max="12" step="1" style="width:65px;padding:5px;"></label>
       </div>
 
       <!-- STEP 1: GENERATE BUTTON (UPPER) -->
       <div class="btn-group">
         <button id="generateMultiPassportA4Btn" class="action-btn btn-add">🖼️ Generate Sheet (Preview)</button>
+        <button id="generatePassport4x6A4Btn" class="action-btn btn-add">🧾 Generate 4×6 (4 Photos) on A4</button>
       </div>
 
       <!-- PREVIEW & STEP 2: DOWNLOAD BUTTON (LOWER) -->
@@ -1773,7 +1795,7 @@ body:has(#loginScreen.front-home){background:#07111b!important;color:#e8f7ff!imp
 
         </div>
 
-        <div style="margin-top:12px; text-align:center;">
+      <div style="margin-top:12px; text-align:center;">
           <span style="font-size: 12px; font-weight:600; color: var(--accent-blue);">🔢 फ़ोटो संख्या:</span>
           <input type="number" id="namePassportQtyInput" class="qty-input" value="8" min="1" max="30">
           <button class="quick-qty-btn" onclick="setNamePassportQty(4)">4</button>
@@ -1781,7 +1803,12 @@ body:has(#loginScreen.front-home){background:#07111b!important;color:#e8f7ff!imp
           <button class="quick-qty-btn" onclick="setNamePassportQty(8)">8</button>
           <button class="quick-qty-btn" onclick="setNamePassportQty(12)">12</button>
           <button class="quick-qty-btn" onclick="setNamePassportQty(30)">30</button>
-        </div>
+       </div>
+      </div>
+      <div class="control-panel" style="margin-top:12px;text-align:left;">
+        <strong style="color:var(--accent-blue);font-size:13px;">▣ Photo Border</strong>
+        <label style="display:inline-flex;align-items:center;gap:7px;margin:9px 12px 0 0;font-size:12px;"><input type="checkbox" id="namePassportBorderEnabled" checked> Border दिखाएँ</label>
+        <label style="font-size:12px;">Width <input type="number" id="namePassportBorderWidth" value="3" min="1" max="12" step="1" style="width:65px;padding:5px;"></label>
       </div>
 
       <div class="preview-container">
@@ -1794,7 +1821,7 @@ body:has(#loginScreen.front-home){background:#07111b!important;color:#e8f7ff!imp
       <div class="btn-group">
         <button id="make4x6NamePassportBtn" class="action-btn btn-add" disabled>🖼️ Generate 4×6 Sheet</button>
         <button id="makeA4NamePassportBtn" class="action-btn btn-add" disabled>📄 Generate A4 Sheet</button>
-         <button id="makeA4NamePassport4x6Btn" class="action-btn btn-add" disabled>🧾 Generate selected quantity 4×6 on A4 sheet</button>
+        <button id="makeA4NamePassport4x6Btn" class="action-btn btn-add" disabled>🧾 Generate 4×6 (4 Photos) on A4</button>
       </div>
 
       <div style="margin-top: 20px; border-top: 1px solid var(--border-color); padding-top: 15px;">
@@ -1875,7 +1902,7 @@ body:has(#loginScreen.front-home){background:#07111b!important;color:#e8f7ff!imp
 </section>
 <section hidden id="np-editor" aria-label="PDF text editor">
  <header class="np-head"><div><span class="np-tag">PDF WORKSPACE · NO PAID SDK</span><h2>PDF Editor</h2><p>मूल text बदलें · नया text, signature और highlights जोड़ें</p></div><button id="np-save-edit" class="np-primary" hidden>✓ Save edit</button><button id="np-cancel-edit" hidden>Cancel edit</button><button id="np-save" class="np-primary" disabled>↓ Download PDF</button><button type="button" id="np-download-link" hidden>Download again</button><span id="np-quota">5 downloads maximum</span></header>
- <div class="np-filebar"><button id="np-open" class="np-primary">＋ Open PDF</button><input id="np-file" type="file" accept="application/pdf,.pdf" hidden><span id="np-name">PDF चुनें · अधिकतम 25 MB / 100 pages</span><button id="np-close" disabled>Close</button></div>
+ <div class="np-filebar"><button id="np-open" class="np-primary">＋ Open PDF</button><input id="np-file" type="file" accept="application/pdf,.pdf" hidden><span id="np-name">PDF चुनें · अधिकतम 50 MB / 150 pages</span><button id="np-close" disabled>Close</button></div>
  <p class="np-notice">English · हिन्दी · मराठी: नया font इस्तेमाल होगा; मूल formatting बदल सकती है। Hindi/Marathi shaping और copy/search experimental हैं। Scans/OCR और सभी प्रकार के text blocks समर्थित नहीं हैं।</p>
  <fieldset id="np-controls" disabled>
  <div class="np-toolbar" role="toolbar" aria-label="PDF tools">
@@ -2620,7 +2647,7 @@ body:has(#loginScreen.front-home){background:#07111b!important;color:#e8f7ff!imp
     showPortalTab(tabId);
     if(tabId==='tab-history') renderHistoryTable();
     if(tabId==='tab-my-account') renderAccountFields();
-    if(tabId==='tab-pdf-editor') await refreshPdfPremium();
+     if(tabId==='tab-pdf-editor'){await refreshPdfPremium();window.prewarmPdfEditor?.();}
   }
   function switchTabDirect(tabId) {
     if (!authToken || (tabId === 'tab-admin' && authRole !== 'admin')) return;
@@ -2657,7 +2684,7 @@ body:has(#loginScreen.front-home){background:#07111b!important;color:#e8f7ff!imp
     switchTabDirect('tab-pdf-editor');
     scrollToOperationPage('tab-pdf-editor');
     focusTool('pdf');
-    document.getElementById('np-editor')?.scrollIntoView({behavior:'smooth',block:'start'});
+     document.getElementById('np-editor')?.scrollIntoView({behavior:'smooth',block:'start'});window.prewarmPdfEditor?.();
   }
   async function reviewDistributorPayment(email,requestId,approved) {
     if(!confirm(approved?'Approve this payment?':'Reject this payment?')) return;
@@ -3685,6 +3712,7 @@ body:has(#loginScreen.front-home){background:#07111b!important;color:#e8f7ff!imp
   let rawNamePassportImg = null;
   let frontCardRawData = null;
   let backCardRawData = null;
+  let cleanPassportResultCanvas = null;
 
   const cropModal = document.getElementById('cropModal');
   const imageToCrop = document.getElementById('imageToCrop');
@@ -3700,7 +3728,7 @@ body:has(#loginScreen.front-home){background:#07111b!important;color:#e8f7ff!imp
       if (cropper) cropper.destroy();
 
       let targetRatio = NaN;
-      if (type === 'name_passport' || type.startsWith('multi_passport_')) targetRatio = 35 / 45;
+      if (type === 'name_passport' || type.startsWith('multi_passport_') || type === 'clean_passport') targetRatio = 35 / 45;
       if (type === 'photo4x6') targetRatio = 1200 / 1800;
 
       cropper = new Cropper(imageToCrop, {
@@ -3831,6 +3859,12 @@ body:has(#loginScreen.front-home){background:#07111b!important;color:#e8f7ff!imp
         pCtx.clearRect(0, 0, 413, 531);
         pCtx.drawImage(croppedCanvas, 0, 0);
       }
+    }
+    else if (activeCropType === 'clean_passport') {
+      const croppedCanvas = cropper.getCroppedCanvas({ width: 413, height: 531, imageSmoothingQuality: 'high' });
+      closeCropper();
+      processCleanPassportPhoto(croppedCanvas);
+      return;
     }
     else if (activeCropType === 'name_passport') {
       rawNamePassportImg = cropper.getCroppedCanvas({ width: 413, height: 531, imageSmoothingQuality: 'high' });
@@ -4220,6 +4254,7 @@ body:has(#loginScreen.front-home){background:#07111b!important;color:#e8f7ff!imp
   let multiPassportCanvases = [];
   let multiPassportLoaded = [];
   let passportRemoveBg = false;
+  let passportSheetMode = 'standard';
 
   function setPassportCount(count) {
     activePassportCount = count;
@@ -4294,6 +4329,74 @@ body:has(#loginScreen.front-home){background:#07111b!important;color:#e8f7ff!imp
     return out;
   }
 
+  // User-provided prompt represented as a deterministic processing profile.
+  // This intentionally preserves likeness and does not synthesize facial details.
+  const CLEAN_PASSPORT_PROMPT = 'Official passport portrait; front-facing, eye-level gaze, straight shoulders, neutral expression, centered chest-up framing, 3.5cm x 4.5cm ratio, clean solid light-blue or off-white studio backdrop, even diffused lighting, crisp focus, natural skin tones and texture, preserve facial likeness, formal identification-photo standard.';
+
+  async function processCleanPassportPhoto(croppedCanvas){
+    const status=document.getElementById('cleanPassportStatus');
+    const startButton=document.getElementById('cleanPassportBtn');
+    const preview=document.getElementById('cleanPassportCanvas');
+    const useButton=document.getElementById('useCleanPassportBtn');
+    const downloadButton=document.getElementById('downloadCleanPassportBtn');
+    if(!croppedCanvas||!croppedCanvas.width||!croppedCanvas.height)return;
+    startButton.disabled=true;
+    startButton.textContent='⏳ Cleaning photo…';
+    status.textContent='Face likeness सुरक्षित रखते हुए lighting और clarity improve की जा रही है…';
+    try{
+      let enhanced=croppedCanvas;
+      try{
+        enhanced=await enhanceCanvasViaServer(croppedCanvas,25);
+      }catch(serverError){
+        console.warn('Clean passport server enhancement unavailable; using local clarity pass.',serverError);
+        enhanced=enhancePassportCanvas(croppedCanvas,25);
+      }
+
+      let cutout=enhanced;
+      let backgroundRemoved=true;
+      try{
+        status.textContent='Background clean किया जा रहा है…';
+        cutout=await aiRemovePassportBackground(enhanced);
+      }catch(backgroundError){
+        backgroundRemoved=false;
+        console.warn('Clean passport background removal unavailable; retaining source background.',backgroundError);
+      }
+
+      const out=document.createElement('canvas');out.width=413;out.height=531;
+      const ctx=out.getContext('2d');ctx.imageSmoothingEnabled=true;ctx.imageSmoothingQuality='high';
+      ctx.fillStyle=document.getElementById('cleanPassportBgColor')?.value||'#dbeafe';ctx.fillRect(0,0,out.width,out.height);
+      ctx.drawImage(cutout,0,0,out.width,out.height);
+      cleanPassportResultCanvas=out;
+      if(preview){preview.hidden=false;preview.style.background=ctx.fillStyle;const pCtx=preview.getContext('2d');pCtx.clearRect(0,0,413,531);pCtx.drawImage(out,0,0);}
+      if(useButton)useButton.hidden=false;
+      if(downloadButton)downloadButton.hidden=false;
+      status.textContent=backgroundRemoved?'✅ Clean & clear passport photo ready.':'⚠️ Clarity ready; background cleanup could not load, so the original background was kept.';
+    }catch(error){
+      console.error('Clean passport processing failed:',error);
+      status.textContent='❌ Photo process नहीं हो पाया। कृपया दोबारा प्रयास करें।';
+    }finally{
+      startButton.disabled=false;
+      startButton.textContent='✨ Clean & Clear Passport Photo';
+    }
+  }
+
+  function readPhotoBorder(prefix){
+    const enabled=document.getElementById(prefix+'BorderEnabled')?.checked!==false;
+    const width=Math.max(1,Math.min(12,Number(document.getElementById(prefix+'BorderWidth')?.value)||3));
+    return {enabled,width};
+  }
+  function drawPhotoBorder(ctx,x,y,w,h,border){
+    if(!border.enabled)return;
+    ctx.save();ctx.strokeStyle='#000000';ctx.lineWidth=border.width;ctx.strokeRect(x+border.width/2,y+border.width/2,Math.max(0,w-border.width),Math.max(0,h-border.width));ctx.restore();
+  }
+  function renderFourUpA4(targetCanvas,sourceCanvases,border){
+    targetCanvas.width=2480;targetCanvas.height=3508;const ctx=targetCanvas.getContext('2d');ctx.fillStyle='#ffffff';ctx.fillRect(0,0,2480,3508);
+    const margin=105,gap=42,ratio=2/3;let pw=(2480-2*margin-gap)/2,ph=pw/ratio;const maxH=(3508-2*margin-gap)/2;if(ph>maxH){ph=maxH;pw=ph*ratio;}
+    const startX=(2480-(2*pw+gap))/2,startY=(3508-(2*ph+gap))/2;
+    for(let i=0;i<4;i++){const col=i%2,row=Math.floor(i/2),x=startX+col*(pw+gap),y=startY+row*(ph+gap),source=sourceCanvases[i%sourceCanvases.length];ctx.drawImage(source,x,y,pw,ph);drawPhotoBorder(ctx,x,y,pw,ph,border);}
+    return {width:pw,height:ph};
+  }
+
   document.getElementById('generateMultiPassportA4Btn').addEventListener('click', async () => {
     for (let i = 0; i < activePassportCount; i++) {
       if (!multiPassportLoaded[i]) {
@@ -4303,6 +4406,8 @@ body:has(#loginScreen.front-home){background:#07111b!important;color:#e8f7ff!imp
     }
 
     const targetQty = Math.max(1, Math.min(50, parseInt(document.getElementById('passportQtyInput').value) || 30));
+    passportSheetMode='standard';
+    const passportBorder=readPhotoBorder('passport');
     let outputCanvases=multiPassportCanvases;
     if(passportRemoveBg){const button=document.getElementById('generateMultiPassportA4Btn');button.disabled=true;button.textContent='⏳ Removing background…';try{outputCanvases=await Promise.all(multiPassportCanvases.map(aiRemovePassportBackground));}catch(e){alert('Background removal failed. Check internet connection and try again.');return;}finally{button.disabled=false;button.textContent='🖼️ Generate Sheet (Preview)';}}
     const enhanceValue=Number(document.getElementById('passportEnhanceSlider')?.value||0);
@@ -4335,9 +4440,7 @@ body:has(#loginScreen.front-home){background:#07111b!important;color:#e8f7ff!imp
         sheetCtx.drawImage(currentCanvas, x, y, pw, ph);
         sheetCtx.restore();
         
-        sheetCtx.strokeStyle = '#000000';
-        sheetCtx.lineWidth = 2;
-        sheetCtx.strokeRect(x, y, pw, ph);
+        drawPhotoBorder(sheetCtx,x,y,pw,ph,passportBorder);
 
         photoIndexToPrint++;
         placed++;
@@ -4348,13 +4451,34 @@ body:has(#loginScreen.front-home){background:#07111b!important;color:#e8f7ff!imp
     document.getElementById('downloadMultiPassportPdfBtn').disabled = false;
   });
 
+  document.getElementById('generatePassport4x6A4Btn').addEventListener('click', () => {
+    const sources=multiPassportCanvases.map((canvas,i)=>({canvas,loaded:multiPassportLoaded[i]})).filter(entry=>entry.canvas&&entry.loaded).map(entry=>entry.canvas);if(!sources.length){alert('पहले selected passport photos upload करें।');return;}
+    passportSheetMode='a4-4x6';const sheetCanvas=document.getElementById('passportSheetCanvas');renderFourUpA4(sheetCanvas,sources,readPhotoBorder('passport'));
+    document.getElementById('passportSheetTitle').innerText='Passport 4×6 Sheet on A4 (4 Photos)';document.getElementById('downloadMultiPassportPdfBtn').disabled=false;
+  });
+
   document.getElementById('passportEnhanceSlider')?.addEventListener('input',e=>{document.getElementById('passportEnhanceValue').textContent=e.target.value;});
   document.getElementById('passportRemoveBgBtn')?.addEventListener('click',()=>{passportRemoveBg=!passportRemoveBg;const b=document.getElementById('passportRemoveBgBtn');b.textContent=passportRemoveBg?'↩️ Keep Original Background':'🪄 Remove Background';document.getElementById('passportBgStatus').textContent=passportRemoveBg?'Selected background color will be used in the generated sheet.':'Original photo background will be retained.';});
+
+  document.getElementById('cleanPassportBtn')?.addEventListener('click',()=>{const input=document.getElementById('cleanPassportInput');if(input){input.value='';input.click();}});
+  document.getElementById('cleanPassportInput')?.addEventListener('change',e=>{const file=e.target.files?.[0];if(file)openCropEngine(file,'clean_passport');});
+  document.getElementById('useCleanPassportBtn')?.addEventListener('click',()=>{
+    if(!cleanPassportResultCanvas)return;
+    if(!activePassportCount){setPassportCount(1);}
+    multiPassportCanvases[0]=cleanPassportResultCanvas;multiPassportLoaded[0]=true;
+    const preview=document.getElementById('multiPassPreview0');
+    if(preview){preview.style.display='block';const pCtx=preview.getContext('2d');pCtx.clearRect(0,0,413,531);pCtx.drawImage(cleanPassportResultCanvas,0,0);}
+    document.getElementById('cleanPassportStatus').textContent='✅ Clean photo Passport Photo #1 में जोड़ दी गई है। अब quantity चुनकर Generate करें।';
+  });
+  document.getElementById('downloadCleanPassportBtn')?.addEventListener('click',()=>{
+    if(!cleanPassportResultCanvas)return;
+    const a=document.createElement('a');a.href=whiteJpegDataUrl(cleanPassportResultCanvas,.95);a.download='Clean_Clear_Passport_Photo.jpg';document.body.appendChild(a);a.click();a.remove();
+  });
 
   document.getElementById('downloadMultiPassportPdfBtn').addEventListener('click', () => {
     const sheetCanvas = document.getElementById('passportSheetCanvas');
     const targetQty = document.getElementById('passportQtyInput').value;
-    const fileName = `Multi_Unique_Passport_${activePassportCount}_Photos_${targetQty}_Qty_A4.pdf`;
+    const fileName = passportSheetMode==='a4-4x6'?'Passport_4x6_4_Photos_A4.pdf':`Multi_Unique_Passport_${activePassportCount}_Photos_${targetQty}_Qty_A4.pdf`;
     const result=buildOptimizedCanvasPdf(sheetCanvas,{fileName});
     result.pdf.save(fileName);
     saveToHistory('Multi-Unique Passports', fileName, result.blob, 'application/pdf');
@@ -4371,10 +4495,7 @@ body:has(#loginScreen.front-home){background:#07111b!important;color:#e8f7ff!imp
   const namePassportSheetCtx = namePassportSheetCanvas.getContext('2d');
   const namePassportQtyInput = document.getElementById('namePassportQtyInput');
   let namePassportLoaded = false;
-   let namePassportSheetFormat = '4x6';
-   // The dedicated 4×6-on-A4 mode keeps each print at the real 4×6-inch
-   // size (300 DPI = 1200×1800 px) and creates more A4 pages when needed.
-   let namePassportSheetPages = [];
+  let namePassportSheetFormat = '4x6';
 
   let currentNameFontSize = 24;
   let currentDobFontSize = 20;
@@ -4504,7 +4625,7 @@ body:has(#loginScreen.front-home){background:#07111b!important;color:#e8f7ff!imp
   document.getElementById('make4x6NamePassportBtn').addEventListener('click', () => {
     if (!namePassportLoaded) return;
     namePassportSheetFormat = '4x6';
-    namePassportSheetPages = [];
+    const namePassportBorder=readPhotoBorder('namePassport');
     const targetQty = Math.max(1, Math.min(8, parseInt(namePassportQtyInput.value) || 8));
 
     namePassportSheetCanvas.width = 1800;
@@ -4524,9 +4645,7 @@ body:has(#loginScreen.front-home){background:#07111b!important;color:#e8f7ff!imp
         const x = startX + c * (pw + gapX);
         const y = startY + r * (ph + gapY);
         namePassportSheetCtx.drawImage(namePassportCanvas, x, y, pw, ph);
-        namePassportSheetCtx.strokeStyle = '#000000';
-        namePassportSheetCtx.lineWidth = 2;
-        namePassportSheetCtx.strokeRect(x, y, pw, ph);
+        drawPhotoBorder(namePassportSheetCtx,x,y,pw,ph,namePassportBorder);
         placed++;
       }
     }
@@ -4538,7 +4657,7 @@ body:has(#loginScreen.front-home){background:#07111b!important;color:#e8f7ff!imp
   document.getElementById('makeA4NamePassportBtn').addEventListener('click', () => {
     if (!namePassportLoaded) return;
     namePassportSheetFormat = 'a4';
-    namePassportSheetPages = [];
+    const namePassportBorder=readPhotoBorder('namePassport');
     const targetQty = Math.max(1, Math.min(30, parseInt(namePassportQtyInput.value) || 30));
 
     namePassportSheetCanvas.width = 2480;
@@ -4558,9 +4677,7 @@ body:has(#loginScreen.front-home){background:#07111b!important;color:#e8f7ff!imp
         const x = startX + c * (pw + gapX);
         const y = startY + r * (ph + gapY);
         namePassportSheetCtx.drawImage(namePassportCanvas, x, y, pw, ph);
-        namePassportSheetCtx.strokeStyle = '#000000';
-        namePassportSheetCtx.lineWidth = 2;
-        namePassportSheetCtx.strokeRect(x, y, pw, ph);
+        drawPhotoBorder(namePassportSheetCtx,x,y,pw,ph,namePassportBorder);
         placed++;
       }
     }
@@ -4571,47 +4688,10 @@ body:has(#loginScreen.front-home){background:#07111b!important;color:#e8f7ff!imp
 
   document.getElementById('makeA4NamePassport4x6Btn').addEventListener('click', () => {
     if (!namePassportLoaded) return;
-
-    namePassportSheetFormat = 'a4-4x6';
-    const targetQty = Math.max(1, Math.min(30, parseInt(namePassportQtyInput.value) || 1));
-    const A4_W_300 = 2480;
-    const A4_H_300 = 3508;
-    // Four 4×6-ratio frames arranged at the four corners of one A4 page.
-    // Four exact 4×6-inch prints cannot physically fit on A4, so the
-    // 2:3 ratio is preserved while the frames are scaled to fit safely.
-    const PHOTO_W_300 = 1080;
-    const PHOTO_H_300 = 1620;
-    const framePositions = [
-      {x: 80, y: 50},
-      {x: 1320, y: 50},
-      {x: 80, y: 1838},
-      {x: 1320, y: 1838}
-    ];
-
-    namePassportSheetPages = [];
-    for (let start = 0; start < targetQty; start += 4) {
-      const page = document.createElement('canvas');
-      page.width = A4_W_300;
-      page.height = A4_H_300;
-      const pageCtx = page.getContext('2d');
-      pageCtx.fillStyle = '#ffffff';
-      pageCtx.fillRect(0, 0, A4_W_300, A4_H_300);
-
-      for (let slot = 0; slot < 4 && start + slot < targetQty; slot++) {
-        const position = framePositions[slot];
-        pageCtx.drawImage(namePassportCanvas, position.x, position.y, PHOTO_W_300, PHOTO_H_300);
-      }
-      namePassportSheetPages.push(page);
-    }
-
-    // Show the first generated A4 page in the existing preview area.
-    namePassportSheetCanvas.width = A4_W_300;
-    namePassportSheetCanvas.height = A4_H_300;
-    namePassportSheetCtx.clearRect(0, 0, A4_W_300, A4_H_300);
-    namePassportSheetCtx.drawImage(namePassportSheetPages[0], 0, 0);
-    document.getElementById('namePassportSheetTitle').innerText =
-      `Name & Date 4×6 Frames — 4 Photos on A4 (${targetQty} Photos • ${namePassportSheetPages.length} Page${namePassportSheetPages.length === 1 ? '' : 's'})`;
-    document.getElementById('downloadNamePassportPdfBtn').disabled = false;
+    namePassportSheetFormat='a4-4x6';
+    renderFourUpA4(namePassportSheetCanvas,[namePassportCanvas],readPhotoBorder('namePassport'));
+    document.getElementById('namePassportSheetTitle').innerText='Name & Date 4×6 Sheet on A4 (4 Photos)';
+    document.getElementById('downloadNamePassportPdfBtn').disabled=false;
   });
 
   document.getElementById('downloadNamePassportPdfBtn').addEventListener('click', () => {
@@ -4620,29 +4700,9 @@ body:has(#loginScreen.front-home){background:#07111b!important;color:#e8f7ff!imp
     if (namePassportSheetFormat === '4x6') {
       fileName = `Name_Date_Passport_4x6_${namePassportQtyInput.value}_Qty.pdf`;
       result=buildOptimizedCanvasPdf(namePassportSheetCanvas,{orientation:'landscape',unit:'in',format:[4,6],w:6,h:4,fileName});
-    } else if (namePassportSheetFormat === 'a4-4x6') {
-      fileName = `Name_Date_Passport_4x6_4_Corners_A4_${namePassportQtyInput.value}_Qty.pdf`;
-      const {jsPDF}=window.jspdf||{};
-      if (!jsPDF || !namePassportSheetPages.length) throw new Error('पहले 4×6 photos on A4 generate करें।');
-      const makePdf = (quality) => {
-        const pdf = new jsPDF({orientation:'portrait', unit:'mm', format:'a4', compress:true});
-        namePassportSheetPages.forEach((page, index) => {
-          if (index) pdf.addPage('a4', 'portrait');
-          pdf.addImage(whiteJpegDataUrl(page, quality), 'JPEG', 0, 0, 210, 297, undefined, 'MEDIUM');
-        });
-        return pdf;
-      };
-      let quality = .92;
-      let pdf = makePdf(quality);
-      let blob = pdf.output('blob');
-      [.86, .80, .74].some(nextQuality => {
-        if (blob.size <= 7 * 1024 * 1024) return true;
-        quality = nextQuality;
-        pdf = makePdf(quality);
-        blob = pdf.output('blob');
-        return false;
-      });
-      result = {pdf, blob, quality, fileName};
+    } else if(namePassportSheetFormat==='a4-4x6') {
+      fileName = 'Name_Date_Passport_4x6_4_Photos_A4.pdf';
+      result=buildOptimizedCanvasPdf(namePassportSheetCanvas,{fileName});
     } else {
       fileName = `Name_Date_Passport_A4_${namePassportQtyInput.value}_Qty.pdf`;
       result=buildOptimizedCanvasPdf(namePassportSheetCanvas,{fileName});
@@ -6585,8 +6645,10 @@ try {
 (function(){
  'use strict';
  const root=document.getElementById('np-editor'),$=id=>document.getElementById('np-'+id);
- let core,enginePromise,bytes=null,pdf=null,page=0,view=null,objects=[],selected=null,tool='edit',name='',busy=false,epoch=0,dirty=false;
- let undo=[],redo=[],imageFile=null,gesture=null,passwordResolve=null;
+  const MAX_PDF_BYTES=50*1024*1024,MAX_PDF_PAGES=150;
+  let core,enginePromise,bytes=null,pdf=null,page=0,view=null,objects=[],selected=null,tool='edit',name='',busy=false,epoch=0,dirty=false;
+  let undo=[],redo=[],imageFile=null,gesture=null,passwordResolve=null;
+  let placedPages=[],placedUndo=[],placedRedo=[],selectedPlaced=null,baseCanvasSnapshot=null,nextPlacedId=1,placedDrag=null;
  let parsedBytes=null,inspectedBytes=null,inspectedPage=-1,inspectedObjects=[],fontkitPromise=null;
  const cleanText=text=>String(text).replace(/\r\n?/g,'\n').replace(/\t/g,'    ').replace(/[\u0000-\u0008\u000b\u000c\u000e-\u001f\u007f]/g,'');
  async function ensureFontkit(){
@@ -6594,7 +6656,21 @@ try {
   if(!fontkitPromise)fontkitPromise=new Promise((resolve,reject)=>{const s=document.createElement('script');s.src='https://cdn.jsdelivr.net/npm/@pdf-lib/fontkit@1.1.1/dist/fontkit.umd.min.js';const timeout=setTimeout(()=>{s.remove();reject(new Error('Font load timed out. Retry करें।'));},30000);s.onload=()=>{clearTimeout(timeout);window.fontkit?resolve():reject(new Error('Font engine unavailable.'));};s.onerror=()=>{clearTimeout(timeout);s.remove();reject(new Error('Font engine load नहीं हुआ।'));};document.head.append(s);}).catch(e=>{fontkitPromise=null;throw e;});
   await fontkitPromise;
  }
- const say=t=>$('status').textContent=t;
+  const say=t=>$('status').textContent=t;
+  const clonePlacedItem=o=>{const n={...o};if(o.points)n.points=o.points.map(p=>({...p}));if(o.imageData)n.imageData=new Uint8Array(o.imageData);return n;};
+  const snapshotPlaced=()=>placedPages.map(list=>list.map(clonePlacedItem));
+  function restorePlaced(snapshot){placedPages=snapshot.map(list=>list.map(clonePlacedItem));selectedPlaced=null;repaintPlaced();hits();buttons();}
+  function rememberPlaced(){placedUndo.push(snapshotPlaced());while(placedUndo.length>12)placedUndo.shift();placedRedo=[];invalidateDownload();dirty=true;}
+  function placedBounds(o){if(o.type==='draw'){const xs=o.points.map(p=>p.x),ys=o.points.map(p=>p.y);return [Math.min(...xs),Math.min(...ys),Math.max(...xs),Math.max(...ys)];}return [o.x,o.y,o.x+o.w,o.y+o.h];}
+  function placedViewportRect(o){const b=placedBounds(o),r=view.convertToViewportRectangle(b);return {x:Math.min(r[0],r[2]),y:Math.min(r[1],r[3]),w:Math.abs(r[2]-r[0]),h:Math.abs(r[3]-r[1])};}
+  function drawPlacedPreview(ctx,o){if(!view)return;const r=placedViewportRect(o),sx=$('canvas').width/view.width,sy=$('canvas').height/view.height;ctx.save();ctx.scale(sx,sy);
+   if(o.type==='text'){ctx.fillStyle=o.color||'#111827';ctx.font=`${(o.boldLevel||1)>1?'700':'400'} ${Math.max(6,o.size||18)}px Arial, sans-serif`;ctx.textBaseline='top';String(o.text||'').split('\n').forEach((line,i)=>ctx.fillText(line,r.x,r.y+i*(o.size||18)*1.35));}
+   else if(o.type==='image'&&o.image){ctx.drawImage(o.image,r.x,r.y,r.w,r.h);}
+   else if(o.type==='draw'){ctx.strokeStyle=o.color||'#111827';ctx.lineWidth=Math.max(1,o.pen||2);ctx.lineCap='round';ctx.lineJoin='round';ctx.beginPath();o.points.forEach((p,i)=>{const q=view.convertToViewportPoint(p.x,p.y);i?ctx.lineTo(q[0],q[1]):ctx.moveTo(q[0],q[1]);});ctx.stroke();}
+   else if(o.type==='whiteout'||o.type==='highlight'){ctx.fillStyle=o.type==='whiteout'?'#fff':'rgba(255,214,0,.35)';ctx.fillRect(r.x,r.y,r.w,r.h);}
+   ctx.restore();}
+  function repaintPlaced(){const c=$('canvas');if(!c.width||!baseCanvasSnapshot)return;const ctx=c.getContext('2d');ctx.clearRect(0,0,c.width,c.height);ctx.drawImage(baseCanvasSnapshot,0,0);(placedPages[page]||[]).forEach(o=>drawPlacedPreview(ctx,o));}
+  function choosePlaced(o){if(busy)return;if(inlineSession)finishInline();selected=null;selectedPlaced=o;$('text').value=o.text||'';$('size').value=Math.round((o.size||18)*10)/10;$('color').value=o.color||'#111827';$('bold').value=o.boldLevel||1;updateBold();$('selection').textContent=`Placed ${o.type} चुना गया · drag करके move करें, corner handle से resize करें।`;root.querySelectorAll('#np-hits button').forEach(b=>b.classList.toggle('chosen',b.dataset.placed===o.id));buttons();}
  let lastDownloadUrl=null;function invalidateDownload(){if(lastDownloadUrl)URL.revokeObjectURL(lastDownloadUrl);lastDownloadUrl=null;$('download-link').hidden=true;$('download-link').removeAttribute('href');}
  let inlineSession=null,inlineSaving=false,lastTextTap={index:'',at:0};
  const inline=document.createElement('textarea');inline.id='np-inline';inline.hidden=true;inline.maxLength=2000;
@@ -6634,15 +6710,11 @@ try {
   if(busy||inlineSaving||inlineSession)return;
   const p=view.convertToPdfPoint(at.x,at.y),angle=(view.rotation||0)*Math.PI/180;
   const o={index:'new',text:'',size:size(),color:$('color').value,boldLevel:boldLevel(),matrix:[Math.cos(angle),Math.sin(angle),-Math.sin(angle),Math.cos(angle),p[0],p[1]],bounds:[p[0],p[1],p[0]+120,p[1]+size()]};
-  invalidateDownload();selected=null;inlineSession={object:o,initial:'',ticket:epoch,isNew:true};inline.value='';$('text').value='';$('cancel-edit').hidden=false;$('save-edit').hidden=false;
+   invalidateDownload();selected=null;selectedPlaced=null;inlineSession={object:o,initial:'',ticket:epoch,isNew:true};inline.value='';$('text').value='';$('cancel-edit').hidden=false;$('save-edit').hidden=false;
   positionInline(o);Object.assign(inline.style,{left:Math.max(0,at.x)+'px',top:Math.max(0,at.y)+'px',width:Math.max(60,Math.min(240,view.width-at.x))+'px'});
   inline.hidden=false;inline.focus();say('New text · Enter to save · Esc to cancel');
  }
- async function saveNewInline(session,value){return await job(async ticket=>{
-  const out=await PDFLib.PDFDocument.load(bytes),o=session.object;
-  await drawText({doc:out,page:out.getPage(page)},value,[o.matrix[4],o.matrix[5]],size(),rgb($('color').value),0,o.matrix);
-  await commit(await out.save(),ticket,'नया text PDF में save हुआ।');return true;
- });}
+  async function saveNewInline(session,value){return await job(async ticket=>{if(ticket!==epoch)return false;const o=session.object,text=cleanText(value),fs=size(),lines=text.split('\n'),item={id:'placed-'+nextPlacedId++,type:'text',text,size:fs,color:$('color').value,boldLevel:boldLevel(),x:o.matrix[4],y:o.matrix[5],w:Math.max(18,...lines.map(t=>t.length*fs*.58)),h:Math.max(18,lines.length*fs*1.35)};rememberPlaced();(placedPages[page]||(placedPages[page]=[])).push(item);selectedPlaced=item;selected=null;repaintPlaced();hits();buttons();say('नया text placed है · drag, resize या Delete कर सकते हैं।');return true;},false);}
  async function finishInline(){
   if(!inlineSession||inlineSaving)return false;
   const session=inlineSession,value=cleanText(inline.value);
@@ -6696,13 +6768,13 @@ try {
  const boldLevel=()=>Math.max(1,Math.min(5,Math.round(Number($('bold').value)||1)));
  function updateBold(){const level=boldLevel(),labels=['Normal','Light bold','Medium bold','Bold','Extra bold'];$('bold-value').textContent=`${level} / 5 · ${labels[level-1]}`;$('bold').setAttribute('aria-valuetext',`Level ${level}: ${labels[level-1]}`);$('text').style.webkitTextStroke=`${(level-1)*.015}em currentColor`;}
  $('bold').oninput=updateBold;
- function buttons(){
-  $('controls').disabled=!bytes||busy;$('open').disabled=busy;$('close').disabled=!bytes||busy;$('save').disabled=!bytes||busy;
-  $('apply').disabled=!selected||busy;$('delete').disabled=!selected||busy;
-  $('undo').disabled=!undo.length||busy;$('redo').disabled=!redo.length||busy;
+  function buttons(){
+   $('controls').disabled=!bytes||busy;$('open').disabled=busy;$('close').disabled=!bytes||busy;$('save').disabled=!bytes||busy;
+   $('apply').disabled=!(selected||selectedPlaced)||busy;$('delete').disabled=!(selected||selectedPlaced)||busy;
+   $('undo').disabled=!(placedUndo.length||undo.length)||busy;$('redo').disabled=!(placedRedo.length||redo.length)||busy;
   $('prev').disabled=page===0||busy;$('next').disabled=!pdf||page>=pdf.numPages-1||busy;
  }
- async function ready(){
+  async function ready(){
   if(!enginePromise)enginePromise=(async()=>{
    say('मुफ्त PDF engine लोड हो रहा है… पहली बार थोड़ा समय लग सकता है।');
    if(!window.PDFLib||!window.pdfjsLib)throw new Error('PDF libraries नहीं लोड हुईं। Internet जाँचकर reload करें।');
@@ -6713,16 +6785,19 @@ try {
    ]);
    const e=await module.init({wasmBinary});e.PDFiumExt_Init();core=new PortalPDFEngine(e);
   })().catch(err=>{enginePromise=null;throw err;});
-  return enginePromise;
- }
- async function job(fn,authorize=true){if(busy)return;busy=true;buttons();const progress=$('pe-progress');if(progress)progress.style.display='block';const ticket=epoch;try{say(authorize?'Checking access…':'Processing PDF…');await new Promise(requestAnimationFrame);if(authorize)await window.requirePdfPremium();if(ticket!==epoch)return false;return await fn(ticket);}catch(err){if(ticket===epoch)say(err.message||'Operation failed.');return false;}finally{if(ticket===epoch){busy=false;buttons();if(progress)progress.style.display='none';}}}
+   return enginePromise;
+  }
+  window.prewarmPdfEditor=async()=>{try{await ready();void ensureFontkit().catch(()=>{});if(!bytes)say('PDF Editor ready · अब PDF जल्दी खुलेगी।');return true;}catch(error){if(!bytes)say('PDF engine अभी उपलब्ध नहीं है। PDF खोलते समय दोबारा प्रयास होगा।');return false;}};
+  async function job(fn,authorize=true){if(busy)return;busy=true;buttons();const progress=$('pe-progress');if(progress)progress.style.display='block';const ticket=epoch;try{say(authorize?'Checking access…':'Processing PDF…');await new Promise(requestAnimationFrame);if(authorize)await window.requirePdfPremium();if(ticket!==epoch)return false;return await fn(ticket);}catch(err){if(ticket===epoch)say(err.message||'Operation failed.');return false;}finally{if(ticket===epoch){busy=false;buttons();if(progress)progress.style.display='none';}}}
  function passwordPrompt(message){$('password-message').textContent=message;$('password').value='';$('password-dialog').showModal();$('password').focus();return new Promise(r=>passwordResolve=r);}
  function finishPassword(value){if($('password-dialog').open)$('password-dialog').close();$('password').value='';const r=passwordResolve;passwordResolve=null;if(r)r(value);}
  $('password-form').onsubmit=e=>{e.preventDefault();finishPassword($('password').value);};
  $('password-cancel').onclick=()=>finishPassword(null);$('password-dialog').oncancel=e=>{e.preventDefault();finishPassword(null);};
- function reset(){epoch++;invalidateDownload();closeInline();finishPassword(null);if(pdf)pdf.destroy().catch(()=>{});pdf=null;parsedBytes=null;inspectedBytes=null;inspectedObjects=[];inspectedPage=-1;bytes=null;undo=[];redo=[];objects=[];selected=null;gesture=null;imageFile=null;view=null;dirty=false;busy=false;page=0;name='';$('file').value='';$('text').value='';$('find').value='';$('results').replaceChildren();$('hits').replaceChildren();$('canvas').width=$('gesture').width=1;$('wrap').hidden=true;$('empty').hidden=false;$('name').textContent='PDF चुनें · अधिकतम 25 MB / 100 pages';$('page-label').textContent='0 / 0';buttons();say('Ready · Original file नहीं बदलेगी।');}
- function choose(o){if(busy)return;if(inlineSession){if(inlineSession.object.index===o.index)return;finishInline();return;}selected=o;$('text').value=cleanText(o.text);$('size').value=Math.round(o.size*10)/10;$('color').value=o.color;$('bold').value=o.boldLevel||1;updateBold();$('selection').textContent='Text पर double-click / double-tap करें। Style बदलने के बाद Apply style दबाएँ।';root.querySelectorAll('#np-hits button').forEach(b=>b.classList.toggle('chosen',b.dataset.block===o.index));buttons();}
- function hits(){
+  function reset(){epoch++;invalidateDownload();closeInline();finishPassword(null);if(pdf)pdf.destroy().catch(()=>{});pdf=null;parsedBytes=null;inspectedBytes=null;inspectedPage=-1;inspectedObjects=[];bytes=null;undo=[];redo=[];placedPages=[];placedUndo=[];placedRedo=[];selectedPlaced=null;baseCanvasSnapshot=null;objects=[];selected=null;gesture=null;placedDrag=null;imageFile=null;view=null;dirty=false;busy=false;page=0;name='';$('file').value='';$('text').value='';$('find').value='';$('results').replaceChildren();$('hits').replaceChildren();$('canvas').width=$('gesture').width=1;$('wrap').hidden=true;$('empty').hidden=false;$('name').textContent='PDF चुनें · अधिकतम 50 MB / 150 pages';$('page-label').textContent='0 / 0';buttons();say('Ready · Original file नहीं बदलेगी।');}
+  function choose(o){if(busy)return;if(inlineSession){if(inlineSession.object.index===o.index)return;finishInline();return;}selectedPlaced=null;selected=o;$('text').value=cleanText(o.text);$('size').value=Math.round(o.size*10)/10;$('color').value=o.color;$('bold').value=o.boldLevel||1;updateBold();$('selection').textContent='Text पर double-click / double-tap करें। Style बदलने के बाद Apply style दबाएँ।';root.querySelectorAll('#np-hits button').forEach(b=>b.classList.toggle('chosen',b.dataset.block===o.index));buttons();}
+  function resizePlaced(o,original,dx,dy){const old=placedViewportRect(original),right=old.x+old.w+dx,bottom=old.y+old.h+dy;let nw=Math.max(14,right-old.x),nh=Math.max(14,bottom-old.y);if(o.type==='image'){const ratio=(old.w||1)/(old.h||1);if(Math.abs(dx)>=Math.abs(dy))nh=nw/ratio;else nw=nh*ratio;}const a=view.convertToPdfPoint(old.x,old.y),b=view.convertToPdfPoint(old.x+nw,old.y+nh),box=[Math.min(a[0],b[0]),Math.min(a[1],b[1]),Math.max(a[0],b[0]),Math.max(a[1],b[1])];if(o.type==='draw'){const ob=placedBounds(original),sx=(box[2]-box[0])/Math.max(1,ob[2]-ob[0]),sy=(box[3]-box[1])/Math.max(1,ob[3]-ob[1]);o.points=original.points.map(p=>({x:box[0]+(p.x-ob[0])*sx,y:box[1]+(p.y-ob[1])*sy}));}else{o.x=box[0];o.y=box[1];o.w=box[2]-box[0];o.h=box[3]-box[1];if(o.type==='text')o.size=Math.max(6,original.size*(o.h/Math.max(1,old.h)));}}
+  function startPlacedPointer(e,o,resize,button){if(busy||tool!=='edit')return;selectedPlaced=o;selected=null;placedDrag={o,resize,button,start:{x:e.clientX,y:e.clientY},original:clonePlacedItem(o),before:snapshotPlaced(),moved:false,pointerId:e.pointerId};button.setPointerCapture?.(e.pointerId);button.onpointermove=ev=>{if(!placedDrag||placedDrag.pointerId!==ev.pointerId)return;const dx=ev.clientX-placedDrag.start.x,dy=ev.clientY-placedDrag.start.y;if(Math.abs(dx)+Math.abs(dy)<2)return;placedDrag.moved=true;if(resize)resizePlaced(o,placedDrag.original,dx,dy);else{const d0=view.convertToPdfPoint(0,0),d1=view.convertToPdfPoint(dx,dy),mx=d1[0]-d0[0],my=d1[1]-d0[1];if(o.type==='draw')o.points=placedDrag.original.points.map(p=>({x:p.x+mx,y:p.y+my}));else{o.x=placedDrag.original.x+mx;o.y=placedDrag.original.y+my;}}repaintPlaced();};button.onpointerup=ev=>{if(!placedDrag||placedDrag.pointerId!==ev.pointerId)return;button.releasePointerCapture?.(ev.pointerId);const d=placedDrag;placedDrag=null;button.onpointermove=button.onpointerup=null;if(d.moved){placedUndo.push(d.before);while(placedUndo.length>12)placedUndo.shift();placedRedo=[];invalidateDownload();dirty=true;say('Placed item बदला गया।');}hits();buttons();};button.onpointercancel=()=>{if(placedDrag){Object.assign(o,clonePlacedItem(placedDrag.original));placedDrag=null;repaintPlaced();hits();buttons();}};}
+  function hits(){
   $('hits').replaceChildren();$('results').replaceChildren();if(!view)return;
   $('gesture').style.pointerEvents=tool==='edit'?'none':'auto';
   const query=$('find').value.toLocaleLowerCase();let count=0;
@@ -6733,8 +6808,11 @@ try {
     b.addEventListener('pointerup',e=>{if(e.pointerType!=='touch')return;const now=Date.now();if(lastTextTap.index===o.index&&now-lastTextTap.at<450){e.preventDefault();beginInline(o);lastTextTap={index:'',at:0};}else lastTextTap={index:o.index,at:now};});$('hits').append(b);
    }
    if(query&&o.text.toLocaleLowerCase().includes(query)&&count++<100){const b=document.createElement('button');b.textContent=o.text;b.type='button';b.onclick=()=>{setTool('edit');beginInline(o);$('scroll').scrollTop=Math.max(0,y-80);};$('results').append(b);}
-  });
- }
+   });
+   if(tool==='edit'){
+    (placedPages[page]||[]).forEach(o=>{const r=placedViewportRect(o),b=document.createElement('button');b.type='button';b.className='np-placed-hit';b.title=`Placed ${o.type}`;b.setAttribute('aria-label',`Select placed ${o.type}`);b.dataset.placed=o.id;Object.assign(b.style,{left:r.x+'px',top:r.y+'px',width:Math.max(12,r.w)+'px',height:Math.max(12,r.h)+'px'});b.classList.toggle('chosen',selectedPlaced?.id===o.id);b.onclick=e=>{e.preventDefault();choosePlaced(o);};b.onpointerdown=e=>{if(e.button!==0)return;e.preventDefault();e.stopPropagation();startPlacedPointer(e,o,false,b);};const h=document.createElement('span');h.className='np-resize-handle';h.title='Resize';h.onpointerdown=e=>{e.preventDefault();e.stopPropagation();startPlacedPointer(e,o,true,b);};b.append(h);$('hits').append(b);});
+   }
+  }
  async function render(ticket){
   if(!bytes)return;
   const reused=pdf&&parsedBytes===bytes,renderBytes=bytes,selectionBefore=selected;
@@ -6753,11 +6831,11 @@ try {
    if(pdf&&pdf!==current)await pdf.destroy();if(ticket!==epoch){await current.destroy();return;}
    pdf=current;parsedBytes=renderBytes;inspectedBytes=renderBytes;inspectedPage=page;inspectedObjects=found;
    view=viewport;objects=found;selected=samePage?selectionBefore:null;
-   const c=$('canvas');c.width=temp.width;c.height=temp.height;c.getContext('2d').drawImage(temp,0,0);
+    const c=$('canvas');c.width=temp.width;c.height=temp.height;c.getContext('2d').drawImage(temp,0,0);baseCanvasSnapshot=document.createElement('canvas');baseCanvasSnapshot.width=temp.width;baseCanvasSnapshot.height=temp.height;baseCanvasSnapshot.getContext('2d').drawImage(temp,0,0);
    const g=$('gesture');g.width=temp.width;g.height=temp.height;
    $('wrap').style.width=viewport.width+'px';$('wrap').style.height=viewport.height+'px';$('wrap').hidden=false;$('empty').hidden=true;
    $('page-label').textContent=`${page+1} / ${pdf.numPages}`;$('selection').textContent=`${objects.length} editable text blocks · Grouped/rotated text supported · नाम पर box न मिले तो Find में खोजें; scan/outline को OCR चाहिए।`;
-   hits();buttons();
+    repaintPlaced();hits();buttons();
   }catch(err){if(pdf!==current)await current.destroy();throw err;}
  }
  function pushHistory(list,value){list.push(value);while(list.length>12||list.reduce((n,b)=>n+b.length,0)>70*1024*1024)list.shift();}
@@ -6768,7 +6846,7 @@ try {
   if(ticket!==epoch)return;pushHistory(undo,previous);redo=[];dirty=true;say(message);buttons();
  }
  async function open(file,ticket){
-  if(!file)return;if(file.size>25*1024*1024)throw new Error('अधिकतम 25 MB की PDF चुनें।');
+   if(!file)return;if(file.size===0)throw new Error('PDF file खाली है।');if(file.size>MAX_PDF_BYTES)throw new Error('अधिकतम 50 MB की PDF चुनें।');
   await ready();if(ticket!==epoch)return;
   let input=new Uint8Array(await file.arrayBuffer());
   let parsed=await PDFLib.PDFDocument.load(input).catch(()=>null);
@@ -6776,21 +6854,21 @@ try {
    let message='अगर PDF locked है तो सही password डालें। Unlocked download copy बनेगी।';
    for(;;){const pw=await passwordPrompt(message);if(pw===null||ticket!==epoch)return;try{input=core.unlock(input,pw);parsed=await PDFLib.PDFDocument.load(input);break;}catch(err){message=err.message+' फिर प्रयास करें या Cancel करें।';}}
   }
-  if(ticket!==epoch)return;if(parsed.getPageCount()>100)throw new Error('अधिकतम 100 pages समर्थित हैं।');
-  invalidateDownload();const previous=bytes,oldPage=page;bytes=input;page=0;
+ if(ticket!==epoch)return;const pageCount=parsed.getPageCount();if(!Number.isInteger(pageCount)||pageCount<1)throw new Error('PDF में कोई readable page नहीं मिला।');if(pageCount>MAX_PDF_PAGES)throw new Error('अधिकतम 150 pages समर्थित हैं।');
+   invalidateDownload();const previous=bytes,oldPage=page;bytes=input;page=0;placedPages=Array.from({length:parsed.getPageCount()},()=>[]);placedUndo=[];placedRedo=[];selectedPlaced=null;
   try{await render(ticket);}catch(err){if(ticket===epoch){bytes=previous;page=oldPage;}throw err;}
-  if(ticket!==epoch)return;undo=[];redo=[];dirty=false;name=file.name;$('name').textContent=name;say('Ready · Double-click text to edit');
+   if(ticket!==epoch)return;undo=[];redo=[];dirty=false;name=file.name;$('name').textContent=name;say('Ready · Double-click text to edit');
  }
- function setTool(value){if(busy)return;if(inlineSession){finishInline();return;}tool=value;selected=null;gesture=null;root.querySelectorAll('[data-np-tool]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.npTool===value)));hits();buttons();say(value==='edit'?'नीले box पर click करके text बदलें।':value==='text'?'Page पर click करके वहीं नया text लिखें।':value==='image'?'PNG/JPG चुनें, फिर page पर click करें।':'Page पर drag करें। Whiteout secure redaction नहीं है।');}
+ function setTool(value){if(busy)return;if(inlineSession){finishInline();return;}tool=value;selected=null;selectedPlaced=null;gesture=null;root.querySelectorAll('[data-np-tool]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.npTool===value)));hits();buttons();say(value==='edit'?'नीले box पर click करके text बदलें।':value==='text'?'Page पर click करके वहीं नया text लिखें।':value==='image'?'PNG/JPG चुनें, फिर page पर click करें।':'Page पर drag करें। Whiteout secure redaction नहीं है।');}
  const rgb=hex=>PDFLib.rgb(parseInt(hex.slice(1,3),16)/255,parseInt(hex.slice(3,5),16)/255,parseInt(hex.slice(5,7),16)/255);
- async function drawText(target,text,point,fontSize,color,angle=0,affine=null){
+  async function drawText(target,text,point,fontSize,color,angle=0,affine=null,boldOverride=null){
   text=cleanText(text);await ensureFontkit();target.doc.registerFontkit(window.fontkit);
   const fonts={},characterSets={};
   if(/[\u0900-\u097f\u200c\u200d]/.test(text))fonts.dev=await target.doc.embedFont(b64(PORTAL_FONTS.devanagari),{subset:true});
   if(/[^\u0900-\u097f\u200c\u200d\n]/.test(text))fonts.latin=await target.doc.embedFont(b64(PORTAL_FONTS.latin),{subset:true});
   Object.entries(fonts).forEach(([key,font])=>characterSets[key]=new Set(font.getCharacterSet()));
   const radians=angle*Math.PI/180,cs=Math.cos(radians),sn=Math.sin(radians);
-  const level=boldLevel();
+   const level=boldOverride===null?boldLevel():Math.max(1,Math.min(5,Number(boldOverride)||1));
   target.page.pushOperators(PDFLib.pushGraphicsState());
   if(affine){const sy=Math.hypot(affine[2],affine[3]);target.page.pushOperators(PDFLib.concatTransformationMatrix(affine[0]/sy,affine[1]/sy,affine[2]/sy,affine[3]/sy,point[0],point[1]));point=[0,0];}
   target.page.pushOperators(PDFLib.pushGraphicsState(),PDFLib.setStrokingColor(color),PDFLib.setLineWidth((level-1)*fontSize*.015),PDFLib.beginText(),PDFLib.setTextRenderingMode(level===1?0:2),PDFLib.endText());
@@ -6804,30 +6882,30 @@ try {
   });
   target.page.pushOperators(PDFLib.popGraphicsState(),PDFLib.popGraphicsState());
  }
- async function applyText(deleting=false){return await job(async ticket=>{
+  async function applyText(deleting=false){return await job(async ticket=>{
   if(!selected)return;const chosen=selected,text=cleanText($('text').value);if(!deleting&&!text.trim())throw new Error('Text लिखें या Delete selected text दबाएँ।');
   if(deleting&&!confirm('इस चुने हुए text block को हटाएँ? Undo उपलब्ध है।'))return;
   say('मूल text बदल रहा है…');const removed=core.remove(bytes,page,chosen);let next=removed;
   if(!deleting){const out=await PDFLib.PDFDocument.load(removed);await drawText({doc:out,page:out.getPage(page)},text,[chosen.matrix[4],chosen.matrix[5]],size(),rgb($('color').value),0,chosen.matrix);next=await out.save();}
   await commit(next,ticket,deleting?'चुना हुआ मूल text block हटाया गया।':'मूल text block बदला गया। Preview में layout और मात्राएँ जाँचें।');
-  return true;
- });}
- async function place(kind,start,end,points){await job(async ticket=>{
-  const out=await PDFLib.PDFDocument.load(bytes),target=out.getPage(page),a=view.convertToPdfPoint(start.x,start.y),b=view.convertToPdfPoint(end.x,end.y);
-  if(kind==='text'){
-   const text=$('text').value;if(!cleanText(text).trim())throw new Error('पहले sidebar में text लिखें।');await drawText({doc:out,page:target},text,a,size(),rgb($('color').value),target.getRotation().angle);
-  }else if(kind==='image'){
-   if(!imageFile)throw new Error('पहले PNG/JPG image चुनें।');
-   const img=imageFile.type==='image/png'?await out.embedPng(imageFile.data):await out.embedJpg(imageFile.data);
-   const w=Math.min(160,target.getWidth()/2),h=w*img.height/img.width;target.drawImage(img,{x:a[0],y:a[1]-h,width:w,height:h});
-  }else if(kind==='draw'){
-   for(let i=1;i<points.length;i++){const p=view.convertToPdfPoint(points[i-1].x,points[i-1].y),q=view.convertToPdfPoint(points[i].x,points[i].y);target.drawLine({start:{x:p[0],y:p[1]},end:{x:q[0],y:q[1]},thickness:2,color:rgb($('color').value)});}
-  }else{
-   if(Math.abs(a[0]-b[0])<2||Math.abs(a[1]-b[1])<2)return;
-   target.drawRectangle({x:Math.min(a[0],b[0]),y:Math.min(a[1],b[1]),width:Math.abs(a[0]-b[0]),height:Math.abs(a[1]-b[1]),color:kind==='whiteout'?PDFLib.rgb(1,1,1):PDFLib.rgb(1,.85,0),opacity:kind==='highlight'?.35:1});
-  }
-  await commit(await out.save(),ticket,kind==='whiteout'?'Whiteout जोड़ा है—नीचे का content नहीं मिटा।':'Edit लागू हुई। Download करने से पहले preview जाँचें।');
- });}
+   return true;
+  });}
+  function applyPlaced(){if(!selectedPlaced)return false;const o=selectedPlaced;rememberPlaced();if(o.type==='text'){const old=o.text;o.text=cleanText($('text').value);o.size=size();o.color=$('color').value;o.boldLevel=boldLevel();const lines=o.text.split('\n');o.w=Math.max(18,...lines.map(t=>t.length*Math.max(6,o.size)*.58));o.h=Math.max(18,lines.length*o.size*1.35);say(old===o.text?'Placed text style updated.':'Placed text updated.');}else{o.color=$('color').value;if(o.type==='draw')o.pen=Math.max(1,Number($('pen')?.value)||2);}selectedPlaced=null;repaintPlaced();hits();buttons();return true;}
+  function deletePlaced(){if(!selectedPlaced)return false;if(!confirm('इस जोड़े हुए item को हटाएँ? Undo उपलब्ध है।'))return false;rememberPlaced();const list=placedPages[page]||[],index=list.indexOf(selectedPlaced);if(index>=0)list.splice(index,1);selectedPlaced=null;repaintPlaced();hits();buttons();say('Placed item हटाया गया।');return true;}
+  async function place(kind,start,end,points){await job(async ticket=>{
+   const a=view.convertToPdfPoint(start.x,start.y),b=view.convertToPdfPoint(end.x,end.y),color=$('color').value;
+   let item;
+   if(kind==='text'){
+    const text=cleanText($('text').value);if(!text.trim())throw new Error('पहले sidebar में text लिखें।');const fs=size(),lines=text.split('\n');item={id:'placed-'+nextPlacedId++,type:'text',text,size:fs,color,boldLevel:boldLevel(),x:a[0],y:a[1],w:Math.max(18,...lines.map(t=>t.length*fs*.58)),h:Math.max(18,lines.length*fs*1.35)};
+   }else if(kind==='image'){
+    if(!imageFile)throw new Error('पहले PNG/JPG image चुनें।');const pageWidth=view.viewBox?Math.abs(view.viewBox[2]-view.viewBox[0]):view.width,w=Math.min(160,pageWidth/2),h=w*imageFile.image.height/imageFile.image.width;item={id:'placed-'+nextPlacedId++,type:'image',x:a[0],y:a[1]-h,w,h,image:imageFile.image,imageData:new Uint8Array(imageFile.data),imageType:imageFile.type};
+   }else if(kind==='draw'){
+    const converted=points.map(p=>{const q=view.convertToPdfPoint(p.x,p.y);return {x:q[0],y:q[1]};});if(converted.length<2)return;item={id:'placed-'+nextPlacedId++,type:'draw',points:converted,color,pen:2};
+   }else{
+    if(Math.abs(a[0]-b[0])<2||Math.abs(a[1]-b[1])<2)return;item={id:'placed-'+nextPlacedId++,type:kind,x:Math.min(a[0],b[0]),y:Math.min(a[1],b[1]),w:Math.abs(a[0]-b[0]),h:Math.abs(a[1]-b[1]),color};
+   }
+   rememberPlaced();(placedPages[page]||(placedPages[page]=[])).push(item);selectedPlaced=item;selected=null;repaintPlaced();hits();buttons();say('Placed item तैयार है · drag, resize या Delete कर सकते हैं।');
+  },false);}
  function point(e){const r=$('gesture').getBoundingClientRect();return {x:(e.clientX-r.left)*view.width/r.width,y:(e.clientY-r.top)*view.height/r.height};}
  const gc=$('gesture');
  gc.onpointerdown=e=>{if(!bytes||busy||tool==='edit')return;e.preventDefault();if(tool==='text'){beginNewInline(point(e));return;}gc.setPointerCapture(e.pointerId);gesture={start:point(e),end:point(e),points:[point(e)],id:e.pointerId,kind:tool};};
@@ -6835,30 +6913,33 @@ try {
  gc.onpointerup=e=>{if(!gesture||gesture.id!==e.pointerId)return;const g=gesture;gesture=null;gc.getContext('2d').clearRect(0,0,gc.width,gc.height);place(g.kind,g.start,point(e),g.points);};
  gc.onpointercancel=()=>{gesture=null;gc.getContext('2d').clearRect(0,0,gc.width,gc.height);};
  root.querySelectorAll('[data-np-tool]').forEach(b=>b.onclick=()=>{setTool(b.dataset.npTool);if(tool==='image'){$('image-file').value='';$('image-file').click();}});
- $('image-file').onchange=()=>job(async ticket=>{const f=$('image-file').files[0];if(!f)return;if(!['image/png','image/jpeg'].includes(f.type)||f.size>5*1024*1024)throw new Error('PNG/JPG अधिकतम 5 MB चुनें।');const data=new Uint8Array(await f.arrayBuffer());if(ticket===epoch){imageFile={data,type:f.type};say('Image तैयार है। Page पर click करें।');}});
+ $('image-file').onchange=()=>job(async ticket=>{const f=$('image-file').files[0];if(!f)return;if(!['image/png','image/jpeg'].includes(f.type)||f.size>5*1024*1024)throw new Error('PNG/JPG अधिकतम 5 MB चुनें।');const data=new Uint8Array(await f.arrayBuffer()),url=URL.createObjectURL(f),img=new Image();img.src=url;await img.decode();URL.revokeObjectURL(url);if(ticket===epoch){imageFile={data,type:f.type,image:img};say('Image तैयार है। Page पर click करें।');}});
  $('open').onclick=()=>{if(dirty&&!confirm('Unsaved edits छोड़कर दूसरी PDF खोलें?'))return;$('file').value='';$('file').click();};
  $('file').onchange=()=>job(t=>open($('file').files[0],t));$('close').onclick=()=>{if(!dirty||confirm('Unsaved edits छोड़कर बंद करें?'))reset();};
- $('apply').onclick=()=>inlineSession?finishInline():applyText();$('delete').onclick=()=>applyText(true);$('find').oninput=hits;
+ $('apply').onclick=()=>inlineSession?finishInline():selectedPlaced?applyPlaced():applyText();$('delete').onclick=()=>selectedPlaced?deletePlaced():applyText(true);$('find').oninput=hits;
  $('language').onchange=()=>{$('text').lang=$('language').value==='auto'?'':$('language').value;say('Unicode text paste/type करें। यह transliteration नहीं है; Hindi/Marathi shaping experimental है।');};
- async function travel(from,to){await job(async t=>{if(!from.length)return;invalidateDownload();const old=bytes;bytes=from[from.length-1];try{await render(t);}catch(e){if(t===epoch)bytes=old;throw e;}if(t===epoch){from.pop();pushHistory(to,old);dirty=true;say('Undo / Redo लागू हुआ।');}});}
- $('undo').onclick=()=>travel(undo,redo);$('redo').onclick=()=>travel(redo,undo);
- async function changePage(delta){await job(async t=>{const old=page;page+=delta;try{await render(t);}catch(e){page=old;throw e;}},false);}
+  async function travel(from,to){await job(async t=>{if(!from.length)return;invalidateDownload();const old=bytes;bytes=from[from.length-1];try{await render(t);}catch(e){if(t===epoch)bytes=old;throw e;}if(t===epoch){from.pop();pushHistory(to,old);dirty=true;say('Undo / Redo लागू हुआ।');}});}
+  function travelPlaced(from,to){if(busy||!from.length)return;const current=snapshotPlaced(),next=from.pop();to.push(current);restorePlaced(next);invalidateDownload();dirty=true;say('Placed item का Undo / Redo लागू हुआ।');}
+  $('undo').onclick=()=>placedUndo.length?travelPlaced(placedUndo,placedRedo):travel(undo,redo);$('redo').onclick=()=>placedRedo.length?travelPlaced(placedRedo,placedUndo):travel(redo,undo);
+  async function changePage(delta){await job(async t=>{const old=page;page+=delta;selected=null;selectedPlaced=null;try{await render(t);}catch(e){page=old;throw e;}},false);}
  $('prev').onclick=()=>changePage(-1);$('next').onclick=()=>changePage(1);$('zoom').onchange=async()=>{if(inlineSession&&!(await finishInline()))return;await job(render,false);};
  let resizeTimer,previousOverflow='';
  const documentView=root.querySelector('.np-document');
  function refreshFit(){clearTimeout(resizeTimer);resizeTimer=setTimeout(()=>{if(!bytes||!documentView.getBoundingClientRect().width)return;if(busy||inlineSession){refreshFit();return;}if(['fit','width'].includes($('zoom').value))job(render,false);},180);}
  function expandPreview(expand){documentView.classList.toggle('np-expanded',expand);$('fullscreen').setAttribute('aria-pressed',String(expand));$('fullscreen').textContent=expand?'✕ Close full screen':'⛶ Full screen';if(expand){previousOverflow=document.body.style.overflow;document.body.style.overflow='hidden';}else document.body.style.overflow=previousOverflow;refreshFit();}
- $('fullscreen').onclick=()=>expandPreview(!documentView.classList.contains('np-expanded'));
+  $('fullscreen').onclick=()=>expandPreview(!documentView.classList.contains('np-expanded'));
  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&documentView.classList.contains('np-expanded')){e.preventDefault();expandPreview(false);}});
  window.addEventListener('portal-auth-cleared',()=>{if(documentView.classList.contains('np-expanded'))expandPreview(false);});
- new ResizeObserver(refreshFit).observe($('scroll'));
- $('save').onclick=async()=>{
+  new ResizeObserver(refreshFit).observe($('scroll'));
+  async function materializePlacedEdits(){if(!placedPages.some(list=>list.length))return bytes;const out=await PDFLib.PDFDocument.load(bytes);for(let i=0;i<placedPages.length;i++){const target=out.getPage(i);for(const o of placedPages[i]){if(o.type==='text'){await drawText({doc:out,page:target},o.text,[o.x,o.y],o.size||18,rgb(o.color||'#111827'),0,null,o.boldLevel||1);}else if(o.type==='image'){const img=o.imageType==='image/png'?await out.embedPng(o.imageData):await out.embedJpg(o.imageData);target.drawImage(img,{x:o.x,y:o.y,width:o.w,height:o.h});}else if(o.type==='draw'){for(let j=1;j<o.points.length;j++)target.drawLine({start:{x:o.points[j-1].x,y:o.points[j-1].y},end:{x:o.points[j].x,y:o.points[j].y},thickness:o.pen||2,color:rgb(o.color||'#111827')});}else target.drawRectangle({x:o.x,y:o.y,width:o.w,height:o.h,color:o.type==='whiteout'?PDFLib.rgb(1,1,1):PDFLib.rgb(1,.85,0),opacity:o.type==='highlight'?.35:1});}}return await out.save();}
+  $('save').onclick=async()=>{
   if(!bytes||busy)return;
-  if(selected&&(cleanText($('text').value)!==cleanText(selected.text)||Math.abs(size()-selected.size)>.11||$('color').value!==selected.color||boldLevel()!==(selected.boldLevel||1))){say('पहले Save edit / Apply style करें।');return;}
-  await job(async ticket=>{const blob=new Blob([bytes],{type:'application/pdf'});await window.exportPortalPdf(blob,name.replace(/\.pdf$/i,'')+'-edited.pdf');if(ticket!==epoch)return;dirty=false;$('download-link').hidden=false;say('PDF history में save हुई और download भेजा गया।');});
+   if(selected&&(cleanText($('text').value)!==cleanText(selected.text)||Math.abs(size()-selected.size)>.11||$('color').value!==selected.color||boldLevel()!==(selected.boldLevel||1))){say('पहले Save edit / Apply style करें।');return;}
+   if(selectedPlaced&&selectedPlaced.type==='text'&&(cleanText($('text').value)!==cleanText(selectedPlaced.text)||Math.abs(size()-selectedPlaced.size)>.11||$('color').value!==selectedPlaced.color||boldLevel()!==(selectedPlaced.boldLevel||1))){say('पहले Apply style करें।');return;}
+   await job(async ticket=>{const outputBytes=await materializePlacedEdits(),blob=new Blob([outputBytes],{type:'application/pdf'});await window.exportPortalPdf(blob,name.replace(/\.pdf$/i,'')+'-edited.pdf');if(ticket!==epoch)return;dirty=false;$('download-link').hidden=false;say('PDF history में save हुई और download भेजा गया।');});
  };
  $('download-link').onclick=()=>$('save').click();
- root.addEventListener('keydown',e=>{if(['INPUT','TEXTAREA','SELECT'].includes(e.target.tagName))return;if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='z'){e.preventDefault();e.shiftKey?travel(redo,undo):travel(undo,redo);}});
+   root.addEventListener('keydown',e=>{if(['INPUT','TEXTAREA','SELECT'].includes(e.target.tagName))return;if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='z'){e.preventDefault();e.shiftKey?(placedRedo.length?travelPlaced(placedRedo,placedUndo):travel(redo,undo)):(placedUndo.length?travelPlaced(placedUndo,placedRedo):travel(undo,redo));}});
  window.addEventListener('portal-auth-cleared',reset);window.addEventListener('beforeunload',e=>{if(dirty||(inlineSession&&cleanText(inline.value)!==inlineSession.initial)){e.preventDefault();e.returnValue='';}});buttons();
 })();
 
