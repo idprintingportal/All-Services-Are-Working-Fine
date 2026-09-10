@@ -3476,6 +3476,8 @@ body:has(#loginScreen.front-home){background:#07111b!important;color:#e8f7ff!imp
   async function handleSignUp() {
     if (authRole === 'admin') { alert('Logout before public signup.'); return; }
     clearAuth();
+    const whatsappChannelBtn = document.getElementById('whatsappChannelBtn');
+    if (whatsappChannelBtn) whatsappChannelBtn.hidden = true;
     const officeName = signUpOffice.value.trim();
     const name = signUpName.value.trim();
     const email = signUpEmail.value.trim().toLowerCase();
@@ -3563,7 +3565,7 @@ body:has(#loginScreen.front-home){background:#07111b!important;color:#e8f7ff!imp
       signUpStatusMsg.innerText = '✅ आपका आवेदन सफलतापूर्वक भेज दिया गया है। एडमिन आपके भुगतान screenshot की समीक्षा करेगा और तभी login approved होगा।';
       signUpStatusMsg.style.color = '#34d399';
       signUpStatusMsg.style.display = 'block';
-      document.getElementById('whatsappChannelBtn').hidden = false;
+      if (whatsappChannelBtn) whatsappChannelBtn.hidden = false;
 
       setTimeout(() => {
         signUpScreen.style.display = 'none';
@@ -3578,7 +3580,7 @@ body:has(#loginScreen.front-home){background:#07111b!important;color:#e8f7ff!imp
         signUpPaymentScreenshot.value = '';
         document.querySelector('input[name="planType"][value="1month"]').checked = true;
         signUpStatusMsg.style.display = 'none';
-        document.getElementById('whatsappChannelBtn').hidden = true;
+        if (whatsappChannelBtn) whatsappChannelBtn.hidden = true;
       }, 7000);
     } else {
       signUpStatusMsg.innerText = '⚠️ अकाउंट बनाने में समस्या हुई, कृपया फिर से प्रयास करें!';
