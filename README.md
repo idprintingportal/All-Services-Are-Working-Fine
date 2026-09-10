@@ -4,9 +4,12 @@
 <meta name="referrer" content="no-referrer">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>OP Printing Hub</title>
+  <title>Skillo ID Print Solutions</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <!-- Warm up the Apps Script connection so login starts with less network setup time. -->
+  <link rel="preconnect" href="https://script.google.com">
+  <link rel="preconnect" href="https://script.googleusercontent.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
   
   <!-- PDF.js Standalone -->
@@ -846,7 +849,7 @@
 #np-editor .np-toolbar{display:flex;gap:6px;flex-wrap:wrap;padding:12px;background:#fff;border-bottom:1px solid #d6dfe9}#np-editor [aria-pressed=true]{background:#d9f0f1;border-color:#087e8b;color:#065b65}
 #np-editor .np-body{display:grid;grid-template-columns:235px minmax(0,1fr)}#np-editor .np-panel{padding:17px;display:flex;flex-direction:column;gap:10px;border-right:1px solid #d6dfe9;background:#fff}#np-editor label{display:block;font-size:12px;color:#35475d}#np-editor input,#np-editor select,#np-editor textarea{background:#fff;color:#172a41;border:1px solid #bdcada;border-radius:5px;padding:8px;max-width:100%}#np-editor textarea{width:100%;resize:vertical;line-height:1.7;font-family:Arial,'Noto Sans Devanagari',sans-serif}#np-editor .np-fields{display:flex;gap:12px}#np-size{width:75px}#np-color{width:47px;height:34px}#np-editor hr{border:0;border-top:1px solid #d6dfe9}#np-editor .np-help{font-size:11px}#np-selection{font-size:11px!important}#np-results{display:flex;flex-direction:column;gap:5px;max-height:180px;overflow:auto}#np-results button{text-align:left;white-space:normal;overflow-wrap:anywhere;font-weight:400}
 #np-editor .np-pages{display:flex;align-items:center;justify-content:center;gap:12px;padding:8px;background:#e9eef5;font-size:12px}#np-scroll{height:690px;overflow:auto;padding:24px;background:#dfe6ef;position:relative}#np-empty{text-align:center;padding:110px 10px}#np-empty>div{font-size:55px;color:#7894a9}#np-empty h3{font-size:20px;color:#203c51;margin:10px}#np-wrap{position:relative;margin:0 auto;box-shadow:0 5px 24px #132d4426}
-#np-editor #np-canvas,#np-editor #np-gesture{display:block!important;max-width:none!important;max-height:none!important;width:100%!important;height:100%!important;border:0!important;border-radius:0!important;margin:0!important;box-shadow:none!important}#np-canvas{background:white!important}#np-gesture{position:absolute;inset:0;background:transparent!important;touch-action:none;pointer-events:none}#np-hits{position:absolute;inset:0;pointer-events:none}#np-editor #np-hits button{position:absolute;background:#0396cc0a;border:1px dashed #168abb;padding:0;min-width:5px;min-height:7px;border-radius:0;pointer-events:auto}#np-editor #np-hits button:hover,#np-editor #np-hits button.chosen{background:#0ea5e933;border:2px solid #087e8b}#np-status{padding:12px 20px;background:#f8fafc;border-top:1px solid #cbd5e1;font-size:12px;color:#135a69;overflow-wrap:anywhere}
+#np-editor #np-canvas,#np-editor #np-gesture{display:block!important;max-width:none!important;max-height:none!important;width:100%!important;height:100%!important;border:0!important;border-radius:0!important;margin:0!important;box-shadow:none!important}#np-canvas{background:white!important}#np-gesture{position:absolute;inset:0;background:transparent!important;touch-action:none;pointer-events:none}#np-hits{position:absolute;inset:0;pointer-events:none}#np-editor #np-hits button{position:absolute;background:#0396cc0a;border:1px dashed #168abb;padding:0;min-width:5px;min-height:7px;border-radius:0;pointer-events:auto}#np-editor #np-hits button:hover,#np-editor #np-hits button.chosen{background:#0ea5e933;border:2px solid #087e8b}#np-editor #np-hits button.np-placed-hit{z-index:3;background:#f59e0b0a;border:1px solid transparent}#np-editor #np-hits button.np-placed-hit.chosen{background:#f59e0b22;border:2px solid #f59e0b}#np-editor .np-resize-handle{position:absolute;right:-6px;bottom:-6px;width:12px;height:12px;border:2px solid #fff;border-radius:50%;background:#f59e0b;cursor:nwse-resize;box-sizing:border-box}#np-status{padding:12px 20px;background:#f8fafc;border-top:1px solid #cbd5e1;font-size:12px;color:#135a69;overflow-wrap:anywhere}
 #np-password-dialog{margin:auto;max-width:420px;width:90%;padding:24px;border:1px solid #087e8b;border-radius:12px;background:#fff;color:#1e293b}#np-password-dialog::backdrop{background:#020617b0}#np-password-form{display:flex;flex-direction:column;gap:15px}#np-password-form>div{display:flex;gap:12px}
 @media(max-width:740px){#np-editor .np-body{grid-template-columns:1fr}#np-editor .np-head{padding:16px;align-items:flex-start;flex-direction:column}#np-editor .np-panel{border-right:0;border-bottom:1px solid #cbd5e1}#np-editor .np-help{display:none}#np-scroll{height:500px;padding:12px}#np-editor .np-filebar{flex-wrap:wrap}#np-editor .np-toolbar button{font-size:11px;padding:8px}#np-editor h2{font-size:22px}}
 
@@ -883,6 +886,18 @@
 #np-editor #np-inline{background:transparent!important;opacity:1!important;box-shadow:none!important;border:0!important;outline:0!important}
 #np-quota{font-size:12px;color:#475569;white-space:nowrap}
 .tab-btn{min-height:54px!important;padding:14px 20px!important;font-size:15px!important}.tool-active{background:#2563eb!important;color:#fff!important;border-color:#60a5fa!important;box-shadow:0 8px 20px #2563eb66!important}.premium-crop-mode .basic-only{display:none!important}
+/* Landing-page cleanup: remove the decorative vertical line and keep the access panel compact. */
+.front-home .front-services h3{border-left:0!important;padding-left:0!important}
+.universal-export-panel{display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap;margin:14px auto 0;padding:12px;border:1px solid var(--border-color);border-radius:12px;background:rgba(15,23,42,.45)}.universal-export-panel label{font-size:12px;color:var(--text-muted)}.universal-export-size{margin-left:5px;padding:7px;border-radius:7px;background:#172338;color:#fff;border:1px solid #52637f}.universal-export-panel button{padding:8px 11px;border:1px solid #52637f;border-radius:8px;background:#24334b;color:#fff;cursor:pointer;font-size:11px}.universal-export-panel button:disabled{opacity:.45;cursor:not-allowed}.universal-export-panel button:not(:disabled):hover{background:#124951;border-color:#43c4d4}
+.account-field-row{display:flex;align-items:center;gap:8px;margin-top:5px}.account-field-row .login-input{flex:1;margin:0!important}.account-field-row button{padding:8px 10px;border:1px solid #52637f;border-radius:8px;background:#24334b;color:#fff;cursor:pointer;white-space:nowrap}.account-field-row button:hover{background:#124951;border-color:#43c4d4}
+.front-home .badge{margin-top:10px}
+#loginScreen.front-home .front-showcase{grid-column:2;grid-row:2 / span 3;align-self:stretch;min-height:360px;position:relative;overflow:hidden;border-radius:22px;background:#172033;border:1px solid #ffffffaa;box-shadow:0 16px 35px #17203326}
+.front-showcase img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .7s ease}.front-showcase img.active{opacity:1}.front-showcase .showcase-caption{position:absolute;left:16px;right:16px;bottom:14px;padding:10px 12px;border-radius:12px;background:#020617b8;color:#fff;font-size:12px;font-weight:700;backdrop-filter:blur(5px)}
+#loginScreen.front-home>.badge,#loginScreen.front-home>h2,#loginScreen.front-home>p,#loginScreen.front-home>#loginEmail,#loginScreen.front-home>#loginPass,#loginScreen.front-home>#authBtn,#loginScreen.front-home>#errorMsg,#loginScreen.front-home>div[style]{grid-column:2;width:100%;margin-left:0;margin-right:0}
+#loginScreen.front-home>.badge,#loginScreen.front-home>h2,#loginScreen.front-home>p,#loginScreen.front-home>#loginEmail,#loginScreen.front-home>#loginPass,#loginScreen.front-home>#authBtn,#loginScreen.front-home>#errorMsg,#loginScreen.front-home>div[style]{grid-column:2;width:100%;margin-left:0;margin-right:0}
+#loginScreen.front-home>.badge{text-align:left}
+#loginScreen.front-home .front-services h3{border-left:4px solid #10b981!important;padding-left:10px!important}
+@media(max-width:850px){#loginScreen.front-home{min-height:100vh;overflow-x:hidden}}
 </style>
 <style>
   .op-footer{margin:28px auto 0;padding:32px 28px 18px;max-width:1320px;border:1px solid #ffffff24;border-radius:24px 24px 0 0;background:linear-gradient(135deg,#0f172eee,#1e1b4bee);color:#cbd5e1;box-shadow:0 -16px 45px #02061744;backdrop-filter:blur(18px)}
@@ -992,7 +1007,7 @@ body:has(#loginScreen.front-home){background:radial-gradient(circle at 10% 10%,#
 .dashboard-status{padding:10px 15px;margin:0 auto 15px;border:1px solid #34d39966;border-radius:14px;background:linear-gradient(90deg,#064e3b88,#0f766e55);color:#a7f3d0;text-align:center;font-weight:700;letter-spacing:.1px;box-shadow:0 8px 22px #10b98122}
 .welcome-office{padding:16px 20px;margin:0 auto 18px;border:1px solid #60a5fa88;border-radius:16px;background:linear-gradient(110deg,#1d4ed855,#7c3aed44);color:#f8fafc;text-align:center;font-size:clamp(18px,2.4vw,28px);font-weight:800;letter-spacing:.2px;box-shadow:0 10px 28px #2563eb33}.welcome-office small{display:block;margin-top:5px;color:#bfdbfe;font-size:13px;font-weight:600}
   .premium-only{display:none!important}.premium-crop-mode .premium-only{display:block!important}
-  .premium-preview{display:none}.premium-crop-mode .premium-preview{display:flex!important;gap:16px;justify-content:center;flex-wrap:wrap}
+  .premium-preview{display:none}.premium-crop-mode .premium-preview{display:flex!important;gap:16px;justify-content:center;flex-wrap:wrap}.basic-preview{display:flex!important;gap:16px;justify-content:center;flex-wrap:wrap}
   .premium-only .upload-box{margin-left:auto;margin-right:auto;text-align:center}
   /* Landing information footer must never appear inside the logged-in portal. */
   #mainApp:not([style*="display: none"]) ~ .op-footer{display:none!important}
@@ -1011,11 +1026,263 @@ body:has(#loginScreen.front-home){background:#edf3f8!important}
 @media(max-width:720px){#tab-pdf-editor .pe-heading{padding:16px;align-items:flex-start;flex-direction:column}#tab-pdf-editor .pe-workspace{grid-template-columns:minmax(0,1fr)}#tab-pdf-editor .pe-sidebar{border-right:0;border-bottom:1px solid #34435c}#tab-pdf-editor .pe-sidebar p,#tab-pdf-editor .pe-sidebar hr,#tab-pdf-editor .pe-sidebar h3{display:none}#tab-pdf-editor #pe-scroll{height:520px;padding:12px}#tab-pdf-editor .pe-toolbar{gap:5px}#tab-pdf-editor .pe-toolbar button{padding:8px;font-size:11px}}
 
 </style>
+<style>
+/* Sign-in panel occupies the former slideshow position; samples remain visible beside it. */
+.front-auth-panel{grid-column:2;grid-row:2 / span 3;align-self:start;padding:30px 26px 24px;border-radius:22px;background:rgba(255,255,255,.92);border:1px solid #dbe3f0;box-shadow:0 16px 35px #17203322;text-align:center}
+.front-auth-panel h2{font-size:28px!important;margin-bottom:0!important;color:#172033}
+.front-auth-panel>p{font-size:11px;color:#64748b!important;margin:0 0 15px!important}
+.front-auth-panel>.badge{margin-top:0;text-align:center}
+.front-auth-panel>.login-input,.front-auth-panel>#authBtn{display:block;width:100%;margin-left:0;margin-right:0}
+.front-auth-panel>#authBtn{margin-top:2px}
+.front-auth-panel>#errorMsg{border:1px solid #fb7185;border-radius:12px;padding:10px;background:#fff1f2;color:#be123c}
+#loginScreen.front-home .front-showcase{grid-column:1;grid-row:2;min-height:360px;background:#172033}
+.front-showcase img{object-fit:contain!important;background:#172033}
+#loginScreen.front-home .front-hero{grid-column:1;grid-row:3;margin:0;min-height:150px;padding:28px 30px;text-align:center}
+#loginScreen.front-home .front-hero p{margin:18px auto 0!important;padding:8px 18px;border-top:1px solid #5b78e8;border-bottom:1px solid #5b78e8;background:transparent;color:#334155!important;animation:frontTickerFade 4.2s ease-in-out infinite}
+@keyframes frontTickerFade{0%,100%{opacity:.55;transform:translateX(8px)}50%{opacity:1;transform:translateX(0)}}
+@media(max-width:850px){.front-auth-panel{display:block;margin:18px 0;padding:24px 18px}.front-home .front-showcase{min-height:260px;margin:18px 0}}
+</style>
+<style>
+/* Base visual system retained for compatibility; Skillo theme overrides it below. */
+:root{--op-ink:#172033;--op-sky:#2563eb;--op-mint:#10b981;--op-surface:#f8fafc}
+#mainApp{color:var(--op-surface)}
+#mainApp .admin-corner-btn{background:linear-gradient(135deg,#f59e0b,#dc2626)!important;color:#fff!important;border:2px solid #fde68a!important;box-shadow:0 8px 24px #dc262666!important;font-weight:800!important}
+#mainApp .new-distributor-alert{display:none;margin:0 auto 14px;max-width:1180px;padding:11px 16px;border:1px solid #fbbf24;border-radius:12px;background:linear-gradient(90deg,#451a03,#78350f,#451a03);color:#fef3c7;font-weight:800;text-align:center;overflow:hidden}
+#mainApp .new-distributor-alert span{display:inline-block;animation:opNoticeSlide 14s linear infinite;white-space:nowrap}
+@keyframes opNoticeSlide{from{transform:translateX(100%)}to{transform:translateX(-100%)}}
+#mainApp .tab-nav{padding:10px;border:1px solid #ffffff22;border-radius:18px;background:#111c31aa;box-shadow:0 10px 30px #02061733}
+#mainApp .tab-btn{border-radius:12px!important;background:#1d2b46;color:#dbeafe;border:1px solid #ffffff1f!important}
+#mainApp .tab-btn.active,#mainApp .tab-btn:hover{background:linear-gradient(135deg,#2563eb,#0ea5e9)!important;color:#fff;border-color:#7dd3fc!important}
+.theme-toggle{padding:8px 12px;border:1px solid #7dd3fc66;border-radius:10px;background:#1d2b46;color:#e0f2fe;cursor:pointer;font-weight:700;font-size:12px}
+.theme-toggle:hover{background:#2563eb;transform:translateY(-1px)}
+body.op-light{background:linear-gradient(135deg,#eef6ff,#f8fafc 50%,#ecfdf5)!important}
+body.op-light #mainApp{background:rgba(255,255,255,.82);color:#172033;border-color:#cbd5e1}
+body.op-light #mainApp .tab-nav{background:#ffffffcc;border-color:#cbd5e1}
+body.op-light #mainApp .tab-btn{background:#fff;color:#243b69;border-color:#cbd5e1!important}
+body.op-light #mainApp .container,body.op-light #mainApp .tab-content>div{background:#fff;color:#172033;border-color:#dbe3f0}
+.op-celebration{position:fixed;inset:0;z-index:9999;pointer-events:none;overflow:hidden}
+.op-celebration i{position:absolute;left:50%;top:62%;width:7px;height:16px;border-radius:3px;background:var(--c);animation:opBlast 900ms ease-out forwards;transform:rotate(var(--r))}
+@keyframes opBlast{0%{opacity:1;transform:translate(-50%,-50%) scale(.5) rotate(0)}100%{opacity:0;transform:translate(calc(-50% + var(--x)),calc(-50% + var(--y))) scale(1) rotate(540deg)}}
+/* Versatile in-app workspace: clear cards, grouped tools and responsive controls. */
+#mainApp .container{max-width:1320px;margin:0 auto;padding:18px 20px;background:rgba(15,23,42,.28);border:1px solid #ffffff14;border-radius:22px}
+#mainApp .tab-content{animation:opPanelIn .28s ease both}
+#mainApp .tab-nav{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;align-items:stretch}
+#mainApp .tab-nav .tab-btn{width:100%;min-width:0;white-space:normal;line-height:1.25}
+.my-account-corner{background:linear-gradient(135deg,#6d4bd6,#8b5cf6)!important;color:#fff!important;border-color:#c4b5fd!important;box-shadow:0 7px 18px #8b5cf644}
+.my-account-corner:hover{background:linear-gradient(135deg,#7c3aed,#a78bfa)!important}
+.added-cards-list{display:grid;gap:7px;max-width:520px;margin:12px auto 0;text-align:left}.added-card-row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:8px 10px;border:1px solid #52637f;border-radius:10px;background:#172338;color:#dbeafe;font-size:12px}.added-card-row button{padding:6px 10px;border:1px solid #fb7185;border-radius:8px;background:#7f1d1d;color:#fff;cursor:pointer;font-weight:700}.added-card-row button:hover{background:#dc2626}
+#mainApp .tab-content>div,#mainApp .control-panel,#mainApp .upload-box{border-radius:18px!important;box-shadow:0 12px 28px #0206172b}
+#mainApp .tab-content h1,#mainApp .tab-content h2,#mainApp .tab-content h3{letter-spacing:.1px}
+#mainApp .action-btn{border-radius:12px!important;box-shadow:0 6px 16px #02061733}
+#mainApp .action-btn:disabled{filter:saturate(.35);box-shadow:none}
+#mainApp input[type=text],#mainApp input[type=email],#mainApp input[type=number],#mainApp input[type=file],#mainApp select,#mainApp textarea{border-radius:11px!important}
+@keyframes opPanelIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.front-tool-catalog{grid-column:1/-1;margin:22px 0 0;padding:22px;border:1px solid #cbd5e1;border-radius:22px;background:linear-gradient(135deg,#ffffffd9,#eff6ffcc);box-shadow:0 14px 32px #17203318;text-align:left}
+.catalog-heading span{font-size:10px;letter-spacing:2px;color:#2563eb;font-weight:800}.catalog-heading h3{margin:4px 0;color:#172033;font-size:24px}.catalog-heading p{color:#64748b;font-size:13px;margin-bottom:16px}.catalog-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}.catalog-tool{display:flex;align-items:center;gap:9px;min-height:52px;padding:10px 12px;border:1px solid #dbeafe;border-radius:14px;background:#fff;color:#243b69;font-weight:700;font-size:12px;text-align:left;cursor:pointer;transition:.2s}.catalog-tool span{font-size:21px}.catalog-tool:hover{transform:translateY(-3px);border-color:#60a5fa;box-shadow:0 8px 18px #2563eb24}.catalog-footer-links{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}.catalog-footer-links button{border:0;background:transparent;color:#2563eb;font-size:12px;font-weight:700;cursor:pointer}.catalog-footer-links button:hover{text-decoration:underline}
+body:not(.op-light) .front-tool-catalog{background:linear-gradient(135deg,#16243bdd,#172554dd);border-color:#ffffff24}.front-home .catalog-heading h3{color:#172033}.front-home .catalog-tool{background:#fff}
+@media(max-width:720px){#mainApp .container{padding:12px 10px;border-radius:16px}#mainApp .tab-nav{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}#mainApp .tab-btn{min-height:48px!important;padding:10px 8px!important;font-size:12px!important}#mainApp .theme-toggle{order:3}#mainApp .container>div:first-child{align-items:stretch!important}}
+@media(max-width:850px){.front-tool-catalog{margin-top:16px;padding:16px}.catalog-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+</style>
+<style>
+/* Glassmorphism redesign: colorful shell, practical utility-first controls. */
+:root{--glass-bg:rgba(255,255,255,.14);--glass-border:rgba(255,255,255,.32);--glass-text:#f8fbff;--glass-muted:#d6e3ff}
+body{background:radial-gradient(circle at 8% 8%,#7c3aed 0,transparent 28%),radial-gradient(circle at 92% 12%,#ec4899 0,transparent 25%),linear-gradient(135deg,#07152f,#172554 48%,#0f766e)!important;background-attachment:fixed;color:var(--glass-text)}
+body:before{content:'';position:fixed;inset:-20%;z-index:-1;background:radial-gradient(circle at 50% 20%,#22d3ee20,transparent 30%),radial-gradient(circle at 30% 85%,#f9731622,transparent 30%);animation:glassDrift 18s ease-in-out infinite alternate;pointer-events:none}
+@keyframes glassDrift{from{transform:translate3d(-2%,0,0) scale(1)}to{transform:translate3d(2%,2%,0) scale(1.06)}}
+#loginScreen.front-home{max-width:1380px;display:grid;grid-template-columns:minmax(0,1.2fr) minmax(330px,.8fr);gap:20px;padding:18px 24px 34px;border:1px solid var(--glass-border)!important;border-radius:30px;background:linear-gradient(135deg,rgba(255,255,255,.18),rgba(255,255,255,.06))!important;box-shadow:0 28px 90px #02061780;backdrop-filter:blur(24px);overflow:hidden}
+#loginScreen.front-home .front-nav{grid-column:1/-1;margin:-18px -24px 0;padding:0 24px;background:#07152f70!important;border-bottom:1px solid #ffffff2b;border-radius:30px 30px 0 0;backdrop-filter:blur(18px)}
+#loginScreen.front-home .front-nav strong{color:#fff!important}.front-home .front-nav-links a{color:#dbeafe}.front-home .front-language{color:#e0e7ff!important}.front-home .front-language select{background:#ffffff16!important;color:#fff!important;border-color:#ffffff55!important}
+#loginScreen.front-home .front-hero{grid-column:1;grid-row:2;margin:0;min-height:255px;padding:40px;border:1px solid #ffffff38;border-radius:24px;background:linear-gradient(135deg,#2563ebbb,#7c3aedaa 55%,#db277799);box-shadow:0 18px 40px #02061755}
+#loginScreen.front-home .front-hero h1{font-size:clamp(30px,4vw,53px);text-shadow:0 8px 25px #02061780}.front-home .front-hero p{color:#eef2ff!important}
+#loginScreen.front-home .front-showcase{grid-column:1;grid-row:3;min-height:285px;margin:0;border:1px solid #ffffff38!important;border-radius:24px;background:#02061755;box-shadow:0 18px 40px #02061755}
+#loginScreen.front-home .front-auth-panel{grid-column:2;grid-row:2 / span 2;align-self:stretch;padding:30px 26px;border:1px solid #ffffff45;background:linear-gradient(160deg,rgba(255,255,255,.23),rgba(255,255,255,.08));box-shadow:0 18px 42px #02061766;backdrop-filter:blur(20px);color:#fff}
+.front-auth-panel h2,.front-auth-panel>p{color:#fff!important}.front-auth-panel .login-input{background:#07152f99!important;border:1px solid #ffffff45!important;color:#fff!important}.front-auth-panel .login-input::placeholder{color:#dbeafe99}.front-auth-panel .login-btn{background:linear-gradient(135deg,#06b6d4,#6366f1,#ec4899)!important;border:0;box-shadow:0 12px 25px #4f46e566}
+#loginScreen.front-home .front-status-banner,#loginScreen.front-home .front-highlights,#loginScreen.front-home .front-search,#loginScreen.front-home .front-services,#loginScreen.front-home .front-tool-catalog{grid-column:1/-1}
+.front-home .front-status-banner{background:#0f172a66!important;border:1px solid #5eead466!important;color:#d1fae5!important;backdrop-filter:blur(12px)}.front-home .front-highlight,.front-home .service-tile{background:#ffffff16!important;border:1px solid #ffffff38!important;color:#fff!important;box-shadow:0 12px 28px #02061733!important;backdrop-filter:blur(14px)}.front-home .front-highlight:hover,.front-home .service-tile:hover{background:#ffffff28!important;border-color:#67e8f9!important}
+.front-home .front-search{background:#07152f99!important;border-color:#ffffff45!important;color:#fff!important}.front-home .front-search::placeholder{color:#dbeafe99}.front-home .front-tool-catalog{background:#07152f66!important;border-color:#ffffff38!important;box-shadow:0 18px 40px #02061744}.front-home .catalog-heading h3,.front-home .catalog-heading p{color:#fff!important}.front-home .catalog-tool{background:#ffffff14!important;color:#f8fbff!important;border-color:#ffffff38!important}.front-home .catalog-tool:hover{background:#ffffff25!important;border-color:#67e8f9!important}
+#mainApp{max-width:1440px!important;padding:18px!important;border:1px solid #ffffff36!important;border-radius:30px!important;background:linear-gradient(135deg,rgba(255,255,255,.15),rgba(255,255,255,.05))!important;box-shadow:0 28px 90px #02061780!important;backdrop-filter:blur(24px)}
+#mainApp .dashboard-status,#mainApp .pdf-tools-bar,#mainApp .tab-nav,#mainApp .container,#mainApp .tab-content>div,#mainApp .control-panel,#mainApp .upload-box{background:rgba(7,21,47,.55)!important;border-color:#ffffff2d!important;box-shadow:0 14px 32px #02061744!important;backdrop-filter:blur(16px)}
+#mainApp .tab-nav{padding:12px!important;border-radius:20px!important;grid-template-columns:repeat(4,minmax(0,1fr))}.tab-btn,.action-btn,.login-btn,.theme-toggle{border-radius:14px!important}.tab-btn{background:#ffffff12!important;color:#e0e7ff!important;border-color:#ffffff30!important}.tab-btn.active,.tab-btn:hover{background:linear-gradient(135deg,#06b6d4,#6366f1)!important;border-color:#a5f3fc!important;box-shadow:0 10px 24px #4f46e555!important}
+#mainApp .admin-corner-btn{background:linear-gradient(135deg,#f59e0b,#ef4444)!important;border-color:#fde68a!important;box-shadow:0 10px 28px #ef444466!important}
+#mainApp .action-btn,#mainApp .login-btn{background:linear-gradient(135deg,#06b6d4,#6366f1)!important;color:#fff!important;border:1px solid #a5f3fc55!important}.theme-toggle{background:#ffffff16!important;color:#fff!important;border-color:#ffffff45!important}
+body.op-light{background:linear-gradient(135deg,#dbeafe,#f5d0fe,#ccfbf1)!important;color:#172033}.op-light #loginScreen.front-home,.op-light #mainApp{color:#172033}.op-light #mainApp .dashboard-status,.op-light #mainApp .pdf-tools-bar,.op-light #mainApp .tab-nav,.op-light #mainApp .container,.op-light #mainApp .tab-content>div,.op-light #mainApp .control-panel,.op-light #mainApp .upload-box{background:#ffffff80!important;color:#172033}
+@media(max-width:850px){#loginScreen.front-home{display:block;padding:12px 16px 28px}#loginScreen.front-home .front-nav{margin:-12px -16px 0;padding:0 16px}.front-home .front-hero{margin:16px 0!important;padding:30px 24px!important}.front-home .front-showcase{margin:16px 0!important;min-height:260px}.front-home .front-auth-panel{margin:16px 0!important}.front-home .front-services{margin:18px 0!important}.front-home .front-tool-catalog{margin-top:18px!important}#mainApp .tab-nav{grid-template-columns:repeat(2,minmax(0,1fr))}}
+</style>
+<style>html.session-bootstrap #loginScreen{display:none!important}html.session-bootstrap #mainApp{display:block!important}</style>
+<script>(function(){try{const s=JSON.parse(localStorage.getItem('op-auth-session')||'null');if(s&&s.token&&Number(s.expires)>Date.now())document.documentElement.classList.add('session-bootstrap');}catch(_){}})();</script>
+<style>
+/* Light mode contrast: dark ink on light glass, readable controls and statuses. */
+body.op-light{--text-main:#12203a;--text-muted:#42526a;--accent-blue:#075985;--accent-purple:#5b21b6;--border-color:#b8c7dc;--card-bg:rgba(255,255,255,.86)}
+body.op-light #mainApp{color:#12203a!important;background:rgba(248,250,252,.9)!important}
+body.op-light #mainApp .container,body.op-light #mainApp .tab-content>div,body.op-light #mainApp .control-panel,body.op-light #mainApp .upload-box,body.op-light #mainApp .pdf-tools-bar,body.op-light #mainApp .dashboard-status{color:#12203a!important;background:rgba(255,255,255,.92)!important;border-color:#b8c7dc!important}
+body.op-light #mainApp .tab-content h1,body.op-light #mainApp .tab-content h2,body.op-light #mainApp .tab-content h3,body.op-light #mainApp .tab-content h4,body.op-light #mainApp .tab-content p,body.op-light #mainApp .tab-content label,body.op-light #mainApp .tab-content small,body.op-light #mainApp .tab-content td,body.op-light #mainApp .tab-content th,body.op-light #mainApp .tab-content output{color:#12203a!important}
+body.op-light #mainApp .tab-content p,body.op-light #mainApp .tab-content small,body.op-light #mainApp .tab-content label{color:#42526a!important}
+body.op-light #mainApp input,body.op-light #mainApp select,body.op-light #mainApp textarea{background:#fff!important;color:#12203a!important;border-color:#91a4bf!important}
+body.op-light #mainApp input::placeholder,body.op-light #mainApp textarea::placeholder{color:#64748b!important}
+body.op-light #mainApp .tab-btn{background:#eef4ff!important;color:#243b69!important;border-color:#9fb2cc!important}.op-light #mainApp .tab-btn.active,.op-light #mainApp .tab-btn:hover{color:#fff!important}.op-light #mainApp .admin-corner-btn{color:#fff!important}
+body.op-light #mainApp .universal-export-panel,body.op-light #mainApp .added-card-row{background:#eef4ff!important;color:#12203a!important;border-color:#9fb2cc!important}
+body.op-light #loginScreen.front-home .front-auth-panel{background:rgba(255,255,255,.78)!important;border-color:#b8c7dc!important;color:#12203a!important}.op-light .front-auth-panel h2,.op-light .front-auth-panel>p{color:#12203a!important}.op-light .front-auth-panel .login-input{background:#fff!important;color:#12203a!important;border-color:#91a4bf!important}.op-light .front-auth-panel .login-input::placeholder{color:#64748b!important}.op-light .front-home .front-highlight,.op-light .front-home .service-tile{color:#12203a!important;background:#ffffff70!important;border-color:#b8c7dc!important}.op-light .front-home .front-search{background:#fff!important;color:#12203a!important;border-color:#91a4bf!important}.op-light .front-home .front-search::placeholder{color:#64748b!important}
+</style>
+<style>
+/* Slideshow-first landing layout: preserve the complete sample image and move the
+   animated information into a compact, flat strip below it. */
+#loginScreen.front-home .front-showcase{grid-column:1!important;grid-row:2!important;height:clamp(320px,35vw,500px)!important;min-height:320px!important;margin:0!important;padding:12px!important;background:rgba(248,250,252,.96)!important;border:1px solid #dbeafe!important;border-radius:20px!important;box-shadow:0 14px 34px #02061733!important}
+#loginScreen.front-home .front-showcase img{inset:12px!important;width:calc(100% - 24px)!important;height:calc(100% - 24px)!important;object-fit:contain!important;object-position:center!important;background:#fff!important;border-radius:10px!important}
+#loginScreen.front-home .front-showcase .showcase-caption{left:50%!important;right:auto!important;bottom:18px!important;transform:translateX(-50%)!important;padding:5px 10px!important;border-radius:7px!important;font-size:10px!important;white-space:nowrap!important;background:#07152fcc!important}
+#loginScreen.front-home .front-hero{grid-column:1!important;grid-row:3!important;min-height:0!important;margin:0!important;padding:12px 16px 8px!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;text-align:center!important}
+#loginScreen.front-home .front-hero h1{font-size:clamp(19px,2.4vw,32px)!important;line-height:1.15!important;margin:0!important;text-shadow:none!important}
+#loginScreen.front-home .front-hero p{margin:8px auto 0!important;padding:6px 12px!important;border-top:1px solid #7dd3fc88!important;border-bottom:1px solid #7dd3fc88!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;font-size:11px!important;line-height:1.35!important}
+#loginScreen.front-home .front-status-banner{grid-column:1/-1!important;grid-row:4!important;min-height:0!important;margin:0!important;padding:6px 10px!important;border:0!important;border-top:1px solid #5eead466!important;border-bottom:1px solid #5eead466!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;backdrop-filter:none!important;font-size:11px!important}
+#loginScreen.front-home .front-highlights{grid-column:1/-1!important;grid-row:5!important}
+#loginScreen.front-home .front-search{grid-column:1/-1!important;grid-row:6!important}
+#loginScreen.front-home .front-services{grid-column:1/-1!important;grid-row:7!important}
+#loginScreen.front-home .front-tool-catalog{grid-column:1/-1!important;grid-row:8!important}
+@media(max-width:850px){
+  #loginScreen.front-home{display:grid!important;grid-template-columns:minmax(0,1fr)!important;gap:12px!important;padding:12px 16px 28px!important}
+  #loginScreen.front-home .front-nav{grid-column:1!important;grid-row:1!important;margin:-12px -16px 0!important;padding:0 16px!important}
+  #loginScreen.front-home .front-showcase{grid-column:1!important;grid-row:2!important;height:clamp(240px,64vw,370px)!important;min-height:240px!important}
+  #loginScreen.front-home .front-hero{grid-column:1!important;grid-row:3!important}
+  #loginScreen.front-home .front-auth-panel{grid-column:1!important;grid-row:4!important;margin:0!important;min-width:0!important}
+  #loginScreen.front-home .front-status-banner{grid-row:5!important}
+  #loginScreen.front-home .front-highlights{grid-row:6!important}
+  #loginScreen.front-home .front-search{grid-row:7!important}
+  #loginScreen.front-home .front-services{grid-row:8!important}
+  #loginScreen.front-home .front-tool-catalog{grid-row:9!important}
+  #loginScreen.front-home .front-showcase .showcase-caption{max-width:calc(100% - 28px);overflow:hidden;text-overflow:ellipsis}
+}
+</style>
+<style>
+/* Logged-in workspace launcher: large category cards with the existing working
+   onclick procedures preserved on every button. */
+#mainApp .dashboard-tool-launcher{display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:12px!important;align-items:stretch!important;padding:20px!important;border:1px solid #ffffff2d!important;border-radius:22px!important;background:linear-gradient(145deg,#07152fcc,#172554cc)!important;box-shadow:0 18px 42px #02061755!important}
+#mainApp .dashboard-nav-title{grid-column:1/-1;display:flex;flex-direction:column;gap:5px;padding:2px 2px 8px;color:#f8fbff}
+#mainApp .dashboard-nav-title span{font-size:10px;letter-spacing:2px;color:#67e8f9;font-weight:800}
+#mainApp .dashboard-nav-title strong{font-size:clamp(24px,2.8vw,38px);line-height:1.1;color:#fff}
+#mainApp .dashboard-nav-title small{font-size:12px;color:#cbd5e1}
+#mainApp .dashboard-group-title{grid-column:1/-1;margin-top:6px;padding:7px 2px 3px;border-bottom:1px solid #ffffff30;color:#fff;font-size:13px;font-weight:800;letter-spacing:.2px}
+#mainApp .dashboard-group-title:before{content:'•';display:inline-block;margin-right:7px;color:#67e8f9;font-size:18px;line-height:0;vertical-align:-1px}
+#mainApp .pdf-group-title:before{color:#6ee7b7}#mainApp .image-group-title:before{color:#c4b5fd}
+#mainApp .dashboard-card{position:relative;display:flex!important;align-items:center!important;justify-content:flex-start!important;gap:10px!important;width:100%!important;min-height:82px!important;padding:16px 46px 16px 16px!important;border-radius:14px!important;background:#0f1b31e8!important;color:#f8fbff!important;text-align:left!important;font-size:14px!important;font-weight:800!important;line-height:1.25!important;white-space:normal!important;transition:transform .2s ease,box-shadow .2s ease,background .2s ease!important}
+#mainApp .dashboard-card:after{content:'Open →';position:absolute;right:13px;bottom:11px;font-size:10px;font-weight:700;letter-spacing:.2px;color:#cbd5e1;opacity:.9}
+#mainApp .dashboard-card:hover,#mainApp .dashboard-card:focus-visible{transform:translateY(-3px)!important;background:#17243def!important;outline:none!important}
+#mainApp .dashboard-card.active{transform:none!important}
+#mainApp .id-tool-card{border:1px solid #22d3eeaa!important;box-shadow:0 0 0 1px #0e749044 inset,0 8px 20px #0891b233!important}
+#mainApp .id-tool-card:hover,#mainApp .id-tool-card:focus-visible,#mainApp .id-tool-card.active{border-color:#67e8f9!important;box-shadow:0 0 0 1px #22d3ee inset,0 12px 26px #0891b255!important}
+#mainApp .pdf-tool-card{border:1px solid #6ee7b7aa!important;box-shadow:0 0 0 1px #04785744 inset,0 8px 20px #0596692e!important}
+#mainApp .pdf-tool-card:hover,#mainApp .pdf-tool-card:focus-visible{border-color:#86efac!important;box-shadow:0 0 0 1px #34d399 inset,0 12px 26px #05966955!important}
+#mainApp .image-tool-card{border:1px solid #c4b5fdaa!important;box-shadow:0 0 0 1px #6d28d944 inset,0 8px 20px #7c3aed2e!important}
+#mainApp .image-tool-card:hover,#mainApp .image-tool-card:focus-visible{border-color:#ddd6fe!important;box-shadow:0 0 0 1px #a78bfa inset,0 12px 26px #7c3aed55!important}
+#mainApp .utility-tool-card{border:1px solid #67e8f9aa!important;box-shadow:0 0 0 1px #0e749044 inset,0 8px 20px #0891b233!important}
+body.op-light #mainApp .dashboard-tool-launcher{background:linear-gradient(145deg,#f8fbff,#eaf2ff)!important;border-color:#9fb2cc!important}
+body.op-light #mainApp .dashboard-nav-title strong{color:#12203a!important}body.op-light #mainApp .dashboard-nav-title small{color:#42526a!important}body.op-light #mainApp .dashboard-group-title{color:#12203a;border-color:#b8c7dc}
+body.op-light #mainApp .dashboard-card{background:#fff!important;color:#243b69!important}
+body.op-light #mainApp .dashboard-card:after{color:#52637f}
+@media(max-width:1050px){#mainApp .dashboard-tool-launcher{grid-template-columns:repeat(3,minmax(0,1fr))!important}}
+@media(max-width:720px){#mainApp .dashboard-tool-launcher{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:9px!important;padding:14px!important}#mainApp .dashboard-nav-title,#mainApp .dashboard-group-title{grid-column:1/-1}#mainApp .dashboard-nav-title strong{font-size:25px}#mainApp .dashboard-card{min-height:78px!important;padding:13px 36px 13px 12px!important;font-size:12px!important}#mainApp .dashboard-card:after{right:9px;bottom:8px;font-size:9px}}
+@media(max-width:430px){#mainApp .dashboard-tool-launcher{grid-template-columns:1fr!important}#mainApp .dashboard-card{min-height:68px!important}}
+﻿</style>
+<style id="skillo-machinery-theme">
+/* Skillo machinery console theme: reference-inspired metal panels, cyan circuit
+   accents and a compact login console. Existing tool procedures are untouched. */
+body:has(#loginScreen.front-home){background:#07111b!important;color:#e8f7ff!important;padding:16px!important;overflow-x:hidden}
+.portal-main-heading{display:none!important}
+#loginScreen.front-home{position:relative;isolation:isolate;max-width:1480px!important;display:grid!important;grid-template-columns:minmax(0,1.28fr) minmax(340px,.72fr)!important;grid-template-rows:auto auto auto auto auto auto auto auto!important;gap:14px!important;padding:16px 20px 28px!important;border:2px solid #486273!important;border-radius:26px!important;background:linear-gradient(145deg,#172936 0%,#0b1723 52%,#102634 100%)!important;box-shadow:0 24px 80px #000b,0 0 0 5px #07111b, inset 0 1px #a5e6ff33!important;overflow:hidden}
+#loginScreen.front-home:before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;opacity:.28;background:linear-gradient(90deg,transparent 49.7%,#25d9ff33 50%,transparent 50.3%),linear-gradient(0deg,transparent 49.7%,#25d9ff22 50%,transparent 50.3%),radial-gradient(circle at 15% 15%,#08d9ff26 0 2px,transparent 3px),radial-gradient(circle at 80% 70%,#00a8ff22 0 2px,transparent 3px);background-size:160px 160px,160px 160px,120px 120px,180px 180px}
+#loginScreen.front-home .front-nav{grid-column:1/-1;grid-row:1;margin:-16px -20px 0!important;padding:10px 18px!important;min-height:68px;border-bottom:2px solid #567888!important;border-radius:24px 24px 0 0;background:linear-gradient(180deg,#718593,#2a3d4a 45%,#111e29)!important;box-shadow:inset 0 1px #e6fbff88,0 6px 22px #0009!important;display:flex;align-items:center;gap:20px}
+#loginScreen.front-home .front-nav:after{content:"⚙  ◉  ▣";margin-left:auto;color:#9defff;font-size:23px;letter-spacing:7px;text-shadow:0 0 12px #00d9ff}
+#loginScreen.front-home .front-nav .skillo-brand{display:flex;align-items:center;gap:9px;color:#eefaff!important;font-size:17px;font-weight:900;line-height:1.02;letter-spacing:.4px;text-transform:uppercase;white-space:nowrap;text-shadow:0 2px 2px #000b}
+#loginScreen.front-home .skillo-logo-box{position:relative;display:grid;place-items:center;flex:0 0 45px;width:45px;height:45px;border:2px solid #c2e8f3;border-radius:12px;background:radial-gradient(circle at 35% 30%,#effcff,#83aab6 48%,#203440 100%);box-shadow:0 0 0 3px #203440,0 0 16px #38dfff99;overflow:hidden}
+#loginScreen.front-home .skillo-logo-box:before{content:"⚙";position:absolute;color:#0d2a39;font-size:30px;opacity:.35;line-height:1}
+#loginScreen.front-home .skillo-logo-box img{position:relative;z-index:1;width:100%;height:100%;object-fit:cover;object-position:center;border:0;border-radius:10px;background:#dfe9ed;box-shadow:none}
+#loginScreen.front-home .skillo-logo-fallback{position:relative;z-index:2;color:#06202e;font-size:15px;font-weight:950;letter-spacing:-1px}
+#loginScreen.front-home .skillo-brand>img{width:45px;height:45px;object-fit:cover;object-position:center;border:2px solid #c2e8f3;border-radius:12px;background:#dfe9ed;box-shadow:0 0 0 3px #203440,0 0 16px #38dfff99}
+#loginScreen.front-home .skillo-brand small{font-size:10px;letter-spacing:1.5px;color:#8cecff}
+#loginScreen.front-home .front-nav-links{display:flex;align-items:center;gap:14px}
+#loginScreen.front-home .front-nav-links a{color:#d9f8ff!important;font-size:11px;font-weight:800;text-decoration:none;text-transform:uppercase;letter-spacing:.7px}
+#loginScreen.front-home .front-nav-links a:hover{color:#6dffff!important;text-shadow:0 0 10px #00eaff}
+#loginScreen.front-home .front-language{margin-left:auto!important;margin-right:0!important;color:#d9f8ff!important}
+#loginScreen.front-home .front-language select{background:#162b38!important;color:#e8fbff!important;border:1px solid #71d6e9!important;border-radius:8px!important}
+#loginScreen.front-home .front-menu-btn{background:linear-gradient(#3c6475,#172a36)!important;border:1px solid #8deaff!important;color:#fff!important;border-radius:10px!important;box-shadow:0 0 12px #00cfff55}
+#loginScreen.front-home .front-hero{grid-column:1;grid-row:3;min-height:122px!important;margin:0!important;padding:26px 30px!important;text-align:left!important;border:2px solid #75919d!important;border-radius:18px!important;background:linear-gradient(145deg,#53636d,#c5d0d2 48%,#667984)!important;box-shadow:inset 0 1px #fff9, inset 0 -10px 20px #15232c66,0 12px 25px #0008!important}
+#loginScreen.front-home .front-hero h1{margin:0!important;color:#0b1620!important;font-size:clamp(24px,3vw,44px)!important;line-height:1.04!important;letter-spacing:-.6px!important;text-shadow:0 1px #fff9!important}
+#loginScreen.front-home .front-hero p{display:inline-block;margin:13px 0 0!important;padding:6px 12px!important;border:1px solid #1c3c4a!important;border-radius:4px!important;background:#cfe1e2aa!important;color:#132532!important;font-weight:800!important;font-size:12px!important;box-shadow:inset 0 1px #fff9}
+#loginScreen.front-home .front-showcase{grid-column:1;grid-row:2;position:relative!important;height:clamp(330px,36vw,520px)!important;min-height:330px!important;margin:0!important;padding:20px!important;border:3px solid #697f8b!important;border-radius:20px!important;background:linear-gradient(145deg,#a8b7bc,#283c48 12%,#0a1721 50%,#768b93)!important;box-shadow:inset 0 0 0 4px #12222c,inset 0 0 0 7px #9eb0b466,0 16px 35px #000b!important;overflow:hidden!important}
+#loginScreen.front-home .front-showcase:before{content:"";position:absolute;inset:14px;z-index:0;pointer-events:none;border:2px solid #3ceaffaa;border-radius:12px;box-shadow:0 0 0 4px #0d2632,0 0 25px #00d9ff55,inset 0 0 22px #00d9ff33;background:repeating-linear-gradient(90deg,transparent 0 38px,#32dfff18 39px 40px),repeating-linear-gradient(0deg,transparent 0 38px,#32dfff12 39px 40px)}
+#loginScreen.front-home .front-showcase img{z-index:1!important;inset:30px!important;width:calc(100% - 60px)!important;height:calc(100% - 60px)!important;object-fit:contain!important;object-position:center!important;background:#eef8f9!important;border:2px solid #71dceb!important;border-radius:8px!important;box-shadow:0 0 0 4px #112733,0 0 24px #00d9ff44!important}
+#loginScreen.front-home .front-showcase .showcase-caption{z-index:5;left:50%!important;right:auto!important;bottom:22px!important;transform:translateX(-50%)!important;padding:7px 15px!important;border:1px solid #75edff!important;border-radius:5px!important;background:#071b29e8!important;color:#e2fbff!important;font-size:11px!important;font-weight:800!important;white-space:nowrap!important;box-shadow:0 0 14px #00d9ff55}
+#loginScreen.front-home .front-auth-panel{grid-column:2;grid-row:2 / span 2;align-self:stretch!important;margin:0!important;padding:28px 24px!important;border:2px solid #6d8b96!important;border-radius:18px!important;background:linear-gradient(145deg,#304753,#0d1c28 55%,#1e3441)!important;box-shadow:inset 0 1px #d6fbff55,inset 0 -18px 30px #0005,0 15px 32px #0009!important;color:#effcff!important}
+#loginScreen.front-home .front-auth-panel:before{content:"LOGIN / ACCOUNT";display:block;margin:-6px 0 18px;padding-bottom:9px;border-bottom:1px solid #5ceaff99;color:#e9fcff;font-size:22px;font-weight:900;letter-spacing:.6px;text-shadow:0 0 12px #00cfff}
+#loginScreen.front-home .front-auth-panel .badge{display:none!important}
+#loginScreen.front-home .front-auth-panel h2{display:none!important}
+#loginScreen.front-home .front-auth-panel>p{color:#9cefff!important;font-size:12px!important;text-transform:uppercase;letter-spacing:1px}
+#loginScreen.front-home .front-auth-panel .login-input{height:50px!important;margin:9px 0!important;background:#091923dd!important;border:2px solid #39d8f2!important;border-radius:8px!important;color:#f1fdff!important;box-shadow:inset 0 2px 8px #0009,0 0 10px #00b9dd22!important}
+#loginScreen.front-home .front-auth-panel .login-input::placeholder{color:#b6d6de!important}
+#loginScreen.front-home .front-auth-panel .login-btn{height:52px!important;margin-top:10px!important;border:2px solid #94fff1!important;border-radius:14px!important;background:linear-gradient(135deg,#21e5d2 0%,#0ebad6 38%,#a345ed 100%)!important;color:#071827!important;font-size:18px!important;font-weight:950!important;box-shadow:0 0 0 4px #112733,0 0 22px #12e5dc99!important;text-transform:none!important}
+#loginScreen.front-home .front-auth-panel .login-btn:hover{transform:translateY(-2px) scale(1.01)!important;filter:brightness(1.08)}
+#loginScreen.front-home .front-auth-panel .landing-auth-links{display:none!important}
+#loginScreen.front-home .front-auth-panel #errorMsg{margin-top:12px!important;color:#ffd6d6!important;background:#6e203b99!important;border:1px solid #ff7194!important}
+#loginScreen.front-home .front-status-banner,#loginScreen.front-home .front-highlights,#loginScreen.front-home .front-search,#loginScreen.front-home .front-services,#loginScreen.front-home .front-tool-catalog{grid-column:1/-1!important}
+#loginScreen.front-home .front-status-banner{grid-row:4;padding:7px 12px!important;border:1px solid #43e7f1!important;border-radius:5px!important;background:#0d3541cc!important;color:#aafcff!important;box-shadow:0 0 14px #00d9ff33!important}
+#loginScreen.front-home .front-highlights{grid-row:5;display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+#loginScreen.front-home .front-highlight{padding:10px!important;border:1px solid #4adbea!important;border-radius:7px!important;background:#112b37cc!important;color:#c8f8ff!important;font-size:11px!important;font-weight:800!important;text-align:center}
+#loginScreen.front-home .front-search{grid-row:6!important;background:#091923!important;border:1px solid #3ccfe2!important;color:#e8fbff!important;border-radius:7px!important}
+#loginScreen.front-home .front-search::placeholder{color:#8ebcc7!important}
+#loginScreen.front-home .front-services{grid-row:7!important;gap:10px!important}
+#loginScreen.front-home .front-services h3{grid-column:1/-1!important;margin:0!important;padding:8px 14px!important;border:2px solid #6f8991!important;border-radius:9px!important;background:linear-gradient(#c8d2d2,#627780)!important;color:#13222d!important;text-align:center!important;letter-spacing:1px!important;text-transform:uppercase;box-shadow:inset 0 1px #fff}
+#loginScreen.front-home .front-services .service-tile{min-height:74px!important;border:2px solid #51ddeb!important;border-radius:10px!important;background:linear-gradient(145deg,#405661,#102532)!important;color:#d8fbff!important;box-shadow:inset 0 1px #ffffff33,0 8px 16px #0007!important}
+#loginScreen.front-home .front-services .service-tile:hover{transform:translateY(-3px)!important;box-shadow:0 0 18px #00dcff88!important}
+#loginScreen.front-home .front-tool-catalog{grid-row:8!important;margin-top:0!important;border-color:#4bdced!important;background:#09202dcc!important}
+#loginScreen.front-home .front-tool-catalog .catalog-heading span{color:#6ceeff!important}
+#loginScreen.front-home .front-tool-catalog .catalog-heading h3{color:#ecfdff!important}
+#loginScreen.front-home .front-tool-catalog .catalog-heading p{color:#a9d2dc!important}
+#loginScreen.front-home .front-tool-catalog .catalog-tool{border-color:#3fd9ed!important;background:#102936!important;color:#dcfbff!important;border-radius:8px!important;box-shadow:inset 0 1px #ffffff22,0 6px 14px #0007!important}
+#loginScreen.front-home .front-tool-catalog .catalog-tool:hover{border-color:#b6ffff!important;box-shadow:0 0 15px #00dcff77!important}
+.showcase-door-ring{position:absolute;z-index:4;inset:17% 25%;pointer-events:none;border:4px solid #82f7ff;border-radius:50%;opacity:.62;transform:scale(1);box-shadow:0 0 0 8px #0a2230aa,0 0 22px #00eaff,inset 0 0 18px #00dfff;background:#07233122}
+.showcase-door-ring:before,.showcase-door-ring:after{content:"";position:absolute;top:8%;bottom:8%;width:48%;border:3px solid #cffeff;border-radius:50%;background:linear-gradient(90deg,#38e8ff18,#ffffff08);box-shadow:0 0 12px #00eaff66}
+.showcase-door-ring:before{left:-3%;border-right-color:transparent;transform-origin:100% 50%}
+.showcase-door-ring:after{right:-3%;border-left-color:transparent;transform-origin:0 50%}
+.showcase-door-ring span{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);padding:5px 9px;border:1px solid #a8ffff;border-radius:4px;background:#071d2bd9;color:#d9ffff;font-size:10px;font-weight:900;letter-spacing:1px;white-space:nowrap}
+.front-showcase.is-switching .showcase-door-ring{animation:skilloDoorCycle 1.05s cubic-bezier(.65,0,.35,1)}
+.front-showcase.is-switching .showcase-door-ring:before{animation:skilloDoorLeft 1.05s cubic-bezier(.65,0,.35,1)}
+.front-showcase.is-switching .showcase-door-ring:after{animation:skilloDoorRight 1.05s cubic-bezier(.65,0,.35,1)}
+@keyframes skilloDoorCycle{0%,100%{opacity:.55;transform:scale(1) rotate(0)}45%{opacity:1;transform:scaleX(.22) rotate(180deg)}58%{opacity:1;transform:scaleX(.22) rotate(180deg)}80%{opacity:.7;transform:scale(1.04) rotate(360deg)}}
+@keyframes skilloDoorLeft{0%,100%{transform:rotateY(0)}48%,60%{transform:rotateY(78deg)}}
+@keyframes skilloDoorRight{0%,100%{transform:rotateY(0)}48%,60%{transform:rotateY(-78deg)}}
+#mainApp{max-width:1480px!important;margin:0 auto!important;padding:16px 20px 30px!important;background:linear-gradient(145deg,#0a1823,#142a35 48%,#07131e)!important;border:2px solid #466875!important;border-radius:26px!important;box-shadow:0 24px 70px #000b,inset 0 1px #c9f8ff33!important}
+#mainApp .dashboard-status{border:1px solid #4ce6ee!important;border-radius:5px!important;background:#0c3542!important;color:#b9fcff!important;box-shadow:0 0 16px #00d9ff33!important}
+#mainApp .pdf-tools-bar{border:1px solid #5bdbea!important;border-radius:10px!important;background:linear-gradient(180deg,#506b76,#172b37)!important;box-shadow:inset 0 1px #fff5,0 8px 20px #0008!important}
+#mainApp .dashboard-tool-launcher{border:2px solid #62828e!important;border-radius:18px!important;background:linear-gradient(145deg,#53666d,#172d39 14%,#0a1b27 80%,#59727c)!important;box-shadow:inset 0 1px #ffffff66,inset 0 -12px 22px #0005,0 14px 30px #0009!important}
+#mainApp .dashboard-nav-title{padding:6px 4px 12px!important;border-bottom:1px solid #64eaf4!important}
+#mainApp .dashboard-nav-title span{color:#79f3ff!important;text-shadow:0 0 10px #00dbff}
+#mainApp .dashboard-nav-title strong{color:#f0fdff!important;text-shadow:0 2px 2px #000}
+#mainApp .dashboard-nav-title small{color:#b9d9df!important}
+#mainApp .dashboard-group-title{padding:9px 4px 6px!important;border-bottom:1px solid #60e5ef88!important;color:#e7fcff!important;text-transform:uppercase;letter-spacing:1px!important}
+#mainApp .dashboard-card{min-height:86px!important;border-radius:10px!important;background:linear-gradient(145deg,#304c58,#0e202c 62%,#172f3b)!important;color:#e9fdff!important;box-shadow:inset 0 1px #ffffff30,inset 0 -8px 12px #0004,0 8px 16px #0008!important}
+#mainApp .dashboard-card:after{color:#8cefff!important;text-shadow:0 0 8px #00dfff}
+#mainApp .dashboard-card:hover,#mainApp .dashboard-card:focus-visible{background:linear-gradient(145deg,#3d6471,#103345 62%,#1e4350)!important;box-shadow:0 0 20px #00dcff66,inset 0 1px #ffffff55!important}
+#mainApp .id-tool-card{border:2px solid #39d9ee!important}.id-tool-card:hover{border-color:#b5fbff!important}
+#mainApp .pdf-tool-card{border:2px solid #5fe3bb!important}.pdf-tool-card:hover{border-color:#c3ffe9!important}
+#mainApp .image-tool-card{border:2px solid #be8cff!important}.image-tool-card:hover{border-color:#ead7ff!important}
+#mainApp .utility-tool-card{border:2px solid #39d9ee!important}
+#mainApp .container{border:1px solid #50727f!important;border-radius:16px!important;background:#0a1722b8!important;box-shadow:inset 0 1px #ffffff18!important}
+#mainApp .container>div:first-child strong{color:#e8fcff!important;text-shadow:0 0 10px #00d9ff66}
+#mainApp .tab-content>div,#mainApp .control-panel,#mainApp .upload-box{border-color:#4f7480!important;background:#112633!important}
+#mainApp input,#mainApp select,#mainApp textarea{background:#081923!important;color:#e9fdff!important;border-color:#438d9d!important}
+#mainApp button{border-radius:9px!important}
+#loginScreen.front-home[style*="display: none"]{display:none!important}
+#loginScreen.front-home[style*="display: block"]{display:grid!important}
+#loginScreen.front-home .front-menu{position:absolute}
+#loginScreen.front-home .front-settings-submenu{position:absolute;right:0;top:calc(100% + 6px);z-index:70;display:grid;gap:6px;min-width:205px;padding:8px;border:1px solid #71d6e9;border-radius:10px;background:#0b1c28f5;box-shadow:0 14px 28px #000b}
+#loginScreen.front-home .front-settings-submenu[hidden]{display:none!important}
+#loginScreen.front-home .front-settings-submenu button{border:1px solid #3fd9ed;background:#102936;color:#dcfbff;border-radius:8px;padding:9px 11px;text-align:left;cursor:pointer}
+#loginScreen.front-home .front-settings-submenu button:hover{background:#124951;border-color:#b6ffff;color:#fff}
+@media(max-width:850px){body:has(#loginScreen.front-home){padding:8px!important}#loginScreen.front-home{display:grid!important;grid-template-columns:1fr!important;gap:11px!important;padding:10px 12px 22px!important}.front-nav{grid-column:1!important;grid-row:1!important;margin:-10px -12px 0!important;padding:8px 12px!important}.front-nav-links{display:none!important}.front-nav:after{font-size:17px!important}.front-language{display:none!important}.front-hero{grid-column:1!important;grid-row:3!important;padding:20px!important;min-height:100px!important}.front-showcase{grid-column:1!important;grid-row:2!important;height:clamp(250px,72vw,390px)!important;min-height:250px!important}.front-auth-panel{grid-column:1!important;grid-row:4!important}.front-status-banner{grid-row:5!important}.front-highlights{grid-row:6!important;grid-template-columns:1fr!important}.front-search{grid-row:7!important}.front-services{grid-row:8!important}.front-tool-catalog{grid-row:9!important}.showcase-door-ring{inset:18% 24%}.skillo-logo-box{flex-basis:38px!important;width:38px!important;height:38px!important}.skillo-brand{font-size:13px!important}}
+</style>
 </head>
 <body>
 
 <div class="portal-main-heading">
-  OP PRINTING HUB
+  SKILLO ID PRINT SOLUTIONS
 </div>
 
 <!-- Contact for Registration Button -->
@@ -1027,8 +1294,16 @@ body:has(#loginScreen.front-home){background:#edf3f8!important}
 
 <!-- 1. Login Screen with Running Ticker, Ad Images & Services Info -->
 <div id="loginScreen" class="auth-box front-home">
-  <nav class="front-nav"><strong>OP Printing Hub</strong><div class="front-nav-links" aria-label="Primary navigation"><a href="#loginScreen">Home</a><a href="#pricing">Pricing &amp; Plans</a><a href="#mainApp">All PDF Tools</a><a href="#faq">Help &amp; FAQs</a></div><label class="front-language" style="margin-left:auto;margin-right:58px;font-size:12px;color:#475569;display:flex;align-items:center;gap:6px;">🌐 <select id="frontLanguageSelect" style="border:1px solid #cbd5e1;border-radius:9px;padding:7px;background:#fff;color:#334155;"><option value="en">English</option><option value="hi">हिन्दी</option><option value="mr">मराठी</option></select></label><div class="front-menu-wrap"><button class="front-menu-btn" id="frontMenuBtn" aria-expanded="false" aria-controls="frontMenu">☰</button><div class="front-menu" id="frontMenu"><button type="button" id="frontLoginBtn">🔑 Login</button><button type="button" id="frontJoinBtn">📝 Join / Create Account</button></div></div></nav>
-  <section class="front-hero"><h1>Launch Your Digital Operations With<br>Our Print Portal</h1><p>All-in-one platform for seamless online printing and digital services.</p></section>
+  <nav class="front-nav"><strong class="skillo-brand"><span class="skillo-logo-box"><img src="assets/skillo-brand-mark.png" alt="Skillo ID Print Solutions logo" onerror="this.hidden=true;this.nextElementSibling.hidden=false"><span class="skillo-logo-fallback" hidden>SI</span></span> <span>Skillo ID<br><small>Print Solutions</small></span></strong><div class="front-nav-links" aria-label="Primary navigation"><a href="#loginScreen">Home</a><a href="#pricing">Pricing &amp; Plans</a><a href="#mainApp">All PDF Tools</a><a href="#faq">Help &amp; FAQs</a></div><label class="front-language" style="margin-left:auto;margin-right:58px;font-size:12px;color:#475569;display:flex;align-items:center;gap:6px;">🌐 <select id="frontLanguageSelect" style="border:1px solid #cbd5e1;border-radius:9px;padding:7px;background:#fff;color:#334155;"><option value="en">English</option><option value="hi">हिन्दी</option><option value="mr">मराठी</option></select></label><div class="front-menu-wrap"><button class="front-menu-btn" id="frontMenuBtn" aria-expanded="false" aria-controls="frontMenu">☰</button><div class="front-menu" id="frontMenu"><button type="button" id="frontLoginBtn">🔑 Login</button><button type="button" id="frontJoinBtn">📝 Join / Create Account</button><button type="button" id="frontSettingsBtn" aria-expanded="false" aria-controls="frontSettingsMenu">⚙️ Settings</button><div id="frontSettingsMenu" class="front-settings-submenu" hidden><button type="button" id="frontMenuChangePasswordBtn">🔑 Change Password</button><button type="button" id="frontMenuForgotPasswordBtn">🔒 Forgot Password</button></div></div></div></nav>
+  <section class="front-hero"><h1>Power Your Digital Printing<br>With Skillo ID Solutions</h1><p>Fast, precise and secure tools for ID cards, photos and PDF workflows.</p></section>
+  <section class="front-showcase" aria-label="Printing sample slideshow">
+    <div class="showcase-door-ring" aria-hidden="true"><span>NEXT SAMPLE</span></div>
+    <img class="active" src="assets/passport-hq.png" alt="Passport photo printing sample">
+    <img src="assets/post-cards-hq.png" alt="Post card printing sample">
+    <img src="assets/pdf-editor-hq.png" alt="PDF editor sample">
+    <img src="assets/frame-samples/sample_01.png" alt="Frame printing sample">
+    <div class="showcase-caption">🖨️ Print samples · Passport · Post cards · PDF Editor</div>
+  </section>
   <div class="front-status-banner" role="status">🟢 All Portal Services Operational · Fast 300 DPI Rendering Active</div>
   <section class="front-highlights" aria-label="Portal highlights">
     <div class="front-highlight">⚡ Fast Processing</div>
@@ -1036,7 +1311,14 @@ body:has(#loginScreen.front-home){background:#edf3f8!important}
     <div class="front-highlight">🖨️ Perfect A4 Alignment</div>
   </section>
   <input class="front-search" id="frontServiceSearch" type="search" placeholder="⌕  Search services, forms, files... (e.g. Aadhaar, PDF)" aria-label="Search services">
-  <section class="front-services"><h3>Essential &amp; Services</h3><div class="service-tile" tabindex="0" onclick="document.getElementById('loginEmail').focus()"><span>📝</span><small>Mock Test</small></div><div class="service-tile" tabindex="0" onclick="document.getElementById('loginEmail').focus()"><span>🪪</span><small>ID Card Print</small></div><div class="service-tile" tabindex="0" onclick="document.getElementById('loginEmail').focus()"><span>✂️</span><small>PVC Auto Crop</small></div><div class="service-tile" tabindex="0" onclick="document.getElementById('loginEmail').focus()"><span>🖨️</span><small>Auto Print</small></div><div class="service-tile" tabindex="0" onclick="document.getElementById('loginEmail').focus()"><span>📷</span><small>Passport Photo</small></div></section>
+  <section class="front-services"><h3>Essential Services</h3><div class="service-tile" tabindex="0" onclick="document.getElementById('loginEmail').focus()"><span>📝</span><small>Mock Test</small></div><div class="service-tile" tabindex="0" onclick="document.getElementById('loginEmail').focus()"><span>🪪</span><small>ID Card Print</small></div><div class="service-tile" tabindex="0" onclick="document.getElementById('loginEmail').focus()"><span>✂️</span><small>PVC Auto Crop</small></div><div class="service-tile" tabindex="0" onclick="document.getElementById('loginEmail').focus()"><span>🖨️</span><small>PDF Editor</small></div><div class="service-tile" tabindex="0" onclick="document.getElementById('loginEmail').focus()"><span>📷</span><small>Passport Photo</small></div></section>
+  <section class="front-tool-catalog" aria-label="All portal tools">
+    <div class="catalog-heading"><span>SKILLO ID PRINT SOLUTIONS</span><h3>All tools in one workspace</h3><p>Sign in once and run your everyday ID, photo and PDF workflows.</p></div>
+    <div class="catalog-grid">
+      <button class="catalog-tool" data-tool="passport"><span>📷</span>Passport Photo Maker</button><button class="catalog-tool" data-tool="resume"><span>📄</span>Resume Maker / CV Builder</button><button class="catalog-tool" data-tool="resize"><span>📐</span>Photo Resize</button><button class="catalog-tool" data-tool="id"><span>🪪</span>ID Card Print</button><button class="catalog-tool" data-tool="aadhaar"><span>🧾</span>Aadhaar Card Print</button><button class="catalog-tool" data-tool="ayushman"><span>🏥</span>Ayushman Bharat Card</button><button class="catalog-tool" data-tool="pan"><span>💳</span>PAN Card Printing</button><button class="catalog-tool" data-tool="smart"><span>✨</span>Smart ID Card Printing</button><button class="catalog-tool" data-tool="jpgpdf"><span>🖼️</span>JPG to PDF</button><button class="catalog-tool" data-tool="pngpdf"><span>🌈</span>PNG to PDF</button><button class="catalog-tool" data-tool="merge"><span>📚</span>Merge PDF</button><button class="catalog-tool" data-tool="delete"><span>✂️</span>Delete PDF Pages</button><button class="catalog-tool" data-tool="pdfjpg"><span>🔁</span>PDF to JPG</button><button class="catalog-tool" data-tool="jpgpng"><span>🖼️</span>JPG to PNG</button><button class="catalog-tool" data-tool="pngjpg"><span>🗜️</span>PNG to JPG</button><button class="catalog-tool" data-tool="compress"><span>⚡</span>PDF Compressor</button><button class="catalog-tool" data-tool="editor"><span>✏️</span>PDF Editor</button><button class="catalog-tool" data-tool="arranger"><span>↔️</span>PDF Arranger / Reorder</button><button class="catalog-tool" data-tool="batch"><span>📦</span>Batch Image to PDF</button>
+    </div>
+    <div class="catalog-footer-links"><button data-info-link="payment">💳 Payment QR</button><button data-info-link="support">❓ Help &amp; Support</button><button data-info-link="privacy">🔒 Privacy</button><button data-info-link="terms">📜 Terms</button><button data-info-link="refund">↩️ Refund Policy</button></div>
+  </section>
   
   <!-- Running Ticker Notification -->
   <div class="ticker-container legacy-front">
@@ -1066,6 +1348,7 @@ body:has(#loginScreen.front-home){background:#edf3f8!important}
     </ul>
   </div>
 
+  <div class="front-auth-panel">
   <div class="badge">Protected Access</div>
   <h2 style="font-size: 20px; margin-bottom: 6px;">Sign In</h2>
   <p style="font-size: 11px; color: var(--text-muted); margin-bottom: 15px;">Card & Photo Generator Portal</p>
@@ -1077,12 +1360,13 @@ body:has(#loginScreen.front-home){background:#edf3f8!important}
   
   <div style="display:flex; justify-content:space-between; align-items:center; gap:8px; flex-wrap:wrap; margin-top:10px;">
     <span id="goToSignUp" hidden aria-hidden="true">Create Account</span>
-    <span id="goToChangePwd" class="auth-link change-password-link">🔑 Change Password</span>
+    <span id="goToChangePwd" hidden aria-hidden="true">Change Password</span>
   </div>
-  <div style="display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-top:10px;">
-    <button type="button" id="forgotIdBtn" class="auth-link" style="border:0;background:none;cursor:pointer;">🪪 Forgot ID</button>
+  <div class="landing-auth-links" style="display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-top:10px;">
+    <button type="button" id="forgotIdBtn" hidden aria-hidden="true">Forgot ID</button>
     <button type="button" id="changePasswordBtn" class="auth-link" style="border:0;background:none;cursor:pointer;">🔑 Change Password</button>
     <button type="button" id="forgotPasswordBtn" class="auth-link" style="border:0;background:none;cursor:pointer;">🔒 Forgot Password</button>
+  </div>
   </div>
 </div>
 
@@ -1150,6 +1434,7 @@ body:has(#loginScreen.front-home){background:#edf3f8!important}
   <button id="signUpBtn" class="login-btn" style="background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);">✅ Create Account</button>
   </div>
   <div id="signUpStatusMsg" style="font-size:13px; margin-top:12px; display:none; font-weight:500;"></div>
+  <a id="whatsappChannelBtn" href="https://whatsapp.com/channel/0029Vb8pVZ99cDDacDq9X642" target="_blank" rel="noopener noreferrer" hidden class="login-btn" style="text-decoration:none; text-align:center; margin-top:10px; background:linear-gradient(135deg,#25d366 0%,#128c7e 100%);">📢 Follow our WhatsApp Channel</a>
 
   <div>
     <span id="backToLoginFromSignUp" class="auth-link">⬅️ Already have account? Login</span>
@@ -1237,33 +1522,40 @@ body:has(#loginScreen.front-home){background:#edf3f8!important}
   <div style="max-width:720px;margin:0 auto 14px;padding:0 4px;">
     <input id="portalServiceSearch" type="search" placeholder="🔎 Search tools: ID card, PVC, passport, PDF, JPG…" aria-label="Search portal tools" style="width:100%;padding:12px 15px;border-radius:12px;border:1px solid rgba(56,189,248,.35);background:rgba(15,23,42,.85);color:#fff;font-size:13px;">
   </div>
-  <div class="tab-nav" aria-label="Main tools">
-    <button class="tab-btn active" id="basicIdCropperBtn" onclick="switchTab('tab-cards');focusTool('basic')">✂️ Basic ID Cropper</button>
-    <button class="tab-btn" id="premiumAutoCropperBtn" onclick="openPremiumAutoCropper()">✨ Premium Auto ID Cropper</button>
-    <button class="tab-btn" id="premiumPdfEditorBtn" onclick="openPremiumPdfEditor()">📄 Premium PDF Editor</button>
-    <button class="tab-btn" onclick="switchTab('tab-passport')">👤 Passport Photos</button>
-    <button class="tab-btn" onclick="switchTab('tab-name-passport')">📝 Name & Date Passport</button>
-    <button class="tab-btn" onclick="switchTab('tab-4x6')">🖼️ 4×6 Photo Print</button>
-    <button class="tab-btn" onclick="openPremiumPdfEditor()">✏️ PDF Editor</button>
-    <button class="tab-btn" onclick="switchTab('tab-arranger')">📑 PDF Arranger</button>
-    <button class="tab-btn" onclick="switchTab('tab-jpg-to-pdf')">📄 PDF, JPG, PNG to PDF</button>
-    <button class="tab-btn" onclick="switchTab('tab-resizer')">📐 Image Resizer</button>
-    <button class="tab-btn" onclick="switchTab('tab-pdf-to-jpg')">🖼️ PDF to JPG (Manual DPI)</button>
-    <button class="tab-btn" onclick="switchTab('tab-pdf-compressor')">🗜️ PDF Compressor</button>
-    <button class="tab-btn" onclick="switchTab('tab-history')" style="border-color: rgba(56, 189, 248, 0.5);">📂 History</button>
-    <button id="adminTabBtn" class="tab-btn" onclick="switchTab('tab-admin')" style="display:none; border-color: #f59e0b; color:#fbbf24;">⚙️ Admin Panel</button>
+  <div class="tab-nav dashboard-tool-launcher" aria-label="Main tools">
+    <div class="dashboard-nav-title"><span>SKILLO ID PRINT SOLUTIONS</span><strong>All tools in one workspace</strong><small>Choose a tool to open its working procedure.</small></div>
+    <div class="dashboard-group-title id-group-title">ID &amp; Smart Cards</div>
+    <button class="tab-btn dashboard-card id-tool-card active" id="basicIdCropperBtn" onclick="switchTab('tab-cards');focusTool('basic')">✂️ Basic ID Cropper</button>
+    <button class="tab-btn dashboard-card id-tool-card" id="premiumAutoCropperBtn" onclick="openPremiumAutoCropper()">✨ Premium Auto ID Cropper</button>
+    <button class="tab-btn dashboard-card id-tool-card" onclick="switchTab('tab-passport')">👤 Passport Photos</button>
+    <button class="tab-btn dashboard-card id-tool-card" onclick="switchTab('tab-name-passport')">📝 Name &amp; Date Passport</button>
+    <button class="tab-btn dashboard-card id-tool-card" onclick="switchTab('tab-4x6')">🖼️ 4×6 Photo Print</button>
+    <div class="dashboard-group-title pdf-group-title">PDF Tools</div>
+    <button class="tab-btn dashboard-card pdf-tool-card" id="premiumPdfEditorBtn" onclick="openPremiumPdfEditor()">📄 Premium PDF Editor</button>
+    <button class="tab-btn dashboard-card pdf-tool-card" onclick="openPremiumPdfEditor()">✏️ PDF Editor</button>
+    <button class="tab-btn dashboard-card pdf-tool-card" onclick="switchTab('tab-arranger')">📑 PDF Arranger</button>
+    <button class="tab-btn dashboard-card pdf-tool-card" onclick="switchTab('tab-jpg-to-pdf')">📄 PDF, JPG, PNG to PDF</button>
+    <button class="tab-btn dashboard-card pdf-tool-card" onclick="switchTab('tab-pdf-to-jpg')">🖼️ PDF to JPG (Manual DPI)</button>
+    <button class="tab-btn dashboard-card pdf-tool-card" onclick="switchTab('tab-pdf-compressor')">🗜️ PDF Compressor</button>
+    <div class="dashboard-group-title image-group-title">Convert &amp; Image</div>
+    <button class="tab-btn dashboard-card image-tool-card" onclick="switchTab('tab-resizer')">📐 Image Resizer</button>
+    <button class="tab-btn dashboard-card utility-tool-card" onclick="switchTab('tab-history')" style="border-color: rgba(56, 189, 248, 0.5);">📂 History</button>
   </div>
 
   <div class="container">
     <!-- Top Header Bar with Live Validity Counter & Logout -->
-    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; flex-wrap: wrap; gap: 10px;">
-      <strong style="font-size:20px;color:#7dd3fc;letter-spacing:.3px;">OP Printing Hub</strong>
+  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; flex-wrap: wrap; gap: 10px;">
+      <strong style="font-size:20px;color:#7dd3fc;letter-spacing:.3px;">Skillo ID Print Solutions</strong>
       <label style="margin-left:auto;color:#cbd5e1;font-size:12px;">🌐 <select id="portalLanguageSelect" style="padding:7px 10px;border-radius:9px;border:1px solid #38bdf8;background:#0f172a;color:#fff;"><option value="en">English</option><option value="hi">हिन्दी</option><option value="mr">मराठी</option></select></label>
       <div id="validityCounterBadge" style="background: rgba(16, 185, 129, 0.15); border: 1px solid #10b981; color: #34d399; padding: 6px 14px; border-radius: 20px; font-size: 12px; font-weight: 600;">
         ⏳ Validity: Initializing...
       </div>
+      <button id="themeToggleBtn" class="theme-toggle" type="button" aria-label="Toggle dark mode">🌙 Dark mode</button>
+      <button id="myAccountTabBtn" class="theme-toggle my-account-corner" type="button" onclick="switchTab('tab-my-account')" style="border-color: #a78bfa99;">👤 My Account</button>
+      <button id="adminTabBtn" class="theme-toggle admin-corner-btn" onclick="switchTab('tab-admin')" style="display:none;">⚙️ Admin Panel</button>
       <button id="logoutBtn" class="logout-btn">🔒 Logout</button>
     </div>
+    <div id="newDistributorAlert" class="new-distributor-alert" role="status" aria-live="polite"><span id="newDistributorAlertText"></span></div>
 
     <!-- Distributor Notification Banner with QR/Image & Reply Payment Screenshot Option -->
     <div id="distributorNoticeBanner" style="display:none; background: rgba(245, 158, 11, 0.2); border: 1px solid #fbbf24; color: #fef08a; padding: 14px 18px; border-radius: 12px; margin-bottom: 15px; font-size: 13px; text-align: left;">
@@ -1302,7 +1594,7 @@ body:has(#loginScreen.front-home){background:#edf3f8!important}
         </label>
         <label style="font-size:12px;color:var(--text-muted);">Card type
           <select id="pvcCardType" class="login-input" style="width:auto;display:inline-block;margin:0 4px;padding:7px 10px;">
-            <option value="auto">Auto Detect</option><option value="aadhaar">Aadhaar</option><option value="ayushman">Ayushman</option><option value="pan">PAN Card</option><option value="voter">Voter ID</option><option value="eshram">e-Shram</option><option value="maandhan">Maandhan</option><option value="mahasarathi">MahaSarathi</option><option value="other">Other</option>
+            <option value="auto">Auto Detect</option><option value="aadhaar">Aadhaar</option><option value="ayushman">Ayushman</option><option value="pan">PAN Card</option><option value="voter">Voter / e-EPIC</option><option value="eshram">e-Shram</option><option value="maandhan">Maandhan</option><option value="mahasarathi">MahaSarathi</option><option value="other">Other</option>
           </select>
         </label>
         <label style="font-size:12px;color:var(--text-muted);">Sides
@@ -1334,7 +1626,7 @@ body:has(#loginScreen.front-home){background:#edf3f8!important}
         <input type="file" id="card2Input" accept="image/*">
       </div>
 
-      <div class="preview-container premium-preview">
+      <div class="preview-container premium-preview basic-preview" id="basicCardPreview">
         <div class="preview-box">
           <h4>Front Card Preview</h4>
           <canvas id="canvas1" width="1013" height="638" style="width: 180px;"></canvas>
@@ -1348,6 +1640,7 @@ body:has(#loginScreen.front-home){background:#edf3f8!important}
       </div>
 
       <div class="btn-group">
+        <button id="basicPreviewBtn" class="action-btn" type="button">👁️ Preview Cards</button>
         <button id="addCardBtn" class="action-btn btn-add" disabled>➕ Add This Card to A4 Sheet</button>
         <button id="resetPageBtn" class="action-btn btn-reset">🔄 Clear A4 Page</button>
       </div>
@@ -1360,7 +1653,9 @@ body:has(#loginScreen.front-home){background:#edf3f8!important}
         <div class="btn-group">
           <button id="downloadPdfBtn" class="action-btn btn-download" disabled>📥 Direct A4 PDF Download</button>
           <button id="downloadJpgBtn" class="action-btn btn-download" disabled>🖼️ Download A4 JPG</button>
+          <button id="deleteLastCardBtn" class="action-btn" type="button" disabled>🗑️ Delete Last Card</button>
         </div>
+        <div id="addedCardsList" class="added-cards-list" aria-live="polite"></div>
       </div>
     </div>
 
@@ -1396,6 +1691,22 @@ body:has(#loginScreen.front-home){background:#edf3f8!important}
         <small id="passportBgStatus" style="display:block;margin-top:7px;color:var(--text-muted);">Background removal uses the selected photo preview.</small>
       </div>
 
+      <div class="control-panel" style="margin-bottom:12px;text-align:left;border:1px solid rgba(56,189,248,.35);">
+        <strong style="color:var(--accent-blue);font-size:13px;">✨ Clean &amp; Clear Passport Photo</strong>
+        <p style="font-size:12px;color:var(--text-muted);margin:6px 0 10px;">3.5×4.5 cm portrait profile: centered framing, natural likeness, even lighting and a clean studio background.</p>
+        <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
+          <button type="button" id="cleanPassportBtn" class="action-btn btn-add">✨ Clean &amp; Clear Passport Photo</button>
+          <input type="file" id="cleanPassportInput" accept="image/*" hidden>
+          <label style="font-size:12px;">Studio background <select id="cleanPassportBgColor" class="login-input" style="width:auto;display:inline-block;padding:6px;"><option value="#dbeafe">Light Blue</option><option value="#ffffff">Off-White</option></select></label>
+        </div>
+        <small id="cleanPassportStatus" style="display:block;margin-top:7px;color:var(--text-muted);">Photo upload करने के बाद पहले crop box में पूरा चेहरा और shoulders रखें।</small>
+        <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-top:10px;">
+          <canvas id="cleanPassportCanvas" width="413" height="531" hidden style="width:124px;height:159px;background:#dbeafe;border-radius:6px;border:1px solid var(--border-color);"></canvas>
+          <button type="button" id="useCleanPassportBtn" class="action-btn" hidden>Use in Passport Photo #1</button>
+          <button type="button" id="downloadCleanPassportBtn" class="action-btn btn-download" hidden>📥 Download Clean Photo JPG</button>
+        </div>
+      </div>
+
       <!-- Custom Quantity Control Panel -->
       <div class="control-panel" style="margin-bottom: 15px;">
         <span style="font-size: 13px; font-weight:600; color: var(--accent-blue);">🔢 A4 शीट पर कुल फ़ोटो की संख्या (Quantity) चुनें या टाइप करें:</span>
@@ -1408,12 +1719,18 @@ body:has(#loginScreen.front-home){background:#edf3f8!important}
           <button class="quick-qty-btn" onclick="setPassportQty(12)">12</button>
           <button class="quick-qty-btn" onclick="setPassportQty(16)">16</button>
           <button class="quick-qty-btn" onclick="setPassportQty(30)">30</button>
-        </div>
+       </div>
+      </div>
+      <div class="control-panel" style="margin-bottom:12px;text-align:left;">
+        <strong style="color:var(--accent-blue);font-size:13px;">▣ Photo Border</strong>
+        <label style="display:inline-flex;align-items:center;gap:7px;margin:9px 12px 0 0;font-size:12px;"><input type="checkbox" id="passportBorderEnabled" checked> Border दिखाएँ</label>
+        <label style="font-size:12px;">Width <input type="number" id="passportBorderWidth" value="3" min="1" max="12" step="1" style="width:65px;padding:5px;"></label>
       </div>
 
       <!-- STEP 1: GENERATE BUTTON (UPPER) -->
       <div class="btn-group">
         <button id="generateMultiPassportA4Btn" class="action-btn btn-add">🖼️ Generate Sheet (Preview)</button>
+        <button id="generatePassport4x6A4Btn" class="action-btn btn-add">🧾 Generate 4×6 (4 Photos) on A4</button>
       </div>
 
       <!-- PREVIEW & STEP 2: DOWNLOAD BUTTON (LOWER) -->
@@ -1424,6 +1741,10 @@ body:has(#loginScreen.front-home){background:#edf3f8!important}
         </div>
         <div class="btn-group">
           <button id="downloadMultiPassportPdfBtn" class="action-btn btn-download" disabled>📥 Download A4 Sheet PDF</button>
+        </div>
+        <div class="universal-export-panel" data-export-canvas="passportSheetCanvas" data-export-name="passport-sheet">
+          <label>Print size <select class="universal-export-size"><option value="4x6">4×6 in</option><option value="8x10">8×10 in</option><option value="10x12">10×12 in</option><option value="12x18">12×18 in</option><option value="16x20">16×20 in</option><option value="20x30">20×30 in</option><option value="24x36">24×36 in</option></select></label>
+          <button type="button" class="universal-print-btn" disabled>🖨️ Direct Print</button><button type="button" class="universal-pdf-btn" disabled>📄 Download PDF</button><button type="button" class="universal-jpg-btn" disabled>🖼️ Download JPG</button>
         </div>
       </div>
     </div>
@@ -1474,7 +1795,7 @@ body:has(#loginScreen.front-home){background:#edf3f8!important}
 
         </div>
 
-        <div style="margin-top:12px; text-align:center;">
+      <div style="margin-top:12px; text-align:center;">
           <span style="font-size: 12px; font-weight:600; color: var(--accent-blue);">🔢 फ़ोटो संख्या:</span>
           <input type="number" id="namePassportQtyInput" class="qty-input" value="8" min="1" max="30">
           <button class="quick-qty-btn" onclick="setNamePassportQty(4)">4</button>
@@ -1482,7 +1803,12 @@ body:has(#loginScreen.front-home){background:#edf3f8!important}
           <button class="quick-qty-btn" onclick="setNamePassportQty(8)">8</button>
           <button class="quick-qty-btn" onclick="setNamePassportQty(12)">12</button>
           <button class="quick-qty-btn" onclick="setNamePassportQty(30)">30</button>
-        </div>
+       </div>
+      </div>
+      <div class="control-panel" style="margin-top:12px;text-align:left;">
+        <strong style="color:var(--accent-blue);font-size:13px;">▣ Photo Border</strong>
+        <label style="display:inline-flex;align-items:center;gap:7px;margin:9px 12px 0 0;font-size:12px;"><input type="checkbox" id="namePassportBorderEnabled" checked> Border दिखाएँ</label>
+        <label style="font-size:12px;">Width <input type="number" id="namePassportBorderWidth" value="3" min="1" max="12" step="1" style="width:65px;padding:5px;"></label>
       </div>
 
       <div class="preview-container">
@@ -1495,6 +1821,7 @@ body:has(#loginScreen.front-home){background:#edf3f8!important}
       <div class="btn-group">
         <button id="make4x6NamePassportBtn" class="action-btn btn-add" disabled>🖼️ Generate 4×6 Sheet</button>
         <button id="makeA4NamePassportBtn" class="action-btn btn-add" disabled>📄 Generate A4 Sheet</button>
+        <button id="makeA4NamePassport4x6Btn" class="action-btn btn-add" disabled>🧾 Generate 4×6 (4 Photos) on A4</button>
       </div>
 
       <div style="margin-top: 20px; border-top: 1px solid var(--border-color); padding-top: 15px;">
@@ -1553,6 +1880,10 @@ body:has(#loginScreen.front-home){background:#edf3f8!important}
         <div class="btn-group">
           <button id="downloadA4_4x6_PdfBtn" class="action-btn btn-download" disabled>📥 Download A4 4×6 Sheet PDF</button>
         </div>
+        <div class="universal-export-panel" data-export-canvas="a4_4x6_SheetCanvas" data-export-name="photo-sheet">
+          <label>Print size <select class="universal-export-size"><option value="4x6">4×6 in</option><option value="8x10">8×10 in</option><option value="10x12">10×12 in</option><option value="12x18">12×18 in</option><option value="16x20">16×20 in</option><option value="20x30">20×30 in</option><option value="24x36">24×36 in</option></select></label>
+          <button type="button" class="universal-print-btn" disabled>🖨️ Direct Print</button><button type="button" class="universal-pdf-btn" disabled>📄 Download PDF</button><button type="button" class="universal-jpg-btn" disabled>🖼️ Download JPG</button>
+        </div>
       </div>
     </div>
 
@@ -1571,7 +1902,7 @@ body:has(#loginScreen.front-home){background:#edf3f8!important}
 </section>
 <section hidden id="np-editor" aria-label="PDF text editor">
  <header class="np-head"><div><span class="np-tag">PDF WORKSPACE · NO PAID SDK</span><h2>PDF Editor</h2><p>मूल text बदलें · नया text, signature और highlights जोड़ें</p></div><button id="np-save-edit" class="np-primary" hidden>✓ Save edit</button><button id="np-cancel-edit" hidden>Cancel edit</button><button id="np-save" class="np-primary" disabled>↓ Download PDF</button><button type="button" id="np-download-link" hidden>Download again</button><span id="np-quota">5 downloads maximum</span></header>
- <div class="np-filebar"><button id="np-open" class="np-primary">＋ Open PDF</button><input id="np-file" type="file" accept="application/pdf,.pdf" hidden><span id="np-name">PDF चुनें · अधिकतम 25 MB / 100 pages</span><button id="np-close" disabled>Close</button></div>
+ <div class="np-filebar"><button id="np-open" class="np-primary">＋ Open PDF</button><input id="np-file" type="file" accept="application/pdf,.pdf" hidden><span id="np-name">PDF चुनें · अधिकतम 50 MB / 150 pages</span><button id="np-close" disabled>Close</button></div>
  <p class="np-notice">English · हिन्दी · मराठी: नया font इस्तेमाल होगा; मूल formatting बदल सकती है। Hindi/Marathi shaping और copy/search experimental हैं। Scans/OCR और सभी प्रकार के text blocks समर्थित नहीं हैं।</p>
  <fieldset id="np-controls" disabled>
  <div class="np-toolbar" role="toolbar" aria-label="PDF tools">
@@ -1822,10 +2153,10 @@ body:has(#loginScreen.front-home){background:#edf3f8!important}
       <h1>Print & Download History</h1>
       <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 12px;">आपके द्वारा डाउनलोड की गई सभी फाइल्स का रिकॉर्ड सुरक्षित है। आप यहाँ से डाउनलोड भी कर सकते हैं और डिलीट भी कर सकते हैं।</p>
 
-      <!-- Warning Alert Box for Browser History Clear -->
+      <!-- Browser data clarification: server history is not browser-dependent -->
       <div style="background: rgba(245, 158, 11, 0.15); border: 1px solid rgba(245, 158, 11, 0.5); color: #fde68a; padding: 10px 14px; border-radius: 8px; margin-bottom: 12px; font-size: 12px; text-align: left; display: flex; align-items: center; gap: 8px;">
         <span style="font-size: 16px;">⚠️</span>
-        <span><strong>महत्वपूर्ण चेतावनी:</strong> यदि आप अपने ब्राउज़र का डेटा (Browser Data/History) क्लियर करते हैं, तो यह डाउनलोड हिस्ट्री हमेशा के लिए डिलीट हो जाएगी। कृपया समय पर इसका बैकअप रखें।</span>
+        <span><strong>महत्वपूर्ण सूचना:</strong> आपकी server download history, uploaded files और account details browser data clear करने से डिलीट नहीं होंगे। Browser data clear करने पर केवल इस device की local preferences और PDF Editor की local download count प्रभावित हो सकती है। Server history देखने के लिए दोबारा login करें। Files अपनी retention अवधि के अनुसार ही हटेंगी।</span>
       </div>
 
       <div style="text-align: right; margin-bottom: 10px;">
@@ -1848,6 +2179,21 @@ body:has(#loginScreen.front-home){background:#edf3f8!important}
             </tr>
           </tbody>
         </table>
+      </div>
+    </div>
+
+    <div id="tab-my-account" class="tab-content">
+      <div class="badge">Account Settings</div>
+      <h1>My Account</h1>
+      <p style="font-size:12px;color:var(--text-muted);margin-bottom:14px;">अपनी profile details बदलने के लिए field के सामने Edit दबाएँ। Save के बाद नया email इस्तेमाल करने पर दोबारा login करना होगा।</p>
+      <div style="max-width:620px;margin:auto;display:grid;gap:10px;">
+        <label>Full name <span class="account-field-row"><input id="accountName" class="login-input" disabled><button type="button" data-account-edit="accountName">✏️ Edit</button></span></label>
+        <label>Company / office name <span class="account-field-row"><input id="accountOffice" class="login-input" disabled><button type="button" data-account-edit="accountOffice">✏️ Edit</button></span></label>
+        <label>Mobile number <span class="account-field-row"><input id="accountMobile" class="login-input" disabled><button type="button" data-account-edit="accountMobile">✏️ Edit</button></span></label>
+        <label>Email address <span class="account-field-row"><input id="accountEmail" type="email" class="login-input" disabled><button type="button" data-account-edit="accountEmail">✏️ Edit</button></span></label>
+        <button id="accountSaveBtn" class="action-btn btn-download" type="button" disabled>💾 Save account changes</button>
+        <button id="accountPasswordBtn" class="action-btn" type="button">🔑 Change password</button>
+        <div id="accountStatus" style="font-size:12px;color:var(--accent-blue);" role="status"></div>
       </div>
     </div>
 
@@ -1880,21 +2226,30 @@ body:has(#loginScreen.front-home){background:#edf3f8!important}
             <input type="email" id="newDistEmail" class="text-field-input" style="max-width:100%;" placeholder="user@gmail.com">
           </div>
           <div>
+            <label style="font-size: 11px; color: var(--text-muted); display:block; margin-bottom:4px;">Mobile Number:</label>
+            <input type="tel" id="newDistMobile" class="text-field-input" style="max-width:100%;" placeholder="10-digit mobile number" inputmode="tel">
+          </div>
+          <div>
             <label style="font-size: 11px; color: var(--text-muted); display:block; margin-bottom:4px;">Assign Password:</label>
             <input type="text" id="newDistPass" class="text-field-input" style="max-width:100%;" placeholder="SecurePass123">
+          </div>
+          <div>
+            <label style="font-size: 11px; color: var(--text-muted); display:block; margin-bottom:4px;">Validity Plan:</label>
+            <select id="newDistPlan" class="text-field-input" style="max-width:100%;"><option value="1month">30 Days</option><option value="1year">1 Year</option></select>
           </div>
           <button onclick="addNewDistributor()" class="action-btn btn-add" style="margin-top: 5px;">🚀 Assign ID & Password</button>
           <div id="distMsg" style="font-size: 12px; font-weight: 500; display:none; margin-top:5px;"></div>
         </div>
       </div>
 
-      <h3 style="font-size: 14px; color: var(--accent-blue); margin-bottom: 10px; text-align: left; max-width: 850px; margin-left: auto; margin-right: auto;">Connected Distributors List (30 Days Validity)</h3>
+      <h3 style="font-size: 14px; color: var(--accent-blue); margin-bottom: 10px; text-align: left; max-width: 850px; margin-left: auto; margin-right: auto;">Connected Distributors List</h3>
       <div class="history-table-container" style="max-width: 850px; margin-left: auto; margin-right: auto;">
         <table class="history-table">
           <thead>
             <tr>
               <th>Business / Name</th>
               <th>Login Email</th>
+              <th>Mobile Number</th>
               <th>Account Security</th>
               <th>Payment / Screenshot Link</th>
               <th>Validity / Timeline</th>
@@ -1903,7 +2258,7 @@ body:has(#loginScreen.front-home){background:#edf3f8!important}
           </thead>
           <tbody id="distributorTableBody">
             <tr>
-              <td colspan="6" style="text-align:center; color:var(--text-muted); padding:15px;">डेटा लोड हो रहा है...</td>
+              <td colspan="7" style="text-align:center; color:var(--text-muted); padding:15px;">डेटा लोड हो रहा है...</td>
             </tr>
           </tbody>
         </table>
@@ -1911,7 +2266,7 @@ body:has(#loginScreen.front-home){background:#edf3f8!important}
     </div>
 
     <footer style="margin-top: 25px; font-size: 12px; color: var(--text-muted);">
-      Designed &amp; Developed by <strong>OP PRINTING HUB @ 2026 ALL RIGHTS RESERVED</strong>
+      Designed &amp; Developed by <strong>SKILLO ID PRINT SOLUTIONS @ 2026 ALL RIGHTS RESERVED</strong>
     </footer>
   </div>
 </div>
@@ -1998,6 +2353,7 @@ body:has(#loginScreen.front-home){background:#edf3f8!important}
   // CLOUD API URL (POST JSON Method)
   // ==========================================================
   const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxhAJ-GhVFqlNsimIap4r_eZD68LPi_EGf1yMPS82aOpMHP-oDGmJ64D73oXiLRsoaP/exec";
+  const STORAGE_WORKER_URL = "https://id-printing-storage-worker.idprintingportal.workers.dev";
 
   let authToken = '';
   let authRole = '';
@@ -2014,18 +2370,19 @@ body:has(#loginScreen.front-home){background:#edf3f8!important}
   function mergeDistributorCache(list) { saveDistributorCache(list); return distributorMemoryCache; }
   function acceptSession(result, email) {
     authToken=result.token; authRole=result.role; authEmail=email; authExpires=result.expires;
-    const welcome=document.getElementById('officeWelcome');
-    if(welcome){welcome.replaceChildren();const office=String(result.record?.officeName||'').trim();welcome.append(document.createTextNode(office?`Welcome · ${office}`:'Welcome to OP Printing Hub'));const note=document.createElement('small');note.textContent='Happy Business! आपका काम सफल और आसान रहे।';welcome.append(note);welcome.hidden=false;}
+    try{localStorage.setItem('op-auth-session',JSON.stringify({token:authToken,role:authRole,email:authEmail,expires:authExpires}));}catch(_){}
+    renderOfficeWelcome(result.record);
     distributorMemoryCache=[];
   }
+  function renderOfficeWelcome(record){const welcome=document.getElementById('officeWelcome');if(!welcome)return;welcome.replaceChildren();const office=String(record?.officeName||'').trim();welcome.append(document.createTextNode(office?`Welcome · ${office}`:'Welcome to Skillo ID Print Solutions'));const note=document.createElement('small');note.textContent='Happy Business! आपका काम सफल और आसान रहे।';welcome.append(note);welcome.hidden=false;}
   function clearAuth() {
     window.dispatchEvent(new Event('portal-auth-cleared'));
     adminPanelUntil=0;
     if(adminUnlockPending) finishAdminUnlock(false);
-    authToken=''; authRole=''; authEmail=''; authExpires=0; distributorMemoryCache=[];
+    authToken=''; authRole=''; authEmail=''; authExpires=0; distributorMemoryCache=[];document.documentElement.classList.remove('session-bootstrap');
     const welcome=document.getElementById('officeWelcome');if(welcome)welcome.hidden=true;
     activeDistributorSession=null; currentRenewalDistributor=null; currentLoggedDistributorEmail='';
-    sessionStorage.removeItem('isLoggedIn');
+    sessionStorage.removeItem('isLoggedIn');try{localStorage.removeItem('op-auth-session');}catch(_){}
     document.getElementById('distributorTableBody').replaceChildren();
     document.getElementById('historyTableBody').replaceChildren();
   }
@@ -2152,11 +2509,13 @@ body:has(#loginScreen.front-home){background:#edf3f8!important}
     try { records=await getDistributorsListCloud(); }
     catch(error) { tbody.textContent=error.message; return; }
     if(authRole!=='admin' || Date.now()>=adminPanelUntil) {tbody.replaceChildren();return;}
+    const alertBox=document.getElementById('newDistributorAlert'),alertText=document.getElementById('newDistributorAlertText'),latest=records.slice().sort((a,b)=>Number(b.assignedTimestamp||b.createdAt||0)-Number(a.assignedTimestamp||a.createdAt||0))[0];
+    if(latest&&alertBox&&alertText){alertText.textContent=`🆕 New distributor joined: ${latest.name||latest.email} · ${latest.officeName||'New account'} · 📱 ${latest.mobile||'Mobile not available'} · ${new Date(Number(latest.assignedTimestamp||latest.createdAt||Date.now())).toLocaleString()}`;alertBox.style.display='block';}
     tbody.replaceChildren();
     for(const d of records) {
       const tr=document.createElement('tr');
       const cell=text=>{const td=document.createElement('td');td.textContent=String(text ?? '');tr.appendChild(td);return td;};
-      cell(d.name);cell(d.email);cell('Password protected');
+      cell(d.name);cell(d.email);cell(d.mobile||'—');cell('Password protected');
       const renewal=String(d.renewalRequested).toLowerCase()==='true';
       const payment=cell(`${d.paymentStatus || ''}\n${renewal?'🔄 Renewal Request\n':''}${renewal?d.renewalPlan:d.paymentPlan} | ${renewal?d.renewalAmount:d.paymentAmount}\nTxn: ${renewal?d.renewalTxnId:d.paymentTxnId}`);
       payment.style.whiteSpace='pre-line';
@@ -2239,6 +2598,7 @@ body:has(#loginScreen.front-home){background:#edf3f8!important}
     document.querySelectorAll('.tab-content').forEach(content=>content.classList.remove('active'));
     document.getElementById(tabId).classList.add('active');
     document.querySelectorAll('.tab-btn').forEach(btn=>{if((btn.getAttribute('onclick')||'').includes("'"+tabId+"'"))btn.classList.add('active');});
+    try{localStorage.setItem('op-last-tab',tabId);}catch(_){ }
   }
   document.getElementById('portalServiceSearch').addEventListener('input',event=>{
     const q=event.target.value.trim().toLocaleLowerCase();
@@ -2248,10 +2608,13 @@ body:has(#loginScreen.front-home){background:#edf3f8!important}
     const q=event.target.value.trim().toLocaleLowerCase();document.querySelectorAll('.front-home .service-tile').forEach(tile=>{tile.hidden=!!q&&!tile.textContent.toLocaleLowerCase().includes(q);});
   });
   document.getElementById('frontMenuBtn').addEventListener('click',()=>{const menu=document.getElementById('frontMenu'),open=menu.classList.toggle('open');document.getElementById('frontMenuBtn').setAttribute('aria-expanded',String(open));});
+  document.getElementById('frontSettingsBtn').addEventListener('click',event=>{event.stopPropagation();const submenu=document.getElementById('frontSettingsMenu'),open=!submenu.hidden;submenu.hidden=open;event.currentTarget.setAttribute('aria-expanded',String(!open));});
   const helpNav=document.getElementById('topNavRegistrationBox'),changePwd=document.getElementById('goToChangePwd');if(helpNav&&changePwd)changePwd.parentElement.appendChild(helpNav);
   document.getElementById('frontLoginBtn').addEventListener('click',()=>{document.getElementById('frontMenu').classList.remove('open');document.getElementById('loginEmail').focus();});
   document.getElementById('frontJoinBtn').addEventListener('click',()=>{document.getElementById('frontMenu').classList.remove('open');document.getElementById('goToSignUp').click();});
-  document.getElementById('frontLanguageSelect').addEventListener('change',event=>{const lang=event.target.value;const copy={en:{hero:'Launch Your Digital Operations With',sub:'All-in-one platform for seamless online printing and digital services.',services:'Essential Services'},hi:{hero:'अपना डिजिटल काम आसानी से करें',sub:'ऑनलाइन प्रिंटिंग और डिजिटल सेवाओं का एक आसान प्लेटफॉर्म।',services:'जरूरी सेवाएँ'},mr:{hero:'तुमचे डिजिटल काम सहज करा',sub:'ऑनलाइन प्रिंटिंग आणि डिजिटल सेवांसाठी एक सोपे प्लॅटफॉर्म.',services:'महत्त्वाच्या सेवा'}}[lang];const hero=document.querySelector('.front-hero h1'),sub=document.querySelector('.front-hero p'),heading=document.querySelector('.front-services h3');if(hero)hero.innerHTML=copy.hero+'<br>OP Printing Hub';if(sub)sub.textContent=copy.sub;if(heading)heading.textContent=copy.services;});
+  document.getElementById('frontMenuChangePasswordBtn').addEventListener('click',()=>{document.getElementById('frontSettingsMenu').hidden=true;document.getElementById('frontMenu').classList.remove('open');document.getElementById('changePasswordBtn')?.click();});
+  document.getElementById('frontMenuForgotPasswordBtn').addEventListener('click',()=>{document.getElementById('frontSettingsMenu').hidden=true;document.getElementById('frontMenu').classList.remove('open');document.getElementById('forgotPasswordBtn')?.click();});
+  document.getElementById('frontLanguageSelect').addEventListener('change',event=>{const lang=event.target.value;const copy={en:{hero:'Power Your Digital Printing',sub:'Fast, precise and secure tools for ID cards, photos and PDF workflows.',services:'Essential Services'},hi:{hero:'अपना डिजिटल प्रिंटिंग काम आसान करें',sub:'आईडी कार्ड, फोटो और PDF के लिए तेज, सटीक और सुरक्षित टूल्स।',services:'जरूरी सेवाएँ'},mr:{hero:'तुमचे डिजिटल प्रिंटिंग काम सोपे करा',sub:'आयडी कार्ड, फोटो आणि PDF साठी जलद, अचूक आणि सुरक्षित टूल्स.',services:'महत्त्वाच्या सेवा'}}[lang];const hero=document.querySelector('.front-hero h1'),sub=document.querySelector('.front-hero p'),heading=document.querySelector('.front-services h3');if(hero)hero.innerHTML=copy.hero+'<br>with Skillo ID Solutions';if(sub)sub.textContent=copy.sub;if(heading)heading.textContent=copy.services;});
   document.getElementById('frontLanguageSelect').addEventListener('change',e=>{document.getElementById('portalLanguageSelect').value=e.target.value;applyPortalLanguage(e.target.value);});
   document.getElementById('portalLanguageSelect').addEventListener('change',event=>{const lang=event.target.value;document.documentElement.lang=lang==='hi'?'hi':lang==='mr'?'mr':'en';document.querySelectorAll('#portalLanguageSelect,#frontLanguageSelect').forEach(select=>select.value=lang);});
   const opTranslations={hi:{'ID Card (5 Slots)':'आईडी कार्ड (5 स्लॉट)','Passport Photos':'पासपोर्ट फोटो','Name & Date Passport':'नाम और तारीख पासपोर्ट','4×6 Photo Print':'4×6 फोटो प्रिंट','PDF Editor':'पीडीएफ एडिटर','PDF Arranger':'पीडीएफ अरेंजर','Image Resizer':'इमेज रिसाइजर','PDF Compressor':'पीडीएफ कंप्रेसर','History':'इतिहास','PDF Tools':'पीडीएफ टूल्स','Download JPG Image':'JPG डाउनलोड करें','Download PNG Image':'PNG डाउनलोड करें'},mr:{'ID Card (5 Slots)':'आयडी कार्ड (5 स्लॉट)','Passport Photos':'पासपोर्ट फोटो','Name & Date Passport':'नाव आणि तारीख पासपोर्ट','4×6 Photo Print':'4×6 फोटो प्रिंट','PDF Editor':'पीडीएफ एडिटर','PDF Arranger':'पीडीएफ अरेंजर','Image Resizer':'इमेज रिसायझर','PDF Compressor':'पीडीएफ कंप्रेसर','History':'इतिहास','PDF Tools':'पीडीएफ टूल्स','Download JPG Image':'JPG डाउनलोड करा','Download PNG Image':'PNG डाउनलोड करा'}};
@@ -2268,23 +2631,41 @@ body:has(#loginScreen.front-home){background:#edf3f8!important}
   document.getElementById('pdfToolsBtn').addEventListener('click',()=>document.getElementById('pdfToolsMenu').classList.toggle('open'));
   document.querySelectorAll('[data-pdf-tab]').forEach(btn=>btn.addEventListener('click',()=>{document.getElementById('pdfToolsMenu').classList.remove('open');switchTab(btn.dataset.pdfTab);}));
   document.querySelectorAll('[data-pdf-info]').forEach(btn=>btn.addEventListener('click',()=>{document.getElementById('pdfToolsMenu').classList.remove('open');alert(btn.dataset.pdfInfo+' को जोड़ने के लिए dedicated processing engine/OCR की आवश्यकता है।');}));
+  function scrollToOperationPage(tabId){
+    const target=document.getElementById(tabId);
+    if(!target)return;
+    requestAnimationFrame(()=>target.scrollIntoView({behavior:'smooth',block:'start'}));
+  }
   async function switchTab(tabId) {
     if(!authToken || (tabId==='tab-admin' && authRole!=='admin')) return;
     if(tabId==='tab-admin') {
       if(Date.now()>=adminPanelUntil && !(await requestAdminUnlock())) return;
       if(authRole!=='admin' || Date.now()>=adminPanelUntil) return;
-      showPortalTab(tabId);await renderDistributorsTable();return;
+      showPortalTab(tabId);scrollToOperationPage(tabId);await renderDistributorsTable();return;
     }
     if(adminPanelUntil || adminUnlockPending) lockAdminPanel();
     showPortalTab(tabId);
     if(tabId==='tab-history') renderHistoryTable();
-    if(tabId==='tab-pdf-editor') await refreshPdfPremium();
+    if(tabId==='tab-my-account') renderAccountFields();
+     if(tabId==='tab-pdf-editor'){await refreshPdfPremium();window.prewarmPdfEditor?.();}
   }
   function switchTabDirect(tabId) {
     if (!authToken || (tabId === 'tab-admin' && authRole !== 'admin')) return;
     if(!authToken || (tabId==='tab-admin' && (authRole!=='admin'||Date.now()>=adminPanelUntil))) return;
     if(tabId!=='tab-admin' && adminPanelUntil) lockAdminPanel();
     showPortalTab(tabId);
+  }
+  function renderAccountFields(){const r=activeDistributorSession||{};const map={accountName:r.name||'',accountOffice:r.officeName||'',accountMobile:r.mobile||'',accountEmail:r.email||authEmail||''};Object.keys(map).forEach(id=>{const el=document.getElementById(id);if(el){el.value=map[id];el.disabled=true;}});const save=document.getElementById('accountSaveBtn');if(save)save.disabled=true;}
+  document.querySelectorAll('[data-account-edit]').forEach(btn=>btn.addEventListener('click',()=>{const el=document.getElementById(btn.dataset.accountEdit);if(!el)return;el.disabled=false;el.focus();const save=document.getElementById('accountSaveBtn');if(save)save.disabled=false;}));
+  document.getElementById('accountSaveBtn')?.addEventListener('click',async()=>{const status=document.getElementById('accountStatus'),save=document.getElementById('accountSaveBtn');try{save.disabled=true;status.textContent='Saving…';const result=await secureApi({action:'updateOwnProfile',email:document.getElementById('accountEmail').value,name:document.getElementById('accountName').value,officeName:document.getElementById('accountOffice').value,mobile:document.getElementById('accountMobile').value},{timeoutMs:30000});activeDistributorSession=result.profile;status.textContent=result.emailChanged?'Saved. New email के साथ दोबारा login करें।':'Profile saved successfully.';renderAccountFields();}catch(error){status.textContent=error.message||'Profile update failed.';save.disabled=false;}});
+  document.getElementById('accountPasswordBtn')?.addEventListener('click',()=>document.getElementById('changePasswordBtn')?.click());
+  async function enhanceCanvasViaServer(canvas, level=35){
+    if(!canvas||!canvas.width||!canvas.height)throw new Error('Photo is not ready.');
+    // PNG is required here so a removed background remains transparent.
+    const result=await secureApi({action:'enhanceImage',imageBase64:canvas.toDataURL('image/png'),level},{timeoutMs:120000});
+    if(!result.imageBase64)throw new Error('Enhancement returned no image.');
+    const img=new Image();img.src='data:'+String(result.mimeType||'image/jpeg')+';base64,'+result.imageBase64;await img.decode();
+    const out=document.createElement('canvas');out.width=canvas.width;out.height=canvas.height;out.getContext('2d').drawImage(img,0,0,out.width,out.height);return out;
   }
   function focusTool(kind){
     document.body.classList.toggle('premium-crop-mode',kind==='premium');
@@ -2294,14 +2675,16 @@ body:has(#loginScreen.front-home){background:#edf3f8!important}
   }
   function openPremiumAutoCropper(){
     switchTabDirect('tab-cards');
+    scrollToOperationPage('tab-cards');
     focusTool('premium');
     const input=document.getElementById('pvcPdfInput');
     if(input){input.closest('.upload-section')?.scrollIntoView({behavior:'smooth',block:'center'});input.focus({preventScroll:true});}
   }
   function openPremiumPdfEditor(){
     switchTabDirect('tab-pdf-editor');
+    scrollToOperationPage('tab-pdf-editor');
     focusTool('pdf');
-    document.getElementById('np-editor')?.scrollIntoView({behavior:'smooth',block:'start'});
+     document.getElementById('np-editor')?.scrollIntoView({behavior:'smooth',block:'start'});window.prewarmPdfEditor?.();
   }
   async function reviewDistributorPayment(email,requestId,approved) {
     if(!confirm(approved?'Approve this payment?':'Reject this payment?')) return;
@@ -2315,12 +2698,17 @@ body:has(#loginScreen.front-home){background:#edf3f8!important}
     document.getElementById('pendingUploadScreen').style.display='none';document.getElementById('pendingScreen').style.display='block';
     document.getElementById('pendingStatus').textContent=state==='rejected'?'Payment rejected. Contact admin or upload corrected proof.':'Your application is awaiting admin approval.';
   }
+  let loginInFlight=false;
   async function handleLogin() {
+    if(loginInFlight) return;
     const email=loginEmail.value.trim().toLowerCase(), password=loginPass.value;
-    authBtn.disabled=true;const loginLabel=authBtn.textContent;authBtn.textContent='⏳ Loading…';
+    if(!email||!password){errorMsg.textContent='⚠️ ईमेल आईडी और पासवर्ड दर्ज करें।';errorMsg.style.display='block';return;}
+    loginInFlight=true;
+    authBtn.disabled=true;const loginLabel=authBtn.textContent;authBtn.textContent='⏳ लॉगिन हो रहा है…';
+    errorMsg.style.display='none';
     try {
-      const previousToken=authToken;
-      if(previousToken) { try {await secureApi({action:'logout'});} catch(_) {} }
+      // A new login does not need a blocking logout request. The old server session
+      // expires normally, while this browser immediately replaces its local session.
       clearAuth();
       const result=await secureApi({action:'login',email,password});
       acceptSession(result,email);
@@ -2333,26 +2721,29 @@ body:has(#loginScreen.front-home){background:#edf3f8!important}
         if(result.state!=='active') throw new Error('Your account is stopped. Please contact admin.');
       }
       activeDistributorSession=result.record;
-      loginScreen.style.display='none';changePwdScreen.style.display='none';renewalScreen.style.display='none';mainApp.style.display='block';
+      loginScreen.style.display='none';changePwdScreen.style.display='none';renewalScreen.style.display='none';mainApp.style.display='block';window.scrollTo({top:0,behavior:'instant'});
       document.getElementById('topNavRegistrationBox').style.display='none';
       adminTabBtn.style.display=result.role==='admin'?'inline-block':'none';
+      document.getElementById('myAccountTabBtn').style.display=result.role==='distributor'?'inline-block':'none';
       if(result.role==='admin') {updateValidityDisplay();switchTabDirect('tab-cards');}
       else {
         currentLoggedDistributorEmail=email;renderDistributorNotice(result.record);switchTabDirect('tab-cards');
         const days=Math.max(0,Math.ceil((Number(result.record.expiryTime)-Date.now())/86400000));
         document.getElementById('validityCounterBadge').textContent=`👤 ${result.record.name} | Validity: ${days} Days Left`;
       }
-      initAllCanvases();
+      // Let the authenticated dashboard paint first; canvas placeholders are cheap
+      // and can be initialized on the next frame without delaying login completion.
+      requestAnimationFrame(()=>{try{initAllCanvases();}catch(_){}});
     } catch(error) {
       clearAuth();mainApp.style.display='none';loginScreen.style.display='block';
       errorMsg.textContent=error.message;errorMsg.style.display='block';if(/maintenance|चल रहा है/i.test(error.message))alert('🛠️ '+error.message);
-    } finally {authBtn.disabled=false;authBtn.textContent=loginLabel;}
+    } finally {loginInFlight=false;authBtn.disabled=false;authBtn.textContent=loginLabel;}
   }
   const recoveryDialog=document.getElementById('accountRecoveryDialog');
   function openRecovery(kind){
     const title=document.getElementById('accountRecoveryTitle'),msg=document.getElementById('accountRecoveryText'),go=document.getElementById('accountRecoveryContinue'),fields=document.getElementById('recoveryFields');
     fields.hidden=kind==='id';
-    if(kind==='id'){title.textContent='🪪 Forgot ID';msg.textContent='अपनी registered ID जानने के लिए admin से संपर्क करें। सुरक्षा कारणों से account details खुले में नहीं दिखाई जातीं।';go.textContent='Contact Admin';go.onclick=()=>alert('कृपया OP Printing Hub admin को अपना नाम और registered mobile/payment reference भेजें।');}
+    if(kind==='id'){title.textContent='🪪 Forgot ID';msg.textContent='अपनी registered ID जानने के लिए admin से संपर्क करें। सुरक्षा कारणों से account details खुले में नहीं दिखाई जातीं।';go.textContent='Contact Admin';go.onclick=()=>alert('कृपया Skillo ID Print Solutions admin को अपना नाम और registered mobile/payment reference भेजें।');}
     else {title.textContent='🔒 Forgot Password';msg.textContent='Registered email पर OTP भेजें। यही dialog खुला रहेगा और अगले step में OTP field आएगी.';go.textContent='Send OTP';const email=document.getElementById('recoveryEmail'),otp=document.getElementById('recoveryOtp'),np=document.getElementById('recoveryNewPassword'),cp=document.getElementById('recoveryConfirmPassword'),status=document.getElementById('recoveryStatus');[email,otp,np,cp].forEach(x=>{x.hidden=x!==email;x.value='';});status.textContent='';go.onclick=async()=>{let cooldown=false;try{go.disabled=true;go.textContent='⏳ Sending…';if(otp.hidden){await secureApi({action:'requestPasswordReset',email:email.value.trim().toLowerCase()});otp.hidden=false;go.textContent='Verify OTP';status.textContent='✅ OTP sent. Email से OTP डालें.';otp.focus();return;}if(np.hidden){const verified=await secureApi({action:'verifyPasswordOtp',email:email.value.trim().toLowerCase(),otp:otp.value.trim()});go.dataset.resetToken=verified.resetToken;np.hidden=false;cp.hidden=false;go.textContent='Reset Password';status.textContent='✅ OTP verified.';np.focus();return;}if(np.value!==cp.value)throw new Error('Passwords do not match.');await secureApi({action:'resetPassword',email:email.value.trim().toLowerCase(),resetToken:go.dataset.resetToken,newPass:np.value});status.textContent='✅ Password changed. अब नए password से login करें.';go.hidden=true;}catch(e){if(/Too many attempts/i.test(e.message)){cooldown=true;let left=120;clearInterval(recoveryCooldownTimer);const tick=()=>{status.textContent='⏳ Retry OTP in '+left+' seconds';go.textContent='Wait '+left+'s';if(left<=0){clearInterval(recoveryCooldownTimer);go.disabled=false;go.textContent='Send OTP';}left--;};tick();recoveryCooldownTimer=setInterval(tick,1000);}else status.textContent=otp.hidden?'❌ OTP sending failed. Please try again.':'❌ OTP verification failed. Please try again.';}finally{if(!cooldown){go.disabled=false;if(!go.hidden&&go.textContent.includes('Sending'))go.textContent='Send OTP';}}};}
     recoveryDialog.showModal();
   }
@@ -2386,7 +2777,7 @@ body:has(#loginScreen.front-home){background:#edf3f8!important}
           if(mainApp.style.display!=='none') showRenewalScreen(result.record);
         } else if(result.state==='pending'||result.state==='rejected') showPendingScreen(result.record,result.state);
         else if(result.state!=='active') throw new Error('Account stopped. Contact admin.');
-        else {activeDistributorSession=result.record;renderDistributorNotice(result.record);}
+        else {activeDistributorSession=result.record;renderOfficeWelcome(result.record);renderDistributorNotice(result.record);}
       }
     } catch(error) {
       clearAuth();mainApp.style.display='none';renewalScreen.style.display='none';document.getElementById('pendingScreen').style.display='none';document.getElementById('pendingUploadScreen').style.display='none';loginScreen.style.display='block';
@@ -2508,6 +2899,18 @@ body:has(#loginScreen.front-home){background:#edf3f8!important}
   function triggerPdfDownload(record){
     const url=URL.createObjectURL(record.data),a=document.createElement('a');a.href=url;a.download=record.fileName;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),60000);
   }
+  const LOCAL_PDF_DOWNLOAD_LIMIT=5;
+  function localPdfQuota(){
+    const key='pdf-download-count:'+String(authEmail||'').trim().toLowerCase();
+    const used=Math.max(0,Number(localStorage.getItem(key)||0));
+    return {key,used,limit:LOCAL_PDF_DOWNLOAD_LIMIT,remaining:Math.max(0,LOCAL_PDF_DOWNLOAD_LIMIT-used)};
+  }
+  function consumeLocalPdfDownload(){
+    const quota=localPdfQuota();
+    if(quota.remaining<=0)throw new Error('PDF_DOWNLOAD_LIMIT: सभी 5 downloads उपयोग हो चुके हैं।');
+    localStorage.setItem(quota.key,String(quota.used+1));
+    return {success:true,quota:{limit:quota.limit,used:quota.used+1,remaining:quota.remaining-1}};
+  }
   let pdfDownloadInFlight=false;
   window.exportPortalPdf=async(blob,fileName,retryRecord=null)=>{
     if(pdfDownloadInFlight)throw new Error('Download in progress.');pdfDownloadInFlight=true;
@@ -2521,7 +2924,7 @@ body:has(#loginScreen.front-home){background:#edf3f8!important}
         record.id=await savePdfHistory(record); // Fail before consuming quota if browser history cannot persist.
       }
       if(token!==authToken)throw new Error('Account changed.');
-      const result=await secureApi({action:'authorizePdfDownload',requestId:record.pdfRequestId,sha256:record.pdfHash,fileName:record.fileName},{timeoutMs:30000});
+      const result=consumeLocalPdfDownload();
       showPdfQuota(result.quota);record.pdfState='authorized';
       await savePdfHistory(record); // Pending row survives response loss / quota finalization failure for safe retry.
       if(token!==authToken)throw new Error('Account changed.');
@@ -2534,8 +2937,62 @@ body:has(#loginScreen.front-home){background:#edf3f8!important}
     }finally{pdfDownloadInFlight=false;}
   };
 
+  async function uploadFileDirectToStorage(fileName, blobOrDataUrl, fileType){
+    if(!authToken) return '';
+
+    let dataUrl='';
+    if(typeof blobOrDataUrl==='string'){
+      dataUrl=blobOrDataUrl;
+    }else if(blobOrDataUrl instanceof Blob){
+      dataUrl=await new Promise((resolve,reject)=>{
+        const reader=new FileReader();
+        reader.onload=()=>resolve(String(reader.result||''));
+        reader.onerror=()=>reject(new Error('File could not be read.'));
+        reader.readAsDataURL(blobOrDataUrl);
+      });
+    }else{
+      return '';
+    }
+
+    const tokenResult=await secureApi(
+      {action:'storageUploadToken'},
+      {timeoutMs:30000}
+    );
+    const uploadToken=String(tokenResult?.uploadToken||'').trim();
+    if(!uploadToken||!uploadToken.includes('.')){
+      throw new Error('Upload token missing or malformed.');
+    }
+
+    const response=await fetch(`${STORAGE_WORKER_URL}/upload`,{
+      method:'POST',
+      headers:{
+        'Content-Type':'application/json',
+        'Authorization':`Bearer ${uploadToken}`
+      },
+      body:JSON.stringify({
+        ownerEmail:authEmail,
+        fileName,
+        mimeType:fileType,
+        fileBase64:dataUrl
+      })
+    });
+
+    let result;
+    try{
+      result=await response.json();
+    }catch(e){
+      throw new Error(`Storage worker returned HTTP ${response.status}.`);
+    }
+    if(!response.ok||!result.success){
+      throw new Error(result.error||'Direct storage upload failed.');
+    }
+    return result.fileId||'';
+  }
+
   async function saveToHistory(featureName, fileName, blobOrDataUrl, fileType) {
     try {
+      let serverFileId='';
+      try{serverFileId=await uploadFileDirectToStorage(fileName,blobOrDataUrl,fileType)||'';}catch(error){console.warn('Server storage upload skipped:',error.message);}
       const db = await openHistoryDB();
       const tx = db.transaction(DB_STORE, 'readwrite');
       const store = tx.objectStore(DB_STORE);
@@ -2548,76 +3005,37 @@ body:has(#loginScreen.front-home){background:#edf3f8!important}
         timestamp: Date.now(),
         dateFormatted: new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' })
       };
-
+      if(serverFileId)record.serverFileId=serverFileId;
       store.add(record);
     } catch(err) {}
   }
 
   async function renderHistoryTable() {
-    try {
-      const db = await openHistoryDB();
-      const tx = db.transaction(DB_STORE, 'readonly');
-      const store = tx.objectStore(DB_STORE);
-      const request = store.getAll();
-
-      request.onsuccess = function() {
-        const records = request.result || [];
-        const tbody = document.getElementById('historyTableBody');
-        tbody.innerHTML = '';
-
-        if (!records.length) {
-          tbody.innerHTML = `<tr><td colspan="4" style="text-align:center; color:var(--text-muted); padding:20px;">कोई प्रिंट रिकॉर्ड नहीं मिला।</td></tr>`;
-          return;
-        }
-
-        records.reverse().forEach(rec => {
-          const tr = document.createElement('tr');
-          tr.innerHTML = `
-            <td><strong style="color:var(--accent-blue);">${escapeHtml(rec.feature)}</strong>${rec.pdfState==='pending'?' · Pending / Retry':rec.pdfState==='limit-reached'?' · Limit reached':''}</td>
-            <td>${escapeHtml(rec.fileName)}</td>
-            <td style="color:#94a3b8; font-size:11px;">${escapeHtml(rec.dateFormatted)}</td>
-            <td>
-              <button class="history-download-btn" onclick="reDownloadHistoryFile(${Number(rec.id)})">📥 Download</button>
-              <button class="history-delete-btn" onclick="deleteHistoryRecord(${Number(rec.id)})" style="margin-left: 5px;">🗑️ Delete</button>
-            </td>
-          `;
-          tbody.appendChild(tr);
-        });
-      };
-    } catch(err) {}
+    const tbody=document.getElementById('historyTableBody');
+    try{
+      const result=await secureApi({action:'storageHistory'},{timeoutMs:30000});
+      const records=result.files||[];
+      tbody.innerHTML='';
+      if(!records.length){tbody.innerHTML='<tr><td colspan="4" style="text-align:center;color:var(--text-muted);padding:20px;">कोई प्रिंट रिकॉर्ड नहीं मिला।</td></tr>';return;}
+      records.forEach(rec=>{
+        const tr=document.createElement('tr');
+        const date=rec.created_at?new Date(rec.created_at).toLocaleString('en-IN',{timeZone:'Asia/Kolkata'}):'';
+        const remaining=Math.max(0,3-Number(rec.download_count||0));
+        tr.innerHTML=`<td><strong style="color:var(--accent-blue);">Server file</strong></td><td>${escapeHtml(rec.original_name||'file')}</td><td style="color:#94a3b8;font-size:11px;">${escapeHtml(date)} · ${remaining} downloads left</td><td><button class="history-download-btn" onclick="reDownloadHistoryFile('${String(rec.id).replace(/'/g,"\\'")}')">📥 Download</button><button class="history-delete-btn" onclick="deleteHistoryRecord('${String(rec.id).replace(/'/g,"\\'")}')" style="margin-left:5px;">🗑️ Delete</button></td>`;
+        tbody.appendChild(tr);
+      });
+    }catch(err){
+      tbody.innerHTML='<tr><td colspan="4" style="text-align:center;color:#fca5a5;padding:20px;">Server history नहीं मिली: '+escapeHtml(err.message||'Error')+'</td></tr>';
+    }
   }
 
   async function reDownloadHistoryFile(recordId) {
-    const db = await openHistoryDB();
-    const tx = db.transaction(DB_STORE, 'readonly');
-    const store = tx.objectStore(DB_STORE);
-    const request = store.get(recordId);
-
-    request.onsuccess = async function() {
-      const rec = request.result;
-      if (!rec) return;
-      if(rec.feature==='PDF Editor'){
-        try{await window.exportPortalPdf(rec.data,rec.fileName,rec.pdfState==='pending'?rec:null);await renderHistoryTable();}catch(error){alert(error.message);}return;
-      }
-
-      const link = document.createElement('a');
-      if (typeof rec.data === 'string') {
-        link.href = rec.data;
-      } else {
-        link.href = URL.createObjectURL(rec.data);
-      }
-      link.download = rec.fileName;
-      link.click();
-    };
+    try{const result=await secureApi({action:'storageDownload',fileId:String(recordId)},{timeoutMs:30000});const link=document.createElement('a');link.href=`data:${result.mimeType||'application/octet-stream'};base64,${result.fileBase64}`;link.download=result.fileName||'download.bin';document.body.appendChild(link);link.click();link.remove();await renderHistoryTable();}catch(error){alert(error.message||'Download failed.');}
   }
 
   async function deleteHistoryRecord(recordId) {
     if (!confirm('क्या आप इस रिकॉर्ड को हटाना चाहते हैं?')) return;
-    const db = await openHistoryDB();
-    const tx = db.transaction(DB_STORE, 'readwrite');
-    const store = tx.objectStore(DB_STORE);
-    store.delete(recordId);
-    tx.oncomplete = () => renderHistoryTable();
+    try{await secureApi({action:'storageDelete',fileId:String(recordId)},{timeoutMs:30000});await renderHistoryTable();}catch(error){alert(error.message||'Delete failed.');}
   }
 
   async function clearAllHistoryDB() {
@@ -2656,10 +3074,12 @@ body:has(#loginScreen.front-home){background:#edf3f8!important}
   async function addNewDistributor() {
     const name = document.getElementById('newDistName').value.trim();
     const email = document.getElementById('newDistEmail').value.trim().toLowerCase();
+    const mobile = document.getElementById('newDistMobile').value.trim();
     const pass = document.getElementById('newDistPass').value;
+    const paymentPlan = document.getElementById('newDistPlan').value;
     const msg = document.getElementById('distMsg');
 
-    if (!name || !email || !pass) {
+    if (!name || !email || !mobile || !pass || !['1month','1year'].includes(paymentPlan)) {
       msg.innerText = "⚠️ कृपया सभी फ़ील्ड भरें!";
       msg.style.color = "#ef4444";
       msg.style.display = "block";
@@ -2674,24 +3094,14 @@ body:has(#loginScreen.front-home){background:#edf3f8!important}
       return;
     }
 
-    const assignedTimestamp = Date.now();
-    const distExpiryTime = assignedTimestamp + THIRTY_MS;
-
     const newDistData = {
-      id: Date.now(),
-      officeName: officeName,
+      officeName: name,
       name: name,
       email: email,
       mobile: mobile,
-      registrationToken: registrationToken,
       pass: pass,
-      assignedTimestamp: assignedTimestamp,
-      expiryTime: distExpiryTime,
-      adminMessage: "",
-      status: "Active",
-      paymentStatus: "Approved",
-      paymentTxnId: "Admin Assignment",
-      approvalNote: "Admin created account manually"
+      paymentPlan,
+      paymentTxnId: 'Admin Assignment'
     };
 
     let success = await addDistributorCloud(newDistData);
@@ -2702,6 +3112,7 @@ body:has(#loginScreen.front-home){background:#edf3f8!important}
 
       document.getElementById('newDistName').value = '';
       document.getElementById('newDistEmail').value = '';
+      document.getElementById('newDistMobile').value = '';
       document.getElementById('newDistPass').value = '';
 
       setTimeout(() => renderDistributorsTable(), 1500);
@@ -2927,7 +3338,7 @@ body:has(#loginScreen.front-home){background:#edf3f8!important}
   const saveNewPwdBtn = document.getElementById('saveNewPwdBtn');
   const pwdStatusMsg = document.getElementById('pwdStatusMsg');
 
-  sessionStorage.removeItem('isLoggedIn');
+  try{const saved=JSON.parse(localStorage.getItem('op-auth-session')||'null');if(saved?.token&&saved.expires>Date.now()){authToken=saved.token;authRole=saved.role||'';authEmail=saved.email||'';authExpires=Number(saved.expires);checkServerSession().then(()=>{if(authToken){loginScreen.style.display='none';mainApp.style.display='block';window.scrollTo({top:0,behavior:'instant'});document.getElementById('myAccountTabBtn').style.display=authRole==='distributor'?'inline-block':'none';document.getElementById('adminTabBtn').style.display=authRole==='admin'?'inline-block':'none';const lastTab=localStorage.getItem('op-last-tab')||'tab-cards';const allowed=['tab-cards','tab-pdf-editor','tab-history','tab-my-account'];const restoredTab=allowed.includes(lastTab)?lastTab:'tab-cards';switchTabDirect(restoredTab);if(restoredTab==='tab-my-account')renderAccountFields();}});}}catch(_){try{localStorage.removeItem('op-auth-session');}catch(__){}}
 
   const today = new Date();
   const curDay = String(today.getDate()).padStart(2, '0');
@@ -3092,6 +3503,8 @@ body:has(#loginScreen.front-home){background:#edf3f8!important}
   async function handleSignUp() {
     if (authRole === 'admin') { alert('Logout before public signup.'); return; }
     clearAuth();
+    const whatsappChannelBtn = document.getElementById('whatsappChannelBtn');
+    if (whatsappChannelBtn) { whatsappChannelBtn.hidden = true; whatsappChannelBtn.style.display = 'none'; }
     const officeName = signUpOffice.value.trim();
     const name = signUpName.value.trim();
     const email = signUpEmail.value.trim().toLowerCase();
@@ -3179,6 +3592,7 @@ body:has(#loginScreen.front-home){background:#edf3f8!important}
       signUpStatusMsg.innerText = '✅ आपका आवेदन सफलतापूर्वक भेज दिया गया है। एडमिन आपके भुगतान screenshot की समीक्षा करेगा और तभी login approved होगा।';
       signUpStatusMsg.style.color = '#34d399';
       signUpStatusMsg.style.display = 'block';
+      if (whatsappChannelBtn) { whatsappChannelBtn.hidden = false; whatsappChannelBtn.style.display = 'block'; }
 
       setTimeout(() => {
         signUpScreen.style.display = 'none';
@@ -3193,7 +3607,8 @@ body:has(#loginScreen.front-home){background:#edf3f8!important}
         signUpPaymentScreenshot.value = '';
         document.querySelector('input[name="planType"][value="1month"]').checked = true;
         signUpStatusMsg.style.display = 'none';
-      }, 2200);
+        if (whatsappChannelBtn) { whatsappChannelBtn.hidden = true; whatsappChannelBtn.style.display = 'none'; }
+      }, 7000);
     } else {
       signUpStatusMsg.innerText = '⚠️ अकाउंट बनाने में समस्या हुई, कृपया फिर से प्रयास करें!';
       signUpStatusMsg.style.color = '#ef4444';
@@ -3297,6 +3712,7 @@ body:has(#loginScreen.front-home){background:#edf3f8!important}
   let rawNamePassportImg = null;
   let frontCardRawData = null;
   let backCardRawData = null;
+  let cleanPassportResultCanvas = null;
 
   const cropModal = document.getElementById('cropModal');
   const imageToCrop = document.getElementById('imageToCrop');
@@ -3312,7 +3728,7 @@ body:has(#loginScreen.front-home){background:#edf3f8!important}
       if (cropper) cropper.destroy();
 
       let targetRatio = NaN;
-      if (type === 'name_passport' || type.startsWith('multi_passport_')) targetRatio = 35 / 45;
+      if (type === 'name_passport' || type.startsWith('multi_passport_') || type === 'clean_passport') targetRatio = 35 / 45;
       if (type === 'photo4x6') targetRatio = 1200 / 1800;
 
       cropper = new Cropper(imageToCrop, {
@@ -3340,7 +3756,7 @@ body:has(#loginScreen.front-home){background:#edf3f8!important}
     }
   }
 
-  function autoFitCardToCanvas(dataUrl, targetCanvas, ctx, isFront) {
+  function autoFitCardToCanvas(dataUrl, targetCanvas, ctx, isFront, preserveFull=false) {
     const img = new Image();
     img.onload = function() {
       ctx.clearRect(0, 0, CARD_W, CARD_H);
@@ -3354,19 +3770,29 @@ body:has(#loginScreen.front-home){background:#edf3f8!important}
       sourceCanvas.getContext('2d').drawImage(img, 0, 0);
       const croppedSource = (typeof pvcTrimPrintableArea === 'function') ? pvcTrimPrintableArea(sourceCanvas) : sourceCanvas;
 
-      const srcRatio = croppedSource.width / croppedSource.height;
-      const targetRatio = CARD_W / CARD_H;
-      let sX = 0, sY = 0, sW = croppedSource.width, sH = croppedSource.height;
-
-      if (srcRatio > targetRatio) {
-        sW = croppedSource.height * targetRatio;
-        sX = (croppedSource.width - sW) / 2;
+      ctx.imageSmoothingEnabled = true;
+      ctx.imageSmoothingQuality = 'high';
+      if (preserveFull) {
+        // Aadhaar artwork keeps important seals/logos close to the top edge.
+        // Contain the complete detected card instead of center-cropping it.
+        ctx.fillStyle = '#fff';
+        ctx.fillRect(0, 0, CARD_W, CARD_H);
+        const fit = Math.min(CARD_W / croppedSource.width, CARD_H / croppedSource.height);
+        const dw = croppedSource.width * fit, dh = croppedSource.height * fit;
+        ctx.drawImage(croppedSource, 0, 0, croppedSource.width, croppedSource.height, (CARD_W - dw) / 2, (CARD_H - dh) / 2, dw, dh);
       } else {
-        sH = croppedSource.width / targetRatio;
-        sY = (croppedSource.height - sH) / 2;
+        const srcRatio = croppedSource.width / croppedSource.height;
+        const targetRatio = CARD_W / CARD_H;
+        let sX = 0, sY = 0, sW = croppedSource.width, sH = croppedSource.height;
+        if (srcRatio > targetRatio) {
+          sW = croppedSource.height * targetRatio;
+          sX = (croppedSource.width - sW) / 2;
+        } else {
+          sH = croppedSource.width / targetRatio;
+          sY = (croppedSource.height - sH) / 2;
+        }
+        ctx.drawImage(croppedSource, sX, sY, sW, sH, 0, 0, CARD_W, CARD_H);
       }
-
-      ctx.drawImage(croppedSource, sX, sY, sW, sH, 0, 0, CARD_W, CARD_H);
 
       if (isFront) {
         img1Loaded = true;
@@ -3434,12 +3860,19 @@ body:has(#loginScreen.front-home){background:#edf3f8!important}
         pCtx.drawImage(croppedCanvas, 0, 0);
       }
     }
+    else if (activeCropType === 'clean_passport') {
+      const croppedCanvas = cropper.getCroppedCanvas({ width: 413, height: 531, imageSmoothingQuality: 'high' });
+      closeCropper();
+      processCleanPassportPhoto(croppedCanvas);
+      return;
+    }
     else if (activeCropType === 'name_passport') {
       rawNamePassportImg = cropper.getCroppedCanvas({ width: 413, height: 531, imageSmoothingQuality: 'high' });
       renderNamePassportPreview();
       namePassportLoaded = true;
       document.getElementById('make4x6NamePassportBtn').disabled = false;
       document.getElementById('makeA4NamePassportBtn').disabled = false;
+      document.getElementById('makeA4NamePassport4x6Btn').disabled = false;
     }
     else if (activeCropType === 'photo4x6') {
       const croppedCanvas = cropper.getCroppedCanvas({ width: 1200, height: 1800, imageSmoothingQuality: 'high' });
@@ -3467,7 +3900,7 @@ body:has(#loginScreen.front-home){background:#edf3f8!important}
   // TAB 1: 5 CARDS SYSTEM LOGIC
   // ==========================================
   const CARD_W = 1013, CARD_H = 638, A4_W = 2480, A4_H = 3508, GAP_2_5MM_PX = 30, MAX_CARDS = 5;
-  let addedCardsCount = 0, img1Loaded = false, img2Loaded = false;
+  let addedCardsCount = 0, img1Loaded = false, img2Loaded = false, a4History = [], addedCardRecords = [];
 
   const canvas1 = document.getElementById('canvas1');
   const ctx1 = canvas1.getContext('2d');
@@ -3477,8 +3910,45 @@ body:has(#loginScreen.front-home){background:#edf3f8!important}
   const a4Ctx = a4Canvas.getContext('2d');
 
   const addCardBtn = document.getElementById('addCardBtn');
+  const universalPrintSizes={
+    '4x6':[4,6],'8x10':[8,10],'10x12':[10,12],'12x18':[12,18],
+    '16x20':[16,20],'20x30':[20,30],'24x36':[24,36]
+  };
+  function whitePngDataUrl(source){if(!source||!source.width||!source.height)throw new Error('Image preview is empty.');const out=document.createElement('canvas');out.width=source.width;out.height=source.height;const c=out.getContext('2d');c.fillStyle='#fff';c.fillRect(0,0,out.width,out.height);c.drawImage(source,0,0);return out.toDataURL('image/png');}
+  function whiteJpegDataUrl(source,quality=1.0){if(!source||!source.width||!source.height)throw new Error('Image preview is empty.');const out=document.createElement('canvas');out.width=source.width;out.height=source.height;const c=out.getContext('2d');c.fillStyle='#fff';c.fillRect(0,0,out.width,out.height);c.drawImage(source,0,0);return out.toDataURL('image/jpeg',quality);}
+  function whiteJpegBlob(source,quality=.95){return new Promise((resolve,reject)=>{try{whiteJpegCanvas(source).toBlob(resolve,'image/jpeg',quality);}catch(error){reject(error);}});}
+  function whiteJpegCanvas(source){if(!source||!source.width||!source.height)throw new Error('Image preview is empty.');const out=document.createElement('canvas');out.width=source.width;out.height=source.height;const c=out.getContext('2d');c.fillStyle='#fff';c.fillRect(0,0,out.width,out.height);c.drawImage(source,0,0);return out;}
+  function buildOptimizedCanvasPdf(canvas,{orientation='portrait',unit='mm',format='a4',x=0,y=0,w,h,fileName='download.pdf',maxBytes=7*1024*1024}={}){
+    const {jsPDF}=window.jspdf||{};if(!jsPDF)throw new Error('PDF library अभी load नहीं हुई।');
+    const make=(quality)=>{const pdf=new jsPDF({orientation,unit,format,compress:true});pdf.addImage(whiteJpegDataUrl(canvas,quality),'JPEG',x,y,w,h,undefined,'MEDIUM');return pdf;};
+    let quality=.92,pdf=make(quality),blob=pdf.output('blob');
+    [.86,.80,.74].some(nextQuality=>{if(blob.size<=maxBytes)return true;quality=nextQuality;pdf=make(quality);blob=pdf.output('blob');return false;});
+    return {pdf,blob,quality,fileName};
+  }
+  function universalExport(canvas,sizeKey,name,type){
+    const size=universalPrintSizes[sizeKey]||universalPrintSizes['4x6'];
+    if(!canvas||canvas.width<2||canvas.height<2)throw new Error('पहले preview generate करें।');
+    const [w,h]=size,ratio=Math.min(w/canvas.width,h/canvas.height),dw=canvas.width*ratio,dh=canvas.height*ratio;
+    if(type==='jpg'){const a=document.createElement('a');a.href=whiteJpegDataUrl(canvas,1.0);a.download=`${name}-${sizeKey}.jpg`;a.click();return;}
+    if(type==='print'){const win=window.open('','_blank','noopener,noreferrer');if(!win)throw new Error('Print window blocked.');const src=canvas.toDataURL('image/png');win.document.write(`<html><head><title>${name}</title><style>@page{size:${w}in ${h}in;margin:0}html,body{margin:0;width:${w}in;height:${h}in}img{width:${dw}in;height:${dh}in;object-fit:contain;display:block;margin:auto}</style></head><body><img src="${src}" onload="window.print()"></body></html>`);win.document.close();return;}
+    const result=buildOptimizedCanvasPdf(canvas,{orientation:w>=h?'landscape':'portrait',unit:'in',format:[w,h],x:(w-dw)/2,y:(h-dh)/2,w:dw,h:dh,fileName:`${name}-${sizeKey}.pdf`});result.pdf.save(result.fileName);
+  }
+  document.querySelectorAll('.universal-export-panel').forEach(panel=>{const canvas=document.getElementById(panel.dataset.exportCanvas),size=panel.querySelector('.universal-export-size'),buttons=panel.querySelectorAll('button');const enable=()=>buttons.forEach(b=>b.disabled=!(canvas&&canvas.width>2&&canvas.height>2));enable();setInterval(enable,700);panel.addEventListener('click',e=>{const btn=e.target.closest('button');if(!btn)return;try{const type=btn.classList.contains('universal-print-btn')?'print':btn.classList.contains('universal-jpg-btn')?'jpg':'pdf';universalExport(canvas,size.value,panel.dataset.exportName,type);}catch(err){alert(err.message);}});panel._enable=enable;});
   const downloadPdfBtn = document.getElementById('downloadPdfBtn');
   const downloadJpgBtn = document.getElementById('downloadJpgBtn');
+  const deleteLastCardBtn = document.getElementById('deleteLastCardBtn');
+  const addedCardsList = document.getElementById('addedCardsList');
+  function renderAddedCards(){
+    addedCardsList.replaceChildren();
+    addedCardRecords.forEach((card,index)=>{const row=document.createElement('div');row.className='added-card-row';const label=document.createElement('span');label.textContent=`Card ${index+1} · ${card.mode||'Front / Back'}`;const del=document.createElement('button');del.type='button';del.textContent='🗑️ Delete';del.onclick=()=>{addedCardRecords.splice(index,1);addedCardsCount=addedCardRecords.length;rerenderA4Cards();};row.append(label,del);addedCardsList.appendChild(row);});
+    deleteLastCardBtn.disabled=!addedCardRecords.length;
+  }
+  function rerenderA4Cards(){
+    a4Ctx.fillStyle='#ffffff';a4Ctx.fillRect(0,0,A4_W,A4_H);
+    const totalPairWidth=(CARD_W*2)+GAP_2_5MM_PX,startX=(A4_W-totalPairWidth)/2,startY=45;
+    addedCardRecords.forEach((card,index)=>{const currentY=startY+(index*(CARD_H+45));a4Ctx.putImageData(card.front,startX,currentY);a4Ctx.putImageData(card.back,startX+CARD_W+GAP_2_5MM_PX,currentY);if(card.border){a4Ctx.strokeStyle='#000';a4Ctx.lineWidth=card.border;a4Ctx.strokeRect(startX,currentY,CARD_W,CARD_H);a4Ctx.strokeRect(startX+CARD_W+GAP_2_5MM_PX,currentY,CARD_W,CARD_H);}});
+    slotCounter.innerText=addedCardsCount?`Cards on Page: ${addedCardsCount} / ${MAX_CARDS}`:'No cards added yet.';downloadPdfBtn.disabled=!addedCardsCount;downloadJpgBtn.disabled=!addedCardsCount;renderAddedCards();
+  }
   const resetPageBtn = document.getElementById('resetPageBtn');
   const slotCounter = document.getElementById('slotCounter');
   const cardPrintMode = document.getElementById('cardPrintMode');
@@ -3499,6 +3969,12 @@ body:has(#loginScreen.front-home){background:#edf3f8!important}
     for(let y=0;y<h;y+=3)for(let x=0;x<w;x+=3){const i=(y*w+x)*4,r=p[i],g=p[i+1],b=p[i+2],a=p[i+3];if(a>20&&(Math.max(r,g,b)<248||Math.min(r,g,b)<235)){minX=Math.min(minX,x);minY=Math.min(minY,y);maxX=Math.max(maxX,x);maxY=Math.max(maxY,y);}}
     return maxX<0?null:{x:minX,y:minY,w:maxX-minX+1,h:maxY-minY+1};
   }
+  function pvcAadhaarBounds(c){
+    // Ignore yellow markup/highlighter when a sample is used as the source.
+    const ctx=c.getContext('2d'),w=c.width,h=c.height,p=ctx.getImageData(0,0,w,h).data;let minX=w,minY=h,maxX=-1,maxY=-1;
+    for(let y=0;y<h;y+=3)for(let x=0;x<w;x+=3){const i=(y*w+x)*4,r=p[i],g=p[i+1],b=p[i+2],a=p[i+3],highlight=r>205&&g>185&&b<150;if(a>20&&!highlight&&(Math.max(r,g,b)<248||Math.min(r,g,b)<235)){minX=Math.min(minX,x);minY=Math.min(minY,y);maxX=Math.max(maxX,x);maxY=Math.max(maxY,y);}}
+    return maxX<0?null:{x:minX,y:minY,w:maxX-minX+1,h:maxY-minY+1};
+  }
   function pvcHasCenterGap(c,b){
     if(!b||b.w<c.width*.45)return false;const ctx=c.getContext('2d'),p=ctx.getImageData(0,0,c.width,c.height).data,start=Math.max(1,Math.floor(c.width*.38)),end=Math.min(c.width-2,Math.floor(c.width*.62));let best=0,run=0;
     for(let x=start;x<end;x+=2){let ink=0;for(let y=b.y;y<b.y+b.h;y+=6){const i=(y*c.width+x)*4,r=p[i],g=p[i+1],bl=p[i+2];if(Math.max(r,g,bl)<248||Math.min(r,g,bl)<235)ink++;}if(ink<=Math.max(1,Math.floor(b.h/120))){run+=2;best=Math.max(best,run);}else run=0;}
@@ -3506,11 +3982,108 @@ body:has(#loginScreen.front-home){background:#edf3f8!important}
     // Accept that separator only when it is inside the content bounds.
     return best>c.width*.006;
   }
+  function pvcCropBox(c,x,y,w,h){const out=document.createElement('canvas');out.width=Math.max(1,Math.round(c.width*w));out.height=Math.max(1,Math.round(c.height*h));out.getContext('2d').drawImage(c,Math.round(c.width*x),Math.round(c.height*y),out.width,out.height,0,0,out.width,out.height);return pvcTrimPrintableArea(out);}
+  function pvcCropRawBox(c,x,y,w,h){const out=document.createElement('canvas');out.width=Math.max(1,Math.round(c.width*w));out.height=Math.max(1,Math.round(c.height*h));out.getContext('2d').drawImage(c,Math.round(c.width*x),Math.round(c.height*y),out.width,out.height,0,0,out.width,out.height);return out;}
+  function pvcSplitPair(c,vertical){
+    if(vertical){const cut=Math.floor(c.height/2),a=pvcCropBox(c,0,0,1,cut/c.height),b=pvcCropBox(c,0,cut/c.height,1,1-cut/c.height);return [a,b];}
+    const cut=Math.floor(c.width/2),a=pvcCropBox(c,0,0,cut/c.width,1),b=pvcCropBox(c,cut/c.width,0,1-cut/c.width,1);return [a,b];
+  }
+  function pvcInset(c,pct=.018){const x=Math.round(c.width*pct),y=Math.round(c.height*pct),out=document.createElement('canvas');out.width=Math.max(1,c.width-2*x);out.height=Math.max(1,c.height-2*y);out.getContext('2d').drawImage(c,x,y,out.width,out.height,0,0,out.width,out.height);return out;}
+  function pvcInsetPair(pair,pct){return pair.map(c=>c?pvcInset(c,pct):c);}
+  // PREMIUM AUTOPRINT CROP LOCK — v1 (2026-09-08)
+  // Keep these document profiles immutable. UI/design/quality changes must not
+  // alter the crop rectangles or border insets used by Premium Auto Print.
+  const PREMIUM_AUTOPRINT_CROP_LOCK=Object.freeze({
+    aadhaar:Object.freeze({front:[.078,.718,.416,.222],back:[.508,.718,.416,.222],inset:.022}),
+    pan:Object.freeze({page:[0,.76,1,.20],inset:.035}),
+    voter:Object.freeze({front:[.045,.105,.43,.20],back:[.54,.105,.43,.20],inset:.028}),
+    mahasarathi:Object.freeze({front:[0,.01,1,.27],back:[0,.29,1,.28],inset:.022}),
+    maandhan:Object.freeze({front:[0,0,1,.27],back:[0,.275,1,.275],inset:.022}),
+    eshram:Object.freeze({mode:'vertical-half'}),
+    abha:Object.freeze({mode:'vertical-half'}),
+    ayushman:Object.freeze({mode:'profile-default'})
+  });
+  function pvcStackedPair(c,frontY,frontH,backY,backH,inset=.022){
+    // MahaSarathi and Maandhan PDFs place one complete card above the other.
+    // Crop each band independently, trim to its visible outer border, then
+    // inset slightly so the source border/fade is not printed in the preview.
+    const front=pvcCropRawBox(c,0,frontY,1,frontH);
+    const back=pvcCropRawBox(c,0,backY,1,backH);
+    return [front,back].map(card=>pvcInset(pvcTrimPrintableArea(card),inset));
+  }
+  function pvcAadhaarBox(c,x,y,w,h){
+    const region=pvcCropRawBox(c,x,y,w,h),bounds=pvcAadhaarBounds(region);
+    if(!bounds||bounds.w<region.width*.55||bounds.h<region.height*.18)return null;
+    return {x:(x*c.width+bounds.x)/c.width,y:(y*c.height+bounds.y)/c.height,w:bounds.w/c.width,h:bounds.h/c.height};
+  }
+  function pvcAadhaarPairScore(front,back){
+    if(!front||!back)return null;
+    const frontRatio=front.w/front.h,backRatio=back.w/back.h;
+    if(frontRatio<1.25||frontRatio>2.05||backRatio<1.25||backRatio>2.05)return null;
+    if(front.h<.12||back.h<.12)return null;
+    return Math.abs(frontRatio-1.585)*2+Math.abs(backRatio-1.585)*2+Math.abs(front.y-back.y)*2+Math.abs(front.h-back.h)*2-Math.min(front.h,back.h)*.25;
+  }
+  function pvcDetectAadhaarLayout(c){
+    // Standard e-Aadhaar exports have the printable Front on the left and
+    // Back on the right. Some exports put that pair below an information page;
+    // others contain only the two cards. Test both layouts from their borders.
+    const gap=.012,leftX=0,rightX=.5+gap,halfW=.5-gap*1.5;
+    const fullFront=pvcAadhaarBox(c,leftX,0,halfW,1),fullBack=pvcAadhaarBox(c,rightX,0,halfW,1),fullScore=pvcAadhaarPairScore(fullFront,fullBack);
+    if(fullScore!==null&&fullFront.h>.30&&fullBack.h>.30)return {front:fullFront,back:fullBack};
+    let best=null;
+    [.32,.38,.44,.50,.54,.58,.62,.66].forEach(startY=>{
+      const regionH=Math.min(.62,Math.max(.18,.98-startY));
+      const front=pvcAadhaarBox(c,leftX,startY,halfW,regionH),back=pvcAadhaarBox(c,rightX,startY,halfW,regionH),score=pvcAadhaarPairScore(front,back);
+      if(score===null||!front||!back||front.y<.32||back.y<.32)return;
+      if(!best||score<best.score)best={front,back,score};
+    });
+    return best?{front:best.front,back:best.back}:null;
+  }
+  function pvcAadhaarSafeCrop(c,box){
+    const front=pvcCropRawBox(c,Math.max(0,box.x-.008),Math.max(0,box.y-.014),Math.min(1-box.x+.008,box.w+.016),Math.min(1-box.y+.014,box.h+.024));
+    return pvcInset(front,.004);
+  }
+  function pvcAadhaarPair(c){
+    const profile=PREMIUM_AUTOPRINT_CROP_LOCK.aadhaar,layout=pvcDetectAadhaarLayout(c);
+    if(layout)return [pvcAadhaarSafeCrop(c,layout.front),pvcAadhaarSafeCrop(c,layout.back)];
+    // Locked legacy fallback for the known A4 two-card export. Keep extra
+    // source area around the top so the seals are never pre-clipped.
+    const front=pvcCropRawBox(c,profile.front[0],Math.max(0,profile.front[1]-.020),profile.front[2],Math.min(1-profile.front[1]+.020,profile.front[3]+.030));
+    const back=pvcCropRawBox(c,profile.back[0],Math.max(0,profile.back[1]-.020),profile.back[2],Math.min(1-profile.back[1]+.020,profile.back[3]+.030));
+    return [front,back].map(card=>pvcInset(card,.004));
+  }
+  function pvcVoterPair(c){
+    // e-EPIC layout: the printable front/back cards are side-by-side in the
+    // upper band. Use separate rectangles because the centre separator is not
+    // the page midpoint; this prevents the right card from being shifted or
+    // clipped. The trim + inset hides the source card border while preserving
+    // the complete card content and QR code.
+    const profile=PREMIUM_AUTOPRINT_CROP_LOCK.voter;
+    const front=pvcCropRawBox(c,...profile.front);
+    const back=pvcCropRawBox(c,...profile.back);
+    return [front,back].map(card=>pvcInset(pvcTrimPrintableArea(card),profile.inset));
+  }
+  function pvcDocumentProfile(file,type,c){
+    const n=(file.name||'').toLowerCase();let t=type==='auto'?(n.includes('pan')?'pan':n.includes('aadhaar')||n.includes('eaadhaar')?'aadhaar':n.includes('maha')?'mahasarathi':n.includes('eshram')?'eshram':n.includes('abha')?'abha':n.includes('maandhan')?'maandhan':n.includes('epic')||n.includes('voter')?'voter':'auto'):type;
+    // Auto Detect must also recognize generically named Aadhaar PDFs; file
+    // names are unreliable after downloads/renames, but the two-card layout
+    // and border geometry are stable.
+    if(type==='auto'&&t==='auto'&&pvcDetectAadhaarLayout(c))t='aadhaar';
+    if(t==='aadhaar')return pvcAadhaarPair(c);
+    if(t==='pan')return pvcInsetPair(pvcSplitPair(pvcCropBox(c,0,.76,1,.20),false),.035);
+    if(t==='mahasarathi'){const p=PREMIUM_AUTOPRINT_CROP_LOCK.mahasarathi;return pvcStackedPair(c,p.front[1],p.front[3],p.back[1],p.back[3],p.inset);}
+    if(t==='maandhan'){const p=PREMIUM_AUTOPRINT_CROP_LOCK.maandhan;return pvcStackedPair(c,p.front[1],p.front[3],p.back[1],p.back[3],p.inset);}
+    if(['eshram','abha'].includes(t))return pvcSplitPair(c,true);
+    // e-EPIC PDFs contain the printable front/back cards near the top; the lower half is verification text.
+    if(t==='voter')return pvcVoterPair(c);
+    return null;
+  }
+  function pvcShowPair(pair,label,preserveFull=false){const front=pair[0],back=pair[1]||document.createElement('canvas');if(!back.width){back.width=front.width;back.height=front.height;back.getContext('2d').fillStyle='#fff';back.getContext('2d').fillRect(0,0,back.width,back.height);}autoFitCardToCanvas(front.toDataURL('image/png'),canvas1,ctx1,true,preserveFull);autoFitCardToCanvas(back.toDataURL('image/png'),canvas2,ctx2,false,preserveFull);pvcPdfStatus.textContent=`✅ ${label} का Front/Back preview तैयार है। जरूरत हो तो Manual Crop दबाएँ।`;document.getElementById('pvcPasswordBox').hidden=true;addCardBtn.disabled=false;}
   async function pvcRenderPdf(file,password=''){
     pvcPdfStatus.textContent='⏳ Loading…';
     try{await window.requirePdfPremium();}catch(err){pvcPdfStatus.textContent=err.message||'PVC Auto Crop के लिए Premium access आवश्यक है।';return;}
     pvcPdfStatus.textContent='PDF तैयार हो रही है…';
-    if(/pan|signed/i.test(file.name)){
+    if(pvcCardType.value==='other' && /pan|signed/i.test(file.name)){
       try{
         const form=new FormData();form.append('file',file);form.append('card_type',pvcCardType.value);form.append('sides',pvcSideMode.value);if(password)form.append('password',password);
         const response=await fetch('https://all-services-are-working-fine-2.onrender.com/crop-card',{method:'POST',headers:{Authorization:'Bearer '+authToken},body:form});
@@ -3519,19 +4092,20 @@ body:has(#loginScreen.front-home){background:#edf3f8!important}
         pvcCropQueue={page:result.front,backPage:result.back,backPending:true};
         autoFitCardToCanvas(result.front,canvas1,ctx1,true);autoFitCardToCanvas(result.back,canvas2,ctx2,false);
         pvcPdfStatus.textContent='✅ PAN Front/Back तैयार है।';document.getElementById('pvcPasswordBox').hidden=true;openCropEngine(result.front,'card_front');return;
-      }catch(panError){console.warn('PAN worker failed:',panError);pvcPdfStatus.textContent='❌ PAN crop failed: '+panError.message;return;}
+      }catch(panError){console.warn('PAN worker failed; using document profile:',panError);pvcPdfStatus.textContent='PAN auto-crop service unavailable; local profile crop जारी है।'}
     }
-    try{if(!/pan|signed/i.test(file.name)){const form=new FormData();form.append('file',file);form.append('card_type',pvcCardType.value);form.append('sides',pvcSideMode.value);if(password)form.append('password',password);const workerResponse=await fetch('https://all-services-are-working-fine-2.onrender.com/crop-card',{method:'POST',headers:{Authorization:'Bearer '+authToken},body:form});const workerResult=await workerResponse.json();if(!workerResponse.ok||!workerResult.success)throw new Error(workerResult.error||'Card processing unavailable.');pvcCropQueue={page:workerResult.front,backPage:workerResult.back,backPending:pvcSideMode.value!=='single'};autoFitCardToCanvas(workerResult.front,canvas1,ctx1,true);if(workerResult.back){autoFitCardToCanvas(workerResult.back,canvas2,ctx2,false);}pvcPdfStatus.textContent='✅ Front/Back preview तैयार है। जरूरत हो तो नीचे Manual Crop दबाएँ।';openCropEngine(workerResult.front,'card_front');document.getElementById('pvcPasswordBox').hidden=true;return;}}catch(workerError){console.warn('Auto-crop worker failed:',workerError);pvcPdfStatus.textContent='PDF तैयार करने में समस्या हुई; manual PDF crop जारी है।'}
+    try{if(pvcCardType.value==='other'&&!/pan|signed/i.test(file.name)){const form=new FormData();form.append('file',file);form.append('card_type',pvcCardType.value);form.append('sides',pvcSideMode.value);if(password)form.append('password',password);const workerResponse=await fetch('https://all-services-are-working-fine-2.onrender.com/crop-card',{method:'POST',headers:{Authorization:'Bearer '+authToken},body:form});const workerResult=await workerResponse.json();if(!workerResponse.ok||!workerResult.success)throw new Error(workerResult.error||'Card processing unavailable.');pvcCropQueue={page:workerResult.front,backPage:workerResult.back,backPending:pvcSideMode.value!=='single'};autoFitCardToCanvas(workerResult.front,canvas1,ctx1,true);if(workerResult.back){autoFitCardToCanvas(workerResult.back,canvas2,ctx2,false);}pvcPdfStatus.textContent='✅ Front/Back preview तैयार है। जरूरत हो तो नीचे Manual Crop दबाएँ।';openCropEngine(workerResult.front,'card_front');document.getElementById('pvcPasswordBox').hidden=true;return;}}catch(workerError){console.warn('Auto-crop worker failed:',workerError);pvcPdfStatus.textContent='PDF तैयार करने में समस्या हुई; document profile crop जारी है।'}
     const data=await file.arrayBuffer();let doc;
     try{doc=await pdfjsLib.getDocument({data,password}).promise;}catch(e){if(/password/i.test(e.name||'')||/password/i.test(e.message||'')){document.getElementById('pvcPasswordBox').hidden=false;pvcPdfStatus.textContent='Password डालकर Unlock दबाएँ।';return;}throw e;}
-    if(doc.numPages<1)throw new Error('PDF में page नहीं मिला।');const page=await doc.getPage(1),vp=page.getViewport({scale:3}),src=document.createElement('canvas');src.width=vp.width;src.height=vp.height;await page.render({canvasContext:src.getContext('2d'),viewport:vp}).promise;
-    const bounds=pvcContentBounds(src),forcedSide=pvcSideMode.value,requestedType=pvcCardType.value,vertical=forcedSide!=='single'&&Boolean(bounds&&bounds.h/bounds.w>1.12),horizontal=!vertical&&forcedSide==='double'||(!vertical&&forcedSide!=='single'&&Boolean(bounds&&((bounds.w/bounds.h>2.2)||pvcHasCenterGap(src,bounds))));let front,back;if(vertical){const cut=Math.floor(src.height/2),top=document.createElement('canvas'),bottom=document.createElement('canvas');top.width=bottom.width=src.width;top.height=bottom.height=cut;top.getContext('2d').drawImage(src,0,0,src.width,cut,0,0,src.width,cut);bottom.getContext('2d').drawImage(src,0,cut,src.width,src.height-cut,0,0,src.width,src.height-cut);front=pvcTrimPrintableArea(top);back=pvcTrimPrintableArea(bottom);}else if(horizontal){const cut=Math.floor(src.width/2),left=document.createElement('canvas'),right=document.createElement('canvas');left.width=right.width=cut;left.height=right.height=src.height;left.getContext('2d').drawImage(src,0,0,cut,src.height,0,0,cut,src.height);right.getContext('2d').drawImage(src,cut,0,src.width-cut,src.height,0,0,src.width-cut,src.height);front=pvcTrimPrintableArea(left);back=pvcTrimPrintableArea(right);}else{front=pvcTrimPrintableArea(src);back=document.createElement('canvas');back.width=front.width;back.height=front.height;back.getContext('2d').fillStyle='#fff';back.getContext('2d').fillRect(0,0,back.width,back.height);}
-    autoFitCardToCanvas(front.toDataURL('image/jpeg',.95),canvas1,ctx1,true);autoFitCardToCanvas(back.toDataURL('image/jpeg',.95),canvas2,ctx2,false);pvcPdfStatus.textContent=`✅ ${requestedType==='auto'?'Auto':requestedType} · ${horizontal?'Front/Back':'Single'} printable area crop होकर PVC template में तैयार है।`;document.getElementById('pvcPasswordBox').hidden=true;addCardBtn.disabled=false;
+    if(doc.numPages<1)throw new Error('PDF में page नहीं मिला।');const page=await doc.getPage(1),vp=page.getViewport({scale:4}),src=document.createElement('canvas');src.width=vp.width;src.height=vp.height;const renderContext=src.getContext('2d');renderContext.imageSmoothingEnabled=true;renderContext.imageSmoothingQuality='high';await page.render({canvasContext:renderContext,viewport:vp}).promise;
+    const requestedType=pvcCardType.value,profile=pvcDocumentProfile(file,requestedType,src);if(profile){pvcShowPair(profile,requestedType==='auto'?'Document':requestedType,requestedType==='aadhaar'||/aadhaar|eaadhaar/i.test(file.name||''));return;}const bounds=pvcContentBounds(src),forcedSide=pvcSideMode.value,vertical=forcedSide!=='single'&&Boolean(bounds&&bounds.h/bounds.w>1.12),horizontal=!vertical&&forcedSide==='double'||(!vertical&&forcedSide!=='single'&&Boolean(bounds&&((bounds.w/bounds.h>2.2)||pvcHasCenterGap(src,bounds))));let front,back;if(vertical){const cut=Math.floor(src.height/2),top=document.createElement('canvas'),bottom=document.createElement('canvas');top.width=bottom.width=src.width;top.height=bottom.height=cut;top.getContext('2d').drawImage(src,0,0,src.width,cut,0,0,src.width,cut);bottom.getContext('2d').drawImage(src,0,cut,src.width,src.height-cut,0,0,src.width,src.height-cut);front=pvcTrimPrintableArea(top);back=pvcTrimPrintableArea(bottom);}else if(horizontal){const cut=Math.floor(src.width/2),left=document.createElement('canvas'),right=document.createElement('canvas');left.width=right.width=cut;left.height=right.height=src.height;left.getContext('2d').drawImage(src,0,0,cut,src.height,0,0,cut,src.height);right.getContext('2d').drawImage(src,cut,0,src.width-cut,src.height,0,0,src.width-cut,src.height);front=pvcTrimPrintableArea(left);back=pvcTrimPrintableArea(right);}else{front=pvcTrimPrintableArea(src);back=document.createElement('canvas');back.width=front.width;back.height=front.height;back.getContext('2d').fillStyle='#fff';back.getContext('2d').fillRect(0,0,back.width,back.height);}
+    autoFitCardToCanvas(front.toDataURL('image/png'),canvas1,ctx1,true);autoFitCardToCanvas(back.toDataURL('image/png'),canvas2,ctx2,false);pvcPdfStatus.textContent=`✅ ${requestedType==='auto'?'Auto':requestedType} · ${horizontal?'Front/Back':'Single'} printable area crop होकर PVC template में तैयार है।`;document.getElementById('pvcPasswordBox').hidden=true;addCardBtn.disabled=false;
   }
   pvcPdfInput.addEventListener('change',()=>{const f=pvcPdfInput.files[0];if(!f)return;pvcPdfName.textContent='✅ '+f.name;document.getElementById('pvcPasswordBox').hidden=true;pvcRenderPdf(f).catch(e=>{pvcPdfStatus.textContent='PDF खोलने के लिए password आवश्यक है।';document.getElementById('pvcPasswordBox').hidden=false;});});
   document.getElementById('pvcUnlockBtn').addEventListener('click',()=>{const f=pvcPdfInput.files[0];if(f)pvcRenderPdf(f,document.getElementById('pvcPdfPassword').value).catch(e=>{pvcPdfStatus.textContent='❌ '+e.message;});});
   pvcSideMode.addEventListener('change',()=>{const f=pvcPdfInput.files[0];if(f)pvcRenderPdf(f).catch(e=>{pvcPdfStatus.textContent='❌ '+e.message;});});
   cardPrintMode.addEventListener('change',()=>{slotCounter.dataset.mode=cardPrintMode.value;addCardBtn.textContent=cardPrintMode.value==='pvc'?'➕ Add PVC Card to A4':cardPrintMode.value==='auto'?'➕ Auto-Place on A4':'➕ Add This Card to A4 Sheet';});
+  document.getElementById('basicPreviewBtn')?.addEventListener('click',()=>{document.getElementById('basicCardPreview')?.scrollIntoView({behavior:'smooth',block:'center'});document.getElementById('pvcPdfStatus').textContent=(img1Loaded||img2Loaded)?'👁️ Front/Back preview ऊपर दिख रहा है। Manual Crop के लिए संबंधित button दबाएँ।':'पहले Front और Back image चुनें।';});
 
   document.getElementById('card1Input').addEventListener('change', (e) => {
     const file = e.target.files[0];
@@ -3560,6 +4134,7 @@ body:has(#loginScreen.front-home){background:#edf3f8!important}
   addCardBtn.addEventListener('click', () => {
     const copies=Math.max(1,Math.min(MAX_CARDS-addedCardsCount,Number(cardCopies.value)||1));
     if (addedCardsCount >= MAX_CARDS || !copies) return;
+    a4History.push({imageData:a4Ctx.getImageData(0, 0, A4_W, A4_H),count:copies});
     for(let copy=0;copy<copies;copy++){
     const totalPairWidth = (CARD_W * 2) + GAP_2_5MM_PX;
     const startX = (A4_W - totalPairWidth) / 2;
@@ -3577,6 +4152,8 @@ body:has(#loginScreen.front-home){background:#edf3f8!important}
       a4Ctx.strokeRect(backCardX, currentY, CARD_W, CARD_H);
     }
 
+    addedCardRecords.push({front:a4Ctx.getImageData(startX,currentY,CARD_W,CARD_H),back:a4Ctx.getImageData(backCardX,currentY,CARD_W,CARD_H),border:pvcBorderEnabled.checked?(Number(pvcBorderSize.value)||6):0,mode:cardPrintMode.value});
+
     addedCardsCount++;
     }
     if (addedCardsCount < MAX_CARDS) {
@@ -3587,7 +4164,13 @@ body:has(#loginScreen.front-home){background:#edf3f8!important}
 
     downloadPdfBtn.disabled = false;
     downloadJpgBtn.disabled = false;
+    renderAddedCards();
     clearCurrentCardInputs();
+  });
+
+  deleteLastCardBtn.addEventListener('click',()=>{
+    if(!a4History.length||!addedCardsCount)return;
+    addedCardRecords.splice(-1,1);addedCardsCount=addedCardRecords.length;rerenderA4Cards();
   });
 
   function clearCurrentCardInputs() {
@@ -3611,6 +4194,10 @@ body:has(#loginScreen.front-home){background:#edf3f8!important}
 
   function resetCardA4Sheet() {
     addedCardsCount = 0;
+    a4History = [];
+    addedCardRecords = [];
+    deleteLastCardBtn.disabled = true;
+    addedCardsList.replaceChildren();
     a4Ctx.fillStyle = '#ffffff';
     a4Ctx.fillRect(0, 0, A4_W, A4_H);
     // Keep the A4 preview clean after reset. Empty slot guide rectangles are
@@ -3628,12 +4215,26 @@ body:has(#loginScreen.front-home){background:#edf3f8!important}
   });
 
   downloadPdfBtn.addEventListener('click', () => {
+    if (!addedCardsCount) return;
     const { jsPDF } = window.jspdf;
-    const pdf = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
-    pdf.addImage(a4Canvas.toDataURL('image/jpeg', 1.0), 'JPEG', 0, 0, 210, 297);
-    
+    // Keep the 2480×3508 A4 render for print clarity, but embed it as a
+    // high-quality JPEG in a compressed PDF instead of a huge raw PNG stream.
+    // This keeps Premium Auto ID exports practical for upload/download while
+    // preserving small text, seals and QR codes.
+    const buildPdf = quality => {
+      const pdf = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4', compress: true });
+      const image = whiteJpegDataUrl(a4Canvas, quality);
+      pdf.addImage(image, 'JPEG', 0, 0, 210, 297, undefined, 'MEDIUM');
+      return pdf;
+    };
+    let quality = .90;
+    let pdf = buildPdf(quality);
+    let blob = pdf.output('blob');
+    // A 6 MB ceiling avoids the old 30+ MB PNG export. Lower quality only if
+    // an unusually detailed sheet still exceeds the practical upload size.
+    if (blob.size > 6 * 1024 * 1024) { quality = .84; pdf = buildPdf(quality); blob = pdf.output('blob'); }
+    if (blob.size > 6 * 1024 * 1024) { quality = .78; pdf = buildPdf(quality); blob = pdf.output('blob'); }
     const fileName = `A4_Cards_Sheet_${addedCardsCount}_Cards.pdf`;
-    const blob = pdf.output('blob');
     pdf.save(fileName);
     saveToHistory('ID Card Print (5-Slots)', fileName, blob, 'application/pdf');
   });
@@ -3642,7 +4243,7 @@ body:has(#loginScreen.front-home){background:#edf3f8!important}
     if (!addedCardsCount) return;
     const link = document.createElement('a');
     link.download = `A4_Cards_Sheet_${addedCardsCount}_Cards.jpg`;
-    link.href = a4Canvas.toDataURL('image/jpeg', 0.98);
+    link.href = whiteJpegDataUrl(a4Canvas,1.0);
     link.click();
   });
 
@@ -3653,6 +4254,7 @@ body:has(#loginScreen.front-home){background:#edf3f8!important}
   let multiPassportCanvases = [];
   let multiPassportLoaded = [];
   let passportRemoveBg = false;
+  let passportSheetMode = 'standard';
 
   function setPassportCount(count) {
     activePassportCount = count;
@@ -3708,6 +4310,93 @@ body:has(#loginScreen.front-home){background:#edf3f8!important}
     const out=document.createElement('canvas');out.width=canvas.width;out.height=canvas.height;out.getContext('2d').drawImage(img,0,0,out.width,out.height);return out;
   }
 
+  // Conservative clarity pass: improves edge definition without inventing facial details.
+  // The source canvas is never modified; this is applied once per photo before layout.
+  function enhancePassportCanvas(source, amount){
+    const level=Math.max(0,Math.min(40,Number(amount)||0));
+    if(!level)return source;
+    const out=document.createElement('canvas');out.width=source.width;out.height=source.height;
+    const ctx=out.getContext('2d');
+    const edgeAlpha=Math.min(0.16,level/250);
+    ctx.imageSmoothingEnabled=true;
+    ctx.drawImage(source,0,0);
+    // Low-strength directional edge overlay acts as a safe unsharp-mask approximation.
+    ctx.globalAlpha=edgeAlpha;
+    ctx.globalCompositeOperation='screen';
+    ctx.drawImage(source,-1,0);ctx.drawImage(source,1,0);
+    ctx.drawImage(source,0,-1);ctx.drawImage(source,0,1);
+    ctx.globalCompositeOperation='source-over';ctx.globalAlpha=1;
+    return out;
+  }
+
+  // User-provided prompt represented as a deterministic processing profile.
+  // This intentionally preserves likeness and does not synthesize facial details.
+  const CLEAN_PASSPORT_PROMPT = 'Official passport portrait; front-facing, eye-level gaze, straight shoulders, neutral expression, centered chest-up framing, 3.5cm x 4.5cm ratio, clean solid light-blue or off-white studio backdrop, even diffused lighting, crisp focus, natural skin tones and texture, preserve facial likeness, formal identification-photo standard.';
+
+  async function processCleanPassportPhoto(croppedCanvas){
+    const status=document.getElementById('cleanPassportStatus');
+    const startButton=document.getElementById('cleanPassportBtn');
+    const preview=document.getElementById('cleanPassportCanvas');
+    const useButton=document.getElementById('useCleanPassportBtn');
+    const downloadButton=document.getElementById('downloadCleanPassportBtn');
+    if(!croppedCanvas||!croppedCanvas.width||!croppedCanvas.height)return;
+    startButton.disabled=true;
+    startButton.textContent='⏳ Cleaning photo…';
+    status.textContent='Face likeness सुरक्षित रखते हुए lighting और clarity improve की जा रही है…';
+    try{
+      let enhanced=croppedCanvas;
+      try{
+        enhanced=await enhanceCanvasViaServer(croppedCanvas,25);
+      }catch(serverError){
+        console.warn('Clean passport server enhancement unavailable; using local clarity pass.',serverError);
+        enhanced=enhancePassportCanvas(croppedCanvas,25);
+      }
+
+      let cutout=enhanced;
+      let backgroundRemoved=true;
+      try{
+        status.textContent='Background clean किया जा रहा है…';
+        cutout=await aiRemovePassportBackground(enhanced);
+      }catch(backgroundError){
+        backgroundRemoved=false;
+        console.warn('Clean passport background removal unavailable; retaining source background.',backgroundError);
+      }
+
+      const out=document.createElement('canvas');out.width=413;out.height=531;
+      const ctx=out.getContext('2d');ctx.imageSmoothingEnabled=true;ctx.imageSmoothingQuality='high';
+      ctx.fillStyle=document.getElementById('cleanPassportBgColor')?.value||'#dbeafe';ctx.fillRect(0,0,out.width,out.height);
+      ctx.drawImage(cutout,0,0,out.width,out.height);
+      cleanPassportResultCanvas=out;
+      if(preview){preview.hidden=false;preview.style.background=ctx.fillStyle;const pCtx=preview.getContext('2d');pCtx.clearRect(0,0,413,531);pCtx.drawImage(out,0,0);}
+      if(useButton)useButton.hidden=false;
+      if(downloadButton)downloadButton.hidden=false;
+      status.textContent=backgroundRemoved?'✅ Clean & clear passport photo ready.':'⚠️ Clarity ready; background cleanup could not load, so the original background was kept.';
+    }catch(error){
+      console.error('Clean passport processing failed:',error);
+      status.textContent='❌ Photo process नहीं हो पाया। कृपया दोबारा प्रयास करें।';
+    }finally{
+      startButton.disabled=false;
+      startButton.textContent='✨ Clean & Clear Passport Photo';
+    }
+  }
+
+  function readPhotoBorder(prefix){
+    const enabled=document.getElementById(prefix+'BorderEnabled')?.checked!==false;
+    const width=Math.max(1,Math.min(12,Number(document.getElementById(prefix+'BorderWidth')?.value)||3));
+    return {enabled,width};
+  }
+  function drawPhotoBorder(ctx,x,y,w,h,border){
+    if(!border.enabled)return;
+    ctx.save();ctx.strokeStyle='#000000';ctx.lineWidth=border.width;ctx.strokeRect(x+border.width/2,y+border.width/2,Math.max(0,w-border.width),Math.max(0,h-border.width));ctx.restore();
+  }
+  function renderFourUpA4(targetCanvas,sourceCanvases,border){
+    targetCanvas.width=2480;targetCanvas.height=3508;const ctx=targetCanvas.getContext('2d');ctx.fillStyle='#ffffff';ctx.fillRect(0,0,2480,3508);
+    const margin=105,gap=42,ratio=2/3;let pw=(2480-2*margin-gap)/2,ph=pw/ratio;const maxH=(3508-2*margin-gap)/2;if(ph>maxH){ph=maxH;pw=ph*ratio;}
+    const startX=(2480-(2*pw+gap))/2,startY=(3508-(2*ph+gap))/2;
+    for(let i=0;i<4;i++){const col=i%2,row=Math.floor(i/2),x=startX+col*(pw+gap),y=startY+row*(ph+gap),source=sourceCanvases[i%sourceCanvases.length];ctx.drawImage(source,x,y,pw,ph);drawPhotoBorder(ctx,x,y,pw,ph,border);}
+    return {width:pw,height:ph};
+  }
+
   document.getElementById('generateMultiPassportA4Btn').addEventListener('click', async () => {
     for (let i = 0; i < activePassportCount; i++) {
       if (!multiPassportLoaded[i]) {
@@ -3717,8 +4406,13 @@ body:has(#loginScreen.front-home){background:#edf3f8!important}
     }
 
     const targetQty = Math.max(1, Math.min(50, parseInt(document.getElementById('passportQtyInput').value) || 30));
+    passportSheetMode='standard';
+    const passportBorder=readPhotoBorder('passport');
     let outputCanvases=multiPassportCanvases;
     if(passportRemoveBg){const button=document.getElementById('generateMultiPassportA4Btn');button.disabled=true;button.textContent='⏳ Removing background…';try{outputCanvases=await Promise.all(multiPassportCanvases.map(aiRemovePassportBackground));}catch(e){alert('Background removal failed. Check internet connection and try again.');return;}finally{button.disabled=false;button.textContent='🖼️ Generate Sheet (Preview)';}}
+    const enhanceValue=Number(document.getElementById('passportEnhanceSlider')?.value||0);
+    const aiButton=document.getElementById('generateMultiPassportA4Btn');
+    if(enhanceValue>0){aiButton.disabled=true;aiButton.textContent='⏳ AI enhancement…';try{outputCanvases=await Promise.all(outputCanvases.map(canvas=>enhanceCanvasViaServer(canvas,enhanceValue)));}catch(e){alert('AI enhancement failed: '+e.message);return;}finally{aiButton.disabled=false;aiButton.textContent='🖼️ Generate Sheet (Preview)';}}
     const sheetCanvas = document.getElementById('passportSheetCanvas');
     const sheetCtx = sheetCanvas.getContext('2d');
 
@@ -3740,16 +4434,13 @@ body:has(#loginScreen.front-home){background:#edf3f8!important}
         const y = startY + r * (ph + gapY);
 
         const currentCanvas = outputCanvases[photoIndexToPrint % activePassportCount];
-        const enhance=Number(document.getElementById('passportEnhanceSlider')?.value||0);
         sheetCtx.save();
-        sheetCtx.filter=`contrast(${100+enhance}%) brightness(${100+Math.round(enhance/3)}%) saturate(${100+Math.round(enhance/2)}%)`;
+        sheetCtx.filter=`contrast(${100+enhanceValue}%) brightness(${100+Math.round(enhanceValue/3)}%) saturate(${100+Math.round(enhanceValue/2)}%)`;
         if(passportRemoveBg){sheetCtx.fillStyle=document.getElementById('passportBgColor')?.value||'#ffffff';sheetCtx.fillRect(x,y,pw,ph);}
         sheetCtx.drawImage(currentCanvas, x, y, pw, ph);
         sheetCtx.restore();
         
-        sheetCtx.strokeStyle = '#000000';
-        sheetCtx.lineWidth = 2;
-        sheetCtx.strokeRect(x, y, pw, ph);
+        drawPhotoBorder(sheetCtx,x,y,pw,ph,passportBorder);
 
         photoIndexToPrint++;
         placed++;
@@ -3760,21 +4451,37 @@ body:has(#loginScreen.front-home){background:#edf3f8!important}
     document.getElementById('downloadMultiPassportPdfBtn').disabled = false;
   });
 
+  document.getElementById('generatePassport4x6A4Btn').addEventListener('click', () => {
+    const sources=multiPassportCanvases.map((canvas,i)=>({canvas,loaded:multiPassportLoaded[i]})).filter(entry=>entry.canvas&&entry.loaded).map(entry=>entry.canvas);if(!sources.length){alert('पहले selected passport photos upload करें।');return;}
+    passportSheetMode='a4-4x6';const sheetCanvas=document.getElementById('passportSheetCanvas');renderFourUpA4(sheetCanvas,sources,readPhotoBorder('passport'));
+    document.getElementById('passportSheetTitle').innerText='Passport 4×6 Sheet on A4 (4 Photos)';document.getElementById('downloadMultiPassportPdfBtn').disabled=false;
+  });
+
   document.getElementById('passportEnhanceSlider')?.addEventListener('input',e=>{document.getElementById('passportEnhanceValue').textContent=e.target.value;});
   document.getElementById('passportRemoveBgBtn')?.addEventListener('click',()=>{passportRemoveBg=!passportRemoveBg;const b=document.getElementById('passportRemoveBgBtn');b.textContent=passportRemoveBg?'↩️ Keep Original Background':'🪄 Remove Background';document.getElementById('passportBgStatus').textContent=passportRemoveBg?'Selected background color will be used in the generated sheet.':'Original photo background will be retained.';});
+
+  document.getElementById('cleanPassportBtn')?.addEventListener('click',()=>{const input=document.getElementById('cleanPassportInput');if(input){input.value='';input.click();}});
+  document.getElementById('cleanPassportInput')?.addEventListener('change',e=>{const file=e.target.files?.[0];if(file)openCropEngine(file,'clean_passport');});
+  document.getElementById('useCleanPassportBtn')?.addEventListener('click',()=>{
+    if(!cleanPassportResultCanvas)return;
+    if(!activePassportCount){setPassportCount(1);}
+    multiPassportCanvases[0]=cleanPassportResultCanvas;multiPassportLoaded[0]=true;
+    const preview=document.getElementById('multiPassPreview0');
+    if(preview){preview.style.display='block';const pCtx=preview.getContext('2d');pCtx.clearRect(0,0,413,531);pCtx.drawImage(cleanPassportResultCanvas,0,0);}
+    document.getElementById('cleanPassportStatus').textContent='✅ Clean photo Passport Photo #1 में जोड़ दी गई है। अब quantity चुनकर Generate करें।';
+  });
+  document.getElementById('downloadCleanPassportBtn')?.addEventListener('click',()=>{
+    if(!cleanPassportResultCanvas)return;
+    const a=document.createElement('a');a.href=whiteJpegDataUrl(cleanPassportResultCanvas,.95);a.download='Clean_Clear_Passport_Photo.jpg';document.body.appendChild(a);a.click();a.remove();
+  });
 
   document.getElementById('downloadMultiPassportPdfBtn').addEventListener('click', () => {
     const sheetCanvas = document.getElementById('passportSheetCanvas');
     const targetQty = document.getElementById('passportQtyInput').value;
-    
-    const { jsPDF } = window.jspdf;
-    const pdf = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
-    pdf.addImage(sheetCanvas.toDataURL('image/jpeg', 1.0), 'JPEG', 0, 0, 210, 297);
-    
-    const fileName = `Multi_Unique_Passport_${activePassportCount}_Photos_${targetQty}_Qty_A4.pdf`;
-    const blob = pdf.output('blob');
-    pdf.save(fileName);
-    saveToHistory('Multi-Unique Passports', fileName, blob, 'application/pdf');
+    const fileName = passportSheetMode==='a4-4x6'?'Passport_4x6_4_Photos_A4.pdf':`Multi_Unique_Passport_${activePassportCount}_Photos_${targetQty}_Qty_A4.pdf`;
+    const result=buildOptimizedCanvasPdf(sheetCanvas,{fileName});
+    result.pdf.save(fileName);
+    saveToHistory('Multi-Unique Passports', fileName, result.blob, 'application/pdf');
   });
 
   renderPassportUploadBlocks();
@@ -3918,6 +4625,7 @@ body:has(#loginScreen.front-home){background:#edf3f8!important}
   document.getElementById('make4x6NamePassportBtn').addEventListener('click', () => {
     if (!namePassportLoaded) return;
     namePassportSheetFormat = '4x6';
+    const namePassportBorder=readPhotoBorder('namePassport');
     const targetQty = Math.max(1, Math.min(8, parseInt(namePassportQtyInput.value) || 8));
 
     namePassportSheetCanvas.width = 1800;
@@ -3937,9 +4645,7 @@ body:has(#loginScreen.front-home){background:#edf3f8!important}
         const x = startX + c * (pw + gapX);
         const y = startY + r * (ph + gapY);
         namePassportSheetCtx.drawImage(namePassportCanvas, x, y, pw, ph);
-        namePassportSheetCtx.strokeStyle = '#000000';
-        namePassportSheetCtx.lineWidth = 2;
-        namePassportSheetCtx.strokeRect(x, y, pw, ph);
+        drawPhotoBorder(namePassportSheetCtx,x,y,pw,ph,namePassportBorder);
         placed++;
       }
     }
@@ -3951,6 +4657,7 @@ body:has(#loginScreen.front-home){background:#edf3f8!important}
   document.getElementById('makeA4NamePassportBtn').addEventListener('click', () => {
     if (!namePassportLoaded) return;
     namePassportSheetFormat = 'a4';
+    const namePassportBorder=readPhotoBorder('namePassport');
     const targetQty = Math.max(1, Math.min(30, parseInt(namePassportQtyInput.value) || 30));
 
     namePassportSheetCanvas.width = 2480;
@@ -3970,9 +4677,7 @@ body:has(#loginScreen.front-home){background:#edf3f8!important}
         const x = startX + c * (pw + gapX);
         const y = startY + r * (ph + gapY);
         namePassportSheetCtx.drawImage(namePassportCanvas, x, y, pw, ph);
-        namePassportSheetCtx.strokeStyle = '#000000';
-        namePassportSheetCtx.lineWidth = 2;
-        namePassportSheetCtx.strokeRect(x, y, pw, ph);
+        drawPhotoBorder(namePassportSheetCtx,x,y,pw,ph,namePassportBorder);
         placed++;
       }
     }
@@ -3981,22 +4686,29 @@ body:has(#loginScreen.front-home){background:#edf3f8!important}
     document.getElementById('downloadNamePassportPdfBtn').disabled = false;
   });
 
+  document.getElementById('makeA4NamePassport4x6Btn').addEventListener('click', () => {
+    if (!namePassportLoaded) return;
+    namePassportSheetFormat='a4-4x6';
+    renderFourUpA4(namePassportSheetCanvas,[namePassportCanvas],readPhotoBorder('namePassport'));
+    document.getElementById('namePassportSheetTitle').innerText='Name & Date 4×6 Sheet on A4 (4 Photos)';
+    document.getElementById('downloadNamePassportPdfBtn').disabled=false;
+  });
+
   document.getElementById('downloadNamePassportPdfBtn').addEventListener('click', () => {
-    const { jsPDF } = window.jspdf;
     let fileName = '';
-    let pdf;
+    let result;
     if (namePassportSheetFormat === '4x6') {
-      pdf = new jsPDF({ orientation: 'landscape', unit: 'in', format: [4, 6] });
-      pdf.addImage(namePassportSheetCanvas.toDataURL('image/jpeg', 1.0), 'JPEG', 0, 0, 6, 4);
       fileName = `Name_Date_Passport_4x6_${namePassportQtyInput.value}_Qty.pdf`;
+      result=buildOptimizedCanvasPdf(namePassportSheetCanvas,{orientation:'landscape',unit:'in',format:[4,6],w:6,h:4,fileName});
+    } else if(namePassportSheetFormat==='a4-4x6') {
+      fileName = 'Name_Date_Passport_4x6_4_Photos_A4.pdf';
+      result=buildOptimizedCanvasPdf(namePassportSheetCanvas,{fileName});
     } else {
-      pdf = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
-      pdf.addImage(namePassportSheetCanvas.toDataURL('image/jpeg', 1.0), 'JPEG', 0, 0, 210, 297);
       fileName = `Name_Date_Passport_A4_${namePassportQtyInput.value}_Qty.pdf`;
+      result=buildOptimizedCanvasPdf(namePassportSheetCanvas,{fileName});
     }
-    const blob = pdf.output('blob');
-    pdf.save(fileName);
-    saveToHistory('Name & Date Passport', fileName, blob, 'application/pdf');
+    result.pdf.save(fileName);
+    saveToHistory('Name & Date Passport', fileName, result.blob, 'application/pdf');
   });
 
   // ==========================================
@@ -4022,13 +4734,10 @@ body:has(#loginScreen.front-home){background:#edf3f8!important}
 
   document.getElementById('downloadDirect4x6Pdf').addEventListener('click', () => {
     if (!photo4x6Loaded) return;
-    const { jsPDF } = window.jspdf;
-    const pdf = new jsPDF({ orientation: 'portrait', unit: 'in', format: [4, 6] });
-    pdf.addImage(canvas4x6.toDataURL('image/jpeg', 1.0), 'JPEG', 0, 0, 4, 6);
     const fileName = 'Photo_4x6_Print.pdf';
-    const blob = pdf.output('blob');
-    pdf.save(fileName);
-    saveToHistory('4x6 Photo (Single)', fileName, blob, 'application/pdf');
+    const result=buildOptimizedCanvasPdf(canvas4x6,{orientation:'portrait',unit:'in',format:[4,6],w:4,h:6,fileName});
+    result.pdf.save(fileName);
+    saveToHistory('4x6 Photo (Single)', fileName, result.blob, 'application/pdf');
   });
 
   document.getElementById('generateA4Custom4x6Btn').addEventListener('click', () => {
@@ -4065,13 +4774,10 @@ body:has(#loginScreen.front-home){background:#edf3f8!important}
   });
 
   document.getElementById('downloadA4_4x6_PdfBtn').addEventListener('click', () => {
-    const { jsPDF } = window.jspdf;
-    const pdf = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
-    pdf.addImage(a4_4x6_SheetCanvas.toDataURL('image/jpeg', 1.0), 'JPEG', 0, 0, 210, 297);
     const fileName = `4x6_Photos_A4_Sheet_${photo4x6QtyInput.value}_Qty.pdf`;
-    const blob = pdf.output('blob');
-    pdf.save(fileName);
-    saveToHistory('4x6 Photo A4 Sheet', fileName, blob, 'application/pdf');
+    const result=buildOptimizedCanvasPdf(a4_4x6_SheetCanvas,{fileName});
+    result.pdf.save(fileName);
+    saveToHistory('4x6 Photo A4 Sheet', fileName, result.blob, 'application/pdf');
   });
 
   // ==========================================================
@@ -4246,7 +4952,7 @@ body:has(#loginScreen.front-home){background:#edf3f8!important}
       outPdf.addPage(copiedPage);
     }
 
-    const pdfBytes = await outPdf.save();
+    const pdfBytes = await outPdf.save({useObjectStreams:true});
     const blob = new Blob([pdfBytes], { type: 'application/pdf' });
     const fileName = `Arranged_Document_${arrangedPdfPagesList.length}_Pages.pdf`;
 
@@ -4369,6 +5075,21 @@ body:has(#loginScreen.front-home){background:#edf3f8!important}
     document.getElementById('universalMultiInput').value = '';
   });
 
+  function imageFileToPdfJpeg(file,quality=.90){
+    return new Promise((resolve,reject)=>{
+      const url=URL.createObjectURL(file),img=new Image();
+      img.onload=()=>{
+        try{
+          const scale=Math.min(1,3508/Math.max(img.naturalWidth,img.naturalHeight));
+          const canvas=document.createElement('canvas');canvas.width=Math.max(1,Math.round(img.naturalWidth*scale));canvas.height=Math.max(1,Math.round(img.naturalHeight*scale));
+          const ctx=canvas.getContext('2d');ctx.fillStyle='#fff';ctx.fillRect(0,0,canvas.width,canvas.height);ctx.drawImage(img,0,0,canvas.width,canvas.height);
+          canvas.toBlob(async blob=>{try{resolve(await blob.arrayBuffer());}catch(error){reject(error);}finally{URL.revokeObjectURL(url);canvas.width=canvas.height=1;}},'image/jpeg',quality);
+        }catch(error){URL.revokeObjectURL(url);reject(error);}
+      };
+      img.onerror=()=>{URL.revokeObjectURL(url);reject(new Error('Image पढ़ी नहीं जा सकी।'));};img.src=url;
+    });
+  }
+
   document.getElementById('convertUniversalToPdfBtn').addEventListener('click', async () => {
     if (!universalFiles.length) return;
 
@@ -4384,12 +5105,8 @@ body:has(#loginScreen.front-home){background:#edf3f8!important}
         const copiedPages = await mergedPdf.copyPages(externalPdf, externalPdf.getPageIndices());
         copiedPages.forEach((page) => mergedPdf.addPage(page));
       } else {
-        let embeddedImage;
-        if (file.type === 'image/png') {
-          embeddedImage = await mergedPdf.embedPng(fileBytes);
-        } else {
-          embeddedImage = await mergedPdf.embedJpg(fileBytes);
-        }
+        const optimizedImageBytes=await imageFileToPdfJpeg(file,.90);
+        const embeddedImage=await mergedPdf.embedJpg(optimizedImageBytes);
 
         const page = mergedPdf.addPage([595.28, 841.89]);
         const imgDims = embeddedImage.scaleToFit(555.28, 801.89);
@@ -4403,7 +5120,7 @@ body:has(#loginScreen.front-home){background:#edf3f8!important}
       }
     }
 
-    const mergedPdfBytes = await mergedPdf.save();
+    const mergedPdfBytes = await mergedPdf.save({useObjectStreams:true});
     const blob = new Blob([mergedPdfBytes], { type: 'application/pdf' });
     const fileName = `Merged_Combined_Document.pdf`;
     
@@ -4522,7 +5239,7 @@ body:has(#loginScreen.front-home){background:#edf3f8!important}
   }
 
   document.getElementById('resizerKbSlider').addEventListener('input',e=>document.getElementById('resizerKbValue').textContent=e.target.value+' KB');
-  async function resizedJpegForTarget(targetKB){let q=.95,blob=await new Promise(r=>resizerCanvas.toBlob(r,'image/jpeg',q));while(blob&&blob.size/1024>targetKB&&q>.35){q=Math.max(.35,q-.05);blob=await new Promise(r=>resizerCanvas.toBlob(r,'image/jpeg',q));}return blob;}
+  async function resizedJpegForTarget(targetKB){let q=.95,blob=await whiteJpegBlob(resizerCanvas,q);while(blob&&blob.size/1024>targetKB&&q>.35){q=Math.max(.35,q-.05);blob=await whiteJpegBlob(resizerCanvas,q);}return blob;}
   document.getElementById('downloadResizedJpgBtn').addEventListener('click', async () => {
     if (!originalResizerImg) return;
     const dims = getPixelDimensions();
@@ -4601,7 +5318,7 @@ body:has(#loginScreen.front-home){background:#edf3f8!important}
 
       await page.render({ canvasContext: ctx, viewport: viewport }).promise;
 
-      canvas.toBlob((blob) => {
+      whiteJpegBlob(canvas,.95).then((blob) => {
         const fileName = `Page_1_${activeDpiValue}DPI.jpg`;
         const link = document.createElement('a');
         link.href = URL.createObjectURL(blob);
@@ -4609,7 +5326,7 @@ body:has(#loginScreen.front-home){background:#edf3f8!important}
         link.click();
         progress.innerText = `✅ Download Complete (1 Page @ ${activeDpiValue} DPI)`;
         saveToHistory('PDF to JPG (Single)', fileName, blob, 'image/jpeg');
-      }, 'image/jpeg', 0.95);
+      });
 
     } else {
       const zip = new JSZip();
@@ -4624,7 +5341,7 @@ body:has(#loginScreen.front-home){background:#edf3f8!important}
         canvas.height = viewport.height;
 
         await page.render({ canvasContext: ctx, viewport: viewport }).promise;
-        const imgData = canvas.toDataURL('image/jpeg', 0.95).split(',')[1];
+        const imgData = whiteJpegDataUrl(canvas,0.95).split(',')[1];
         zip.file(`Page_${i}_${activeDpiValue}DPI.jpg`, imgData, { base64: true });
       }
 
@@ -4709,11 +5426,11 @@ body:has(#loginScreen.front-home){background:#edf3f8!important}
       canvas.height = viewport.height;
 
       await page.render({ canvasContext: ctx, viewport: viewport }).promise;
-      const imgData = canvas.toDataURL('image/jpeg', jpegQuality);
+      const imgData = whiteJpegDataUrl(canvas,jpegQuality);
 
       const orientation = viewport.width > viewport.height ? 'landscape' : 'portrait';
       if (i === 1) {
-        outPdf = new jsPDF({ orientation: orientation, unit: 'pt', format: [viewport.width, viewport.height] });
+        outPdf = new jsPDF({ orientation: orientation, unit: 'pt', format: [viewport.width, viewport.height], compress: true });
       } else {
         outPdf.addPage([viewport.width, viewport.height], orientation);
       }
@@ -5004,15 +5721,16 @@ body:has(#loginScreen.front-home){background:#edf3f8!important}
     const ctx=canvas.getContext('2d');
     if(flat){await sourcePage.render({canvasContext:ctx,viewport:sourcePage.getViewport({scale}),transform:[canvas.width/(view.width*scale),0,0,canvas.height/(view.height*scale),0,0]}).promise;}
     ctx.scale(canvas.width/view.width,canvas.height/view.height);pages[i].forEach(o=>drawItem(ctx,o));
-    const png=await output.embedPng(canvas.toDataURL('image/png'));
-    if(flat){output.addPage([view.width,view.height]).drawImage(png,{x:0,y:0,width:view.width,height:view.height});canvas.width=canvas.height=1;continue;}
+    const jpeg=whiteJpegDataUrl(canvas,.90);
+    const image=await output.embedJpg(jpeg);
+    if(flat){output.addPage([view.width,view.height]).drawImage(image,{x:0,y:0,width:view.width,height:view.height});canvas.width=canvas.height=1;continue;}
     const origin=view.convertToPdfPoint(0,view.height);
     // Map the displayed crop-box back into PDF coordinates, including /Rotate and /UserUnit.
     const unit=Math.hypot(view.transform[0],view.transform[1]);
-    output.getPage(i).drawImage(png,{x:origin[0],y:origin[1],width:view.width/unit,height:view.height/unit,rotate:PDFLib.degrees(((sourcePage.rotate%360)+360)%360)});
+    output.getPage(i).drawImage(image,{x:origin[0],y:origin[1],width:view.width/unit,height:view.height/unit,rotate:PDFLib.degrees(((sourcePage.rotate%360)+360)%360)});
     canvas.width=canvas.height=1;
    }
-   const data=await output.save();if(token!==epoch)return;
+   const data=await output.save({useObjectStreams:true});if(token!==epoch)return;
    const blob=new Blob([data],{type:'application/pdf'}),url=URL.createObjectURL(blob),link=document.createElement('a');
    link.href=url;link.download=filename.replace(/\.pdf$/i,'')+'-edited.pdf';document.body.append(link);link.click();link.remove();setTimeout(()=>URL.revokeObjectURL(url),60000);
    dirty=false;status(flat?'Image-based, unlocked PDF download तैयार है। Original file नहीं बदली; output text search/select नहीं होगा।':'PDF download तैयार है। Original file नहीं बदली। Whiteout के नीचे मूल content रहता है।');
@@ -5927,8 +6645,10 @@ try {
 (function(){
  'use strict';
  const root=document.getElementById('np-editor'),$=id=>document.getElementById('np-'+id);
- let core,enginePromise,bytes=null,pdf=null,page=0,view=null,objects=[],selected=null,tool='edit',name='',busy=false,epoch=0,dirty=false;
- let undo=[],redo=[],imageFile=null,gesture=null,passwordResolve=null;
+  const MAX_PDF_BYTES=50*1024*1024,MAX_PDF_PAGES=150;
+  let core,enginePromise,bytes=null,pdf=null,page=0,view=null,objects=[],selected=null,tool='edit',name='',busy=false,epoch=0,dirty=false;
+  let undo=[],redo=[],imageFile=null,gesture=null,passwordResolve=null;
+  let placedPages=[],placedUndo=[],placedRedo=[],selectedPlaced=null,baseCanvasSnapshot=null,nextPlacedId=1,placedDrag=null;
  let parsedBytes=null,inspectedBytes=null,inspectedPage=-1,inspectedObjects=[],fontkitPromise=null;
  const cleanText=text=>String(text).replace(/\r\n?/g,'\n').replace(/\t/g,'    ').replace(/[\u0000-\u0008\u000b\u000c\u000e-\u001f\u007f]/g,'');
  async function ensureFontkit(){
@@ -5936,7 +6656,21 @@ try {
   if(!fontkitPromise)fontkitPromise=new Promise((resolve,reject)=>{const s=document.createElement('script');s.src='https://cdn.jsdelivr.net/npm/@pdf-lib/fontkit@1.1.1/dist/fontkit.umd.min.js';const timeout=setTimeout(()=>{s.remove();reject(new Error('Font load timed out. Retry करें।'));},30000);s.onload=()=>{clearTimeout(timeout);window.fontkit?resolve():reject(new Error('Font engine unavailable.'));};s.onerror=()=>{clearTimeout(timeout);s.remove();reject(new Error('Font engine load नहीं हुआ।'));};document.head.append(s);}).catch(e=>{fontkitPromise=null;throw e;});
   await fontkitPromise;
  }
- const say=t=>$('status').textContent=t;
+  const say=t=>$('status').textContent=t;
+  const clonePlacedItem=o=>{const n={...o};if(o.points)n.points=o.points.map(p=>({...p}));if(o.imageData)n.imageData=new Uint8Array(o.imageData);return n;};
+  const snapshotPlaced=()=>placedPages.map(list=>list.map(clonePlacedItem));
+  function restorePlaced(snapshot){placedPages=snapshot.map(list=>list.map(clonePlacedItem));selectedPlaced=null;repaintPlaced();hits();buttons();}
+  function rememberPlaced(){placedUndo.push(snapshotPlaced());while(placedUndo.length>12)placedUndo.shift();placedRedo=[];invalidateDownload();dirty=true;}
+  function placedBounds(o){if(o.type==='draw'){const xs=o.points.map(p=>p.x),ys=o.points.map(p=>p.y);return [Math.min(...xs),Math.min(...ys),Math.max(...xs),Math.max(...ys)];}return [o.x,o.y,o.x+o.w,o.y+o.h];}
+  function placedViewportRect(o){const b=placedBounds(o),r=view.convertToViewportRectangle(b);return {x:Math.min(r[0],r[2]),y:Math.min(r[1],r[3]),w:Math.abs(r[2]-r[0]),h:Math.abs(r[3]-r[1])};}
+  function drawPlacedPreview(ctx,o){if(!view)return;const r=placedViewportRect(o),sx=$('canvas').width/view.width,sy=$('canvas').height/view.height;ctx.save();ctx.scale(sx,sy);
+   if(o.type==='text'){ctx.fillStyle=o.color||'#111827';ctx.font=`${(o.boldLevel||1)>1?'700':'400'} ${Math.max(6,o.size||18)}px Arial, sans-serif`;ctx.textBaseline='top';String(o.text||'').split('\n').forEach((line,i)=>ctx.fillText(line,r.x,r.y+i*(o.size||18)*1.35));}
+   else if(o.type==='image'&&o.image){ctx.drawImage(o.image,r.x,r.y,r.w,r.h);}
+   else if(o.type==='draw'){ctx.strokeStyle=o.color||'#111827';ctx.lineWidth=Math.max(1,o.pen||2);ctx.lineCap='round';ctx.lineJoin='round';ctx.beginPath();o.points.forEach((p,i)=>{const q=view.convertToViewportPoint(p.x,p.y);i?ctx.lineTo(q[0],q[1]):ctx.moveTo(q[0],q[1]);});ctx.stroke();}
+   else if(o.type==='whiteout'||o.type==='highlight'){ctx.fillStyle=o.type==='whiteout'?'#fff':'rgba(255,214,0,.35)';ctx.fillRect(r.x,r.y,r.w,r.h);}
+   ctx.restore();}
+  function repaintPlaced(){const c=$('canvas');if(!c.width||!baseCanvasSnapshot)return;const ctx=c.getContext('2d');ctx.clearRect(0,0,c.width,c.height);ctx.drawImage(baseCanvasSnapshot,0,0);(placedPages[page]||[]).forEach(o=>drawPlacedPreview(ctx,o));}
+  function choosePlaced(o){if(busy)return;if(inlineSession)finishInline();selected=null;selectedPlaced=o;$('text').value=o.text||'';$('size').value=Math.round((o.size||18)*10)/10;$('color').value=o.color||'#111827';$('bold').value=o.boldLevel||1;updateBold();$('selection').textContent=`Placed ${o.type} चुना गया · drag करके move करें, corner handle से resize करें।`;root.querySelectorAll('#np-hits button').forEach(b=>b.classList.toggle('chosen',b.dataset.placed===o.id));buttons();}
  let lastDownloadUrl=null;function invalidateDownload(){if(lastDownloadUrl)URL.revokeObjectURL(lastDownloadUrl);lastDownloadUrl=null;$('download-link').hidden=true;$('download-link').removeAttribute('href');}
  let inlineSession=null,inlineSaving=false,lastTextTap={index:'',at:0};
  const inline=document.createElement('textarea');inline.id='np-inline';inline.hidden=true;inline.maxLength=2000;
@@ -5976,15 +6710,11 @@ try {
   if(busy||inlineSaving||inlineSession)return;
   const p=view.convertToPdfPoint(at.x,at.y),angle=(view.rotation||0)*Math.PI/180;
   const o={index:'new',text:'',size:size(),color:$('color').value,boldLevel:boldLevel(),matrix:[Math.cos(angle),Math.sin(angle),-Math.sin(angle),Math.cos(angle),p[0],p[1]],bounds:[p[0],p[1],p[0]+120,p[1]+size()]};
-  invalidateDownload();selected=null;inlineSession={object:o,initial:'',ticket:epoch,isNew:true};inline.value='';$('text').value='';$('cancel-edit').hidden=false;$('save-edit').hidden=false;
+   invalidateDownload();selected=null;selectedPlaced=null;inlineSession={object:o,initial:'',ticket:epoch,isNew:true};inline.value='';$('text').value='';$('cancel-edit').hidden=false;$('save-edit').hidden=false;
   positionInline(o);Object.assign(inline.style,{left:Math.max(0,at.x)+'px',top:Math.max(0,at.y)+'px',width:Math.max(60,Math.min(240,view.width-at.x))+'px'});
   inline.hidden=false;inline.focus();say('New text · Enter to save · Esc to cancel');
  }
- async function saveNewInline(session,value){return await job(async ticket=>{
-  const out=await PDFLib.PDFDocument.load(bytes),o=session.object;
-  await drawText({doc:out,page:out.getPage(page)},value,[o.matrix[4],o.matrix[5]],size(),rgb($('color').value),0,o.matrix);
-  await commit(await out.save(),ticket,'नया text PDF में save हुआ।');return true;
- });}
+  async function saveNewInline(session,value){return await job(async ticket=>{if(ticket!==epoch)return false;const o=session.object,text=cleanText(value),fs=size(),lines=text.split('\n'),item={id:'placed-'+nextPlacedId++,type:'text',text,size:fs,color:$('color').value,boldLevel:boldLevel(),x:o.matrix[4],y:o.matrix[5],w:Math.max(18,...lines.map(t=>t.length*fs*.58)),h:Math.max(18,lines.length*fs*1.35)};rememberPlaced();(placedPages[page]||(placedPages[page]=[])).push(item);selectedPlaced=item;selected=null;repaintPlaced();hits();buttons();say('नया text placed है · drag, resize या Delete कर सकते हैं।');return true;},false);}
  async function finishInline(){
   if(!inlineSession||inlineSaving)return false;
   const session=inlineSession,value=cleanText(inline.value);
@@ -6038,13 +6768,13 @@ try {
  const boldLevel=()=>Math.max(1,Math.min(5,Math.round(Number($('bold').value)||1)));
  function updateBold(){const level=boldLevel(),labels=['Normal','Light bold','Medium bold','Bold','Extra bold'];$('bold-value').textContent=`${level} / 5 · ${labels[level-1]}`;$('bold').setAttribute('aria-valuetext',`Level ${level}: ${labels[level-1]}`);$('text').style.webkitTextStroke=`${(level-1)*.015}em currentColor`;}
  $('bold').oninput=updateBold;
- function buttons(){
-  $('controls').disabled=!bytes||busy;$('open').disabled=busy;$('close').disabled=!bytes||busy;$('save').disabled=!bytes||busy;
-  $('apply').disabled=!selected||busy;$('delete').disabled=!selected||busy;
-  $('undo').disabled=!undo.length||busy;$('redo').disabled=!redo.length||busy;
+  function buttons(){
+   $('controls').disabled=!bytes||busy;$('open').disabled=busy;$('close').disabled=!bytes||busy;$('save').disabled=!bytes||busy;
+   $('apply').disabled=!(selected||selectedPlaced)||busy;$('delete').disabled=!(selected||selectedPlaced)||busy;
+   $('undo').disabled=!(placedUndo.length||undo.length)||busy;$('redo').disabled=!(placedRedo.length||redo.length)||busy;
   $('prev').disabled=page===0||busy;$('next').disabled=!pdf||page>=pdf.numPages-1||busy;
  }
- async function ready(){
+  async function ready(){
   if(!enginePromise)enginePromise=(async()=>{
    say('मुफ्त PDF engine लोड हो रहा है… पहली बार थोड़ा समय लग सकता है।');
    if(!window.PDFLib||!window.pdfjsLib)throw new Error('PDF libraries नहीं लोड हुईं। Internet जाँचकर reload करें।');
@@ -6055,16 +6785,19 @@ try {
    ]);
    const e=await module.init({wasmBinary});e.PDFiumExt_Init();core=new PortalPDFEngine(e);
   })().catch(err=>{enginePromise=null;throw err;});
-  return enginePromise;
- }
- async function job(fn,authorize=true){if(busy)return;busy=true;buttons();const progress=$('pe-progress');if(progress)progress.style.display='block';const ticket=epoch;try{say(authorize?'Checking access…':'Processing PDF…');await new Promise(requestAnimationFrame);if(authorize)await window.requirePdfPremium();if(ticket!==epoch)return false;return await fn(ticket);}catch(err){if(ticket===epoch)say(err.message||'Operation failed.');return false;}finally{if(ticket===epoch){busy=false;buttons();if(progress)progress.style.display='none';}}}
+   return enginePromise;
+  }
+  window.prewarmPdfEditor=async()=>{try{await ready();void ensureFontkit().catch(()=>{});if(!bytes)say('PDF Editor ready · अब PDF जल्दी खुलेगी।');return true;}catch(error){if(!bytes)say('PDF engine अभी उपलब्ध नहीं है। PDF खोलते समय दोबारा प्रयास होगा।');return false;}};
+  async function job(fn,authorize=true){if(busy)return;busy=true;buttons();const progress=$('pe-progress');if(progress)progress.style.display='block';const ticket=epoch;try{say(authorize?'Checking access…':'Processing PDF…');await new Promise(requestAnimationFrame);if(authorize)await window.requirePdfPremium();if(ticket!==epoch)return false;return await fn(ticket);}catch(err){if(ticket===epoch)say(err.message||'Operation failed.');return false;}finally{if(ticket===epoch){busy=false;buttons();if(progress)progress.style.display='none';}}}
  function passwordPrompt(message){$('password-message').textContent=message;$('password').value='';$('password-dialog').showModal();$('password').focus();return new Promise(r=>passwordResolve=r);}
  function finishPassword(value){if($('password-dialog').open)$('password-dialog').close();$('password').value='';const r=passwordResolve;passwordResolve=null;if(r)r(value);}
  $('password-form').onsubmit=e=>{e.preventDefault();finishPassword($('password').value);};
  $('password-cancel').onclick=()=>finishPassword(null);$('password-dialog').oncancel=e=>{e.preventDefault();finishPassword(null);};
- function reset(){epoch++;invalidateDownload();closeInline();finishPassword(null);if(pdf)pdf.destroy().catch(()=>{});pdf=null;parsedBytes=null;inspectedBytes=null;inspectedObjects=[];inspectedPage=-1;bytes=null;undo=[];redo=[];objects=[];selected=null;gesture=null;imageFile=null;view=null;dirty=false;busy=false;page=0;name='';$('file').value='';$('text').value='';$('find').value='';$('results').replaceChildren();$('hits').replaceChildren();$('canvas').width=$('gesture').width=1;$('wrap').hidden=true;$('empty').hidden=false;$('name').textContent='PDF चुनें · अधिकतम 25 MB / 100 pages';$('page-label').textContent='0 / 0';buttons();say('Ready · Original file नहीं बदलेगी।');}
- function choose(o){if(busy)return;if(inlineSession){if(inlineSession.object.index===o.index)return;finishInline();return;}selected=o;$('text').value=cleanText(o.text);$('size').value=Math.round(o.size*10)/10;$('color').value=o.color;$('bold').value=o.boldLevel||1;updateBold();$('selection').textContent='Text पर double-click / double-tap करें। Style बदलने के बाद Apply style दबाएँ।';root.querySelectorAll('#np-hits button').forEach(b=>b.classList.toggle('chosen',b.dataset.block===o.index));buttons();}
- function hits(){
+  function reset(){epoch++;invalidateDownload();closeInline();finishPassword(null);if(pdf)pdf.destroy().catch(()=>{});pdf=null;parsedBytes=null;inspectedBytes=null;inspectedPage=-1;inspectedObjects=[];bytes=null;undo=[];redo=[];placedPages=[];placedUndo=[];placedRedo=[];selectedPlaced=null;baseCanvasSnapshot=null;objects=[];selected=null;gesture=null;placedDrag=null;imageFile=null;view=null;dirty=false;busy=false;page=0;name='';$('file').value='';$('text').value='';$('find').value='';$('results').replaceChildren();$('hits').replaceChildren();$('canvas').width=$('gesture').width=1;$('wrap').hidden=true;$('empty').hidden=false;$('name').textContent='PDF चुनें · अधिकतम 50 MB / 150 pages';$('page-label').textContent='0 / 0';buttons();say('Ready · Original file नहीं बदलेगी।');}
+  function choose(o){if(busy)return;if(inlineSession){if(inlineSession.object.index===o.index)return;finishInline();return;}selectedPlaced=null;selected=o;$('text').value=cleanText(o.text);$('size').value=Math.round(o.size*10)/10;$('color').value=o.color;$('bold').value=o.boldLevel||1;updateBold();$('selection').textContent='Text पर double-click / double-tap करें। Style बदलने के बाद Apply style दबाएँ।';root.querySelectorAll('#np-hits button').forEach(b=>b.classList.toggle('chosen',b.dataset.block===o.index));buttons();}
+  function resizePlaced(o,original,dx,dy){const old=placedViewportRect(original),right=old.x+old.w+dx,bottom=old.y+old.h+dy;let nw=Math.max(14,right-old.x),nh=Math.max(14,bottom-old.y);if(o.type==='image'){const ratio=(old.w||1)/(old.h||1);if(Math.abs(dx)>=Math.abs(dy))nh=nw/ratio;else nw=nh*ratio;}const a=view.convertToPdfPoint(old.x,old.y),b=view.convertToPdfPoint(old.x+nw,old.y+nh),box=[Math.min(a[0],b[0]),Math.min(a[1],b[1]),Math.max(a[0],b[0]),Math.max(a[1],b[1])];if(o.type==='draw'){const ob=placedBounds(original),sx=(box[2]-box[0])/Math.max(1,ob[2]-ob[0]),sy=(box[3]-box[1])/Math.max(1,ob[3]-ob[1]);o.points=original.points.map(p=>({x:box[0]+(p.x-ob[0])*sx,y:box[1]+(p.y-ob[1])*sy}));}else{o.x=box[0];o.y=box[1];o.w=box[2]-box[0];o.h=box[3]-box[1];if(o.type==='text')o.size=Math.max(6,original.size*(o.h/Math.max(1,old.h)));}}
+  function startPlacedPointer(e,o,resize,button){if(busy||tool!=='edit')return;selectedPlaced=o;selected=null;placedDrag={o,resize,button,start:{x:e.clientX,y:e.clientY},original:clonePlacedItem(o),before:snapshotPlaced(),moved:false,pointerId:e.pointerId};button.setPointerCapture?.(e.pointerId);button.onpointermove=ev=>{if(!placedDrag||placedDrag.pointerId!==ev.pointerId)return;const dx=ev.clientX-placedDrag.start.x,dy=ev.clientY-placedDrag.start.y;if(Math.abs(dx)+Math.abs(dy)<2)return;placedDrag.moved=true;if(resize)resizePlaced(o,placedDrag.original,dx,dy);else{const d0=view.convertToPdfPoint(0,0),d1=view.convertToPdfPoint(dx,dy),mx=d1[0]-d0[0],my=d1[1]-d0[1];if(o.type==='draw')o.points=placedDrag.original.points.map(p=>({x:p.x+mx,y:p.y+my}));else{o.x=placedDrag.original.x+mx;o.y=placedDrag.original.y+my;}}repaintPlaced();};button.onpointerup=ev=>{if(!placedDrag||placedDrag.pointerId!==ev.pointerId)return;button.releasePointerCapture?.(ev.pointerId);const d=placedDrag;placedDrag=null;button.onpointermove=button.onpointerup=null;if(d.moved){placedUndo.push(d.before);while(placedUndo.length>12)placedUndo.shift();placedRedo=[];invalidateDownload();dirty=true;say('Placed item बदला गया।');}hits();buttons();};button.onpointercancel=()=>{if(placedDrag){Object.assign(o,clonePlacedItem(placedDrag.original));placedDrag=null;repaintPlaced();hits();buttons();}};}
+  function hits(){
   $('hits').replaceChildren();$('results').replaceChildren();if(!view)return;
   $('gesture').style.pointerEvents=tool==='edit'?'none':'auto';
   const query=$('find').value.toLocaleLowerCase();let count=0;
@@ -6075,8 +6808,11 @@ try {
     b.addEventListener('pointerup',e=>{if(e.pointerType!=='touch')return;const now=Date.now();if(lastTextTap.index===o.index&&now-lastTextTap.at<450){e.preventDefault();beginInline(o);lastTextTap={index:'',at:0};}else lastTextTap={index:o.index,at:now};});$('hits').append(b);
    }
    if(query&&o.text.toLocaleLowerCase().includes(query)&&count++<100){const b=document.createElement('button');b.textContent=o.text;b.type='button';b.onclick=()=>{setTool('edit');beginInline(o);$('scroll').scrollTop=Math.max(0,y-80);};$('results').append(b);}
-  });
- }
+   });
+   if(tool==='edit'){
+    (placedPages[page]||[]).forEach(o=>{const r=placedViewportRect(o),b=document.createElement('button');b.type='button';b.className='np-placed-hit';b.title=`Placed ${o.type}`;b.setAttribute('aria-label',`Select placed ${o.type}`);b.dataset.placed=o.id;Object.assign(b.style,{left:r.x+'px',top:r.y+'px',width:Math.max(12,r.w)+'px',height:Math.max(12,r.h)+'px'});b.classList.toggle('chosen',selectedPlaced?.id===o.id);b.onclick=e=>{e.preventDefault();choosePlaced(o);};b.onpointerdown=e=>{if(e.button!==0)return;e.preventDefault();e.stopPropagation();startPlacedPointer(e,o,false,b);};const h=document.createElement('span');h.className='np-resize-handle';h.title='Resize';h.onpointerdown=e=>{e.preventDefault();e.stopPropagation();startPlacedPointer(e,o,true,b);};b.append(h);$('hits').append(b);});
+   }
+  }
  async function render(ticket){
   if(!bytes)return;
   const reused=pdf&&parsedBytes===bytes,renderBytes=bytes,selectionBefore=selected;
@@ -6095,11 +6831,11 @@ try {
    if(pdf&&pdf!==current)await pdf.destroy();if(ticket!==epoch){await current.destroy();return;}
    pdf=current;parsedBytes=renderBytes;inspectedBytes=renderBytes;inspectedPage=page;inspectedObjects=found;
    view=viewport;objects=found;selected=samePage?selectionBefore:null;
-   const c=$('canvas');c.width=temp.width;c.height=temp.height;c.getContext('2d').drawImage(temp,0,0);
+    const c=$('canvas');c.width=temp.width;c.height=temp.height;c.getContext('2d').drawImage(temp,0,0);baseCanvasSnapshot=document.createElement('canvas');baseCanvasSnapshot.width=temp.width;baseCanvasSnapshot.height=temp.height;baseCanvasSnapshot.getContext('2d').drawImage(temp,0,0);
    const g=$('gesture');g.width=temp.width;g.height=temp.height;
    $('wrap').style.width=viewport.width+'px';$('wrap').style.height=viewport.height+'px';$('wrap').hidden=false;$('empty').hidden=true;
    $('page-label').textContent=`${page+1} / ${pdf.numPages}`;$('selection').textContent=`${objects.length} editable text blocks · Grouped/rotated text supported · नाम पर box न मिले तो Find में खोजें; scan/outline को OCR चाहिए।`;
-   hits();buttons();
+    repaintPlaced();hits();buttons();
   }catch(err){if(pdf!==current)await current.destroy();throw err;}
  }
  function pushHistory(list,value){list.push(value);while(list.length>12||list.reduce((n,b)=>n+b.length,0)>70*1024*1024)list.shift();}
@@ -6110,7 +6846,7 @@ try {
   if(ticket!==epoch)return;pushHistory(undo,previous);redo=[];dirty=true;say(message);buttons();
  }
  async function open(file,ticket){
-  if(!file)return;if(file.size>25*1024*1024)throw new Error('अधिकतम 25 MB की PDF चुनें।');
+   if(!file)return;if(file.size===0)throw new Error('PDF file खाली है।');if(file.size>MAX_PDF_BYTES)throw new Error('अधिकतम 50 MB की PDF चुनें।');
   await ready();if(ticket!==epoch)return;
   let input=new Uint8Array(await file.arrayBuffer());
   let parsed=await PDFLib.PDFDocument.load(input).catch(()=>null);
@@ -6118,21 +6854,21 @@ try {
    let message='अगर PDF locked है तो सही password डालें। Unlocked download copy बनेगी।';
    for(;;){const pw=await passwordPrompt(message);if(pw===null||ticket!==epoch)return;try{input=core.unlock(input,pw);parsed=await PDFLib.PDFDocument.load(input);break;}catch(err){message=err.message+' फिर प्रयास करें या Cancel करें।';}}
   }
-  if(ticket!==epoch)return;if(parsed.getPageCount()>100)throw new Error('अधिकतम 100 pages समर्थित हैं।');
-  invalidateDownload();const previous=bytes,oldPage=page;bytes=input;page=0;
+ if(ticket!==epoch)return;const pageCount=parsed.getPageCount();if(!Number.isInteger(pageCount)||pageCount<1)throw new Error('PDF में कोई readable page नहीं मिला।');if(pageCount>MAX_PDF_PAGES)throw new Error('अधिकतम 150 pages समर्थित हैं।');
+   invalidateDownload();const previous=bytes,oldPage=page;bytes=input;page=0;placedPages=Array.from({length:parsed.getPageCount()},()=>[]);placedUndo=[];placedRedo=[];selectedPlaced=null;
   try{await render(ticket);}catch(err){if(ticket===epoch){bytes=previous;page=oldPage;}throw err;}
-  if(ticket!==epoch)return;undo=[];redo=[];dirty=false;name=file.name;$('name').textContent=name;say('Ready · Double-click text to edit');
+   if(ticket!==epoch)return;undo=[];redo=[];dirty=false;name=file.name;$('name').textContent=name;say('Ready · Double-click text to edit');
  }
- function setTool(value){if(busy)return;if(inlineSession){finishInline();return;}tool=value;selected=null;gesture=null;root.querySelectorAll('[data-np-tool]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.npTool===value)));hits();buttons();say(value==='edit'?'नीले box पर click करके text बदलें।':value==='text'?'Page पर click करके वहीं नया text लिखें।':value==='image'?'PNG/JPG चुनें, फिर page पर click करें।':'Page पर drag करें। Whiteout secure redaction नहीं है।');}
+ function setTool(value){if(busy)return;if(inlineSession){finishInline();return;}tool=value;selected=null;selectedPlaced=null;gesture=null;root.querySelectorAll('[data-np-tool]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.npTool===value)));hits();buttons();say(value==='edit'?'नीले box पर click करके text बदलें।':value==='text'?'Page पर click करके वहीं नया text लिखें।':value==='image'?'PNG/JPG चुनें, फिर page पर click करें।':'Page पर drag करें। Whiteout secure redaction नहीं है।');}
  const rgb=hex=>PDFLib.rgb(parseInt(hex.slice(1,3),16)/255,parseInt(hex.slice(3,5),16)/255,parseInt(hex.slice(5,7),16)/255);
- async function drawText(target,text,point,fontSize,color,angle=0,affine=null){
+  async function drawText(target,text,point,fontSize,color,angle=0,affine=null,boldOverride=null){
   text=cleanText(text);await ensureFontkit();target.doc.registerFontkit(window.fontkit);
   const fonts={},characterSets={};
   if(/[\u0900-\u097f\u200c\u200d]/.test(text))fonts.dev=await target.doc.embedFont(b64(PORTAL_FONTS.devanagari),{subset:true});
   if(/[^\u0900-\u097f\u200c\u200d\n]/.test(text))fonts.latin=await target.doc.embedFont(b64(PORTAL_FONTS.latin),{subset:true});
   Object.entries(fonts).forEach(([key,font])=>characterSets[key]=new Set(font.getCharacterSet()));
   const radians=angle*Math.PI/180,cs=Math.cos(radians),sn=Math.sin(radians);
-  const level=boldLevel();
+   const level=boldOverride===null?boldLevel():Math.max(1,Math.min(5,Number(boldOverride)||1));
   target.page.pushOperators(PDFLib.pushGraphicsState());
   if(affine){const sy=Math.hypot(affine[2],affine[3]);target.page.pushOperators(PDFLib.concatTransformationMatrix(affine[0]/sy,affine[1]/sy,affine[2]/sy,affine[3]/sy,point[0],point[1]));point=[0,0];}
   target.page.pushOperators(PDFLib.pushGraphicsState(),PDFLib.setStrokingColor(color),PDFLib.setLineWidth((level-1)*fontSize*.015),PDFLib.beginText(),PDFLib.setTextRenderingMode(level===1?0:2),PDFLib.endText());
@@ -6146,30 +6882,30 @@ try {
   });
   target.page.pushOperators(PDFLib.popGraphicsState(),PDFLib.popGraphicsState());
  }
- async function applyText(deleting=false){return await job(async ticket=>{
+  async function applyText(deleting=false){return await job(async ticket=>{
   if(!selected)return;const chosen=selected,text=cleanText($('text').value);if(!deleting&&!text.trim())throw new Error('Text लिखें या Delete selected text दबाएँ।');
   if(deleting&&!confirm('इस चुने हुए text block को हटाएँ? Undo उपलब्ध है।'))return;
   say('मूल text बदल रहा है…');const removed=core.remove(bytes,page,chosen);let next=removed;
   if(!deleting){const out=await PDFLib.PDFDocument.load(removed);await drawText({doc:out,page:out.getPage(page)},text,[chosen.matrix[4],chosen.matrix[5]],size(),rgb($('color').value),0,chosen.matrix);next=await out.save();}
   await commit(next,ticket,deleting?'चुना हुआ मूल text block हटाया गया।':'मूल text block बदला गया। Preview में layout और मात्राएँ जाँचें।');
-  return true;
- });}
- async function place(kind,start,end,points){await job(async ticket=>{
-  const out=await PDFLib.PDFDocument.load(bytes),target=out.getPage(page),a=view.convertToPdfPoint(start.x,start.y),b=view.convertToPdfPoint(end.x,end.y);
-  if(kind==='text'){
-   const text=$('text').value;if(!cleanText(text).trim())throw new Error('पहले sidebar में text लिखें।');await drawText({doc:out,page:target},text,a,size(),rgb($('color').value),target.getRotation().angle);
-  }else if(kind==='image'){
-   if(!imageFile)throw new Error('पहले PNG/JPG image चुनें।');
-   const img=imageFile.type==='image/png'?await out.embedPng(imageFile.data):await out.embedJpg(imageFile.data);
-   const w=Math.min(160,target.getWidth()/2),h=w*img.height/img.width;target.drawImage(img,{x:a[0],y:a[1]-h,width:w,height:h});
-  }else if(kind==='draw'){
-   for(let i=1;i<points.length;i++){const p=view.convertToPdfPoint(points[i-1].x,points[i-1].y),q=view.convertToPdfPoint(points[i].x,points[i].y);target.drawLine({start:{x:p[0],y:p[1]},end:{x:q[0],y:q[1]},thickness:2,color:rgb($('color').value)});}
-  }else{
-   if(Math.abs(a[0]-b[0])<2||Math.abs(a[1]-b[1])<2)return;
-   target.drawRectangle({x:Math.min(a[0],b[0]),y:Math.min(a[1],b[1]),width:Math.abs(a[0]-b[0]),height:Math.abs(a[1]-b[1]),color:kind==='whiteout'?PDFLib.rgb(1,1,1):PDFLib.rgb(1,.85,0),opacity:kind==='highlight'?.35:1});
-  }
-  await commit(await out.save(),ticket,kind==='whiteout'?'Whiteout जोड़ा है—नीचे का content नहीं मिटा।':'Edit लागू हुई। Download करने से पहले preview जाँचें।');
- });}
+   return true;
+  });}
+  function applyPlaced(){if(!selectedPlaced)return false;const o=selectedPlaced;rememberPlaced();if(o.type==='text'){const old=o.text;o.text=cleanText($('text').value);o.size=size();o.color=$('color').value;o.boldLevel=boldLevel();const lines=o.text.split('\n');o.w=Math.max(18,...lines.map(t=>t.length*Math.max(6,o.size)*.58));o.h=Math.max(18,lines.length*o.size*1.35);say(old===o.text?'Placed text style updated.':'Placed text updated.');}else{o.color=$('color').value;if(o.type==='draw')o.pen=Math.max(1,Number($('pen')?.value)||2);}selectedPlaced=null;repaintPlaced();hits();buttons();return true;}
+  function deletePlaced(){if(!selectedPlaced)return false;if(!confirm('इस जोड़े हुए item को हटाएँ? Undo उपलब्ध है।'))return false;rememberPlaced();const list=placedPages[page]||[],index=list.indexOf(selectedPlaced);if(index>=0)list.splice(index,1);selectedPlaced=null;repaintPlaced();hits();buttons();say('Placed item हटाया गया।');return true;}
+  async function place(kind,start,end,points){await job(async ticket=>{
+   const a=view.convertToPdfPoint(start.x,start.y),b=view.convertToPdfPoint(end.x,end.y),color=$('color').value;
+   let item;
+   if(kind==='text'){
+    const text=cleanText($('text').value);if(!text.trim())throw new Error('पहले sidebar में text लिखें।');const fs=size(),lines=text.split('\n');item={id:'placed-'+nextPlacedId++,type:'text',text,size:fs,color,boldLevel:boldLevel(),x:a[0],y:a[1],w:Math.max(18,...lines.map(t=>t.length*fs*.58)),h:Math.max(18,lines.length*fs*1.35)};
+   }else if(kind==='image'){
+    if(!imageFile)throw new Error('पहले PNG/JPG image चुनें।');const pageWidth=view.viewBox?Math.abs(view.viewBox[2]-view.viewBox[0]):view.width,w=Math.min(160,pageWidth/2),h=w*imageFile.image.height/imageFile.image.width;item={id:'placed-'+nextPlacedId++,type:'image',x:a[0],y:a[1]-h,w,h,image:imageFile.image,imageData:new Uint8Array(imageFile.data),imageType:imageFile.type};
+   }else if(kind==='draw'){
+    const converted=points.map(p=>{const q=view.convertToPdfPoint(p.x,p.y);return {x:q[0],y:q[1]};});if(converted.length<2)return;item={id:'placed-'+nextPlacedId++,type:'draw',points:converted,color,pen:2};
+   }else{
+    if(Math.abs(a[0]-b[0])<2||Math.abs(a[1]-b[1])<2)return;item={id:'placed-'+nextPlacedId++,type:kind,x:Math.min(a[0],b[0]),y:Math.min(a[1],b[1]),w:Math.abs(a[0]-b[0]),h:Math.abs(a[1]-b[1]),color};
+   }
+   rememberPlaced();(placedPages[page]||(placedPages[page]=[])).push(item);selectedPlaced=item;selected=null;repaintPlaced();hits();buttons();say('Placed item तैयार है · drag, resize या Delete कर सकते हैं।');
+  },false);}
  function point(e){const r=$('gesture').getBoundingClientRect();return {x:(e.clientX-r.left)*view.width/r.width,y:(e.clientY-r.top)*view.height/r.height};}
  const gc=$('gesture');
  gc.onpointerdown=e=>{if(!bytes||busy||tool==='edit')return;e.preventDefault();if(tool==='text'){beginNewInline(point(e));return;}gc.setPointerCapture(e.pointerId);gesture={start:point(e),end:point(e),points:[point(e)],id:e.pointerId,kind:tool};};
@@ -6177,30 +6913,33 @@ try {
  gc.onpointerup=e=>{if(!gesture||gesture.id!==e.pointerId)return;const g=gesture;gesture=null;gc.getContext('2d').clearRect(0,0,gc.width,gc.height);place(g.kind,g.start,point(e),g.points);};
  gc.onpointercancel=()=>{gesture=null;gc.getContext('2d').clearRect(0,0,gc.width,gc.height);};
  root.querySelectorAll('[data-np-tool]').forEach(b=>b.onclick=()=>{setTool(b.dataset.npTool);if(tool==='image'){$('image-file').value='';$('image-file').click();}});
- $('image-file').onchange=()=>job(async ticket=>{const f=$('image-file').files[0];if(!f)return;if(!['image/png','image/jpeg'].includes(f.type)||f.size>5*1024*1024)throw new Error('PNG/JPG अधिकतम 5 MB चुनें।');const data=new Uint8Array(await f.arrayBuffer());if(ticket===epoch){imageFile={data,type:f.type};say('Image तैयार है। Page पर click करें।');}});
+ $('image-file').onchange=()=>job(async ticket=>{const f=$('image-file').files[0];if(!f)return;if(!['image/png','image/jpeg'].includes(f.type)||f.size>5*1024*1024)throw new Error('PNG/JPG अधिकतम 5 MB चुनें।');const data=new Uint8Array(await f.arrayBuffer()),url=URL.createObjectURL(f),img=new Image();img.src=url;await img.decode();URL.revokeObjectURL(url);if(ticket===epoch){imageFile={data,type:f.type,image:img};say('Image तैयार है। Page पर click करें।');}});
  $('open').onclick=()=>{if(dirty&&!confirm('Unsaved edits छोड़कर दूसरी PDF खोलें?'))return;$('file').value='';$('file').click();};
  $('file').onchange=()=>job(t=>open($('file').files[0],t));$('close').onclick=()=>{if(!dirty||confirm('Unsaved edits छोड़कर बंद करें?'))reset();};
- $('apply').onclick=()=>inlineSession?finishInline():applyText();$('delete').onclick=()=>applyText(true);$('find').oninput=hits;
+ $('apply').onclick=()=>inlineSession?finishInline():selectedPlaced?applyPlaced():applyText();$('delete').onclick=()=>selectedPlaced?deletePlaced():applyText(true);$('find').oninput=hits;
  $('language').onchange=()=>{$('text').lang=$('language').value==='auto'?'':$('language').value;say('Unicode text paste/type करें। यह transliteration नहीं है; Hindi/Marathi shaping experimental है।');};
- async function travel(from,to){await job(async t=>{if(!from.length)return;invalidateDownload();const old=bytes;bytes=from[from.length-1];try{await render(t);}catch(e){if(t===epoch)bytes=old;throw e;}if(t===epoch){from.pop();pushHistory(to,old);dirty=true;say('Undo / Redo लागू हुआ।');}});}
- $('undo').onclick=()=>travel(undo,redo);$('redo').onclick=()=>travel(redo,undo);
- async function changePage(delta){await job(async t=>{const old=page;page+=delta;try{await render(t);}catch(e){page=old;throw e;}},false);}
+  async function travel(from,to){await job(async t=>{if(!from.length)return;invalidateDownload();const old=bytes;bytes=from[from.length-1];try{await render(t);}catch(e){if(t===epoch)bytes=old;throw e;}if(t===epoch){from.pop();pushHistory(to,old);dirty=true;say('Undo / Redo लागू हुआ।');}});}
+  function travelPlaced(from,to){if(busy||!from.length)return;const current=snapshotPlaced(),next=from.pop();to.push(current);restorePlaced(next);invalidateDownload();dirty=true;say('Placed item का Undo / Redo लागू हुआ।');}
+  $('undo').onclick=()=>placedUndo.length?travelPlaced(placedUndo,placedRedo):travel(undo,redo);$('redo').onclick=()=>placedRedo.length?travelPlaced(placedRedo,placedUndo):travel(redo,undo);
+  async function changePage(delta){await job(async t=>{const old=page;page+=delta;selected=null;selectedPlaced=null;try{await render(t);}catch(e){page=old;throw e;}},false);}
  $('prev').onclick=()=>changePage(-1);$('next').onclick=()=>changePage(1);$('zoom').onchange=async()=>{if(inlineSession&&!(await finishInline()))return;await job(render,false);};
  let resizeTimer,previousOverflow='';
  const documentView=root.querySelector('.np-document');
  function refreshFit(){clearTimeout(resizeTimer);resizeTimer=setTimeout(()=>{if(!bytes||!documentView.getBoundingClientRect().width)return;if(busy||inlineSession){refreshFit();return;}if(['fit','width'].includes($('zoom').value))job(render,false);},180);}
  function expandPreview(expand){documentView.classList.toggle('np-expanded',expand);$('fullscreen').setAttribute('aria-pressed',String(expand));$('fullscreen').textContent=expand?'✕ Close full screen':'⛶ Full screen';if(expand){previousOverflow=document.body.style.overflow;document.body.style.overflow='hidden';}else document.body.style.overflow=previousOverflow;refreshFit();}
- $('fullscreen').onclick=()=>expandPreview(!documentView.classList.contains('np-expanded'));
+  $('fullscreen').onclick=()=>expandPreview(!documentView.classList.contains('np-expanded'));
  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&documentView.classList.contains('np-expanded')){e.preventDefault();expandPreview(false);}});
  window.addEventListener('portal-auth-cleared',()=>{if(documentView.classList.contains('np-expanded'))expandPreview(false);});
- new ResizeObserver(refreshFit).observe($('scroll'));
- $('save').onclick=async()=>{
+  new ResizeObserver(refreshFit).observe($('scroll'));
+  async function materializePlacedEdits(){if(!placedPages.some(list=>list.length))return bytes;const out=await PDFLib.PDFDocument.load(bytes);for(let i=0;i<placedPages.length;i++){const target=out.getPage(i);for(const o of placedPages[i]){if(o.type==='text'){await drawText({doc:out,page:target},o.text,[o.x,o.y],o.size||18,rgb(o.color||'#111827'),0,null,o.boldLevel||1);}else if(o.type==='image'){const img=o.imageType==='image/png'?await out.embedPng(o.imageData):await out.embedJpg(o.imageData);target.drawImage(img,{x:o.x,y:o.y,width:o.w,height:o.h});}else if(o.type==='draw'){for(let j=1;j<o.points.length;j++)target.drawLine({start:{x:o.points[j-1].x,y:o.points[j-1].y},end:{x:o.points[j].x,y:o.points[j].y},thickness:o.pen||2,color:rgb(o.color||'#111827')});}else target.drawRectangle({x:o.x,y:o.y,width:o.w,height:o.h,color:o.type==='whiteout'?PDFLib.rgb(1,1,1):PDFLib.rgb(1,.85,0),opacity:o.type==='highlight'?.35:1});}}return await out.save();}
+  $('save').onclick=async()=>{
   if(!bytes||busy)return;
-  if(selected&&(cleanText($('text').value)!==cleanText(selected.text)||Math.abs(size()-selected.size)>.11||$('color').value!==selected.color||boldLevel()!==(selected.boldLevel||1))){say('पहले Save edit / Apply style करें।');return;}
-  await job(async ticket=>{const blob=new Blob([bytes],{type:'application/pdf'});await window.exportPortalPdf(blob,name.replace(/\.pdf$/i,'')+'-edited.pdf');if(ticket!==epoch)return;dirty=false;$('download-link').hidden=false;say('PDF history में save हुई और download भेजा गया।');});
+   if(selected&&(cleanText($('text').value)!==cleanText(selected.text)||Math.abs(size()-selected.size)>.11||$('color').value!==selected.color||boldLevel()!==(selected.boldLevel||1))){say('पहले Save edit / Apply style करें।');return;}
+   if(selectedPlaced&&selectedPlaced.type==='text'&&(cleanText($('text').value)!==cleanText(selectedPlaced.text)||Math.abs(size()-selectedPlaced.size)>.11||$('color').value!==selectedPlaced.color||boldLevel()!==(selectedPlaced.boldLevel||1))){say('पहले Apply style करें।');return;}
+   await job(async ticket=>{const outputBytes=await materializePlacedEdits(),blob=new Blob([outputBytes],{type:'application/pdf'});await window.exportPortalPdf(blob,name.replace(/\.pdf$/i,'')+'-edited.pdf');if(ticket!==epoch)return;dirty=false;$('download-link').hidden=false;say('PDF history में save हुई और download भेजा गया।');});
  };
  $('download-link').onclick=()=>$('save').click();
- root.addEventListener('keydown',e=>{if(['INPUT','TEXTAREA','SELECT'].includes(e.target.tagName))return;if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='z'){e.preventDefault();e.shiftKey?travel(redo,undo):travel(undo,redo);}});
+   root.addEventListener('keydown',e=>{if(['INPUT','TEXTAREA','SELECT'].includes(e.target.tagName))return;if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='z'){e.preventDefault();e.shiftKey?(placedRedo.length?travelPlaced(placedRedo,placedUndo):travel(redo,undo)):(placedUndo.length?travelPlaced(placedUndo,placedRedo):travel(undo,redo));}});
  window.addEventListener('portal-auth-cleared',reset);window.addEventListener('beforeunload',e=>{if(dirty||(inlineSession&&cleanText(inline.value)!==inlineSession.initial)){e.preventDefault();e.returnValue='';}});buttons();
 })();
 
@@ -6208,18 +6947,35 @@ try {
 <div id="infoModal" class="info-modal" hidden role="dialog" aria-modal="true" aria-labelledby="infoModalTitle"><div class="info-modal-card"><button id="infoModalClose" class="info-modal-close" type="button" aria-label="Close">×</button><h2 id="infoModalTitle"></h2><div id="infoModalBody"></div></div></div>
 <footer class="op-footer" aria-label="Website footer">
   <div class="op-footer-grid">
-    <div><h3>OP Printing Hub</h3><p>Digital printing and document tools for everyday work.</p><span class="made-india">Made in India 🇮🇳</span></div>
+    <div><h3>Skillo ID Print Solutions</h3><p>Digital printing and document tools for everyday work.</p><span class="made-india">Made in India 🇮🇳</span></div>
     <div><h4>About &amp; Support</h4><a href="#about">About Us</a><a href="#contact">Contact Us</a><a href="#faq">Help &amp; FAQs</a></div>
     <div><h4>Legal</h4><a href="#privacy">Privacy Policy</a><a href="#terms">Terms &amp; Conditions</a><a href="#disclaimer">Disclaimer</a><a href="#cookies">Cookie Policy</a></div>
     <div><h4>Resources</h4><a href="#pricing">Pricing &amp; Plans</a><a href="#mainApp">All PDF Tools</a><a href="#sitemap">Sitemap</a><a href="#contact">✉️ Support Email</a><a href="#social">🔗 Social Media</a></div>
   </div>
-  <div class="op-footer-bottom">© 2026 OP Printing Hub · Secure portal access</div>
+  <div class="op-footer-bottom">© 2026 Skillo ID Print Solutions · Secure portal access</div>
 </footer>
 <script>
 (() => {
+  const showcase=document.querySelector('.front-showcase');
+  const samplePaths=Array.from({length:25},(_,i)=>`assets/frame-samples/sample_${String(i+1).padStart(2,'0')}.png`);
+  if(showcase){samplePaths.forEach((src,i)=>{if(!showcase.querySelector(`img[src="${src}"]`)){const img=document.createElement('img');img.src=src;img.alt=`Printing sample ${i+1}`;showcase.insertBefore(img,showcase.querySelector('.showcase-caption'));}});}
+  const slides=[...document.querySelectorAll('.front-showcase img')];
+  if(slides.length>1){
+    let index=0,switching=false;
+    const advanceSlide=()=>{
+      if(switching)return;
+      switching=true;
+      showcase.classList.add('is-switching');
+      window.setTimeout(()=>{slides[index].classList.remove('active');index=(index+1)%slides.length;slides[index].classList.add('active');},520);
+      window.setTimeout(()=>{showcase.classList.remove('is-switching');switching=false;},1100);
+    };
+    setInterval(advanceSlide,3500);
+  }
   const phrases=['Automate your printing workflow','Crop ID cards with confidence','Create clean A4-ready documents'];
+  const subPhrases=['All-in-one platform for seamless online printing and digital services.','Fast, secure and print-ready tools for everyday work.','Create, edit and download your documents with ease.'];
   const hero=document.querySelector('#loginScreen .front-hero h1');
-  if(hero){let i=0;setInterval(()=>{i=(i+1)%phrases.length;hero.classList.add('op-type-fade');setTimeout(()=>{hero.innerHTML=phrases[i]+'<br>with OP Printing Hub';hero.classList.remove('op-type-fade')},220)},4200);}
+  const sub=document.querySelector('#loginScreen .front-hero p');
+  if(hero){let i=0;setInterval(()=>{i=(i+1)%phrases.length;hero.classList.add('op-type-fade');if(sub)sub.style.opacity='0';setTimeout(()=>{hero.innerHTML=phrases[i]+'<br>with Skillo ID Solutions';if(sub){sub.textContent=subPhrases[i];sub.style.opacity='1';}hero.classList.remove('op-type-fade')},220)},4200);}
 })();
 </script>
 <script>
@@ -6227,7 +6983,7 @@ try {
   const data={
     pricing:{title:'Pricing & Plans',body:'<p>Portal access and premium features are managed according to the plans shown inside your account.</p><ul><li>Basic ID Cropper: Front/Back image upload and manual adjustment.</li><li>Premium Auto ID Cropper: PDF upload, automatic layout detection and manual fallback.</li><li>PDF Editor Premium: advanced PDF editing after approval.</li><li>Other tools: passport sheets, 4×6 photo print, PDF conversion, arranger, resizer and compressor.</li></ul><p>Final price, validity and approval status are always shown in the portal before submission.</p>'},
     faq:{title:'Help & FAQs',body:'<ul><li><b>Login नहीं हो रहा?</b> Email/password जाँचें और जरूरत हो तो Forgot Password से OTP लें.</li><li><b>OTP नहीं आया?</b> Spam folder देखें और 120-second cooldown पूरा होने दें.</li><li><b>Auto crop गलत है?</b> साफ, सीधी और high-resolution PDF/image लगाएँ; manual crop fallback इस्तेमाल करें.</li><li><b>PDF premium कैसे मिलेगा?</b> Portal में payment proof submit करें और admin approval की प्रतीक्षा करें.</li><li><b>फाइल सुरक्षित है?</b> केवल आवश्यक processing के लिए भेजी जाती है; sensitive files का backup अपने पास रखें.</li></ul>'},
-    about:{title:'About OP Printing Hub',body:'<p>OP Printing Hub एक practical digital printing portal है, जो ID cards, passport photos, PDF processing और A4 print workflows को एक जगह सरल बनाने के लिए बनाया गया है.</p><p>हमारा लक्ष्य छोटे printing operators और distributors को तेज, साफ और आसान tools देना है.</p>'},
+    about:{title:'About Skillo ID Print Solutions',body:'<p>Skillo ID Print Solutions एक practical digital printing portal है, जो ID cards, passport photos, PDF processing और A4 print workflows को एक जगह सरल बनाने के लिए बनाया गया है.</p><p>हमारा लक्ष्य छोटे printing operators और distributors को तेज, साफ और आसान tools देना है.</p>'},
     contact:{title:'Contact Us',body:'<p>Support के लिए अपने portal administrator से संपर्क करें।</p><p><b>Support email:</b> अपना verified support email यहाँ configure करें।</p><p>कृपया message में registered email, समस्या का screenshot और समय शामिल करें। अपना password या OTP कभी साझा न करें.</p>'},
     privacy:{title:'Privacy Policy',body:'<p>Portal account, payment proof और uploaded documents को केवल requested service, access control और support के लिए process किया जाता है. Password और OTP किसी के साथ साझा न करें.</p>'},
     terms:{title:'Terms & Conditions',body:'<ul><li>Portal का उपयोग केवल lawful printing और document work के लिए करें.</li><li>अपलोड की गई files और दिए गए details की जिम्मेदारी user की है.</li><li>Premium features approval और validity rules के अधीन हैं.</li><li>Security bypass, abuse, spam या unauthorized access निषिद्ध है.</li><li>Service availability network और third-party providers पर निर्भर हो सकती है.</li></ul>'},
@@ -6239,6 +6995,21 @@ try {
   const modal=document.getElementById('infoModal'),title=document.getElementById('infoModalTitle'),body=document.getElementById('infoModalBody');
   function close(){modal.hidden=true} document.getElementById('infoModalClose').onclick=close;modal.onclick=e=>{if(e.target===modal)close()};document.addEventListener('keydown',e=>{if(e.key==='Escape')close()});
   document.addEventListener('click',e=>{const a=e.target.closest('a[href^="#"]');if(!a)return;const key=a.getAttribute('href').slice(1);if(!data[key])return;e.preventDefault();title.textContent=data[key].title;body.innerHTML=data[key].body;modal.hidden=false;document.getElementById('infoModalClose').focus();});
+})();
+</script>
+<script>
+(() => {
+  const themeBtn=document.getElementById('themeToggleBtn');
+  const applyTheme=light=>{document.body.classList.toggle('op-light',light);if(themeBtn)themeBtn.textContent=light?'☀️ Light mode':'🌙 Dark mode';localStorage.setItem('op-theme',light?'light':'dark');};
+  applyTheme(localStorage.getItem('op-theme')==='light');
+  themeBtn?.addEventListener('click',()=>applyTheme(!document.body.classList.contains('op-light')));
+  window.opCelebrate=()=>{const box=document.createElement('div');box.className='op-celebration';const colors=['#38bdf8','#10b981','#fbbf24','#f472b6','#a78bfa'];for(let i=0;i<42;i++){const bit=document.createElement('i');bit.style.setProperty('--c',colors[i%colors.length]);bit.style.setProperty('--x',`${Math.round((Math.random()-.5)*620)}px`);bit.style.setProperty('--y',`${Math.round(-120-Math.random()*420)}px`);bit.style.setProperty('--r',`${Math.round(Math.random()*360)}deg`);box.appendChild(bit);}document.body.appendChild(box);setTimeout(()=>box.remove(),1100);};
+  document.addEventListener('click',e=>{if(e.target?.closest('a[download]'))window.opCelebrate();});
+  const nativeAnchorClick=HTMLAnchorElement.prototype.click;
+  HTMLAnchorElement.prototype.click=function(){if(this.hasAttribute('download'))window.opCelebrate();return nativeAnchorClick.call(this);};
+  const toolTabs={passport:'tab-passport',resize:'tab-resizer',id:'tab-cards',jpgpdf:'tab-jpg-to-pdf',pngpdf:'tab-jpg-to-pdf',merge:'tab-arranger',delete:'tab-arranger',pdfjpg:'tab-pdf-to-jpg',jpgpng:'tab-resizer',pngjpg:'tab-resizer',compress:'tab-pdf-compressor',editor:'tab-pdf-editor',arranger:'tab-arranger',batch:'tab-jpg-to-pdf'};
+  document.querySelectorAll('.catalog-tool').forEach(btn=>btn.addEventListener('click',()=>{if(!authToken){document.getElementById('loginEmail')?.focus();return;}const tab=toolTabs[btn.dataset.tool];if(tab) switchTab(tab);else alert(btn.textContent.trim()+' को portal में sign in के बाद configure किया जाएगा।');}));
+  document.querySelectorAll('[data-info-link]').forEach(btn=>btn.addEventListener('click',()=>{const copy={payment:['Payment QR','Payment QR केवल admin-configured plan और verified payment proof के लिए उपयोग करें।'],support:['Help & Support','Support के लिए registered email, समस्या का समय और screenshot भेजें। Password या OTP कभी साझा न करें।'],privacy:['Privacy Policy','Uploaded files, account data और payment proof केवल requested processing, access control और support के लिए उपयोग होंगे। Retention rules के अनुसार files हटेंगी।'],terms:['Terms & Conditions','Portal का उपयोग lawful printing/document work के लिए करें। Unauthorized access, abuse, spam और security bypass निषिद्ध हैं।'],refund:['Refund Policy','Refund requests को registered account और transaction reference के साथ admin review के लिए भेजें। Approval plan और payment verification पर निर्भर है।']}[btn.dataset.infoLink];const modal=document.getElementById('infoModal');if(copy&&modal){document.getElementById('infoModalTitle').textContent=copy[0];document.getElementById('infoModalBody').innerHTML='<p>'+copy[1]+'</p>';modal.hidden=false;}}));
 })();
 </script>
 </body>
