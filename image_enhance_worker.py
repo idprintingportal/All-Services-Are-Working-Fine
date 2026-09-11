@@ -117,38 +117,61 @@ def clean_passport():
         # Use Google's documented generateContent REST shape for image editing:
         # text and the source image are sent as parts of one user content block.
         # Keep the key server-side and request image-only output.
-        gemini_payload = {
-            "contents": [{
-                "parts": [
-                    {"text": prompt},
-                    {"inline_data": {"mime_type": "image/png", "data": encoded}},
-                ]
-            }],
-            "generationConfig": {
-                "responseModalities": ["IMAGE"],
-                "responseFormat": {
-                    "image": {"aspectRatio": "4:5", "imageSize": "1K"}
+        contents = [{
+            "parts": [
+                {"text": prompt},
+                {"inline_data": {"mime_type": "image/png", "data": encoded}},
+            ]
+        }]
+        # Some Gemini projects reject optional imageConfig fields even though the
+        # model supports them. Retry once with Google's minimal REST payload.
+        gemini_payloads = [
+            {
+                "contents": contents,
+                "generationConfig": {
+                    "responseModalities": ["IMAGE"],
+                    "responseFormat": {
+                        "image": {"aspectRatio": "4:5", "imageSize": "1K"}
+                    },
                 },
             },
-        }
-        req = urllib.request.Request(
-            "https://generativelanguage.googleapis.com/v1/models/"
-            + GEMINI_IMAGE_MODEL
-            + ":generateContent",
-            data=json.dumps(gemini_payload).encode("utf-8"),
-            headers={"x-goog-api-key": GEMINI_API_KEY, "Content-Type": "application/json"},
-            method="POST",
-        )
-        try:
-            with urllib.request.urlopen(req, timeout=120) as response:
-                result = json.loads(response.read().decode("utf-8"))
-        except urllib.error.HTTPError as exc:
-            detail = exc.read().decode("utf-8", errors="replace")[:400]
-            app.logger.warning("Gemini passport edit failed (HTTP %s): %s", exc.code, detail)
-            return jsonify(success=False, error=f"Gemini rejected the request (HTTP {exc.code}). Check model and API access."), 502
-        except Exception:
-            app.logger.exception("Gemini passport edit unavailable")
-            return jsonify(success=False, error="Gemini prompt service is temporarily unavailable."), 502
+            {"contents": contents},
+        ]
+        result = None
+        last_code = 502
+        last_detail = "request rejected"
+        for attempt, gemini_payload in enumerate(gemini_payloads):
+            req = urllib.request.Request(
+                "https://generativelanguage.googleapis.com/v1/models/"
+                + GEMINI_IMAGE_MODEL
+                + ":generateContent",
+                data=json.dumps(gemini_payload).encode("utf-8"),
+                headers={"x-goog-api-key": GEMINI_API_KEY, "Content-Type": "application/json"},
+                method="POST",
+            )
+            try:
+                with urllib.request.urlopen(req, timeout=120) as response:
+                    result = json.loads(response.read().decode("utf-8"))
+                break
+            except urllib.error.HTTPError as exc:
+                last_code = exc.code
+                raw_detail = exc.read().decode("utf-8", errors="replace")[:500]
+                try:
+                    parsed_detail = json.loads(raw_detail)
+                    last_detail = str((parsed_detail.get("error") or {}).get("message") or raw_detail)
+                except Exception:
+                    last_detail = raw_detail
+                app.logger.warning("Gemini passport edit failed (HTTP %s, attempt %s): %s", exc.code, attempt + 1, last_detail)
+                if exc.code == 400 and attempt == 0:
+                    continue
+                safe_detail = " ".join(last_detail.split())[:180]
+                return jsonify(success=False, error=f"Gemini rejected the request (HTTP {last_code}): {safe_detail}"), 502
+            except Exception:
+                app.logger.exception("Gemini passport edit unavailable")
+                return jsonify(success=False, error="Gemini prompt service is temporarily unavailable."), 502
+        if result is None:
+            safe_detail = " ".join(last_detail.split())[:180]
+            return jsonify(success=False, error=f"Gemini rejected the request (HTTP {last_code}): {safe_detail}"), 502
         image_data = None
         for candidate in result.get("candidates", []) or []:
             content = candidate.get("content") or {}
