@@ -1691,22 +1691,6 @@ body:has(#loginScreen.front-home){background:#07111b!important;color:#e8f7ff!imp
         <small id="passportBgStatus" style="display:block;margin-top:7px;color:var(--text-muted);">Background removal uses the selected photo preview.</small>
       </div>
 
-      <div class="control-panel" style="margin-bottom:12px;text-align:left;border:1px solid rgba(56,189,248,.35);">
-        <strong style="color:var(--accent-blue);font-size:13px;">✨ Clean &amp; Clear Passport Photo</strong>
-        <p style="font-size:12px;color:var(--text-muted);margin:6px 0 10px;">3.5×4.5 cm portrait profile: centered framing, natural likeness, even lighting and a clean studio background.</p>
-        <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
-          <button type="button" id="cleanPassportBtn" class="action-btn btn-add">✨ Clean &amp; Clear Passport Photo</button>
-          <input type="file" id="cleanPassportInput" accept="image/*" hidden>
-          <label style="font-size:12px;">Studio background <select id="cleanPassportBgColor" class="login-input" style="width:auto;display:inline-block;padding:6px;"><option value="#dbeafe">Light Blue</option><option value="#ffffff">Off-White</option></select></label>
-        </div>
-        <small id="cleanPassportStatus" style="display:block;margin-top:7px;color:var(--text-muted);">Photo upload करने के बाद पहले crop box में पूरा चेहरा और shoulders रखें।</small>
-        <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-top:10px;">
-          <canvas id="cleanPassportCanvas" width="413" height="531" hidden style="width:124px;height:159px;background:#dbeafe;border-radius:6px;border:1px solid var(--border-color);"></canvas>
-          <button type="button" id="useCleanPassportBtn" class="action-btn" hidden>Use in Passport Photo #1</button>
-          <button type="button" id="downloadCleanPassportBtn" class="action-btn btn-download" hidden>📥 Download Clean Photo JPG</button>
-        </div>
-      </div>
-
       <!-- Custom Quantity Control Panel -->
       <div class="control-panel" style="margin-bottom: 15px;">
         <span style="font-size: 13px; font-weight:600; color: var(--accent-blue);">🔢 A4 शीट पर कुल फ़ोटो की संख्या (Quantity) चुनें या टाइप करें:</span>
@@ -3712,7 +3696,6 @@ body:has(#loginScreen.front-home){background:#07111b!important;color:#e8f7ff!imp
   let rawNamePassportImg = null;
   let frontCardRawData = null;
   let backCardRawData = null;
-  let cleanPassportResultCanvas = null;
 
   const cropModal = document.getElementById('cropModal');
   const imageToCrop = document.getElementById('imageToCrop');
@@ -3728,7 +3711,7 @@ body:has(#loginScreen.front-home){background:#07111b!important;color:#e8f7ff!imp
       if (cropper) cropper.destroy();
 
       let targetRatio = NaN;
-      if (type === 'name_passport' || type.startsWith('multi_passport_') || type === 'clean_passport') targetRatio = 35 / 45;
+      if (type === 'name_passport' || type.startsWith('multi_passport_')) targetRatio = 35 / 45;
       if (type === 'photo4x6') targetRatio = 1200 / 1800;
 
       cropper = new Cropper(imageToCrop, {
@@ -3859,12 +3842,6 @@ body:has(#loginScreen.front-home){background:#07111b!important;color:#e8f7ff!imp
         pCtx.clearRect(0, 0, 413, 531);
         pCtx.drawImage(croppedCanvas, 0, 0);
       }
-    }
-    else if (activeCropType === 'clean_passport') {
-      const croppedCanvas = cropper.getCroppedCanvas({ width: 413, height: 531, imageSmoothingQuality: 'high' });
-      closeCropper();
-      processCleanPassportPhoto(croppedCanvas);
-      return;
     }
     else if (activeCropType === 'name_passport') {
       rawNamePassportImg = cropper.getCroppedCanvas({ width: 413, height: 531, imageSmoothingQuality: 'high' });
@@ -4329,57 +4306,6 @@ body:has(#loginScreen.front-home){background:#07111b!important;color:#e8f7ff!imp
     return out;
   }
 
-  async function processCleanPassportPhoto(croppedCanvas){
-    const status=document.getElementById('cleanPassportStatus');
-    const startButton=document.getElementById('cleanPassportBtn');
-    const preview=document.getElementById('cleanPassportCanvas');
-    const useButton=document.getElementById('useCleanPassportBtn');
-    const downloadButton=document.getElementById('downloadCleanPassportBtn');
-    if(!croppedCanvas||!croppedCanvas.width||!croppedCanvas.height)return;
-    startButton.disabled=true;
-    startButton.textContent='⏳ Cleaning photo…';
-    status.textContent='Face likeness सुरक्षित रखते हुए lighting और clarity improve की जा रही है…';
-    try{
-      const selectedBackground=document.getElementById('cleanPassportBgColor')?.value||'#dbeafe';
-      let enhanced=croppedCanvas;
-      try{
-        status.textContent='Photo clarity और lighting improve की जा रही है…';
-        enhanced=await enhanceCanvasViaServer(croppedCanvas,25);
-      }catch(serverError){
-        console.warn('Clean passport server enhancement unavailable; using local clarity pass.',serverError);
-        enhanced=enhancePassportCanvas(croppedCanvas,25);
-      }
-      let cutout=enhanced;
-      let backgroundRemoved=false;
-      try{
-        status.textContent='Background clean किया जा रहा है…';
-        cutout=await aiRemovePassportBackground(enhanced);
-        backgroundRemoved=true;
-      }catch(backgroundError){
-        console.warn('Clean passport background removal unavailable; retaining source background.',backgroundError);
-      }
-
-      const out=document.createElement('canvas');out.width=413;out.height=531;
-      const ctx=out.getContext('2d');ctx.imageSmoothingEnabled=true;ctx.imageSmoothingQuality='high';
-      ctx.fillStyle=selectedBackground;ctx.fillRect(0,0,out.width,out.height);
-      const sourceRatio=cutout.width/cutout.height,targetRatio=out.width/out.height;
-      let sx=0,sy=0,sw=cutout.width,sh=cutout.height;
-      if(sourceRatio>targetRatio){sw=cutout.height*targetRatio;sx=(cutout.width-sw)/2;}else if(sourceRatio<targetRatio){sh=cutout.width/targetRatio;sy=(cutout.height-sh)/2;}
-      ctx.drawImage(cutout,sx,sy,sw,sh,0,0,out.width,out.height);
-      cleanPassportResultCanvas=out;
-      if(preview){preview.hidden=false;preview.style.background=ctx.fillStyle;const pCtx=preview.getContext('2d');pCtx.clearRect(0,0,413,531);pCtx.drawImage(out,0,0);}
-      if(useButton)useButton.hidden=false;
-      if(downloadButton)downloadButton.hidden=false;
-      status.textContent='✅ Clean & clear passport photo ready.'+(backgroundRemoved?'':' Original background kept because cleanup was unavailable.');
-    }catch(error){
-      console.error('Clean passport processing failed:',error);
-      status.textContent='❌ Photo process नहीं हो पाया। कृपया दोबारा प्रयास करें।';
-    }finally{
-      startButton.disabled=false;
-      startButton.textContent='✨ Clean & Clear Passport Photo';
-    }
-  }
-
   function readPhotoBorder(prefix){
     const enabled=document.getElementById(prefix+'BorderEnabled')?.checked!==false;
     const width=Math.max(1,Math.min(12,Number(document.getElementById(prefix+'BorderWidth')?.value)||3));
@@ -4459,21 +4385,6 @@ body:has(#loginScreen.front-home){background:#07111b!important;color:#e8f7ff!imp
 
   document.getElementById('passportEnhanceSlider')?.addEventListener('input',e=>{document.getElementById('passportEnhanceValue').textContent=e.target.value;});
   document.getElementById('passportRemoveBgBtn')?.addEventListener('click',()=>{passportRemoveBg=!passportRemoveBg;const b=document.getElementById('passportRemoveBgBtn');b.textContent=passportRemoveBg?'↩️ Keep Original Background':'🪄 Remove Background';document.getElementById('passportBgStatus').textContent=passportRemoveBg?'Selected background color will be used in the generated sheet.':'Original photo background will be retained.';});
-
-  document.getElementById('cleanPassportBtn')?.addEventListener('click',()=>{const input=document.getElementById('cleanPassportInput');if(input){input.value='';input.click();}});
-  document.getElementById('cleanPassportInput')?.addEventListener('change',e=>{const file=e.target.files?.[0];if(file)openCropEngine(file,'clean_passport');});
-  document.getElementById('useCleanPassportBtn')?.addEventListener('click',()=>{
-    if(!cleanPassportResultCanvas)return;
-    if(!activePassportCount){setPassportCount(1);}
-    multiPassportCanvases[0]=cleanPassportResultCanvas;multiPassportLoaded[0]=true;
-    const preview=document.getElementById('multiPassPreview0');
-    if(preview){preview.style.display='block';const pCtx=preview.getContext('2d');pCtx.clearRect(0,0,413,531);pCtx.drawImage(cleanPassportResultCanvas,0,0);}
-    document.getElementById('cleanPassportStatus').textContent='✅ Clean photo Passport Photo #1 में जोड़ दी गई है। अब quantity चुनकर Generate करें।';
-  });
-  document.getElementById('downloadCleanPassportBtn')?.addEventListener('click',()=>{
-    if(!cleanPassportResultCanvas)return;
-    const a=document.createElement('a');a.href=whiteJpegDataUrl(cleanPassportResultCanvas,.95);a.download='Clean_Clear_Passport_Photo.jpg';document.body.appendChild(a);a.click();a.remove();
-  });
 
   document.getElementById('downloadMultiPassportPdfBtn').addEventListener('click', () => {
     const sheetCanvas = document.getElementById('passportSheetCanvas');
