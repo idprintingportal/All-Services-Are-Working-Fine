@@ -1278,6 +1278,17 @@ body:has(#loginScreen.front-home){background:#07111b!important;color:#e8f7ff!imp
 #loginScreen.front-home .front-settings-submenu button:hover{background:#124951;border-color:#b6ffff;color:#fff}
 @media(max-width:850px){body:has(#loginScreen.front-home){padding:8px!important}#loginScreen.front-home{display:grid!important;grid-template-columns:1fr!important;gap:11px!important;padding:10px 12px 22px!important}.front-nav{grid-column:1!important;grid-row:1!important;margin:-10px -12px 0!important;padding:8px 12px!important}.front-nav-links{display:none!important}.front-nav:after{font-size:17px!important}.front-language{display:none!important}.front-hero{grid-column:1!important;grid-row:3!important;padding:20px!important;min-height:100px!important}.front-showcase{grid-column:1!important;grid-row:2!important;height:clamp(250px,72vw,390px)!important;min-height:250px!important}.front-auth-panel{grid-column:1!important;grid-row:4!important}.front-status-banner{grid-row:5!important}.front-highlights{grid-row:6!important;grid-template-columns:1fr!important}.front-search{grid-row:7!important}.front-services{grid-row:8!important}.front-tool-catalog{grid-row:9!important}.showcase-door-ring{inset:18% 24%}.skillo-logo-box{flex-basis:38px!important;width:38px!important;height:38px!important}.skillo-brand{font-size:13px!important}}
 </style>
+<style id="pdf-editor-phase4">
+#np-editor #np-dropzone{display:inline-block;margin-top:12px;border:1px dashed #087e8b;background:#e6f7f8;color:#065b65;border-radius:8px;padding:10px 14px;font-weight:700;cursor:pointer}#np-editor #np-dropzone:hover,#np-editor #np-dropzone.np-drop-active{background:#c7f0f2;border-color:#065b65;box-shadow:0 0 0 3px #087e8b22}
+</style>
+<style id="pdf-editor-phase5">
+#np-editor #np-thumbnails{display:flex;gap:8px;overflow-x:auto;padding:9px 12px;background:#cbd5e1;border-bottom:1px solid #94a3b8;scrollbar-width:thin}#np-editor #np-thumbnails:empty{display:none}#np-editor .np-thumb{flex:0 0 78px;display:grid;gap:4px;place-items:center;padding:5px;border:1px solid #94a3b8;border-radius:7px;background:#f8fafc;color:#334155;cursor:pointer;font-size:10px}#np-editor .np-thumb:hover{border-color:#087e8b;background:#e6f7f8}#np-editor .np-thumb.np-thumb-active{border:2px solid #087e8b;background:#d9f0f1;color:#065b65;font-weight:700}#np-editor .np-thumb canvas{display:block;width:68px;height:88px;object-fit:contain;background:#fff;box-shadow:0 1px 3px #0f172a33}
+@media(max-width:740px){#np-editor .np-thumb{flex-basis:66px}#np-editor .np-thumb canvas{width:56px;height:72px}}
+</style>
+<style id="pdf-editor-phase6-7">
+#np-editor .np-page-actions{display:inline-flex;gap:4px;flex-wrap:wrap;justify-content:center;margin-left:8px}#np-editor .np-page-actions button{padding:6px 8px;font-size:11px}#np-editor .np-page-actions button[data-page-action="delete"]{color:#9f1239;border-color:#fb7185}#np-editor .np-page-actions button:disabled{opacity:.45;cursor:not-allowed}@media(max-width:740px){#np-editor .np-page-actions{width:100%;margin:4px 0 0}.np-pages{gap:6px!important}}
+#np-editor .np-ocr-button{border-color:#7c3aed;color:#5b21b6;background:#f5f3ff}#np-editor .np-ocr-button:hover{background:#ede9fe;border-color:#6d28d9}
+</style>
 </head>
 <body>
 
@@ -1890,7 +1901,7 @@ body:has(#loginScreen.front-home){background:#07111b!important;color:#e8f7ff!imp
  <p class="np-notice">English · हिन्दी · मराठी: नया font इस्तेमाल होगा; मूल formatting बदल सकती है। Hindi/Marathi shaping और copy/search experimental हैं। Scans/OCR और सभी प्रकार के text blocks समर्थित नहीं हैं।</p>
  <fieldset id="np-controls" disabled>
  <div class="np-toolbar" role="toolbar" aria-label="PDF tools">
-  <button data-np-tool="edit" aria-pressed="true">↖ Edit original text</button><button data-np-tool="text">T Add text</button><button data-np-tool="image">▧ Image / Signature</button><button data-np-tool="highlight">▰ Highlight</button><button data-np-tool="whiteout">▱ Whiteout</button><button data-np-tool="draw">✎ Draw / Sign</button><button id="np-undo">↶ Undo</button><button id="np-redo">↷ Redo</button>
+ <button data-np-tool="edit" aria-pressed="true">↖ Edit original text</button><button data-np-tool="text">T Add text</button><button data-np-tool="image">▧ Image / Signature</button><button data-np-tool="highlight">▰ Highlight</button><button data-np-tool="whiteout">▱ Whiteout</button><button data-np-tool="draw">✎ Draw / Sign</button><button id="np-form-fields" type="button">🧾 Form fields</button><button id="np-undo">↶ Undo</button><button id="np-redo">↷ Redo</button>
  </div>
  <div class="np-body"><aside class="np-panel">
   <textarea id="np-text" aria-label="Selected original PDF text" maxlength="2000" rows="4"></textarea><p class="np-inline-help">नीले text box पर double-click करें और उसी original text को बदलें। फिर Apply दबाएँ।</p>
@@ -1899,10 +1910,10 @@ body:has(#loginScreen.front-home){background:#07111b!important;color:#e8f7ff!imp
   <label for="np-bold">Bold level <output id="np-bold-value" for="np-bold">1 / 5 · Normal</output></label>
   <input id="np-bold" type="range" min="1" max="5" step="1" value="1" aria-describedby="np-bold-help" aria-valuetext="Level 1: Normal">
   <p id="np-bold-help">1 Normal → 5 Extra bold · मोटाई बदलकर Apply दबाएँ। यह synthetic bold है।</p>
-  <button id="np-apply" class="np-primary" disabled>Apply style</button><button id="np-delete" disabled>Delete selected text</button>
+  <button id="np-apply" class="np-primary" disabled>Apply style</button><button id="np-delete" disabled>Secure redact selected text</button>
   <p id="np-selection">Edit original text चुनकर नीले box पर click करें।</p>
-  <hr><label for="np-find">Find on this page</label><input id="np-find" placeholder="Search text…"><div id="np-results" aria-label="Matching text blocks"></div>
-  <p class="np-help">Add text: लिखें, फिर page पर click करें। Highlight / Whiteout: drag करें। Image: PNG/JPG चुनें, फिर click करें। Draw: page पर signature बनाएँ।<br><br>Whiteout secure redaction नहीं है। Digital signatures edits के बाद invalid हो सकती हैं।</p>
+  <hr><label for="np-find">Find on this page</label><input id="np-find" placeholder="Search text…"><div id="np-results" aria-label="Matching text blocks"></div><div id="np-form-panel" hidden style="margin-top:12px;padding:10px;border:1px solid #94a3b8;border-radius:8px;background:#f8fafc;color:#0f172a"><strong>Interactive form fields</strong><p style="margin:6px 0;font-size:12px">Fields को भरें; Download PDF पर values interactive form में save होंगी।</p><div id="np-form-list"></div></div>
+  <p class="np-help">Add text: लिखें, फिर page पर click करें। Highlight / Whiteout: drag करें। Image: PNG/JPG चुनें, फिर click करें। Draw: page पर signature बनाएँ।<br><br>Secure redact केवल चुने हुए native text block को content से हटाता है; scanned/image text के लिए raster redaction अभी उपलब्ध नहीं है। Whiteout secure redaction नहीं है। Draw signature cryptographic digital signature नहीं है।</p>
  </aside><div class="np-document"><div class="np-pages"><button id="np-prev">←</button><span id="np-page-label">0 / 0</span><button id="np-next">→</button><label>Zoom <select id="np-zoom"><option value="fit" selected>Fit page · पूरा पन्ना</option><option value="width">Fit width</option><option value="0.75">75%</option><option value="1">100%</option><option value="1.25">125%</option><option value="1.5">150%</option></select></label></div>
   <div class="np-view-actions"><button type="button" id="np-fullscreen" aria-pressed="false">⛶ Full screen</button><span>Esc से वापस आएँ</span></div><div id="np-scroll"><div id="np-empty"><div>▤</div><h3>अपनी PDF यहाँ खोलें</h3><p>PDF इसी browser में process होती है।<br>Engine लोड करने के लिए internet चाहिए।</p></div><div id="np-wrap" hidden><canvas id="np-canvas"></canvas><div id="np-hits"></div><canvas id="np-gesture"></canvas></div></div>
  </div></div></fieldset>
@@ -2973,6 +2984,10 @@ body:has(#loginScreen.front-home){background:#07111b!important;color:#e8f7ff!imp
     return result.fileId||'';
   }
 
+  window.savePdfEditorCloud = async function(blob,fileName){
+    try{return await uploadFileDirectToStorage(fileName,blob,'application/pdf');}
+    catch(error){console.warn('PDF Editor cloud autosave skipped:',error?.message||error);return '';}
+  };
   async function saveToHistory(featureName, fileName, blobOrDataUrl, fileType) {
     try {
       let serverFileId='';
@@ -3967,6 +3982,23 @@ body:has(#loginScreen.front-home){background:#07111b!important;color:#e8f7ff!imp
   }
   function pvcInset(c,pct=.018){const x=Math.round(c.width*pct),y=Math.round(c.height*pct),out=document.createElement('canvas');out.width=Math.max(1,c.width-2*x);out.height=Math.max(1,c.height-2*y);out.getContext('2d').drawImage(c,x,y,out.width,out.height,0,0,out.width,out.height);return out;}
   function pvcInsetPair(pair,pct){return pair.map(c=>c?pvcInset(c,pct):c);}
+  function pvcPanPair(c){
+    // PAN/e-PAN A4 exports keep the printable pair in a lower coloured band,
+    // but the band can move between generators. Detect that band instead of
+    // trusting one fixed Y coordinate, then split at the actual white gap.
+    const ctx=c.getContext('2d'),w=c.width,h=c.height,p=ctx.getImageData(0,0,w,h).data,step=4;
+    const pixel=(x,y)=>{const i=(y*w+x)*4,r=p[i],g=p[i+1],b=p[i+2],mx=Math.max(r,g,b),mn=Math.min(r,g,b);return {ink:mx<246||mn<232,color:mx-mn>16&&mx<248};};
+    const rows=[];for(let y=Math.floor(h*.48);y<Math.floor(h*.99);y+=step){let score=0,total=0;for(let x=0;x<w;x+=step){const q=pixel(x,y);if(q.ink)score++;total++;}rows.push({y,score:score/Math.max(1,total)});}
+    let best=null,start=null,weight=0;for(const row of rows){if(row.score>.18){if(start===null)start=row.y;weight+=row.score;}else if(start!==null){const end=row.y;if(end-start>h*.055&&(!best||weight>best.weight))best={start,end,weight};start=null;weight=0;}}if(start!==null){const end=h*.99;if(end-start>h*.055&&(!best||weight>best.weight))best={start,end,weight};}
+    const fixed=()=>pvcInsetPair(pvcSplitPair(pvcCropBox(c,0,.76,1,.20),false),.035);
+    if(!best)return fixed();
+    const cropTop=Math.max(0,best.start-Math.round(h*.008)),cropBottom=Math.min(h,best.end+Math.round(h*.008)),cropH=cropBottom-cropTop;
+    // The printable PAN pair is centered on the A4 page. Keep a small page
+    // margin around each card and split at the stable centre gutter; the
+    // adaptive Y band prevents the lower edge from being clipped.
+    const left=pvcCropRawBox(c,.055,cropTop/h,.435,cropH/h),right=pvcCropRawBox(c,.510,cropTop/h,.435,cropH/h);
+    return [left,right].map(card=>pvcInset(card,.010));
+  }
   // PREMIUM AUTOPRINT CROP LOCK — v1 (2026-09-08)
   // Keep these document profiles immutable. UI/design/quality changes must not
   // alter the crop rectangles or border insets used by Premium Auto Print.
@@ -4047,7 +4079,7 @@ body:has(#loginScreen.front-home){background:#07111b!important;color:#e8f7ff!imp
     // and border geometry are stable.
     if(type==='auto'&&t==='auto'&&pvcDetectAadhaarLayout(c))t='aadhaar';
     if(t==='aadhaar')return pvcAadhaarPair(c);
-    if(t==='pan')return pvcInsetPair(pvcSplitPair(pvcCropBox(c,0,.76,1,.20),false),.035);
+    if(t==='pan')return pvcPanPair(c);
     if(t==='mahasarathi'){const p=PREMIUM_AUTOPRINT_CROP_LOCK.mahasarathi;return pvcStackedPair(c,p.front[1],p.front[3],p.back[1],p.back[3],p.inset);}
     if(t==='maandhan'){const p=PREMIUM_AUTOPRINT_CROP_LOCK.maandhan;return pvcStackedPair(c,p.front[1],p.front[3],p.back[1],p.back[3],p.inset);}
     if(['eshram','abha'].includes(t))return pvcSplitPair(c,true);
@@ -6557,7 +6589,17 @@ try {
  'use strict';
  const root=document.getElementById('np-editor'),$=id=>document.getElementById('np-'+id);
   const MAX_PDF_BYTES=50*1024*1024,MAX_PDF_PAGES=150;
-  let core,enginePromise,bytes=null,pdf=null,page=0,view=null,objects=[],selected=null,tool='edit',name='',busy=false,epoch=0,dirty=false;
+  const dropzone=document.createElement('button');dropzone.type='button';dropzone.id='np-dropzone';dropzone.textContent='＋ Open या PDF यहाँ drop करें';$('empty').append(dropzone);
+  const dropArea=$('scroll');
+  const pageStrip=document.createElement('div');pageStrip.id='np-thumbnails';pageStrip.setAttribute('aria-label','PDF page thumbnails');root.querySelector('.np-document').insertBefore(pageStrip,root.querySelector('.np-pages'));
+  const pageActions=document.createElement('span');pageActions.className='np-page-actions';pageActions.setAttribute('aria-label','Page actions');[['left','↶ Left'],['right','↷ Right'],['duplicate','＋ Duplicate'],['blank','＋ Blank'],['delete','🗑 Delete']].forEach(([action,label])=>{const button=document.createElement('button');button.type='button';button.dataset.pageAction=action;button.textContent=label;pageActions.append(button);});root.querySelector('.np-pages').append(pageActions);
+  const ocrButton=document.createElement('button');ocrButton.type='button';ocrButton.className='np-ocr-button';ocrButton.textContent='🔎 OCR current page';ocrButton.title='Scanned page text को sidebar में पहचानें';root.querySelector('.np-toolbar').append(ocrButton);
+  dropzone.onclick=()=>$('open').click();
+  ['dragenter','dragover'].forEach(type=>dropArea.addEventListener(type,e=>{e.preventDefault();e.stopPropagation();dropzone.classList.add('np-drop-active');}));
+  ['dragleave','drop'].forEach(type=>dropArea.addEventListener(type,e=>{e.preventDefault();e.stopPropagation();dropzone.classList.remove('np-drop-active');}));
+  dropArea.addEventListener('drop',e=>{const file=e.dataTransfer?.files?.[0];if(file)job(t=>open(file,t));});
+  root.addEventListener('keydown',e=>{if(['INPUT','TEXTAREA','SELECT'].includes(e.target.tagName))return;if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='s'){e.preventDefault();$('save').click();}});
+  let core,enginePromise,bytes=null,pdf=null,page=0,view=null,objects=[],selected=null,tool='edit',name='',busy=false,epoch=0,dirty=false,tesseractPromise=null,formValues=new Map(),formFields=[];
   let undo=[],redo=[],imageFile=null,gesture=null,passwordResolve=null;
   let placedPages=[],placedUndo=[],placedRedo=[],selectedPlaced=null,baseCanvasSnapshot=null,nextPlacedId=1,placedDrag=null;
  let parsedBytes=null,inspectedBytes=null,inspectedPage=-1,inspectedObjects=[],fontkitPromise=null;
@@ -6681,7 +6723,7 @@ try {
  $('bold').oninput=updateBold;
   function buttons(){
    $('controls').disabled=!bytes||busy;$('open').disabled=busy;$('close').disabled=!bytes||busy;$('save').disabled=!bytes||busy;
-   $('apply').disabled=!(selected||selectedPlaced)||busy;$('delete').disabled=!(selected||selectedPlaced)||busy;
+   $('apply').disabled=!(selected||selectedPlaced)||busy;$('delete').disabled=!(selected||selectedPlaced)||busy;$('form-fields').disabled=!bytes||busy;
    $('undo').disabled=!(placedUndo.length||undo.length)||busy;$('redo').disabled=!(placedRedo.length||redo.length)||busy;
   $('prev').disabled=page===0||busy;$('next').disabled=!pdf||page>=pdf.numPages-1||busy;
  }
@@ -6704,7 +6746,7 @@ try {
  function finishPassword(value){if($('password-dialog').open)$('password-dialog').close();$('password').value='';const r=passwordResolve;passwordResolve=null;if(r)r(value);}
  $('password-form').onsubmit=e=>{e.preventDefault();finishPassword($('password').value);};
  $('password-cancel').onclick=()=>finishPassword(null);$('password-dialog').oncancel=e=>{e.preventDefault();finishPassword(null);};
-  function reset(){epoch++;invalidateDownload();closeInline();finishPassword(null);if(pdf)pdf.destroy().catch(()=>{});pdf=null;parsedBytes=null;inspectedBytes=null;inspectedPage=-1;inspectedObjects=[];bytes=null;undo=[];redo=[];placedPages=[];placedUndo=[];placedRedo=[];selectedPlaced=null;baseCanvasSnapshot=null;objects=[];selected=null;gesture=null;placedDrag=null;imageFile=null;view=null;dirty=false;busy=false;page=0;name='';$('file').value='';$('text').value='';$('find').value='';$('results').replaceChildren();$('hits').replaceChildren();$('canvas').width=$('gesture').width=1;$('wrap').hidden=true;$('empty').hidden=false;$('name').textContent='PDF चुनें · अधिकतम 50 MB / 150 pages';$('page-label').textContent='0 / 0';buttons();say('Ready · Original file नहीं बदलेगी।');}
+  function reset(){epoch++;invalidateDownload();closeInline();finishPassword(null);if(pdf)pdf.destroy().catch(()=>{});pdf=null;parsedBytes=null;inspectedBytes=null;inspectedPage=-1;inspectedObjects=[];bytes=null;undo=[];redo=[];placedPages=[];placedUndo=[];placedRedo=[];selectedPlaced=null;baseCanvasSnapshot=null;objects=[];selected=null;gesture=null;placedDrag=null;imageFile=null;view=null;formValues=new Map();formFields=[];dirty=false;busy=false;page=0;name='';$('file').value='';$('text').value='';$('find').value='';$('results').replaceChildren();$('form-list').replaceChildren();$('form-panel').hidden=true;$('hits').replaceChildren();$('canvas').width=$('gesture').width=1;$('wrap').hidden=true;$('empty').hidden=false;$('name').textContent='PDF चुनें · अधिकतम 50 MB / 150 pages';$('page-label').textContent='0 / 0';buttons();say('Ready · Original file नहीं बदलेगी।');}
   function choose(o){if(busy)return;if(inlineSession){if(inlineSession.object.index===o.index)return;finishInline();return;}selectedPlaced=null;selected=o;$('text').value=cleanText(o.text);$('size').value=Math.round(o.size*10)/10;$('color').value=o.color;$('bold').value=o.boldLevel||1;updateBold();$('selection').textContent='Text पर double-click / double-tap करें। Style बदलने के बाद Apply style दबाएँ।';root.querySelectorAll('#np-hits button').forEach(b=>b.classList.toggle('chosen',b.dataset.block===o.index));buttons();}
   function resizePlaced(o,original,dx,dy){const old=placedViewportRect(original),right=old.x+old.w+dx,bottom=old.y+old.h+dy;let nw=Math.max(14,right-old.x),nh=Math.max(14,bottom-old.y);if(o.type==='image'){const ratio=(old.w||1)/(old.h||1);if(Math.abs(dx)>=Math.abs(dy))nh=nw/ratio;else nw=nh*ratio;}const a=view.convertToPdfPoint(old.x,old.y),b=view.convertToPdfPoint(old.x+nw,old.y+nh),box=[Math.min(a[0],b[0]),Math.min(a[1],b[1]),Math.max(a[0],b[0]),Math.max(a[1],b[1])];if(o.type==='draw'){const ob=placedBounds(original),sx=(box[2]-box[0])/Math.max(1,ob[2]-ob[0]),sy=(box[3]-box[1])/Math.max(1,ob[3]-ob[1]);o.points=original.points.map(p=>({x:box[0]+(p.x-ob[0])*sx,y:box[1]+(p.y-ob[1])*sy}));}else{o.x=box[0];o.y=box[1];o.w=box[2]-box[0];o.h=box[3]-box[1];if(o.type==='text')o.size=Math.max(6,original.size*(o.h/Math.max(1,old.h)));}}
   function startPlacedPointer(e,o,resize,button){if(busy||tool!=='edit')return;selectedPlaced=o;selected=null;placedDrag={o,resize,button,start:{x:e.clientX,y:e.clientY},original:clonePlacedItem(o),before:snapshotPlaced(),moved:false,pointerId:e.pointerId};button.setPointerCapture?.(e.pointerId);button.onpointermove=ev=>{if(!placedDrag||placedDrag.pointerId!==ev.pointerId)return;const dx=ev.clientX-placedDrag.start.x,dy=ev.clientY-placedDrag.start.y;if(Math.abs(dx)+Math.abs(dy)<2)return;placedDrag.moved=true;if(resize)resizePlaced(o,placedDrag.original,dx,dy);else{const d0=view.convertToPdfPoint(0,0),d1=view.convertToPdfPoint(dx,dy),mx=d1[0]-d0[0],my=d1[1]-d0[1];if(o.type==='draw')o.points=placedDrag.original.points.map(p=>({x:p.x+mx,y:p.y+my}));else{o.x=placedDrag.original.x+mx;o.y=placedDrag.original.y+my;}}repaintPlaced();};button.onpointerup=ev=>{if(!placedDrag||placedDrag.pointerId!==ev.pointerId)return;button.releasePointerCapture?.(ev.pointerId);const d=placedDrag;placedDrag=null;button.onpointermove=button.onpointerup=null;if(d.moved){placedUndo.push(d.before);while(placedUndo.length>12)placedUndo.shift();placedRedo=[];invalidateDownload();dirty=true;say('Placed item बदला गया।');}hits();buttons();};button.onpointercancel=()=>{if(placedDrag){Object.assign(o,clonePlacedItem(placedDrag.original));placedDrag=null;repaintPlaced();hits();buttons();}};}
@@ -6724,7 +6766,20 @@ try {
     (placedPages[page]||[]).forEach(o=>{const r=placedViewportRect(o),b=document.createElement('button');b.type='button';b.className='np-placed-hit';b.title=`Placed ${o.type}`;b.setAttribute('aria-label',`Select placed ${o.type}`);b.dataset.placed=o.id;Object.assign(b.style,{left:r.x+'px',top:r.y+'px',width:Math.max(12,r.w)+'px',height:Math.max(12,r.h)+'px'});b.classList.toggle('chosen',selectedPlaced?.id===o.id);b.onclick=e=>{e.preventDefault();choosePlaced(o);};b.onpointerdown=e=>{if(e.button!==0)return;e.preventDefault();e.stopPropagation();startPlacedPointer(e,o,false,b);};const h=document.createElement('span');h.className='np-resize-handle';h.title='Resize';h.onpointerdown=e=>{e.preventDefault();e.stopPropagation();startPlacedPointer(e,o,true,b);};b.append(h);$('hits').append(b);});
    }
   }
- async function render(ticket){
+  async function ensureTesseract(){if(window.Tesseract)return window.Tesseract;if(!tesseractPromise)tesseractPromise=new Promise((resolve,reject)=>{const script=document.createElement('script');script.src='https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js';script.onload=()=>window.Tesseract?resolve(window.Tesseract):reject(new Error('OCR engine unavailable.'));script.onerror=()=>{script.remove();reject(new Error('OCR engine load नहीं हुआ।'));};document.head.append(script);}).catch(error=>{tesseractPromise=null;throw error;});return tesseractPromise;}
+  async function runOcrCurrentPage(){if(!bytes||busy||!pdf){say('पहले PDF खोलें।');return;}await job(async ticket=>{const requested=$('language').value,language={en:'eng',hi:'hin',mr:'mar',auto:'eng+hin+mar'}[requested]||'eng';say(`Page ${page+1} का OCR तैयार हो रहा है…`);const source=await pdf.getPage(page+1),scale=Math.min(2,2600/Math.max(source.view[2]-source.view[0],source.view[3]-source.view[1])),viewport=source.getViewport({scale}),canvas=document.createElement('canvas');canvas.width=Math.ceil(viewport.width);canvas.height=Math.ceil(viewport.height);if(canvas.width*canvas.height>22000000)throw new Error('इस page का resolution बहुत बड़ा है। Zoom कम करके फिर OCR करें।');await source.render({canvasContext:canvas.getContext('2d'),viewport}).promise;const T=await ensureTesseract(),worker=await T.createWorker(language);try{const result=await worker.recognize(canvas);if(ticket!==epoch)return;const text=cleanText(result?.data?.text||'').trim().slice(0,2000);if(!text){say('OCR में readable text नहीं मिला।');return;}$('text').value=text;setTool('text');$('text').value=text;say(`OCR complete · ${text.length} characters sidebar में रखे गए। Text tool से page पर place करें।`);}finally{await worker.terminate();}},true);}
+  ocrButton.onclick=()=>void runOcrCurrentPage();
+  function formKind(field){const type=field?.constructor?.name||'';if(type.includes('CheckBox'))return'checkbox';if(type.includes('RadioGroup'))return'radio';if(type.includes('Dropdown'))return'dropdown';if(type.includes('OptionList'))return'list';return'text';}
+  function formCurrentValue(field,kind){if(kind==='checkbox')return field.isChecked?.()?'true':'false';if(kind==='radio')return field.getSelected?.()||'';const value=field.getText?.()??field.getSelected?.()??'';return Array.isArray(value)?value[0]||'':String(value);}
+  function drawFormPanel(){const panel=$('form-panel'),list=$('form-list');list.replaceChildren();if(!formFields.length){panel.hidden=false;const empty=document.createElement('p');empty.textContent='इस PDF में interactive form fields नहीं मिले।';empty.style.margin='6px 0';list.append(empty);return;}panel.hidden=false;for(const entry of formFields){const row=document.createElement('label');row.style.cssText='display:grid;gap:4px;margin:9px 0;font-size:12px';const caption=document.createElement('span');caption.textContent=entry.name;row.append(caption);let control;if(entry.kind==='checkbox'){control=document.createElement('input');control.type='checkbox';control.checked=formValues.get(entry.name)??(entry.value==='true');control.addEventListener('change',()=>{formValues.set(entry.name,control.checked?'true':'false');dirty=true;invalidateDownload();});}else if(entry.kind==='dropdown'||entry.kind==='list'||entry.kind==='radio'){control=document.createElement('select');control.style.cssText='width:100%;padding:5px';if(entry.kind==='list')control.multiple=true;for(const option of entry.options){const item=document.createElement('option');item.value=option;item.textContent=option;item.selected=String(formValues.get(entry.name)??entry.value).split(',').includes(option);control.append(item);}control.addEventListener('change',()=>{formValues.set(entry.name,entry.kind==='list'?Array.from(control.selectedOptions).map(o=>o.value).join(','):control.value);dirty=true;invalidateDownload();});}else{control=document.createElement('input');control.type='text';control.value=formValues.get(entry.name)??entry.value;control.maxLength=4000;control.addEventListener('input',()=>{formValues.set(entry.name,control.value);dirty=true;invalidateDownload();});}control.setAttribute('aria-label',entry.name);row.append(control);list.append(row);}}
+  async function inspectFormFields(){if(!bytes||busy){if(!bytes)say('पहले PDF खोलें।');return;}await job(async ticket=>{const doc=await PDFLib.PDFDocument.load(bytes),fields=doc.getForm().getFields();if(ticket!==epoch)return;formFields=fields.map(field=>{const kind=formKind(field),options=(kind==='dropdown'||kind==='list'||kind==='radio')?(field.getOptions?.()||[]):[];return{name:field.getName(),kind,value:formCurrentValue(field,kind),options};}).filter(entry=>entry.name);formValues=new Map(formFields.map(entry=>[entry.name,entry.value]));drawFormPanel();say(formFields.length?`${formFields.length} interactive form field(s) मिले। Sidebar में भरकर Download PDF करें।`:'इस PDF में interactive form fields नहीं मिले।');},true);}
+  async function applyFormValues(sourceBytes){if(!formValues.size)return sourceBytes;const out=await PDFLib.PDFDocument.load(sourceBytes),form=out.getForm();for(const field of form.getFields()){const fieldName=field.getName();if(!formValues.has(fieldName))continue;const kind=formKind(field),value=formValues.get(fieldName);try{if(kind==='checkbox'){value==='true'?field.check():field.uncheck();}else if(kind==='radio'){if(value)field.select(value);}else if(kind==='dropdown'||kind==='list'){const values=String(value).split(',').map(item=>item.trim()).filter(Boolean);if(values.length)field.select(kind==='list'?values:values[0]);else field.clear?.();}else field.setText(String(value??''));}catch(error){throw new Error(`Form field “${fieldName}” save नहीं हुआ: ${error.message||error}`);}}return await out.save({useObjectStreams:true});}
+  $('form-fields').onclick=()=>void inspectFormFields();
+  async function runPageAction(action){if(!bytes||busy||!pdf)return;if(placedPages.some(list=>list.length)){say('पहले placed edits को Download करें या हटाएँ; उसके बाद page arrange करें।');return;}if(action==='delete'&&!confirm('इस page को PDF से हटाएँ? Undo उपलब्ध रहेगा।'))return;const oldPage=page,oldPlaced=placedPages;await job(async ticket=>{const out=await PDFLib.PDFDocument.load(bytes),count=out.getPageCount();let nextPage=page,nextPlaced=oldPlaced.map(list=>list.slice()),message='';if((action==='left'&&page===0)||(action==='right'&&page===count-1)){say(action==='left'?'यह पहला page है।':'यह आखिरी page है।');return;}if(action==='delete'){if(count<=1)throw new Error('कम-से-कम एक page रखना जरूरी है।');out.removePage(page);nextPlaced.splice(page,1);nextPage=Math.min(page,count-2);message='Page delete किया गया।';}else if(action==='duplicate'){const [copy]=await out.copyPages(out,[page]);out.insertPage(page+1,copy);nextPlaced.splice(page+1,0,[]);nextPage=page+1;message='Page duplicate किया गया।';}else if(action==='blank'){const source=out.getPage(page);out.insertPage(page+1,[source.getWidth(),source.getHeight()]);nextPlaced.splice(page+1,0,[]);nextPage=page+1;message='Blank page insert किया गया।';}else{const offset=action==='left'?-1:1,to=page+offset,[copy]=await out.copyPages(out,[page]);out.removePage(page);out.insertPage(to,copy);const moved=nextPlaced.splice(page,1)[0]||[];nextPlaced.splice(to,0,moved);nextPage=to;message=offset<0?'Page left move किया गया।':'Page right move किया गया।';}const next=await out.save({useObjectStreams:true});page=nextPage;placedPages=nextPlaced;try{await commit(next,ticket,message);}catch(error){page=oldPage;placedPages=oldPlaced;throw error;}},true);}
+  pageActions.addEventListener('click',e=>{const action=e.target.closest('button')?.dataset.pageAction;if(action)void runPageAction(action);});
+  function syncThumbnailState(){pageStrip.querySelectorAll('.np-thumb').forEach((button,index)=>{const active=index===page;button.classList.toggle('np-thumb-active',active);button.setAttribute('aria-current',active?'page':'false');if(active)button.scrollIntoView({block:'nearest',inline:'nearest'});});}
+  async function renderPageThumbs(ticket=epoch){const current=pdf;if(!current||ticket!==epoch)return;pageStrip.replaceChildren();for(let i=0;i<current.numPages;i++){if(ticket!==epoch||pdf!==current)return;const button=document.createElement('button');button.type='button';button.className='np-thumb';button.setAttribute('aria-label',`Open PDF page ${i+1}`);button.dataset.page=String(i);const canvas=document.createElement('canvas');const label=document.createElement('span');label.textContent=`Page ${i+1}`;button.append(canvas,label);button.onclick=()=>{if(busy||page===i)return;page=i;syncThumbnailState();void job(t=>render(t),false);};pageStrip.append(button);try{const source=await current.getPage(i+1),base=source.getViewport({scale:1}),scale=Math.min(.22,76/base.width,92/base.height),viewport=source.getViewport({scale});canvas.width=Math.max(1,Math.ceil(viewport.width));canvas.height=Math.max(1,Math.ceil(viewport.height));await source.render({canvasContext:canvas.getContext('2d'),viewport}).promise;}catch(error){console.warn('PDF thumbnail render failed',error);}syncThumbnailState();}}
+  async function render(ticket){
   if(!bytes)return;
   const reused=pdf&&parsedBytes===bytes,renderBytes=bytes,selectionBefore=selected;
   const current=reused?pdf:await pdfjsLib.getDocument({data:bytes.slice(),isEvalSupported:false,enableScripting:false}).promise;
@@ -6746,7 +6801,7 @@ try {
    const g=$('gesture');g.width=temp.width;g.height=temp.height;
    $('wrap').style.width=viewport.width+'px';$('wrap').style.height=viewport.height+'px';$('wrap').hidden=false;$('empty').hidden=true;
    $('page-label').textContent=`${page+1} / ${pdf.numPages}`;$('selection').textContent=`${objects.length} editable text blocks · Grouped/rotated text supported · नाम पर box न मिले तो Find में खोजें; scan/outline को OCR चाहिए।`;
-    repaintPlaced();hits();buttons();
+    repaintPlaced();hits();buttons();syncThumbnailState();
   }catch(err){if(pdf!==current)await current.destroy();throw err;}
  }
  function pushHistory(list,value){list.push(value);while(list.length>12||list.reduce((n,b)=>n+b.length,0)>70*1024*1024)list.shift();}
@@ -6758,7 +6813,7 @@ try {
  }
  async function open(file,ticket){
    if(!file)return;if(file.size===0)throw new Error('PDF file खाली है।');if(file.size>MAX_PDF_BYTES)throw new Error('अधिकतम 50 MB की PDF चुनें।');
-  await ready();if(ticket!==epoch)return;
+   pageStrip.replaceChildren();await ready();if(ticket!==epoch)return;
   let input=new Uint8Array(await file.arrayBuffer());
   let parsed=await PDFLib.PDFDocument.load(input).catch(()=>null);
   if(!parsed){
@@ -6768,7 +6823,7 @@ try {
  if(ticket!==epoch)return;const pageCount=parsed.getPageCount();if(!Number.isInteger(pageCount)||pageCount<1)throw new Error('PDF में कोई readable page नहीं मिला।');if(pageCount>MAX_PDF_PAGES)throw new Error('अधिकतम 150 pages समर्थित हैं।');
    invalidateDownload();const previous=bytes,oldPage=page;bytes=input;page=0;placedPages=Array.from({length:parsed.getPageCount()},()=>[]);placedUndo=[];placedRedo=[];selectedPlaced=null;
   try{await render(ticket);}catch(err){if(ticket===epoch){bytes=previous;page=oldPage;}throw err;}
-   if(ticket!==epoch)return;undo=[];redo=[];dirty=false;name=file.name;$('name').textContent=name;say('Ready · Double-click text to edit');
+  if(ticket!==epoch)return;undo=[];redo=[];formValues=new Map();formFields=[];$('form-panel').hidden=true;$('form-list').replaceChildren();dirty=false;name=file.name;$('name').textContent=name;say('Ready · Double-click text to edit');void renderPageThumbs(ticket);
  }
  function setTool(value){if(busy)return;if(inlineSession){finishInline();return;}tool=value;selected=null;selectedPlaced=null;gesture=null;root.querySelectorAll('[data-np-tool]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.npTool===value)));hits();buttons();say(value==='edit'?'नीले box पर click करके text बदलें।':value==='text'?'Page पर click करके वहीं नया text लिखें।':value==='image'?'PNG/JPG चुनें, फिर page पर click करें।':'Page पर drag करें। Whiteout secure redaction नहीं है।');}
  const rgb=hex=>PDFLib.rgb(parseInt(hex.slice(1,3),16)/255,parseInt(hex.slice(3,5),16)/255,parseInt(hex.slice(5,7),16)/255);
@@ -6797,7 +6852,7 @@ try {
   if(!selected)return;const chosen=selected,text=cleanText($('text').value);if(!deleting&&!text.trim())throw new Error('Text लिखें या Delete selected text दबाएँ।');
   if(deleting&&!confirm('इस चुने हुए text block को हटाएँ? Undo उपलब्ध है।'))return;
   say('मूल text बदल रहा है…');const removed=core.remove(bytes,page,chosen);let next=removed;
-  if(!deleting){const out=await PDFLib.PDFDocument.load(removed);await drawText({doc:out,page:out.getPage(page)},text,[chosen.matrix[4],chosen.matrix[5]],size(),rgb($('color').value),0,chosen.matrix);next=await out.save();}
+  if(!deleting){const out=await PDFLib.PDFDocument.load(removed);await drawText({doc:out,page:out.getPage(page)},text,[chosen.matrix[4],chosen.matrix[5]],size(),rgb($('color').value),0,chosen.matrix);next=await out.save({useObjectStreams:true});}
   await commit(next,ticket,deleting?'चुना हुआ मूल text block हटाया गया।':'मूल text block बदला गया। Preview में layout और मात्राएँ जाँचें।');
    return true;
   });}
@@ -6829,7 +6884,7 @@ try {
  $('file').onchange=()=>job(t=>open($('file').files[0],t));$('close').onclick=()=>{if(!dirty||confirm('Unsaved edits छोड़कर बंद करें?'))reset();};
  $('apply').onclick=()=>inlineSession?finishInline():selectedPlaced?applyPlaced():applyText();$('delete').onclick=()=>selectedPlaced?deletePlaced():applyText(true);$('find').oninput=hits;
  $('language').onchange=()=>{$('text').lang=$('language').value==='auto'?'':$('language').value;say('Unicode text paste/type करें। यह transliteration नहीं है; Hindi/Marathi shaping experimental है।');};
-  async function travel(from,to){await job(async t=>{if(!from.length)return;invalidateDownload();const old=bytes;bytes=from[from.length-1];try{await render(t);}catch(e){if(t===epoch)bytes=old;throw e;}if(t===epoch){from.pop();pushHistory(to,old);dirty=true;say('Undo / Redo लागू हुआ।');}});}
+  async function travel(from,to){await job(async t=>{if(!from.length)return;invalidateDownload();const old=bytes;bytes=from[from.length-1];try{await render(t);}catch(e){if(t===epoch)bytes=old;throw e;}if(t===epoch){placedPages=Array.from({length:pdf.numPages},(_,i)=>placedPages[i]||[]);from.pop();pushHistory(to,old);dirty=true;say('Undo / Redo लागू हुआ।');}});}
   function travelPlaced(from,to){if(busy||!from.length)return;const current=snapshotPlaced(),next=from.pop();to.push(current);restorePlaced(next);invalidateDownload();dirty=true;say('Placed item का Undo / Redo लागू हुआ।');}
   $('undo').onclick=()=>placedUndo.length?travelPlaced(placedUndo,placedRedo):travel(undo,redo);$('redo').onclick=()=>placedRedo.length?travelPlaced(placedRedo,placedUndo):travel(redo,undo);
   async function changePage(delta){await job(async t=>{const old=page;page+=delta;selected=null;selectedPlaced=null;try{await render(t);}catch(e){page=old;throw e;}},false);}
@@ -6842,12 +6897,12 @@ try {
  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&documentView.classList.contains('np-expanded')){e.preventDefault();expandPreview(false);}});
  window.addEventListener('portal-auth-cleared',()=>{if(documentView.classList.contains('np-expanded'))expandPreview(false);});
   new ResizeObserver(refreshFit).observe($('scroll'));
-  async function materializePlacedEdits(){if(!placedPages.some(list=>list.length))return bytes;const out=await PDFLib.PDFDocument.load(bytes);for(let i=0;i<placedPages.length;i++){const target=out.getPage(i);for(const o of placedPages[i]){if(o.type==='text'){await drawText({doc:out,page:target},o.text,[o.x,o.y],o.size||18,rgb(o.color||'#111827'),0,null,o.boldLevel||1);}else if(o.type==='image'){const img=o.imageType==='image/png'?await out.embedPng(o.imageData):await out.embedJpg(o.imageData);target.drawImage(img,{x:o.x,y:o.y,width:o.w,height:o.h});}else if(o.type==='draw'){for(let j=1;j<o.points.length;j++)target.drawLine({start:{x:o.points[j-1].x,y:o.points[j-1].y},end:{x:o.points[j].x,y:o.points[j].y},thickness:o.pen||2,color:rgb(o.color||'#111827')});}else target.drawRectangle({x:o.x,y:o.y,width:o.w,height:o.h,color:o.type==='whiteout'?PDFLib.rgb(1,1,1):PDFLib.rgb(1,.85,0),opacity:o.type==='highlight'?.35:1});}}return await out.save();}
+  async function materializePlacedEdits(){let source=bytes;if(placedPages.some(list=>list.length)){const out=await PDFLib.PDFDocument.load(bytes);for(let i=0;i<placedPages.length;i++){const target=out.getPage(i);for(const o of placedPages[i]){if(o.type==='text'){await drawText({doc:out,page:target},o.text,[o.x,o.y],o.size||18,rgb(o.color||'#111827'),0,null,o.boldLevel||1);}else if(o.type==='image'){const img=o.imageType==='image/png'?await out.embedPng(o.imageData):await out.embedJpg(o.imageData);target.drawImage(img,{x:o.x,y:o.y,width:o.w,height:o.h});}else if(o.type==='draw'){for(let j=1;j<o.points.length;j++)target.drawLine({start:{x:o.points[j-1].x,y:o.points[j-1].y},end:{x:o.points[j].x,y:o.points[j].y},thickness:o.pen||2,color:rgb(o.color||'#111827')});}else target.drawRectangle({x:o.x,y:o.y,width:o.w,height:o.h,color:o.type==='whiteout'?PDFLib.rgb(1,1,1):PDFLib.rgb(1,.85,0),opacity:o.type==='highlight'?.35:1});}}source=await out.save({useObjectStreams:true});}return await applyFormValues(source);}
   $('save').onclick=async()=>{
   if(!bytes||busy)return;
    if(selected&&(cleanText($('text').value)!==cleanText(selected.text)||Math.abs(size()-selected.size)>.11||$('color').value!==selected.color||boldLevel()!==(selected.boldLevel||1))){say('पहले Save edit / Apply style करें।');return;}
    if(selectedPlaced&&selectedPlaced.type==='text'&&(cleanText($('text').value)!==cleanText(selectedPlaced.text)||Math.abs(size()-selectedPlaced.size)>.11||$('color').value!==selectedPlaced.color||boldLevel()!==(selectedPlaced.boldLevel||1))){say('पहले Apply style करें।');return;}
-   await job(async ticket=>{const outputBytes=await materializePlacedEdits(),blob=new Blob([outputBytes],{type:'application/pdf'});await window.exportPortalPdf(blob,name.replace(/\.pdf$/i,'')+'-edited.pdf');if(ticket!==epoch)return;dirty=false;$('download-link').hidden=false;say('PDF history में save हुई और download भेजा गया।');});
+   await job(async ticket=>{const outputBytes=await materializePlacedEdits(),blob=new Blob([outputBytes],{type:'application/pdf'}),fileName=name.replace(/\.pdf$/i,'')+'-edited.pdf';await window.exportPortalPdf(blob,fileName);await window.savePdfEditorCloud?.(blob,fileName);if(ticket!==epoch)return;dirty=false;$('download-link').hidden=false;say('PDF history और private cloud storage में save हुई और download भेजा गया।');});
  };
  $('download-link').onclick=()=>$('save').click();
    root.addEventListener('keydown',e=>{if(['INPUT','TEXTAREA','SELECT'].includes(e.target.tagName))return;if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='z'){e.preventDefault();e.shiftKey?(placedRedo.length?travelPlaced(placedRedo,placedUndo):travel(redo,undo)):(placedUndo.length?travelPlaced(placedUndo,placedRedo):travel(undo,redo));}});
