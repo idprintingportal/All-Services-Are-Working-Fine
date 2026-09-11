@@ -4329,10 +4329,6 @@ body:has(#loginScreen.front-home){background:#07111b!important;color:#e8f7ff!imp
     return out;
   }
 
-  // User-provided prompt represented as a deterministic processing profile.
-  // This intentionally preserves likeness and does not synthesize facial details.
-  const CLEAN_PASSPORT_PROMPT = 'Official passport portrait; front-facing, eye-level gaze, straight shoulders, neutral expression, centered chest-up framing, 3.5cm x 4.5cm ratio, clean solid light-blue or off-white studio backdrop, even diffused lighting, crisp focus, natural skin tones and texture, preserve facial likeness, formal identification-photo standard.';
-
   async function processCleanPassportPhoto(croppedCanvas){
     const status=document.getElementById('cleanPassportStatus');
     const startButton=document.getElementById('cleanPassportBtn');
@@ -4345,43 +4341,22 @@ body:has(#loginScreen.front-home){background:#07111b!important;color:#e8f7ff!imp
     status.textContent='Face likeness सुरक्षित रखते हुए lighting और clarity improve की जा रही है…';
     try{
       const selectedBackground=document.getElementById('cleanPassportBgColor')?.value||'#dbeafe';
-      let promptEditedCanvas=null;
-      let promptAiError=null;
+      let enhanced=croppedCanvas;
       try{
-        status.textContent='Prompt AI से official passport portrait तैयार किया जा रहा है…';
-        const aiResult=await secureApi({
-          action:'cleanPassportPhoto',
-          imageBase64:croppedCanvas.toDataURL('image/png'),
-          prompt:CLEAN_PASSPORT_PROMPT+' Use a clean '+(selectedBackground==='#ffffff'?'off-white':'light-blue')+' studio background.'
-        },{timeoutMs:180000});
-        if(!aiResult.imageBase64)throw new Error('Prompt AI returned no image.');
-        const aiImage=new Image();aiImage.src='data:'+(aiResult.mimeType||'image/png')+';base64,'+aiResult.imageBase64;await aiImage.decode();
-        promptEditedCanvas=document.createElement('canvas');promptEditedCanvas.width=aiImage.naturalWidth||aiImage.width;promptEditedCanvas.height=aiImage.naturalHeight||aiImage.height;
-        promptEditedCanvas.getContext('2d').drawImage(aiImage,0,0);
-      }catch(promptError){
-        promptAiError=promptError;
-        console.warn('Prompt AI unavailable; using local passport-safe fallback.',promptError);
+        status.textContent='Photo clarity और lighting improve की जा रही है…';
+        enhanced=await enhanceCanvasViaServer(croppedCanvas,25);
+      }catch(serverError){
+        console.warn('Clean passport server enhancement unavailable; using local clarity pass.',serverError);
+        enhanced=enhancePassportCanvas(croppedCanvas,25);
       }
-
-      let cutout=promptEditedCanvas||croppedCanvas;
-      let backgroundRemoved=Boolean(promptEditedCanvas);
-      if(!promptEditedCanvas){
-        let enhanced=croppedCanvas;
-        try{
-          enhanced=await enhanceCanvasViaServer(croppedCanvas,25);
-        }catch(serverError){
-          console.warn('Clean passport server enhancement unavailable; using local clarity pass.',serverError);
-          enhanced=enhancePassportCanvas(croppedCanvas,25);
-        }
-        cutout=enhanced;
-        try{
-          status.textContent='Background clean किया जा रहा है…';
-          cutout=await aiRemovePassportBackground(enhanced);
-          backgroundRemoved=true;
-        }catch(backgroundError){
-          backgroundRemoved=false;
-          console.warn('Clean passport background removal unavailable; retaining source background.',backgroundError);
-        }
+      let cutout=enhanced;
+      let backgroundRemoved=false;
+      try{
+        status.textContent='Background clean किया जा रहा है…';
+        cutout=await aiRemovePassportBackground(enhanced);
+        backgroundRemoved=true;
+      }catch(backgroundError){
+        console.warn('Clean passport background removal unavailable; retaining source background.',backgroundError);
       }
 
       const out=document.createElement('canvas');out.width=413;out.height=531;
@@ -4395,8 +4370,7 @@ body:has(#loginScreen.front-home){background:#07111b!important;color:#e8f7ff!imp
       if(preview){preview.hidden=false;preview.style.background=ctx.fillStyle;const pCtx=preview.getContext('2d');pCtx.clearRect(0,0,413,531);pCtx.drawImage(out,0,0);}
       if(useButton)useButton.hidden=false;
       if(downloadButton)downloadButton.hidden=false;
-      const promptAiHint=promptAiError?String(promptAiError.message||promptAiError).replace(/\s+/g,' ').slice(0,180):'';
-      status.textContent=promptEditedCanvas?'✅ Prompt AI passport photo ready.':(promptAiError?'⚠️ Prompt AI unavailable; safe cleanup fallback तैयार है.'+(promptAiHint?' कारण: '+promptAiHint:''):'✅ Clean & clear passport photo ready.')+(backgroundRemoved?'':' Original background kept because cleanup was unavailable.');
+      status.textContent='✅ Clean & clear passport photo ready.'+(backgroundRemoved?'':' Original background kept because cleanup was unavailable.');
     }catch(error){
       console.error('Clean passport processing failed:',error);
       status.textContent='❌ Photo process नहीं हो पाया। कृपया दोबारा प्रयास करें।';
