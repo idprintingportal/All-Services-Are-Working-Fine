@@ -114,23 +114,27 @@ def clean_passport():
     if not prompt or len(prompt) > 5000:
         return jsonify(success=False, error="A valid passport prompt is required."), 400
     if GEMINI_API_KEY:
-        # Gemini accepts text and base64 image parts in one JSON interaction.
+        # Use Google's documented generateContent REST shape for image editing:
+        # text and the source image are sent as parts of one user content block.
         # Keep the key server-side and request image-only output.
         gemini_payload = {
-            "model": GEMINI_IMAGE_MODEL,
-            "input": [
-                {"type": "text", "text": prompt},
-                {"type": "image", "mime_type": "image/png", "data": encoded},
-            ],
-            "response_format": {
-                "type": "image",
-                "mime_type": "image/png",
-                "aspect_ratio": "4:5",
-                "image_size": "1K",
+            "contents": [{
+                "parts": [
+                    {"text": prompt},
+                    {"inline_data": {"mime_type": "image/png", "data": encoded}},
+                ]
+            }],
+            "generationConfig": {
+                "responseModalities": ["IMAGE"],
+                "responseFormat": {
+                    "image": {"aspectRatio": "4:5", "imageSize": "1K"}
+                },
             },
         }
         req = urllib.request.Request(
-            "https://generativelanguage.googleapis.com/v1beta/interactions",
+            "https://generativelanguage.googleapis.com/v1/models/"
+            + GEMINI_IMAGE_MODEL
+            + ":generateContent",
             data=json.dumps(gemini_payload).encode("utf-8"),
             headers={"x-goog-api-key": GEMINI_API_KEY, "Content-Type": "application/json"},
             method="POST",
@@ -140,20 +144,21 @@ def clean_passport():
                 result = json.loads(response.read().decode("utf-8"))
         except urllib.error.HTTPError as exc:
             detail = exc.read().decode("utf-8", errors="replace")[:400]
-            app.logger.warning("Gemini passport edit failed: %s", detail)
-            return jsonify(success=False, error="Gemini prompt service rejected the image."), 502
+            app.logger.warning("Gemini passport edit failed (HTTP %s): %s", exc.code, detail)
+            return jsonify(success=False, error=f"Gemini rejected the request (HTTP {exc.code}). Check model and API access."), 502
         except Exception:
             app.logger.exception("Gemini passport edit unavailable")
             return jsonify(success=False, error="Gemini prompt service is temporarily unavailable."), 502
-        image_data = ((result.get("output_image") or {}).get("data"))
-        if not image_data:
-            for step in result.get("steps", []) or []:
-                for block in step.get("content", []) or []:
-                    if block.get("type") == "image" and block.get("data"):
-                        image_data = block["data"]
-                        break
-                if image_data:
+        image_data = None
+        for candidate in result.get("candidates", []) or []:
+            content = candidate.get("content") or {}
+            for block in content.get("parts", []) or []:
+                inline = block.get("inlineData") or block.get("inline_data") or {}
+                if inline.get("data"):
+                    image_data = inline["data"]
                     break
+            if image_data:
+                break
         if not image_data:
             return jsonify(success=False, error="Gemini prompt service returned no image."), 502
         return jsonify(success=True, mode="prompt-ai", provider="gemini", model=GEMINI_IMAGE_MODEL, imageBase64=image_data, mimeType="image/png")
