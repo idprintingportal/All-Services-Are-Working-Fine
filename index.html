@@ -3988,6 +3988,16 @@ body:has(#loginScreen.front-home){background:#07111b!important;color:#e8f7ff!imp
     for(let y=Math.floor(h*.60);y<Math.floor(h*.99);y+=step){let colour=0,total=0;for(let x=0;x<w;x+=step){const i=(y*w+x)*4,mx=Math.max(p[i],p[i+1],p[i+2]),mn=Math.min(p[i],p[i+1],p[i+2]);if(mx-mn>16&&mx<248)colour++;total++;}if(colour/Math.max(1,total)>.20){run+=step;best=Math.max(best,run);}else run=0;}
     return best>h*.10;
   }
+  function pvcPanInset(c,leftPct=.018,rightPct=.006,topPct=.018,bottomPct=.018){
+    // Keep a little extra room on the right edge: PAN front QR/barcode blocks
+    // can sit very close to that edge and must not be clipped by the preview
+    // cleanup inset. The other edges retain the small inset used to hide the
+    // rounded source corners and external crop guides.
+    const left=Math.round(c.width*leftPct),right=Math.round(c.width*rightPct),top=Math.round(c.height*topPct),bottom=Math.round(c.height*bottomPct),out=document.createElement('canvas');
+    out.width=Math.max(1,c.width-left-right);out.height=Math.max(1,c.height-top-bottom);
+    out.getContext('2d').drawImage(c,left,top,out.width,out.height,0,0,out.width,out.height);
+    return out;
+  }
   function pvcPanPair(c){
     // PAN/e-PAN A4 exports keep the printable pair in a lower coloured band,
     // but the band can move between generators. Detect that band instead of
@@ -3996,7 +4006,7 @@ body:has(#loginScreen.front-home){background:#07111b!important;color:#e8f7ff!imp
     const pixel=(x,y)=>{const i=(y*w+x)*4,r=p[i],g=p[i+1],b=p[i+2],mx=Math.max(r,g,b),mn=Math.min(r,g,b);return {ink:mx<246||mn<232,color:mx-mn>16&&mx<248};};
     const rows=[];for(let y=Math.floor(h*.60);y<Math.floor(h*.99);y+=step){let score=0,colour=0,total=0;for(let x=0;x<w;x+=step){const q=pixel(x,y);if(q.ink)score++;if(q.color)colour++;total++;}rows.push({y,score:score/Math.max(1,total),colour:colour/Math.max(1,total)});}
     let best=null,start=null,weight=0;for(const row of rows){if(row.score>.18&&row.colour>.20){if(start===null)start=row.y;weight+=row.score+row.colour;}else if(start!==null){const end=row.y;if(end-start>h*.055&&(!best||weight>best.weight))best={start,end,weight};start=null;weight=0;}}if(start!==null){const end=h*.99;if(end-start>h*.055&&(!best||weight>best.weight))best={start,end,weight};}
-    const fixed=()=>pvcInsetPair(pvcSplitPair(pvcCropBox(c,0,.76,1,.20),false),.035);
+    const fixed=()=>pvcSplitPair(pvcCropBox(c,0,.76,1,.20),false).map(card=>pvcPanInset(card,.018,.006,.018,.018));
     if(!best)return fixed();
     const cropTop=Math.max(0,best.start),cropBottom=Math.min(h,best.end+Math.round(h*.004)),cropH=cropBottom-cropTop;
     // Map each card independently from continuous card-body occupancy. This
@@ -4005,9 +4015,9 @@ body:has(#loginScreen.front-home){background:#07111b!important;color:#e8f7ff!imp
     const findRun=(values,threshold,minLength)=>{let bestRun=null,start=-1,weight=0;for(let i=0;i<values.length;i++){if(values[i]>threshold){if(start<0)start=i;weight+=values[i];}else if(start>=0){if(i-start>=minLength&&(!bestRun||weight>bestRun.weight))bestRun={start,end:i,weight};start=-1;weight=0;}}if(start>=0&&values.length-start>=minLength&&(!bestRun||weight>bestRun.weight))bestRun={start,end:values.length,weight};return bestRun;};
     const detectCard=(xStart,xEnd)=>{const rows=[];for(let y=cropTop;y<cropBottom;y+=step){let hit=0,total=0;for(let x=Math.floor(w*xStart);x<Math.floor(w*xEnd);x+=step){if(pixel(x,y).ink)hit++;total++;}rows.push(hit/Math.max(1,total));}const yr=findRun(rows,.30,Math.max(3,Math.floor(cropH/step*.12)));if(!yr)return null;const y0=cropTop+yr.start*step,y1=Math.min(cropBottom,cropTop+yr.end*step),cols=[];for(let x=Math.floor(w*xStart);x<Math.floor(w*xEnd);x+=step){let hit=0,total=0;for(let y=y0;y<y1;y+=step){if(pixel(x,y).ink)hit++;total++;}cols.push(hit/Math.max(1,total));}const xr=findRun(cols,.30,Math.max(3,Math.floor((w*(xEnd-xStart))/step*.12)));if(!xr)return null;const x0=Math.floor(w*xStart)+xr.start*step,x1=Math.min(w,Math.floor(w*xStart)+xr.end*step);if((x1-x0)/(y1-y0)<1.25||(x1-x0)/(y1-y0)>2.05)return null;return{x:x0/w,y:y0/h,w:(x1-x0)/w,h:(y1-y0)/h};};
     const leftBox=detectCard(.03,.49),rightBox=detectCard(.51,.97);
-    if(leftBox&&rightBox){const pair=[leftBox,rightBox].map(box=>pvcInset(pvcCropRawBox(c,box.x,box.y,box.w,box.h),.018));return pair;}
+     if(leftBox&&rightBox){const pair=[leftBox,rightBox].map(box=>pvcPanInset(pvcCropRawBox(c,box.x,box.y,box.w,box.h),.018,.006,.018,.018));return pair;}
     const band=pvcCropRawBox(c,0,cropTop/h,1,cropH/h),trimmed=pvcTrimPrintableArea(band),pair=pvcSplitPair(trimmed,false);
-    return pair.map(card=>pvcInset(card,.018));
+     return pair.map(card=>pvcPanInset(card,.018,.006,.018,.018));
   }
   // PREMIUM AUTOPRINT CROP LOCK — v1 (2026-09-08)
   // Keep these document profiles immutable. UI/design/quality changes must not
