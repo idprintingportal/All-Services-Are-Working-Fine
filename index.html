@@ -1725,7 +1725,6 @@ body:has(#loginScreen.front-home){background:#07111b!important;color:#e8f7ff!imp
       <!-- STEP 1: GENERATE BUTTON (UPPER) -->
       <div class="btn-group">
         <button id="generateMultiPassportA4Btn" class="action-btn btn-add">🖼️ Generate Sheet (Preview)</button>
-        <button id="generatePassport4x6A4Btn" class="action-btn btn-add">🧾 Generate 4×6 (4 Photos) on A4</button>
       </div>
 
       <!-- PREVIEW & STEP 2: DOWNLOAD BUTTON (LOWER) -->
@@ -1813,11 +1812,11 @@ body:has(#loginScreen.front-home){background:#07111b!important;color:#e8f7ff!imp
         </div>
       </div>
 
-      <div class="btn-group">
-        <button id="make4x6NamePassportBtn" class="action-btn btn-add" disabled>🖼️ Generate 4×6 Sheet</button>
-        <button id="makeA4NamePassportBtn" class="action-btn btn-add" disabled>📄 Generate A4 Sheet</button>
-        <button id="makeA4NamePassport4x6Btn" class="action-btn btn-add" disabled>🧾 Generate 4×6 (4 Photos) on A4</button>
-      </div>
+       <div class="btn-group">
+         <button id="make4x6NamePassportBtn" class="action-btn btn-add" disabled>🖼️ Generate 4×6 Sheet</button>
+         <button id="makeA4NamePassportBtn" class="action-btn btn-add" disabled>📄 Generate A4 Sheet</button>
+         <button id="makeA4NamePassport4x6Btn" class="action-btn btn-add" disabled>🧾 Generate 4×6 (4 Photos) on A4</button>
+       </div>
 
       <div style="margin-top: 20px; border-top: 1px solid var(--border-color); padding-top: 15px;">
         <h3 id="namePassportSheetTitle" style="font-size: 15px; color: var(--accent-blue); margin-bottom: 6px;">Sheet Preview</h3>
@@ -3862,9 +3861,9 @@ body:has(#loginScreen.front-home){background:#07111b!important;color:#e8f7ff!imp
       rawNamePassportImg = cropper.getCroppedCanvas({ width: 413, height: 531, imageSmoothingQuality: 'high' });
       renderNamePassportPreview();
       namePassportLoaded = true;
-      document.getElementById('make4x6NamePassportBtn').disabled = false;
-      document.getElementById('makeA4NamePassportBtn').disabled = false;
-      document.getElementById('makeA4NamePassport4x6Btn').disabled = false;
+       document.getElementById('make4x6NamePassportBtn').disabled = false;
+       document.getElementById('makeA4NamePassportBtn').disabled = false;
+       document.getElementById('makeA4NamePassport4x6Btn').disabled = false;
     }
     else if (activeCropType === 'photo4x6') {
       const croppedCanvas = cropper.getCroppedCanvas({ width: 1200, height: 1800, imageSmoothingQuality: 'high' });
@@ -4430,19 +4429,13 @@ body:has(#loginScreen.front-home){background:#07111b!important;color:#e8f7ff!imp
     document.getElementById('downloadMultiPassportPdfBtn').disabled = false;
   });
 
-  document.getElementById('generatePassport4x6A4Btn').addEventListener('click', () => {
-    const sources=multiPassportCanvases.map((canvas,i)=>({canvas,loaded:multiPassportLoaded[i]})).filter(entry=>entry.canvas&&entry.loaded).map(entry=>entry.canvas);if(!sources.length){alert('पहले selected passport photos upload करें।');return;}
-    passportSheetMode='a4-4x6';const sheetCanvas=document.getElementById('passportSheetCanvas');renderFourUpA4(sheetCanvas,sources,readPhotoBorder('passport'));
-    document.getElementById('passportSheetTitle').innerText='Passport 4×6 Sheet on A4 (4 Photos)';document.getElementById('downloadMultiPassportPdfBtn').disabled=false;
-  });
-
   document.getElementById('passportEnhanceSlider')?.addEventListener('input',e=>{document.getElementById('passportEnhanceValue').textContent=e.target.value;});
   document.getElementById('passportRemoveBgBtn')?.addEventListener('click',()=>{passportRemoveBg=!passportRemoveBg;const b=document.getElementById('passportRemoveBgBtn');b.textContent=passportRemoveBg?'↩️ Keep Original Background':'🪄 Remove Background';document.getElementById('passportBgStatus').textContent=passportRemoveBg?'Selected background color will be used in the generated sheet.':'Original photo background will be retained.';});
 
   document.getElementById('downloadMultiPassportPdfBtn').addEventListener('click', () => {
     const sheetCanvas = document.getElementById('passportSheetCanvas');
     const targetQty = document.getElementById('passportQtyInput').value;
-    const fileName = passportSheetMode==='a4-4x6'?'Passport_4x6_4_Photos_A4.pdf':`Multi_Unique_Passport_${activePassportCount}_Photos_${targetQty}_Qty_A4.pdf`;
+    const fileName = `Multi_Unique_Passport_${activePassportCount}_Photos_${targetQty}_Qty_A4.pdf`;
     const result=buildOptimizedCanvasPdf(sheetCanvas,{fileName});
     result.pdf.save(fileName);
     saveToHistory('Multi-Unique Passports', fileName, result.blob, 'application/pdf');
