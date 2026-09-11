@@ -3,7 +3,7 @@
 This deliberately uses conservative, identity-preserving processing. It does not
 invent facial details or perform face replacement/restoration.
 """
-import base64, io, os
+import base64, io, os, json, urllib.request, urllib.error
 from flask import Flask, jsonify, request
 from PIL import Image, ImageOps
 import cv2
@@ -12,6 +12,10 @@ import numpy as np
 app = Flask(__name__)
 MAX_BYTES = int(os.getenv("MAX_IMAGE_BYTES", "12000000"))
 API_KEY = os.getenv("ENHANCE_API_KEY", "")
+OPENAI_API_KEY = os.getenv("OPENAI_API_KEY", "").strip()
+OPENAI_IMAGE_MODEL = os.getenv("OPENAI_IMAGE_MODEL", "gpt-image-2.5-sunburst").strip()
+GEMINI_API_KEY = os.getenv("GEMINI_API_KEY", "").strip()
+GEMINI_IMAGE_MODEL = os.getenv("GEMINI_IMAGE_MODEL", "gemini-3.1-flash-image").strip()
 
 def _authorized():
     return bool(API_KEY) and request.headers.get("X-Enhance-Key", "") == API_KEY
@@ -69,6 +73,113 @@ def enhance():
     except Exception:
         app.logger.exception("enhancement failed")
         return jsonify(success=False, error="Image enhancement failed"), 422
+
+def _multipart_form(fields, file_field, filename, content, mime_type):
+    boundary = "----SkilloPassportBoundary" + base64.b16encode(os.urandom(12)).decode("ascii")
+    chunks = []
+    for key, value in fields.items():
+        chunks.extend([
+            f"--{boundary}\r\n".encode(),
+            f'Content-Disposition: form-data; name="{key}"\r\n\r\n'.encode(),
+            str(value).encode("utf-8"),
+            b"\r\n",
+        ])
+    chunks.extend([
+        f"--{boundary}\r\n".encode(),
+        f'Content-Disposition: form-data; name="{file_field}"; filename="{filename}"\r\n'.encode(),
+        f"Content-Type: {mime_type}\r\n\r\n".encode(),
+        content,
+        b"\r\n",
+        f"--{boundary}--\r\n".encode(),
+    ])
+    return b"".join(chunks), boundary
+
+@app.post("/clean-passport")
+def clean_passport():
+    """Prompt-based passport edit; provider keys stay on this private worker."""
+    if not _authorized():
+        return jsonify(success=False, error="Unauthorized"), 401
+    if not GEMINI_API_KEY and not OPENAI_API_KEY:
+        return jsonify(success=False, configured=False, error="Prompt AI service is not configured."), 503
+    body = request.get_json(silent=True) or {}
+    encoded = str(body.get("imageBase64", ""))
+    encoded = encoded.split(",", 1)[1] if "," in encoded else encoded
+    if not encoded or len(encoded) > 17000000:
+        return jsonify(success=False, error="Valid passport image is required."), 400
+    try:
+        image_bytes = base64.b64decode(encoded, validate=True)
+    except Exception:
+        return jsonify(success=False, error="Invalid passport image encoding."), 400
+    prompt = str(body.get("prompt", "")).strip()
+    if not prompt or len(prompt) > 5000:
+        return jsonify(success=False, error="A valid passport prompt is required."), 400
+    if GEMINI_API_KEY:
+        # Gemini accepts text and base64 image parts in one JSON interaction.
+        # Keep the key server-side and request image-only output.
+        gemini_payload = {
+            "model": GEMINI_IMAGE_MODEL,
+            "input": [
+                {"type": "text", "text": prompt},
+                {"type": "image", "mime_type": "image/png", "data": encoded},
+            ],
+            "response_format": {
+                "type": "image",
+                "mime_type": "image/png",
+                "aspect_ratio": "4:5",
+                "image_size": "1K",
+            },
+        }
+        req = urllib.request.Request(
+            "https://generativelanguage.googleapis.com/v1beta/interactions",
+            data=json.dumps(gemini_payload).encode("utf-8"),
+            headers={"x-goog-api-key": GEMINI_API_KEY, "Content-Type": "application/json"},
+            method="POST",
+        )
+        try:
+            with urllib.request.urlopen(req, timeout=120) as response:
+                result = json.loads(response.read().decode("utf-8"))
+        except urllib.error.HTTPError as exc:
+            detail = exc.read().decode("utf-8", errors="replace")[:400]
+            app.logger.warning("Gemini passport edit failed: %s", detail)
+            return jsonify(success=False, error="Gemini prompt service rejected the image."), 502
+        except Exception:
+            app.logger.exception("Gemini passport edit unavailable")
+            return jsonify(success=False, error="Gemini prompt service is temporarily unavailable."), 502
+        image_data = ((result.get("output_image") or {}).get("data"))
+        if not image_data:
+            for step in result.get("steps", []) or []:
+                for block in step.get("content", []) or []:
+                    if block.get("type") == "image" and block.get("data"):
+                        image_data = block["data"]
+                        break
+                if image_data:
+                    break
+        if not image_data:
+            return jsonify(success=False, error="Gemini prompt service returned no image."), 502
+        return jsonify(success=True, mode="prompt-ai", provider="gemini", model=GEMINI_IMAGE_MODEL, imageBase64=image_data, mimeType="image/png")
+
+    fields = {"model": OPENAI_IMAGE_MODEL, "prompt": prompt, "size": "1024x1536", "quality": "medium"}
+    payload, boundary = _multipart_form(fields, "image[]", "passport-source.png", image_bytes, "image/png")
+    req = urllib.request.Request(
+        "https://api.openai.com/v1/images/edits",
+        data=payload,
+        headers={"Authorization": "Bearer " + OPENAI_API_KEY, "Content-Type": "multipart/form-data; boundary=" + boundary},
+        method="POST",
+    )
+    try:
+        with urllib.request.urlopen(req, timeout=120) as response:
+            result = json.loads(response.read().decode("utf-8"))
+    except urllib.error.HTTPError as exc:
+        detail = exc.read().decode("utf-8", errors="replace")[:400]
+        app.logger.warning("OpenAI passport edit failed: %s", detail)
+        return jsonify(success=False, error="Prompt AI service rejected the image."), 502
+    except Exception:
+        app.logger.exception("OpenAI passport edit unavailable")
+        return jsonify(success=False, error="Prompt AI service is temporarily unavailable."), 502
+    image_data = ((result.get("data") or [{}])[0]).get("b64_json")
+    if not image_data:
+        return jsonify(success=False, error="Prompt AI returned no image."), 502
+    return jsonify(success=True, mode="prompt-ai", provider="openai", model=OPENAI_IMAGE_MODEL, imageBase64=image_data, mimeType="image/png")
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=int(os.getenv("PORT", "10000")))
