@@ -3988,11 +3988,11 @@ body:has(#loginScreen.front-home){background:#07111b!important;color:#e8f7ff!imp
     // trusting one fixed Y coordinate, then split at the actual white gap.
     const ctx=c.getContext('2d'),w=c.width,h=c.height,p=ctx.getImageData(0,0,w,h).data,step=4;
     const pixel=(x,y)=>{const i=(y*w+x)*4,r=p[i],g=p[i+1],b=p[i+2],mx=Math.max(r,g,b),mn=Math.min(r,g,b);return {ink:mx<246||mn<232,color:mx-mn>16&&mx<248};};
-    const rows=[];for(let y=Math.floor(h*.48);y<Math.floor(h*.99);y+=step){let score=0,total=0;for(let x=0;x<w;x+=step){const q=pixel(x,y);if(q.ink)score++;total++;}rows.push({y,score:score/Math.max(1,total)});}
-    let best=null,start=null,weight=0;for(const row of rows){if(row.score>.18){if(start===null)start=row.y;weight+=row.score;}else if(start!==null){const end=row.y;if(end-start>h*.055&&(!best||weight>best.weight))best={start,end,weight};start=null;weight=0;}}if(start!==null){const end=h*.99;if(end-start>h*.055&&(!best||weight>best.weight))best={start,end,weight};}
+    const rows=[];for(let y=Math.floor(h*.60);y<Math.floor(h*.99);y+=step){let score=0,colour=0,total=0;for(let x=0;x<w;x+=step){const q=pixel(x,y);if(q.ink)score++;if(q.color)colour++;total++;}rows.push({y,score:score/Math.max(1,total),colour:colour/Math.max(1,total)});}
+    let best=null,start=null,weight=0;for(const row of rows){if(row.score>.18&&row.colour>.20){if(start===null)start=row.y;weight+=row.score+row.colour;}else if(start!==null){const end=row.y;if(end-start>h*.055&&(!best||weight>best.weight))best={start,end,weight};start=null;weight=0;}}if(start!==null){const end=h*.99;if(end-start>h*.055&&(!best||weight>best.weight))best={start,end,weight};}
     const fixed=()=>pvcInsetPair(pvcSplitPair(pvcCropBox(c,0,.76,1,.20),false),.035);
     if(!best)return fixed();
-    const cropTop=Math.max(0,best.start-Math.round(h*.008)),cropBottom=Math.min(h,best.end+Math.round(h*.008)),cropH=cropBottom-cropTop;
+    const cropTop=Math.max(0,best.start),cropBottom=Math.min(h,best.end+Math.round(h*.004)),cropH=cropBottom-cropTop;
     // The printable PAN pair is centered on the A4 page. Keep a small page
     // margin around each card and split at the stable centre gutter; the
     // adaptive Y band prevents the lower edge from being clipped.
