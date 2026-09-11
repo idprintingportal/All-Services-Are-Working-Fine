@@ -3982,6 +3982,12 @@ body:has(#loginScreen.front-home){background:#07111b!important;color:#e8f7ff!imp
   }
   function pvcInset(c,pct=.018){const x=Math.round(c.width*pct),y=Math.round(c.height*pct),out=document.createElement('canvas');out.width=Math.max(1,c.width-2*x);out.height=Math.max(1,c.height-2*y);out.getContext('2d').drawImage(c,x,y,out.width,out.height,0,0,out.width,out.height);return out;}
   function pvcInsetPair(pair,pct){return pair.map(c=>c?pvcInset(c,pct):c);}
+  function pvcLooksLikePan(c){
+    const ctx=c.getContext('2d'),w=c.width,h=c.height,p=ctx.getImageData(0,0,w,h).data,step=4;
+    let run=0,best=0;
+    for(let y=Math.floor(h*.60);y<Math.floor(h*.99);y+=step){let colour=0,total=0;for(let x=0;x<w;x+=step){const i=(y*w+x)*4,mx=Math.max(p[i],p[i+1],p[i+2]),mn=Math.min(p[i],p[i+1],p[i+2]);if(mx-mn>16&&mx<248)colour++;total++;}if(colour/Math.max(1,total)>.20){run+=step;best=Math.max(best,run);}else run=0;}
+    return best>h*.10;
+  }
   function pvcPanPair(c){
     // PAN/e-PAN A4 exports keep the printable pair in a lower coloured band,
     // but the band can move between generators. Detect that band instead of
@@ -3993,11 +3999,12 @@ body:has(#loginScreen.front-home){background:#07111b!important;color:#e8f7ff!imp
     const fixed=()=>pvcInsetPair(pvcSplitPair(pvcCropBox(c,0,.76,1,.20),false),.035);
     if(!best)return fixed();
     const cropTop=Math.max(0,best.start),cropBottom=Math.min(h,best.end+Math.round(h*.004)),cropH=cropBottom-cropTop;
-    // The printable PAN pair is centered on the A4 page. Keep a small page
-    // margin around each card and split at the stable centre gutter; the
-    // adaptive Y band prevents the lower edge from being clipped.
-    const left=pvcCropRawBox(c,.055,cropTop/h,.435,cropH/h),right=pvcCropRawBox(c,.510,cropTop/h,.435,cropH/h);
-    return [left,right].map(card=>pvcInset(card,.010));
+    // The black-marked sample shows the exact printable bounds. Trim the
+    // detected lower band to those visible bounds first, then split the pair;
+    // this removes page margins and avoids carrying the source outline into
+    // the preview. The adaptive Y band prevents the lower edge from clipping.
+    const band=pvcCropRawBox(c,0,cropTop/h,1,cropH/h),trimmed=pvcTrimPrintableArea(band),pair=pvcSplitPair(trimmed,false);
+    return pair.map(card=>pvcInset(card,.018));
   }
   // PREMIUM AUTOPRINT CROP LOCK — v1 (2026-09-08)
   // Keep these document profiles immutable. UI/design/quality changes must not
@@ -4077,6 +4084,7 @@ body:has(#loginScreen.front-home){background:#07111b!important;color:#e8f7ff!imp
     // Auto Detect must also recognize generically named Aadhaar PDFs; file
     // names are unreliable after downloads/renames, but the two-card layout
     // and border geometry are stable.
+    if(type==='auto'&&t==='auto'&&pvcLooksLikePan(c))t='pan';
     if(type==='auto'&&t==='auto'&&pvcDetectAadhaarLayout(c))t='aadhaar';
     if(t==='aadhaar')return pvcAadhaarPair(c);
     if(t==='pan')return pvcPanPair(c);
