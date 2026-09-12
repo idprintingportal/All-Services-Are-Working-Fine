@@ -1,0 +1,23 @@
+FROM python:3.12-slim
+
+# OCRmyPDF uses Tesseract and Ghostscript. Noto fonts cover common Unicode
+# scripts when the uploaded PDF does not expose a reusable embedded font.
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends \
+        tesseract-ocr \
+        tesseract-ocr-hin \
+        tesseract-ocr-mar \
+        ghostscript \
+        qpdf \
+        fonts-noto-core \
+        fonts-noto-cjk \
+        fonts-noto-extra \
+    && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /app
+COPY requirements-pdf-editor.txt ./
+RUN pip install --no-cache-dir -r requirements-pdf-editor.txt
+COPY pdf_editor_worker.py ./
+
+ENV PYTHONUNBUFFERED=1
+CMD ["sh", "-c", "gunicorn -w 1 --threads 2 --timeout 240 -b 0.0.0.0:${PORT:-10000} pdf_editor_worker:app"]
