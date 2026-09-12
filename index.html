@@ -1336,6 +1336,48 @@ body.op-light #mainApp .portal-sidebar-search input{background:#fff!important;co
 #np-editor .np-server-bar .np-server-status{flex:0 0 auto;white-space:nowrap}
 @media(max-width:620px){#np-editor .np-filebar{grid-template-columns:auto minmax(0,1fr) auto;gap:7px;padding:10px 12px}#np-editor .np-filebar>#np-name{font-size:11px}#np-editor .np-server-bar{padding:8px 0!important}#np-editor .np-server-bar button{font-size:10px!important;padding:6px 7px!important}}
 </style>
+<style id="skillo-refresh-layout-stability">
+/* Keep the logged-in portal layout identical while an existing session is restored. */
+html.session-bootstrap #mainApp{
+  display:grid!important;
+  grid-template-columns:minmax(238px,300px) minmax(0,1fr)!important;
+  gap:16px!important;
+  align-items:start!important;
+  width:100%!important;
+  max-width:1480px!important;
+  box-sizing:border-box!important;
+  font-size:16px!important;
+  zoom:1!important;
+  transform:none!important;
+  transform-origin:top left!important;
+}
+html.session-bootstrap #mainApp>.portal-tool-sidebar{
+  grid-column:1!important;
+  grid-row:auto!important;
+  position:sticky!important;
+  top:14px!important;
+  align-self:start!important;
+  display:flex!important;
+  flex-direction:column!important;
+  min-width:0!important;
+  max-height:calc(100vh - 28px)!important;
+  overflow-y:auto!important;
+}
+html.session-bootstrap #mainApp>.container{
+  grid-column:2!important;
+  grid-row:auto!important;
+  min-width:0!important;
+  width:100%!important;
+  max-width:none!important;
+  margin:0!important;
+  box-sizing:border-box!important;
+}
+@media(max-width:920px){
+  html.session-bootstrap #mainApp{display:block!important;width:100%!important;max-width:none!important}
+  html.session-bootstrap #mainApp>.portal-tool-sidebar{position:static!important;max-height:none!important;margin-bottom:14px!important}
+  html.session-bootstrap #mainApp>.container{width:100%!important;margin-top:0!important}
+}
+</style>
 </head>
 <body>
 
