@@ -1327,6 +1327,15 @@ body.op-light #mainApp .portal-sidebar-heading{border-color:#b8c7dc}body.op-ligh
 body.op-light #mainApp .portal-sidebar-search input{background:#fff!important;color:#12203a!important;border-color:#91a4bf!important}
 @media(max-width:920px){#mainApp[style*="display: block"]{display:block!important}.portal-tool-sidebar{position:static!important;max-height:none!important;margin-bottom:14px}.container{margin-top:0!important}}
 </style>
+<style id="skillo-pdf-filebar-responsive">
+/* Keep the PDF filename readable and give the server tools their own full row. */
+#np-editor .np-filebar{display:grid!important;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:10px;min-width:0}
+#np-editor .np-filebar>#np-name{min-width:0;width:auto;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#np-editor .np-filebar>.np-server-bar{grid-column:1/-1;grid-row:2;width:100%;min-width:0;box-sizing:border-box;display:flex;align-items:center;gap:6px;flex-wrap:wrap;overflow:visible}
+#np-editor .np-server-bar button,#np-editor .np-server-bar label{flex:0 0 auto;white-space:nowrap}
+#np-editor .np-server-bar .np-server-status{flex:0 0 auto;white-space:nowrap}
+@media(max-width:620px){#np-editor .np-filebar{grid-template-columns:auto minmax(0,1fr) auto;gap:7px;padding:10px 12px}#np-editor .np-filebar>#np-name{font-size:11px}#np-editor .np-server-bar{padding:8px 0!important}#np-editor .np-server-bar button{font-size:10px!important;padding:6px 7px!important}}
+</style>
 </head>
 <body>
 
@@ -1578,7 +1587,6 @@ body.op-light #mainApp .portal-sidebar-search input{background:#fff!important;co
       <button class="tab-btn dashboard-card premium-tool-card" id="premiumAutoCropperBtn" onclick="openPremiumAutoCropper()">✨ Premium Auto ID Cropper</button>
       <button class="tab-btn dashboard-card premium-tool-card" id="premiumPdfEditorBtn" onclick="openPremiumPdfEditor()">📄 Premium PDF Editor</button>
       <div class="dashboard-group-title pdf-group-title">📄 PDF Tools</div>
-      <button class="tab-btn dashboard-card pdf-tool-card" onclick="openPremiumPdfEditor()">✏️ PDF Editor</button>
       <button class="tab-btn dashboard-card pdf-tool-card" onclick="switchTab('tab-arranger')">📑 PDF Arranger</button>
       <button class="tab-btn dashboard-card pdf-tool-card" onclick="switchTab('tab-jpg-to-pdf')">📄 PDF, JPG, PNG to PDF</button>
       <button class="tab-btn dashboard-card pdf-tool-card" onclick="switchTab('tab-pdf-to-jpg')">🖼️ PDF to JPG (Manual DPI)</button>
