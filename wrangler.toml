@@ -12,5 +12,8 @@ binding = "FILES"
 bucket_name = "id-printing-private-files"
 
 [vars]
-RETENTION_DAYS = "15"
-MAX_DOWNLOADS = "3"
+RETENTION_DAYS = "3"
+MAX_DOWNLOADS = "unlimited"
+
+[triggers]
+crons = ["0 * * * *"]
