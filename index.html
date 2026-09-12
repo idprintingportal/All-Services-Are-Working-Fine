@@ -1982,11 +1982,11 @@ html.session-bootstrap #mainApp>.container{
  <p>₹159 भुगतान करें। Payment app में राशि और receiver जाँचें।</p>
  <label for="premium-txn">Transaction ID / UTR (जरूरी)</label><input id="premium-txn" class="login-input" maxlength="150" required>
  <label for="premium-proof">Payment screenshot (JPG / PNG / WEBP, max 5 MB; जरूरी)</label><input id="premium-proof" type="file" accept="image/jpeg,image/png,image/webp" required style="display:block;width:100%;margin:12px 0">
- <p>Screenshot approval के 15 दिन बाद delete होगा। Pending/rejected proof approval तक सुरक्षित रहेगा।</p>
+ <p>Uploaded files और screenshots 3 दिन बाद automatically delete होंगे।</p>
  <button id="premium-submit" class="action-btn btn-download" type="submit">Submit for premium approval</button></form>
 </section>
 <section hidden id="np-editor" aria-label="PDF text editor">
- <header class="np-head"><div><span class="np-tag">PDF WORKSPACE · NO PAID SDK</span><h2>PDF Editor</h2><p>मूल text बदलें · नया text, signature और highlights जोड़ें</p></div><button id="np-save-edit" class="np-primary" hidden>✓ Save edit</button><button id="np-cancel-edit" hidden>Cancel edit</button><button id="np-save" class="np-primary" disabled>↓ Download PDF</button><button type="button" id="np-download-link" hidden>Download again</button><button type="button" id="np-recover" hidden>↻ Recover local</button><button type="button" id="np-discard-recovery" hidden>× Discard local</button><span id="np-quota">5 downloads maximum</span></header>
+ <header class="np-head"><div><span class="np-tag">PDF WORKSPACE · NO PAID SDK</span><h2>PDF Editor</h2><p>मूल text बदलें · नया text, signature और highlights जोड़ें</p></div><button id="np-save-edit" class="np-primary" hidden>✓ Save edit</button><button id="np-cancel-edit" hidden>Cancel edit</button><button id="np-save" class="np-primary" disabled>↓ Download PDF</button><button type="button" id="np-download-link" hidden>Download again</button><button type="button" id="np-recover" hidden>↻ Recover local</button><button type="button" id="np-discard-recovery" hidden>× Discard local</button><span id="np-quota">Unlimited downloads</span></header>
  <div class="np-filebar"><button id="np-open" class="np-primary">＋ Open PDF</button><input id="np-file" type="file" accept="application/pdf,.pdf" hidden><span id="np-name">PDF चुनें · अधिकतम 50 MB / 150 pages</span><button id="np-close" disabled>Close</button></div>
  <p class="np-notice">English · हिन्दी · मराठी: original-compatible font fallback, bold level और text box fit लागू होगा। PDF में उपलब्ध original font न मिले तो closest universal Noto fallback इस्तेमाल होगा; downloaded file जाँचें। Server tools में Preflight, quality-safe optimize, OCR, exact text replacement और secure redaction उपलब्ध हैं। Validate local और local recovery browser में free हैं; Signed PDF को optimize नहीं किया जाएगा।</p>
  <fieldset id="np-controls" disabled>
@@ -2976,7 +2976,7 @@ html.session-bootstrap #mainApp>.container{
     });
   }
 
-  function showPdfQuota(q){const label=document.getElementById('np-quota');if(label&&q)label.textContent=q.limit===null?'Admin':`${q.remaining} / ${q.limit} downloads left`;}
+  function showPdfQuota(q){const label=document.getElementById('np-quota');if(label)label.textContent='Unlimited downloads';}
   function historyTransaction(db,mode,operation){return new Promise((resolve,reject)=>{
     const tx=db.transaction(DB_STORE,mode);let result;
     try{result=operation(tx.objectStore(DB_STORE));}catch(e){db.close();reject(e);return;}
@@ -2988,17 +2988,15 @@ html.session-bootstrap #mainApp>.container{
   function triggerPdfDownload(record){
     const url=URL.createObjectURL(record.data),a=document.createElement('a');a.href=url;a.download=record.fileName;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),60000);
   }
-  const LOCAL_PDF_DOWNLOAD_LIMIT=5;
+  const LOCAL_PDF_DOWNLOAD_LIMIT=null;
   function localPdfQuota(){
     const key='pdf-download-count:'+String(authEmail||'').trim().toLowerCase();
     const used=Math.max(0,Number(localStorage.getItem(key)||0));
-    return {key,used,limit:LOCAL_PDF_DOWNLOAD_LIMIT,remaining:Math.max(0,LOCAL_PDF_DOWNLOAD_LIMIT-used)};
+    return {key,used,limit:null,remaining:null};
   }
   function consumeLocalPdfDownload(){
     const quota=localPdfQuota();
-    if(quota.remaining<=0)throw new Error('PDF_DOWNLOAD_LIMIT: सभी 5 downloads उपयोग हो चुके हैं।');
-    localStorage.setItem(quota.key,String(quota.used+1));
-    return {success:true,quota:{limit:quota.limit,used:quota.used+1,remaining:quota.remaining-1}};
+    return {success:true,quota:{limit:null,used:quota.used,remaining:null}};
   }
   let pdfDownloadInFlight=false;
   window.exportPortalPdf=async(blob,fileName,retryRecord=null)=>{
@@ -3019,8 +3017,7 @@ html.session-bootstrap #mainApp>.container{
       if(token!==authToken)throw new Error('Account changed.');
       triggerPdfDownload(record);return result;
     }catch(error){
-      // A rejected sixth attempt was never downloaded, so it must not appear in download history.
-      if(record?.id&&/PDF_DOWNLOAD_LIMIT/.test(error.message)&&token===authToken){await deletePdfHistory(record.id).catch(()=>{});}
+      // Downloads are unlimited; keep the local record for retry/recovery.
       if(error.name==='AbortError'||/Failed to fetch/.test(error.message))throw new Error('Response नहीं मिला। History में उसी entry का Retry करें; दोबारा quota नहीं कटेगा।');
       throw error;
     }finally{pdfDownloadInFlight=false;}
@@ -3113,7 +3110,7 @@ html.session-bootstrap #mainApp>.container{
       records.forEach(rec=>{
         const tr=document.createElement('tr');
         const date=rec.created_at?new Date(rec.created_at).toLocaleString('en-IN',{timeZone:'Asia/Kolkata'}):'';
-        const remaining=Math.max(0,3-Number(rec.download_count||0));
+ const remaining='Unlimited';
         tr.innerHTML=`<td><strong style="color:var(--accent-blue);">Server file</strong></td><td>${escapeHtml(rec.original_name||'file')}</td><td style="color:#94a3b8;font-size:11px;">${escapeHtml(date)} · ${remaining} downloads left</td><td><button class="history-download-btn" onclick="reDownloadHistoryFile('${String(rec.id).replace(/'/g,"\\'")}')">📥 Download</button><button class="history-delete-btn" onclick="deleteHistoryRecord('${String(rec.id).replace(/'/g,"\\'")}')" style="margin-left:5px;">🗑️ Delete</button></td>`;
         tbody.appendChild(tr);
       });
