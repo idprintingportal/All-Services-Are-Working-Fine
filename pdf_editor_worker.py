@@ -42,6 +42,7 @@ from flask import Flask, jsonify, request, send_file
 
 
 app = Flask(__name__)
+SERVICE_VERSION = "1.1.0"
 MAX_UPLOAD_BYTES = int(os.getenv("MAX_UPLOAD_BYTES", str(50 * 1024 * 1024)))
 MAX_PDF_PAGES = int(os.getenv("MAX_PDF_PAGES", "150"))
 app.config["MAX_CONTENT_LENGTH"] = MAX_UPLOAD_BYTES
@@ -50,7 +51,7 @@ ALLOWED_ORIGINS = {
     value.strip().rstrip("/")
     for value in os.getenv(
         "ALLOWED_ORIGINS",
-        "https://all-services-are-working-fine-2.onrender.com,http://localhost:3000,http://127.0.0.1:5500",
+        "https://idprintingportal.github.io,https://all-services-are-working-fine-2.onrender.com,http://localhost:3000,http://127.0.0.1:5500",
     ).split(",")
     if value.strip()
 }
@@ -378,9 +379,24 @@ def _pdf_response(data: bytes, filename: str, warning: str | None = None):
     return response
 
 
+@app.get("/")
+def index():
+    return jsonify(
+        success=True,
+        service="pdf-editor-worker",
+        version=SERVICE_VERSION,
+        status="ready",
+        health="/health",
+        capabilities="/capabilities",
+    )
+
+
 @app.get("/health")
+@app.get("/health/")
+@app.get("/healthz")
+@app.get("/api/health")
 def health():
-    return jsonify(success=True, service="pdf-editor-worker", version="1.0")
+    return jsonify(success=True, service="pdf-editor-worker", version=SERVICE_VERSION)
 
 
 @app.get("/capabilities")
@@ -388,6 +404,7 @@ def capabilities():
     return jsonify(
         success=True,
         service="pdf-editor-worker",
+        version=SERVICE_VERSION,
         features=["inspect", "render", "replace-text", "secure-redaction", "ocr-hook", "optimized-save"],
         ocrmypdf=bool(shutil.which("ocrmypdf")),
         fonts=len(_font_catalog()),
