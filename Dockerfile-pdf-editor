@@ -20,4 +20,5 @@ RUN pip install --no-cache-dir -r requirements-pdf-editor.txt
 COPY pdf_editor_worker.py ./
 
 ENV PYTHONUNBUFFERED=1
-CMD ["sh", "-c", "gunicorn -w 1 --threads 2 --timeout 240 -b 0.0.0.0:${PORT:-10000} pdf_editor_worker:app"]
+EXPOSE 10000
+CMD ["sh", "-c", "exec python -m gunicorn --chdir /app --workers 1 --threads 2 --timeout 240 --bind 0.0.0.0:${PORT:-10000} --access-logfile - --error-logfile - pdf_editor_worker:app"]
