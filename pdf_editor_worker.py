@@ -14,6 +14,8 @@ Endpoints:
   POST /redact-text   multipart: file, password, page, text/rect,
                        occurrence, mode (text|area)
   POST /ocr-pdf       multipart: file, password, language
+  POST /preflight-pdf multipart: file, password
+  POST /optimize-pdf  multipart: file, password (unsigned PDFs only)
 
 Mutation endpoints return application/pdf bytes.  The frontend can replace
 its in-memory PDF with the response Blob and continue using its existing
@@ -42,7 +44,7 @@ from flask import Flask, jsonify, request, send_file
 
 
 app = Flask(__name__)
-SERVICE_VERSION = "1.1.0"
+SERVICE_VERSION = "1.2.0"
 MAX_UPLOAD_BYTES = int(os.getenv("MAX_UPLOAD_BYTES", str(50 * 1024 * 1024)))
 MAX_PDF_PAGES = int(os.getenv("MAX_PDF_PAGES", "150"))
 app.config["MAX_CONTENT_LENGTH"] = MAX_UPLOAD_BYTES
@@ -365,6 +367,34 @@ def _save_document(document: fitz.Document) -> bytes:
     return document.tobytes(garbage=3, clean=True, deflate=True, deflate_fonts=True, use_objstms=1)
 
 
+def _signature_summary(document: fitz.Document) -> dict[str, Any]:
+    """Detect signatures conservatively before any server-side rewrite."""
+    try:
+        flags = document.get_sigflags()
+        flags = int(flags) if flags is not None else None
+    except (AttributeError, TypeError, ValueError):
+        flags = None
+    fields: list[dict[str, Any]] = []
+    try:
+        for page_index in range(document.page_count):
+            page = document.load_page(page_index)
+            widgets = page.widgets() or []
+            for widget in widgets:
+                field_type = str(getattr(widget, "field_type_string", "") or "")
+                if "signature" in field_type.lower():
+                    fields.append(
+                        {
+                            "page": page_index + 1,
+                            "name": str(getattr(widget, "field_name", "") or ""),
+                            "type": field_type,
+                        }
+                    )
+    except (AttributeError, RuntimeError, TypeError):
+        fields = []
+    detected = bool(fields) or (flags is not None and flags not in (0, -1))
+    return {"detected": detected, "flags": flags, "fields": fields, "known": flags is not None}
+
+
 def _pdf_response(data: bytes, filename: str, warning: str | None = None):
     response = send_file(
         io.BytesIO(data),
@@ -405,7 +435,7 @@ def capabilities():
         success=True,
         service="pdf-editor-worker",
         version=SERVICE_VERSION,
-        features=["inspect", "render", "replace-text", "secure-redaction", "ocr-hook", "optimized-save"],
+        features=["inspect", "render", "replace-text", "secure-redaction", "ocr-hook", "optimized-save", "preflight", "optimize-unsigned"],
         ocrmypdf=bool(shutil.which("ocrmypdf")),
         fonts=len(_font_catalog()),
         maxUploadBytes=MAX_UPLOAD_BYTES,
@@ -450,6 +480,97 @@ def inspect_pdf():
         )
     except PermissionError as exc:
         return _error(str(exc), 401)
+    except (ValueError, RuntimeError) as exc:
+        return _error(str(exc), 422)
+    finally:
+        if document:
+            document.close()
+
+
+@app.post("/preflight-pdf")
+def preflight_pdf():
+    auth_error = require_auth()
+    if auth_error is not None:
+        return auth_error
+    document = None
+    try:
+        raw, filename = _read_upload()
+        document = _open_pdf(raw, request.form.get("password", ""))
+        pages = []
+        font_names: set[str] = set()
+        form_fields: list[dict[str, Any]] = []
+        for page_index in range(document.page_count):
+            page = document.load_page(page_index)
+            spans = _text_spans(page)
+            page_fonts = sorted({str(span.get("font", "")) for span in spans if span.get("font")})
+            font_names.update(page_fonts)
+            pages.append(
+                {
+                    "page": page_index + 1,
+                    "width": round(page.rect.width, 3),
+                    "height": round(page.rect.height, 3),
+                    "rotation": page.rotation,
+                    "textBlocks": len(spans),
+                    "textCharacters": sum(len(str(span.get("text", ""))) for span in spans),
+                    "fonts": page_fonts,
+                }
+            )
+            try:
+                for widget in page.widgets() or []:
+                    form_fields.append(
+                        {
+                            "page": page_index + 1,
+                            "name": str(getattr(widget, "field_name", "") or ""),
+                            "type": str(getattr(widget, "field_type_string", "") or ""),
+                            "value": str(getattr(widget, "field_value", "") or ""),
+                        }
+                    )
+            except (AttributeError, RuntimeError, TypeError):
+                pass
+        signatures = _signature_summary(document)
+        return jsonify(
+            success=True,
+            filename=filename,
+            fileBytes=len(raw),
+            pageCount=document.page_count,
+            metadata=document.metadata,
+            fonts=sorted(font_names),
+            formFields=form_fields,
+            signatures=signatures,
+            pages=pages,
+            safeToOptimize=not signatures["detected"] and signatures["known"],
+        )
+    except PermissionError as exc:
+        return _error(str(exc), 401)
+    except (ValueError, RuntimeError) as exc:
+        return _error(str(exc), 422)
+    finally:
+        if document:
+            document.close()
+
+
+@app.post("/optimize-pdf")
+def optimize_pdf():
+    auth_error = require_auth()
+    if auth_error is not None:
+        return auth_error
+    document = None
+    try:
+        raw, filename = _read_upload()
+        document = _open_pdf(raw, request.form.get("password", ""))
+        signatures = _signature_summary(document)
+        if not signatures["known"]:
+            raise PermissionError("Digital signature status could not be verified; optimization was refused.")
+        if signatures["detected"]:
+            raise PermissionError("Signed PDF optimization is refused because rewriting can invalidate the digital signature.")
+        output = _save_document(document)
+        response = _pdf_response(output, Path(filename).stem + "-optimized.pdf")
+        response.headers["X-PDF-Original-Size"] = str(len(raw))
+        response.headers["X-PDF-Optimized-Size"] = str(len(output))
+        response.headers["X-PDF-Reduction-Bytes"] = str(len(raw) - len(output))
+        return response
+    except PermissionError as exc:
+        return _error(str(exc), 409)
     except (ValueError, RuntimeError) as exc:
         return _error(str(exc), 422)
     finally:
