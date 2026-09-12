@@ -2246,7 +2246,8 @@ html.session-bootstrap #mainApp>.container{
       </div>
 
       <div style="text-align: right; margin-bottom: 10px;">
-        <button onclick="clearAllHistoryDB()" class="action-btn btn-reset" style="padding: 6px 14px; font-size: 11px;">🗑️ Clear Entire History Now</button>
+        <button id="clearAllHistoryBtn" onclick="clearAllHistoryDB()" class="action-btn btn-reset" style="padding: 6px 14px; font-size: 11px;">🗑️ Clear Entire History Now</button>
+        <p id="historyClearStatus" role="status" style="margin:8px 0 0;color:var(--text-muted);font-size:11px;"></p>
       </div>
 
       <div class="history-table-container">
@@ -3130,12 +3131,25 @@ html.session-bootstrap #mainApp>.container{
     try{await secureApi({action:'storageDelete',fileId:String(recordId)},{timeoutMs:30000});await renderHistoryTable();}catch(error){alert(error.message||'Delete failed.');}
   }
 
+  async function clearLocalHistoryRecords(){
+    const db=await openHistoryDB();
+    await historyTransaction(db,'readwrite',store=>store.clear());
+  }
   async function clearAllHistoryDB() {
-    if (!confirm('क्या आप सभी इतिहास रिकॉर्ड्स हमेशा के लिए मिटाना चाहते हैं?')) return;
-    const db = await openHistoryDB();
-    const tx = db.transaction(DB_STORE, 'readwrite');
-    tx.objectStore(DB_STORE).clear();
-    tx.oncomplete = () => renderHistoryTable();
+    const button=document.getElementById('clearAllHistoryBtn'),status=document.getElementById('historyClearStatus');
+    if(!authToken||!authEmail){if(status)status.textContent='⚠️ History clear करने के लिए login जरूरी है।';return;}
+    if(!confirm('क्या आप इस account की सभी portal history और Cloudflare files हमेशा के लिए मिटाना चाहते हैं? यह action undo नहीं होगा।'))return;
+    const original=button?.textContent||'🗑️ Clear Entire History Now';if(button){button.disabled=true;button.textContent='⏳ Clearing…';}
+    if(status)status.textContent='⏳ Browser history और Cloudflare storage साफ हो रहा है…';
+    const failures=[];let cloudDeleted=0;
+    try{const result=await secureApi({action:'storageDeleteAll'},{timeoutMs:120000});cloudDeleted=Math.max(0,Number(result?.deleted||0));}
+    catch(error){failures.push('Cloudflare storage: '+(error.message||'delete failed'));}
+    try{await clearLocalHistoryRecords();}
+    catch(error){failures.push('Browser history: '+(error.message||'delete failed'));}
+    await renderHistoryTable();
+    if(failures.length){const message='⚠️ कुछ data delete नहीं हो सका। '+failures.join(' | ');if(status)status.textContent=message;alert(message+' फिर Clear Entire History Now दबाकर retry करें।');}
+    else{const message=`✅ पूरी history clear हो गई। Cloudflare files deleted: ${cloudDeleted}`;if(status)status.textContent=message;alert(message);}
+    if(button){button.disabled=false;button.textContent=original;}
   }
 
   if (typeof pdfjsLib !== 'undefined') {
