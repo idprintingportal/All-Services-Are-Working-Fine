@@ -2740,6 +2740,7 @@ html.session-bootstrap #mainApp>.container{
     if(!authToken || (tabId==='tab-admin' && (authRole!=='admin'||Date.now()>=adminPanelUntil))) return;
     if(tabId!=='tab-admin' && adminPanelUntil) lockAdminPanel();
     showPortalTab(tabId);scrollToOperationPage(tabId);
+    if(tabId==='tab-pdf-editor'){void refreshPdfPremium();window.prewarmPdfEditor?.();}
   }
   function renderAccountFields(){const r=activeDistributorSession||{};const map={accountName:r.name||'',accountOffice:r.officeName||'',accountMobile:r.mobile||'',accountEmail:r.email||authEmail||''};Object.keys(map).forEach(id=>{const el=document.getElementById(id);if(el){el.value=map[id];el.disabled=true;}});const save=document.getElementById('accountSaveBtn');if(save)save.disabled=true;}
   document.querySelectorAll('[data-account-edit]').forEach(btn=>btn.addEventListener('click',()=>{const el=document.getElementById(btn.dataset.accountEdit);if(!el)return;el.disabled=false;el.focus();const save=document.getElementById('accountSaveBtn');if(save)save.disabled=false;}));
@@ -2858,6 +2859,7 @@ html.session-bootstrap #mainApp>.container{
       if(Date.now()>=authExpires) throw new Error('Session expired. Please login again.');
       const result=await secureApi({action:'getMe'});
       applyMaintenance(result.maintenance);
+      renderOfficeWelcome(result.record);
       if(result.role==='distributor') {
         if(result.state==='renewal'||result.state==='renewal_pending') {
           if(mainApp.style.display!=='none') showRenewalScreen(result.record);
